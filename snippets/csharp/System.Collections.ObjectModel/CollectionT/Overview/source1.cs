@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
+namespace DerivedCollectionExample;
+
 public class Dinosaurs : Collection<string>
 {
     public event EventHandler<DinosaursChangedEventArgs> Changed;
@@ -87,7 +89,7 @@ public class Demo
 {
     public static void Main()
     {
-        Dinosaurs dinosaurs = new Dinosaurs();
+        Dinosaurs dinosaurs = [];
 
         dinosaurs.Changed += ChangedHandler;
 
@@ -98,16 +100,14 @@ public class Demo
 
         Display(dinosaurs);
 
-        Console.WriteLine("\nIndexOf(\"Muttaburrasaurus\"): {0}",
-            dinosaurs.IndexOf("Muttaburrasaurus"));
+        Console.WriteLine($"\nIndexOf(\"Muttaburrasaurus\"): {dinosaurs.IndexOf("Muttaburrasaurus")}");
 
-        Console.WriteLine("\nContains(\"Caudipteryx\"): {0}",
-            dinosaurs.Contains("Caudipteryx"));
+        Console.WriteLine($"\nContains(\"Caudipteryx\"): {dinosaurs.Contains("Caudipteryx")}");
 
         Console.WriteLine("\nInsert(2, \"Nanotyrannus\")");
         dinosaurs.Insert(2, "Nanotyrannus");
 
-        Console.WriteLine("\ndinosaurs[2]: {0}", dinosaurs[2]);
+        Console.WriteLine($"\ndinosaurs[2]: {dinosaurs[2]}");
 
         Console.WriteLine("\ndinosaurs[2] = \"Microraptor\"");
         dinosaurs[2] = "Microraptor";
@@ -124,7 +124,7 @@ public class Demo
     private static void Display(Collection<string> cs)
     {
         Console.WriteLine();
-        foreach( string item in cs )
+        foreach (string item in cs)
         {
             Console.WriteLine(item);
         }
@@ -134,18 +134,17 @@ public class Demo
         DinosaursChangedEventArgs e)
     {
 
-        if (e.ChangeType==ChangeType.Replaced)
+        if (e.ChangeType == ChangeType.Replaced)
         {
-            Console.WriteLine("{0} was replaced with {1}", e.ChangedItem,
-                e.ReplacedWith);
+            Console.WriteLine($"{e.ChangedItem} was replaced with {e.ReplacedWith}");
         }
-        else if(e.ChangeType==ChangeType.Cleared)
+        else if (e.ChangeType == ChangeType.Cleared)
         {
             Console.WriteLine("The dinosaur list was cleared.");
         }
         else
         {
-            Console.WriteLine("{0} was {1}.", e.ChangedItem, e.ChangeType);
+            Console.WriteLine($"{e.ChangedItem} was {e.ChangeType}.");
         }
     }
 }

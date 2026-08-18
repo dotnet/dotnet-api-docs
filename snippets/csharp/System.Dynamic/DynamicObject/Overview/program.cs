@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -14,18 +12,11 @@ namespace Test1
     public class DynamicDictionary : DynamicObject
     {
         // The inner dictionary.
-        Dictionary<string, object> dictionary
-            = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> dictionary = [];
 
         // This property returns the number of elements
         // in the inner dictionary.
-        public int Count
-        {
-            get
-            {
-                return dictionary.Count;
-            }
-        }
+        public int Count => dictionary.Count;
 
         // If you try to get a value of a property
         // not defined in the class, this method is called.
@@ -72,13 +63,12 @@ namespace Test1
             // Getting values of the dynamic properties.
             // The TryGetMember method is called.
             // Note that property names are case-insensitive.
-            Console.WriteLine(person.firstname + " " + person.lastname);
+            Console.WriteLine($"{person.firstname} {person.lastname}");
 
             // Getting the value of the Count property.
             // The TryGetMember is not called,
             // because the property is defined in the class.
-            Console.WriteLine(
-                "Number of dynamic properties:" + person.Count);
+            Console.WriteLine($"Number of dynamic properties:{person.Count}");
 
             // The following statement throws an exception at run time.
             // There is no "address" property,
@@ -105,15 +95,12 @@ namespace N2
     public class DynamicNumber : DynamicObject
     {
         // The inner dictionary to store field names and values.
-        Dictionary<string, object> dictionary
-            = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> dictionary = [];
 
         // Get the property value.
         public override bool TryGetMember(
             GetMemberBinder binder, out object result)
-        {
-            return dictionary.TryGetValue(binder.Name, out result);
-        }
+            => dictionary.TryGetValue(binder.Name, out result);
 
         // Set the property value.
         public override bool TrySetMember(
@@ -127,27 +114,25 @@ namespace N2
         public override bool TryBinaryOperation(
             BinaryOperationBinder binder, object arg, out object result)
         {
-            // The Textual property contains the textual representaion
+            // The Textual property contains the textual representation
             // of two numbers, in addition to the name
             // of the binary operation.
             string resultTextual =
-                dictionary["Textual"].ToString() + " "
-                + binder.Operation + " " +
-                ((DynamicNumber)arg).dictionary["Textual"].ToString();
+                $"{dictionary["Textual"]} {binder.Operation} {((DynamicNumber)arg).dictionary["Textual"]}";
 
             int resultNumeric;
 
             // Checking what type of operation is being performed.
             switch (binder.Operation)
             {
-                // Proccessing mathematical addition (a + b).
+                // Processing mathematical addition (a + b).
                 case ExpressionType.Add:
                     resultNumeric =
                         (int)dictionary["Numeric"] +
                         (int)((DynamicNumber)arg).dictionary["Numeric"];
                     break;
 
-                // Processing mathematical substraction (a - b).
+                // Processing mathematical subtraction (a - b).
                 case ExpressionType.Subtract:
                     resultNumeric =
                         (int)dictionary["Numeric"] -
@@ -160,9 +145,7 @@ namespace N2
                 // what to do.
                 // (Usually the language just throws an exception.)
                 default:
-                    Console.WriteLine(
-                        binder.Operation +
-                        ": This binary operation is not implemented");
+                    Console.WriteLine($"{binder.Operation}: This binary operation is not implemented");
                     result = null;
                     return false;
             }
@@ -189,29 +172,25 @@ namespace N2
             firstNumber.Numeric = 1;
 
             // Printing out properties. The TryGetMember method is called.
-            Console.WriteLine(
-                firstNumber.Textual + " " + firstNumber.Numeric);
+            Console.WriteLine($"{firstNumber.Textual} {firstNumber.Numeric}");
 
             // Creating the second dynamic number.
             dynamic secondNumber = new DynamicNumber();
             secondNumber.Textual = "Two";
             secondNumber.Numeric = 2;
-            Console.WriteLine(
-                secondNumber.Textual + " " + secondNumber.Numeric);
+            Console.WriteLine($"{secondNumber.Textual} {secondNumber.Numeric}");
 
             dynamic resultNumber = new DynamicNumber();
 
             // Adding two numbers. The TryBinaryOperation is called.
             resultNumber = firstNumber + secondNumber;
 
-            Console.WriteLine(
-                resultNumber.Textual + " " + resultNumber.Numeric);
+            Console.WriteLine($"{resultNumber.Textual} {resultNumber.Numeric}");
 
             // Subtracting two numbers. TryBinaryOperation is called.
             resultNumber = firstNumber - secondNumber;
 
-            Console.WriteLine(
-                resultNumber.Textual + " " + resultNumber.Numeric);
+            Console.WriteLine($"{resultNumber.Textual} {resultNumber.Numeric}");
 
             // The following statement produces a run-time exception
             // because the multiplication operation is not implemented.
@@ -228,7 +207,7 @@ namespace N2
     //</Snippet2>
 }
 
-//TryConvert
+// TryConvert
 namespace n3
 {
     //<Snippet3>
@@ -236,15 +215,12 @@ namespace n3
     public class DynamicNumber : DynamicObject
     {
         // The inner dictionary.
-        Dictionary<string, object> dictionary
-            = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> dictionary = [];
 
         // Getting a property.
         public override bool TryGetMember(
             GetMemberBinder binder, out object result)
-        {
-            return dictionary.TryGetValue(binder.Name, out result);
-        }
+            => dictionary.TryGetValue(binder.Name, out result);
 
         // Setting a property.
         public override bool TrySetMember(
@@ -259,7 +235,7 @@ namespace n3
             ConvertBinder binder, out object result)
         {
             // Converting to string.
-            if (binder.Type == typeof(String))
+            if (binder.Type == typeof(string))
             {
                 result = dictionary["Textual"];
                 return true;
@@ -296,7 +272,7 @@ namespace n3
             int testImplicit = number;
 
             // Explicit conversion to string.
-            string testExplicit = (String)number;
+            string testExplicit = (string)number;
 
             Console.WriteLine(testImplicit);
             Console.WriteLine(testExplicit);
@@ -314,7 +290,7 @@ namespace n3
     //</Snippet3>
 }
 
-//TryGetIndex and TrySetIndex
+// TryGetIndex and TrySetIndex
 namespace N4
 {
     //<Snippet4>
@@ -322,15 +298,12 @@ namespace N4
     public class SampleDynamicObject : DynamicObject
     {
         // The inner dictionary to store field names and values.
-        Dictionary<string, object> dictionary
-            = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> dictionary = [];
 
         // Get the property value.
         public override bool TryGetMember(
             GetMemberBinder binder, out object result)
-        {
-            return dictionary.TryGetValue(binder.Name, out result);
-        }
+            => dictionary.TryGetValue(binder.Name, out result);
 
         // Set the property value.
         public override bool TrySetMember(
@@ -347,11 +320,16 @@ namespace N4
             int index = (int)indexes[0];
 
             // If a corresponding property already exists, set the value.
-            if (dictionary.ContainsKey("Property" + index))
-                dictionary["Property" + index] = value;
+            if (dictionary.ContainsKey($"Property{index}"))
+            {
+                dictionary[$"Property{index}"] = value;
+            }
             else
+            {
                 // If a corresponding property does not exist, create it.
-                dictionary.Add("Property" + index, value);
+                dictionary.Add($"Property{index}", value);
+            }
+
             return true;
         }
 
@@ -361,7 +339,7 @@ namespace N4
         {
 
             int index = (int)indexes[0];
-            return dictionary.TryGetValue("Property" + index, out result);
+            return dictionary.TryGetValue($"Property{index}", out result);
         }
     }
 
@@ -402,7 +380,7 @@ namespace N4
     //</Snippet4>
 }
 
-//TryInvoke
+// TryInvoke
 namespace N5
 {
     //<Snippet5>
@@ -410,15 +388,12 @@ namespace N5
     public class DynamicNumber : DynamicObject
     {
         // The inner dictionary to store field names and values.
-        Dictionary<string, object> dictionary
-            = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> dictionary = [];
 
         // Get the property value.
         public override bool TryGetMember(
             GetMemberBinder binder, out object result)
-        {
-            return dictionary.TryGetValue(binder.Name, out result);
-        }
+            => dictionary.TryGetValue(binder.Name, out result);
 
         // Set the property value.
         public override bool TrySetMember(
@@ -436,20 +411,28 @@ namespace N5
             // The first one is integer and the second one is string.
             if ((args.Length == 2) &&
                 (args[0].GetType() == typeof(int)) &&
-                (args[1].GetType() == typeof(String)))
+                (args[1].GetType() == typeof(string)))
             {
                 // If the property already exists,
                 // its value is changed.
                 // Otherwise, a new property is created.
                 if (dictionary.ContainsKey("Numeric"))
+                {
                     dictionary["Numeric"] = args[0];
+                }
                 else
+                {
                     dictionary.Add("Numeric", args[0]);
+                }
 
                 if (dictionary.ContainsKey("Textual"))
+                {
                     dictionary["Textual"] = args[1];
+                }
                 else
+                {
                     dictionary.Add("Textual", args[1]);
+                }
 
                 result = true;
                 return true;
@@ -479,12 +462,12 @@ namespace N5
 
             // Printing out the result.
             // The TryGetMember method is called.
-            Console.WriteLine(number.Numeric + " " + number.Textual);
+            Console.WriteLine($"{number.Numeric} {number.Textual}");
 
             // Invoking an object.
             // The TryInvoke method is called.
             number(2, "Two");
-            Console.WriteLine(number.Numeric + " " + number.Textual);
+            Console.WriteLine($"{number.Numeric} {number.Textual}");
 
             // The following statement produces a run-time exception
             // because in this example the method invocation
@@ -511,15 +494,12 @@ namespace N6
     public class DynamicDictionary : DynamicObject
     {
         // The inner dictionary.
-        Dictionary<string, object> dictionary
-            = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> dictionary = [];
 
         // Getting a property.
         public override bool TryGetMember(
             GetMemberBinder binder, out object result)
-        {
-            return dictionary.TryGetValue(binder.Name, out result);
-        }
+            => dictionary.TryGetValue(binder.Name, out result);
 
         // Setting a property.
         public override bool TrySetMember(
@@ -549,13 +529,18 @@ namespace N6
             }
         }
 
-        // This methods prints out dictionary elements.
+        // This method prints out dictionary elements.
         public void Print()
         {
-            foreach (var pair in dictionary)
-                Console.WriteLine(pair.Key + " " + pair.Value);
+            foreach (KeyValuePair<string, object> pair in dictionary)
+            {
+                Console.WriteLine($"{pair.Key} {pair.Value}");
+            }
+
             if (dictionary.Count == 0)
+            {
                 Console.WriteLine("No elements in the dictionary.");
+            }
         }
     }
 
@@ -571,7 +556,7 @@ namespace N6
             person.FirstName = "Ellen";
             person.LastName = "Adams";
 
-            // Calling a method defined in the DynmaicDictionary class.
+            // Calling a method defined in the DynamicDictionary class.
             // The Print method is called.
             person.Print();
 
@@ -605,21 +590,18 @@ namespace n7
 {
     //<Snippet7>
     // Add using System.Linq.Expressions;
-    // to the beginning of the file
+    // to the beginning of the file.
 
     // The class derived from DynamicObject.
     public class DynamicNumber : DynamicObject
     {
         // The inner dictionary to store field names and values.
-        Dictionary<string, object> dictionary
-            = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> dictionary = [];
 
         // Get the property value.
         public override bool TryGetMember(
             GetMemberBinder binder, out object result)
-        {
-            return dictionary.TryGetValue(binder.Name, out result);
-        }
+            => dictionary.TryGetValue(binder.Name, out result);
 
         // Set the property value.
         public override bool TrySetMember(
@@ -635,10 +617,8 @@ namespace n7
         {
             // The Textual property contains
             // the name of the unary operation in addition
-            // to the textual representaion of the number.
-            string resultTextual =
-                 binder.Operation + " " +
-                 dictionary["Textual"].ToString();
+            // to the textual representation of the number.
+            string resultTextual = $"{binder.Operation} {dictionary["Textual"]}";
             int resultNumeric;
 
             // Determining what type of operation is being performed.
@@ -654,9 +634,7 @@ namespace n7
                     // which means that the language should determine
                     // what to do.
                     // (Usually the language just throws an exception.)
-                    Console.WriteLine(
-                        binder.Operation +
-                        ": This unary operation is not implemented");
+                    Console.WriteLine($"{binder.Operation}: This unary operation is not implemented");
                     result = null;
                     return false;
             }
@@ -683,8 +661,7 @@ namespace n7
             number.Numeric = 1;
 
             // Printing out properties. The TryGetMember method is called.
-            Console.WriteLine(
-                number.Textual + " " + number.Numeric);
+            Console.WriteLine($"{number.Textual} {number.Numeric}");
 
             dynamic negativeNumber = new DynamicNumber();
 
@@ -692,8 +669,7 @@ namespace n7
             // TryUnaryOperation is called.
             negativeNumber = -number;
 
-            Console.WriteLine(
-                negativeNumber.Textual + " " + negativeNumber.Numeric);
+            Console.WriteLine($"{negativeNumber.Textual} {negativeNumber.Numeric}");
 
             // The following statement produces a run-time exception
             // because the unary plus operation is not implemented.

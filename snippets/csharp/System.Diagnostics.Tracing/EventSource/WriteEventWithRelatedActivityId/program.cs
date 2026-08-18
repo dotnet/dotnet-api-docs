@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics.Tracing;
 
 namespace WriteEventRelatedId
@@ -11,6 +7,11 @@ namespace WriteEventRelatedId
     {
         static void Main(string[] args)
         {
+        }
+
+        public static class Tasks
+        {
+            public const EventTask Request = (EventTask)0x1;
         }
 
         //<snippet1>
@@ -25,6 +26,7 @@ namespace WriteEventRelatedId
         }
 
         //</snippet1>
+#if false
         //<snippet5>
         [EventSource(Name = "Litware-ProductName-ComponentName")]
         public sealed class LitwareComponentNameEventSource : EventSource
@@ -37,6 +39,7 @@ namespace WriteEventRelatedId
         }
 
         //</snippet5>
+#endif
         //<snippet2>
         [EventSource(Name = "Contoso-ProductName-ComponentName")]
         public sealed class CustomizedForPerfEventSource : EventSource
@@ -45,25 +48,30 @@ namespace WriteEventRelatedId
             public void RequestStart(Guid relatedActivityId, int reqId, string url)
             {
                 if (IsEnabled())
+                {
                     WriteEventWithRelatedActivityId(1, relatedActivityId, reqId, url);
+                }
             }
 
             [NonEvent]
-            unsafe protected void WriteEventWithRelatedActivityId(int eventId, Guid relatedActivityId,
-                            int arg1, string arg2)
+            private unsafe void WriteEventWithRelatedActivityId(
+                int eventId, Guid relatedActivityId, int arg1, string arg2)
             {
                 if (IsEnabled())
                 {
-                    if (arg2 == null) arg2 = string.Empty;
+                    arg2 ??= string.Empty;
+
                     fixed (char* stringBytes = arg2)
                     {
                         EventData* descrs = stackalloc EventData[2];
-                        descrs[0].DataPointer = (IntPtr)(&arg1);
-                        descrs[0].Size = 4;
-                        descrs[1].DataPointer = (IntPtr)stringBytes;
-                        descrs[1].Size = ((arg2.Length + 1) * 2);
+                        descrs[0] = new EventData { DataPointer = (nint)(&arg1), Size = sizeof(int) };
+                        descrs[1] = new EventData
+                        {
+                            DataPointer = (nint)stringBytes,
+                            Size = (arg2.Length + 1) * sizeof(char)
+                        };
                         WriteEventWithRelatedActivityIdCore(eventId,
-                        &relatedActivityId, 2, descrs);
+                            &relatedActivityId, 2, descrs);
                     }
                 }
             }

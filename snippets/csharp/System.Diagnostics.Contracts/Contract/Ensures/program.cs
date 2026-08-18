@@ -1,7 +1,6 @@
 ﻿//<Snippet1>
 #define CONTRACTS_FULL
 
-using System;
 using System.Diagnostics.Contracts;
 
 // An IArray is an ordered collection of objects.
@@ -9,7 +8,7 @@ using System.Diagnostics.Contracts;
 public interface IArray
 {
     // The Item property provides methods to read and edit entries in the array.
-    Object this[int index]
+    object this[int index]
     {
         get;
         set;
@@ -22,16 +21,16 @@ public interface IArray
 
     // Adds an item to the list.
     // The return value is the position the new element was inserted in.
-    int Add(Object value);
+    int Add(object value);
 
     // Removes all items from the list.
     void Clear();
 
     // Inserts value into the array at position index.
-    // index must be non-negative and less than or equal to the
-    // number of elements in the array.  If index equals the number
+    // Index must be non-negative and less than or equal to the
+    // number of elements in the array. If index equals the number
     // of items in the array, then value is appended to the end.
-    void Insert(int index, Object value);
+    void Insert(int index, object value);
 
     // Removes the item at position index.
     void RemoveAt(int index);
@@ -42,21 +41,21 @@ public interface IArray
 internal abstract class IArrayContract : IArray
 {
     //<Snippet3>
-    int IArray.Add(Object value)
+    int IArray.Add(object value)
     {
         // Returns the index in which an item was inserted.
         Contract.Ensures(Contract.Result<int>() >= -1);
         Contract.Ensures(Contract.Result<int>() < ((IArray)this).Count);
-        return default(int);
+        return default;
     }
     //</Snippet3>
-    Object IArray.this[int index]
+    object IArray.this[int index]
     {
         get
         {
             Contract.Requires(index >= 0);
             Contract.Requires(index < ((IArray)this).Count);
-            return default(int);
+            return default;
         }
         set
         {
@@ -71,7 +70,7 @@ internal abstract class IArrayContract : IArray
         {
             Contract.Requires(Count >= 0);
             Contract.Requires(Count <= ((IArray)this).Count);
-            return default(int);
+            return default;
         }
     }
     //</Snippet2>
@@ -82,7 +81,7 @@ internal abstract class IArrayContract : IArray
     }
 
     //<Snippet5>
-    void IArray.Insert(int index, Object value)
+    void IArray.Insert(int index, object value)
     {
         Contract.Requires(index >= 0);
         Contract.Requires(index <= ((IArray)this).Count);  // For inserting immediately after the end.

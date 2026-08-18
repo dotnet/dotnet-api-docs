@@ -1,8 +1,8 @@
 ﻿//<snippet1>
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,7 +57,10 @@ namespace OrderablePartitionerDemo
                     throw new ObjectDisposedException("InternalEnumerable: Can't call GetEnumerator() after disposing");
 
                 // For static partitioning, keep track of the number of active enumerators.
-                if (m_downcountEnumerators) Interlocked.Increment(ref m_activeEnumerators);
+                if (m_downcountEnumerators)
+                {
+                    Interlocked.Increment(ref m_activeEnumerators);
+                }
 
                 return new InternalEnumerator(m_reader, this, m_index);
             }
@@ -182,12 +185,12 @@ namespace OrderablePartitionerDemo
             if (numPartitions < 1)
                 throw new ArgumentOutOfRangeException("NumPartitions");
 
-            List<IEnumerator<KeyValuePair<long, T>>> list = new List<IEnumerator<KeyValuePair<long, T>>>(numPartitions);
+            List<IEnumerator<KeyValuePair<long, T>>> list = new(numPartitions);
 
             // Since we are doing static partitioning, create an InternalEnumerable with reference
             // counting of spawned InternalEnumerators turned on.  Once all of the spawned enumerators
             // are disposed, dynamicPartitions will be disposed.
-            var dynamicPartitions = new InternalEnumerable(m_referenceEnumerable.GetEnumerator(), true);
+            InternalEnumerable dynamicPartitions = new(m_referenceEnumerable.GetEnumerator(), true);
             for (int i = 0; i < numPartitions; i++)
                 list.Add(dynamicPartitions.GetEnumerator());
 
@@ -218,27 +221,30 @@ namespace OrderablePartitionerDemo
             //
             // First a fairly simple visual test
             //
-            var someCollection = new string[] { "four", "score", "and", "twenty", "years", "ago" };
-            var someOrderablePartitioner = new SingleElementOrderablePartitioner<string>(someCollection);
+            string[] someCollection = ["four", "score", "and", "twenty", "years", "ago"];
+            SingleElementOrderablePartitioner<string> someOrderablePartitioner = new(someCollection);
             Parallel.ForEach(someOrderablePartitioner, (item, state, index) =>
             {
-                Console.WriteLine("ForEach: item = {0}, index = {1}, thread id = {2}", item, index, Thread.CurrentThread.ManagedThreadId);
+                Console.WriteLine($"ForEach: item = {item}, index = {index}, thread id = {Thread.CurrentThread.ManagedThreadId}");
             });
 
             //
             // Now a test of static partitioning, using 2 partitions and 2 tasks
             //
-            var staticPartitioner = someOrderablePartitioner.GetOrderablePartitions(2);
+            IList<IEnumerator<KeyValuePair<long, string>>> staticPartitioner =
+                someOrderablePartitioner.GetOrderablePartitions(2);
 
             // staticAction will consume the shared enumerable
             int partitionerListIndex = 0;
             Action staticAction = () =>
             {
                 int myIndex = Interlocked.Increment(ref partitionerListIndex) - 1;
-                var enumerator = staticPartitioner[myIndex];
+                IEnumerator<KeyValuePair<long, string>> enumerator = staticPartitioner[myIndex];
                 while (enumerator.MoveNext())
-                    Console.WriteLine("Static partitioning: item = {0}, index = {1}, thread id = {2}",
-                        enumerator.Current.Value, enumerator.Current.Key, Thread.CurrentThread.ManagedThreadId);
+                {
+                    Console.WriteLine(
+                        $"Static partitioning: item = {enumerator.Current.Value}, index = {enumerator.Current.Key}, thread id = {Thread.CurrentThread.ManagedThreadId}");
+                }
                 enumerator.Dispose();
             };
 
@@ -249,20 +255,26 @@ namespace OrderablePartitionerDemo
             // Now a more rigorous test of dynamic partitioning (used by Parallel.ForEach)
             //
             Console.WriteLine("OrderablePartitioner test: testing for index mismatches");
-            List<int> src = Enumerable.Range(0, 100000).ToList();
-            SingleElementOrderablePartitioner<int> myOP = new SingleElementOrderablePartitioner<int>(src);
+            List<int> src = [.. Enumerable.Range(0, 100000)];
+            SingleElementOrderablePartitioner<int> myOP = new(src);
 
             int counter = 0;
             bool mismatch = false;
             Parallel.ForEach(myOP, (item, state, index) =>
             {
-                if (item != index) mismatch = true;
+                if (item != index)
+                {
+                    mismatch = true;
+                }
                 Interlocked.Increment(ref counter);
             });
 
-            if (mismatch) Console.WriteLine("OrderablePartitioner Test: index mismatch detected");
+            if (mismatch)
+            {
+                Console.WriteLine("OrderablePartitioner Test: index mismatch detected");
+            }
 
-            Console.WriteLine("OrderablePartitioner test: counter = {0}, should be 100000", counter);
+            Console.WriteLine($"OrderablePartitioner test: counter = {counter}, should be 100000");
         }
     }
 }

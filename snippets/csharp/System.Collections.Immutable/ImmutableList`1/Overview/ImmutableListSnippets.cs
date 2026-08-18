@@ -6,10 +6,10 @@ static class ImmutableListSnippets
     static void SnippetIterate()
     {
         // <SnippetIterate>
-        // Create an immutable list of strings
+        // Create an immutable list of strings.
         ImmutableList<string> colors = ImmutableList.Create("Red", "Green", "Blue");
 
-        // Iterate over all items in the list and print them
+        // Iterate over all items in the list and print them.
         foreach (string s in colors)
         {
             Console.WriteLine(s);
@@ -26,10 +26,10 @@ static class ImmutableListSnippets
     static void SnippetModify()
     {
         // <SnippetModify>
-        // Create an immutable list of strings
+        // Create an immutable list of strings.
         ImmutableList<string> colors = ImmutableList.Create("Red", "Green", "Blue");
 
-        // Create a new immutable list by adding and removing items from the original list
+        // Create a new immutable list by adding and removing items from the original list.
         ImmutableList<string> colorsModified = colors.RemoveAt(1).Add("Orange");
 
         foreach (string s in colorsModified)
@@ -51,4 +51,3 @@ static class ImmutableListSnippets
         SnippetModify();
     }
 }
-

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
+namespace KeyedCollectionOverridesExample;
+
 // This class derives from KeyedCollection and shows how to override
 // the protected ClearItems, InsertItem, RemoveItem, and SetItem
 // methods in order to change the behavior of the default Item
@@ -25,7 +27,7 @@ public class SimpleOrder : KeyedCollection<int, OrderItem>
     // dictionary is created as soon as an item is added to the
     // collection.
     //
-    public SimpleOrder() : base(null, 0) {}
+    public SimpleOrder() : base(null, 0) { }
 
     // This is the only method that absolutely must be overridden,
     // because without it the KeyedCollection cannot extract the
@@ -98,9 +100,9 @@ public class SimpleOrderChangedEventArgs : EventArgs
     private ChangeType _changeType;
     private OrderItem _replacedWith;
 
-    public OrderItem ChangedItem { get { return _changedItem; }}
-    public ChangeType ChangeType { get { return _changeType; }}
-    public OrderItem ReplacedWith { get { return _replacedWith; }}
+    public OrderItem ChangedItem { get { return _changedItem; } }
+    public ChangeType ChangeType { get { return _changeType; } }
+    public OrderItem ReplacedWith { get { return _replacedWith; } }
 
     public SimpleOrderChangedEventArgs(ChangeType change,
         OrderItem item, OrderItem replacement)
@@ -123,7 +125,7 @@ public class Demo
 {
     public static void Main()
     {
-        SimpleOrder weekly = new SimpleOrder();
+        SimpleOrder weekly = [];
         weekly.Changed += new
             EventHandler<SimpleOrderChangedEventArgs>(ChangedHandler);
 
@@ -138,14 +140,12 @@ public class Demo
 
         // The Contains method of KeyedCollection takes TKey.
         //
-        Console.WriteLine("\nContains(101030411): {0}",
-            weekly.Contains(101030411));
+        Console.WriteLine($"\nContains(101030411): {weekly.Contains(101030411)}");
 
         // The default Item property of KeyedCollection takes the key
         // type, Integer. The property is read-only.
         //
-        Console.WriteLine("\nweekly[101030411].Description: {0}",
-            weekly[101030411].Description);
+        Console.WriteLine($"\nweekly[101030411].Description: {weekly[101030411].Description}");
 
         // The Remove method of KeyedCollection takes a key.
         //
@@ -170,8 +170,7 @@ public class Demo
         // as a key, and KeyNotFoundException is thrown.
         //
         Collection<OrderItem> coweekly = weekly;
-        Console.WriteLine("\ncoweekly[2].Description: {0}",
-            coweekly[2].Description);
+        Console.WriteLine($"\ncoweekly[2].Description: {coweekly[2].Description}");
 
         Console.WriteLine("\ncoweekly[2] = new OrderItem(...)");
         coweekly[2] = new OrderItem(127700026, "Crank", 27, 5.98);
@@ -181,7 +180,7 @@ public class Demo
         // The IndexOf method, inherited from Collection<OrderItem>,
         // takes an OrderItem instead of a key.
         //
-        Console.WriteLine("\nIndexOf(temp): {0}", weekly.IndexOf(temp));
+        Console.WriteLine($"\nIndexOf(temp): {weekly.IndexOf(temp)}");
 
         // The inherited Remove method also takes an OrderItem.
         //
@@ -206,7 +205,7 @@ public class Demo
     private static void Display(SimpleOrder order)
     {
         Console.WriteLine();
-        foreach( OrderItem item in order )
+        foreach (OrderItem item in order)
         {
             Console.WriteLine(item);
         }
@@ -218,23 +217,20 @@ public class Demo
 
         OrderItem item = e.ChangedItem;
 
-        if (e.ChangeType==ChangeType.Replaced)
+        if (e.ChangeType == ChangeType.Replaced)
         {
             OrderItem replacement = e.ReplacedWith;
 
-            Console.WriteLine("{0} (quantity {1}) was replaced " +
-                "by {2}, (quantity {3}).", item.Description,
-                item.Quantity, replacement.Description,
-                replacement.Quantity);
+            Console.WriteLine(
+                $"{item.Description} (quantity {item.Quantity}) was replaced by {replacement.Description}, (quantity {replacement.Quantity}).");
         }
-        else if(e.ChangeType == ChangeType.Cleared)
+        else if (e.ChangeType == ChangeType.Cleared)
         {
             Console.WriteLine("The order list was cleared.");
         }
         else
         {
-            Console.WriteLine("{0} (quantity {1}) was {2}.",
-                item.Description, item.Quantity, e.ChangeType);
+            Console.WriteLine($"{item.Description} (quantity {item.Quantity}) was {e.ChangeType}.");
         }
     }
 }
@@ -249,10 +245,10 @@ public class OrderItem
     private double _unitPrice;
     private int _quantity;
 
-    public int PartNumber { get { return _partNumber; }}
-    public string Description { get { return _description; }}
-    public double UnitPrice { get { return _unitPrice; }}
-    public int Quantity { get { return _quantity; }}
+    public int PartNumber { get { return _partNumber; } }
+    public string Description { get { return _description; } }
+    public double UnitPrice { get { return _unitPrice; } }
+    public int Quantity { get { return _quantity; } }
 
     public OrderItem(int partNumber, string description, int quantity,
         double unitPrice)
@@ -263,13 +259,8 @@ public class OrderItem
         _unitPrice = unitPrice;
     }
 
-    public override string ToString()
-    {
-        return String.Format(
-            "{0,9} {1,6} {2,-12} at {3,8:#,###.00} = {4,10:###,###.00}",
-            PartNumber, _quantity, Description, UnitPrice,
-            UnitPrice * _quantity);
-    }
+    public override string ToString() =>
+        $"{PartNumber,9} {_quantity,6} {Description,-12} at {UnitPrice,8:#,###.00} = {UnitPrice * _quantity,10:###,###.00}";
 }
 
 /* This code example produces the following output:

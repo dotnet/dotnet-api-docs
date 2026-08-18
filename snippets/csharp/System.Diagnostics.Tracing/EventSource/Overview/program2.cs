@@ -35,17 +35,17 @@ namespace Demo2
             : base(throwOnEventWriteErrors)
         { }
 
-        // helper overload of WriteEvent for optimizing writing an event containing
+        // Helper overload of WriteEvent for optimizing writing an event containing
         // payload properties that don't align with a provided overload. This prevents
-        // EventSource from using the object[] overload which is expensive.
+        // EventSource from using the object[] overload, which is expensive.
         protected unsafe void WriteEvent(int eventId, int arg1, short arg2, long arg3)
         {
             if (IsEnabled())
             {
                 EventSource.EventData* descrs = stackalloc EventSource.EventData[3];
-                descrs[0] = new EventData { DataPointer = (IntPtr)(&arg1), Size = 4 };
-                descrs[1] = new EventData { DataPointer = (IntPtr)(&arg2), Size = 2 };
-                descrs[2] = new EventData { DataPointer = (IntPtr)(&arg3), Size = 8 };
+                descrs[0] = new EventData { DataPointer = (nint)(&arg1), Size = 4 };
+                descrs[1] = new EventData { DataPointer = (nint)(&arg2), Size = 2 };
+                descrs[2] = new EventData { DataPointer = (nint)(&arg3), Size = 8 };
                 WriteEventCore(eventId, 3, descrs);
             }
         }
@@ -70,7 +70,7 @@ namespace Demo2
     {
         internal static Dictionary<string, string> _internalState = new();
 
-        private string _name;
+        private readonly string _name;
 
         public ComplexComponent(string name)
         {
@@ -104,10 +104,7 @@ namespace Demo2
             ComplexSource.Log.ExpensiveWorkStop(_name);
         }
 
-        public void Dispose()
-        {
-            ComplexSource.Log.ComponentDisposed(_name);
-        }
+        public void Dispose() => ComplexSource.Log.ComponentDisposed(_name);
     }
 
     internal sealed class ComplexSource : EventSource
@@ -160,8 +157,10 @@ namespace Demo2
             {
                 lock (ComplexComponent._internalState)
                 {
-                    foreach (var (key, value) in ComplexComponent._internalState)
+                    foreach ((string key, string value) in ComplexComponent._internalState)
+                    {
                         ComponentState(key, value);
+                    }
                 }
             }
         }
