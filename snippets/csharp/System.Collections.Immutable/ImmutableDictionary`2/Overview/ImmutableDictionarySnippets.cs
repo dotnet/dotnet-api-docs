@@ -7,7 +7,7 @@ static class ImmutableDictionarySnippets
     static void SnippetGetValues()
     {
         // <SnippetGetValues>
-        // Create an immutable dictionary that maps string values to string keys.
+        // Create an immutable dictionary that maps string keys to string values.
         ImmutableDictionary<string, string> mimeTypes = ImmutableDictionary.CreateRange(
             [
                 KeyValuePair.Create("txt", "text/plain"),
@@ -55,7 +55,7 @@ static class ImmutableDictionarySnippets
     static void SnippetModify()
     {
         // <SnippetModify>
-        // Create an immutable dictionary that maps string values to string keys.
+        // Create an immutable dictionary that maps string keys to string values.
         ImmutableDictionary<string, string> mimeTypes = ImmutableDictionary.CreateRange(
             [
                 KeyValuePair.Create("txt", "text/plain"),
