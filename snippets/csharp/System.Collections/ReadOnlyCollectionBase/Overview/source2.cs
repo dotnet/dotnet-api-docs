@@ -22,7 +22,7 @@ public class SamplesSynchronizedReadOnlyCollectionBase
         // Create an ArrayList.
         ArrayList myAL = ["red", "blue", "yellow", "green", "orange", "purple"];
 
-        // Create a new ROCollection that contains the elements in myAL.
+        // Create a new SynchronizedROCollection that contains the elements in myAL.
         SynchronizedROCollection myReadOnlyCollection = new(myAL);
 
         // <Snippet2>

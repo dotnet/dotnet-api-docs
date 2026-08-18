@@ -13,7 +13,7 @@ public class SamplesArrayList
         // Creates a synchronized wrapper around the ArrayList.
         ArrayList mySyncdAL = ArrayList.Synchronized(myAL);
 
-        // Displays the sychronization status of both ArrayLists.
+        // Displays the synchronization status of both ArrayLists.
         Console.WriteLine($"myAL is {(myAL.IsSynchronized ? "synchronized" : "not synchronized")}.");
         Console.WriteLine($"mySyncdAL is {(mySyncdAL.IsSynchronized ? "synchronized" : "not synchronized")}.");
     }

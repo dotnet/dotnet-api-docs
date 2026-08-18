@@ -27,7 +27,7 @@ public class SamplesHashtable
 
         // Displays the count and values of the Hashtable.
         Console.WriteLine("After Clear,");
-        Console.WriteLine("   Count    : {myHT.Count}");
+        Console.WriteLine($"   Count    : {myHT.Count}");
         Console.WriteLine("   Values:");
         PrintKeysAndValues(myHT);
     }
@@ -37,7 +37,7 @@ public class SamplesHashtable
         Console.WriteLine("\t-KEY-\t-VALUE-");
         foreach (DictionaryEntry de in myHT)
         {
-            Console.WriteLine("\t{de.Key}:\t{de.Value}");
+            Console.WriteLine($"\t{de.Key}:\t{de.Value}");
         }
 
         Console.WriteLine();

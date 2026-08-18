@@ -7,7 +7,7 @@ public class SamplesArrayList
     public static void Main()
     {
 
-        // Creates a new ArrayList with five elements and initialize each element with a null value.
+        // Creates a new ArrayList with five elements and initializes each element with a null value.
         ArrayList myAL = ArrayList.Repeat(null, 5);
 
         // Displays the count, capacity and values of the ArrayList.
@@ -17,7 +17,7 @@ public class SamplesArrayList
         Console.Write("   Values:");
         PrintValues(myAL);
 
-        // Creates a new ArrayList with seven elements and initialize each element with the string "abc".
+        // Creates a new ArrayList with seven elements and initializes each element with the string "abc".
         myAL = ArrayList.Repeat("abc", 7);
 
         // Displays the count, capacity and values of the ArrayList.
