@@ -6,13 +6,10 @@
 // primary intent is to illustrate the CompilerParameters class.
 //<Snippet1>
 using System;
-using System.Globalization;
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Collections;
-using System.ComponentModel;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 
 namespace CompilerParametersExample
 {
@@ -21,45 +18,48 @@ namespace CompilerParametersExample
         // Build a Hello World program graph using System.CodeDom types.
         public static CodeCompileUnit BuildHelloWorldGraph()
         {
-            // Create a new CodeCompileUnit to contain the program graph
-            CodeCompileUnit compileUnit = new CodeCompileUnit();
+            // Create a new CodeCompileUnit to contain the program graph.
+            CodeCompileUnit compileUnit = new();
 
             // Declare a new namespace called Samples.
-            CodeNamespace samples = new CodeNamespace("Samples");
+            CodeNamespace samples = new("Samples");
+
             // Add the new namespace to the compile unit.
-            compileUnit.Namespaces.Add( samples );
+            compileUnit.Namespaces.Add(samples);
 
             // Add the new namespace import for the System namespace.
-            samples.Imports.Add( new CodeNamespaceImport("System") );
+            samples.Imports.Add(new("System"));
 
             // Declare a new type called Class1.
-            CodeTypeDeclaration class1 = new CodeTypeDeclaration("Class1");
+            CodeTypeDeclaration class1 = new("Class1");
+
             // Add the new type to the namespace's type collection.
             samples.Types.Add(class1);
 
             // Declare a new code entry point method.
-            CodeEntryPointMethod start = new CodeEntryPointMethod();
+            CodeEntryPointMethod start = new();
 
             // Create a type reference for the System.Console class.
-            CodeTypeReferenceExpression csSystemConsoleType = new CodeTypeReferenceExpression("System.Console");
+            CodeTypeReferenceExpression csSystemConsoleType = new("System.Console");
 
             // Build a Console.WriteLine statement.
-            CodeMethodInvokeExpression cs1 = new CodeMethodInvokeExpression(
+            CodeMethodInvokeExpression cs1 = new(
                 csSystemConsoleType, "WriteLine",
-                new CodePrimitiveExpression("Hello World!") );
+                new CodePrimitiveExpression("Hello World!"));
 
             // Add the WriteLine call to the statement collection.
             start.Statements.Add(cs1);
 
             // Build another Console.WriteLine statement.
-            CodeMethodInvokeExpression cs2 = new CodeMethodInvokeExpression(
+            CodeMethodInvokeExpression cs2 = new(
                 csSystemConsoleType, "WriteLine",
-                new CodePrimitiveExpression("Press the Enter key to continue.") );
+                new CodePrimitiveExpression("Press the Enter key to continue."));
+
             // Add the WriteLine call to the statement collection.
             start.Statements.Add(cs2);
 
             // Build a call to System.Console.ReadLine.
-            CodeMethodInvokeExpression csReadLine = new CodeMethodInvokeExpression(
+            CodeMethodInvokeExpression csReadLine = new(
                 csSystemConsoleType, "ReadLine");
 
             // Add the ReadLine statement.
@@ -67,30 +67,33 @@ namespace CompilerParametersExample
 
             // Add the code entry point method to the Members
             // collection of the type.
-            class1.Members.Add( start );
+            class1.Members.Add(start);
 
             return compileUnit;
         }
 
-        public static String GenerateCode(CodeDomProvider provider,
-                                          CodeCompileUnit compileunit)
+        public static string GenerateCode(
+            CodeDomProvider provider,
+            CodeCompileUnit compileunit)
         {
             // Build the source file name with the language
             // extension (vb, cs, js).
-            String sourceFile;
+            string sourceFile;
             if (provider.FileExtension[0] == '.')
             {
-                sourceFile = "HelloWorld" + provider.FileExtension;
+                sourceFile = $"HelloWorld{provider.FileExtension}";
             }
             else
             {
-                sourceFile = "HelloWorld." + provider.FileExtension;
+                sourceFile = $"HelloWorld.{provider.FileExtension}";
             }
 
             // Create a TextWriter to a StreamWriter to an output file.
-            IndentedTextWriter tw = new IndentedTextWriter(new StreamWriter(sourceFile, false), "    ");
+            IndentedTextWriter tw = new(new StreamWriter(sourceFile, false), "    ");
+
             // Generate source code using the code provider.
-            provider.GenerateCodeFromCompileUnit(compileunit, tw, new CodeGeneratorOptions());
+            provider.GenerateCodeFromCompileUnit(compileunit, tw, new());
+
             // Close the output file.
             tw.Close();
 
@@ -99,11 +102,10 @@ namespace CompilerParametersExample
 
         //<Snippet2>
         public static bool CompileCode(CodeDomProvider provider,
-            String sourceFile,
-            String exeFile)
+            string sourceFile,
+            string exeFile)
         {
-
-            CompilerParameters cp = new CompilerParameters();
+            CompilerParameters cp = new();
 
             // Generate an executable instead of
             // a class library.
@@ -116,7 +118,7 @@ namespace CompilerParametersExample
             cp.IncludeDebugInformation = true;
 
             // Add an assembly reference.
-            cp.ReferencedAssemblies.Add( "System.dll" );
+            cp.ReferencedAssemblies.Add("System.dll");
 
             // Save the assembly as a physical file.
             cp.GenerateInMemory = false;
@@ -135,7 +137,7 @@ namespace CompilerParametersExample
             // The TempFileCollection stores the temporary files
             // generated during a build in the current directory,
             // and does not delete them after compilation.
-            cp.TempFiles = new TempFileCollection(".", true);
+            cp.TempFiles = new(".", true);
 
             if (provider.Supports(GeneratorSupport.EntryPointMethod))
             {
@@ -163,34 +165,24 @@ namespace CompilerParametersExample
             // Invoke compilation.
             CompilerResults cr = provider.CompileAssemblyFromFile(cp, sourceFile);
 
-            if(cr.Errors.Count > 0)
+            if (cr.Errors.Count > 0)
             {
                 // Display compilation errors.
-                Console.WriteLine("Errors building {0} into {1}",
-                    sourceFile, cr.PathToAssembly);
-                foreach(CompilerError ce in cr.Errors)
+                Console.WriteLine($"Errors building {sourceFile} into {cr.PathToAssembly}");
+                foreach (CompilerError ce in cr.Errors)
                 {
-                    Console.WriteLine("  {0}", ce.ToString());
+                    Console.WriteLine($"  {ce}");
                     Console.WriteLine();
                 }
             }
             else
             {
-                Console.WriteLine("Source {0} built into {1} successfully.",
-                    sourceFile, cr.PathToAssembly);
-                Console.WriteLine("{0} temporary files created during the compilation.",
-                    cp.TempFiles.Count.ToString());
+                Console.WriteLine($"Source {sourceFile} built into {cr.PathToAssembly} successfully.");
+                Console.WriteLine($"{cp.TempFiles.Count} temporary files created during the compilation.");
             }
 
             // Return the results of compilation.
-            if (cr.Errors.Count > 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return cr.Errors.Count == 0;
         }
         //</Snippet2>
 
@@ -198,10 +190,10 @@ namespace CompilerParametersExample
         static void Main()
         {
             CodeDomProvider provider = null;
-            String exeName = "HelloWorld.exe";
+            string exeName = "HelloWorld.exe";
 
             Console.WriteLine("Enter the source language for Hello World (cs, vb, etc):");
-            String inputLang = Console.ReadLine();
+            string inputLang = Console.ReadLine();
             Console.WriteLine();
 
             if (CodeDomProvider.IsDefinedLanguage(inputLang))
@@ -217,11 +209,11 @@ namespace CompilerParametersExample
             {
                 CodeCompileUnit helloWorld = BuildHelloWorldGraph();
 
-                String sourceFile = GenerateCode(provider, helloWorld);
+                string sourceFile = GenerateCode(provider, helloWorld);
 
                 Console.WriteLine("HelloWorld source code generated.");
 
-                if (CompileCode(provider, sourceFile, exeName ))
+                if (CompileCode(provider, sourceFile, exeName))
                 {
                     Console.WriteLine("Starting HelloWorld executable.");
                     Process.Start(exeName);
