@@ -3,10 +3,10 @@ using System.Collections;
 
 public class SamplesQueue2
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
-        Queue myCollection = new Queue();
+        Queue myCollection = new();
         lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)

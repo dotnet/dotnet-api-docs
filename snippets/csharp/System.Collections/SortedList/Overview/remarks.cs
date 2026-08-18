@@ -3,13 +3,15 @@ using System.Collections;
 
 public class SamplesSortedList
 {
-    public static void Main()
+    public static void Run()
     {
         // Creates and initializes a new SortedList.
-        SortedList mySortedList = new SortedList();
-        mySortedList.Add("Third", "!");
-        mySortedList.Add("Second", "World");
-        mySortedList.Add("First", "Hello");
+        SortedList mySortedList = new()
+        {
+            { "Third", "!" },
+            { "Second", "World" },
+            { "First", "Hello" }
+        };
 
         // <Snippet2>
         foreach (DictionaryEntry de in mySortedList)

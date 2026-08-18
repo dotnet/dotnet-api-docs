@@ -4,19 +4,21 @@ using System.Collections;
 
 public class SamplesArrayList1
 {
-    public static void Main()
+    public static void Run()
     {
         // Creates and initializes a new ArrayList.
-        ArrayList myAL = new ArrayList();
-        myAL.Add("The");
-        myAL.Add("quick");
-        myAL.Add("brown");
-        myAL.Add("fox");
-        myAL.Add("jumps");
-        myAL.Add("over");
-        myAL.Add("the");
-        myAL.Add("lazy");
-        myAL.Add("dog");
+        ArrayList myAL =
+        [
+            "The",
+            "quick",
+            "brown",
+            "fox",
+            "jumps",
+            "over",
+            "the",
+            "lazy",
+            "dog",
+        ];
 
         // Displays the values of the ArrayList.
         Console.WriteLine("The ArrayList initially contains the following values:");
@@ -32,8 +34,11 @@ public class SamplesArrayList1
 
     public static void PrintValues(IEnumerable myList)
     {
-        foreach (Object obj in myList)
-            Console.WriteLine("   {0}", obj);
+        foreach (object obj in myList)
+        {
+            Console.WriteLine($"   {obj}");
+        }
+
         Console.WriteLine();
     }
 }
