@@ -157,6 +157,14 @@ You can disable the proxy using <xref:System.Net.Http.HttpClientHandler.UseProxy
 
 Proxy settings (like <xref:System.Net.IWebProxy.Credentials>) should be changed only before the first request is made using the `HttpClient`. Changes made after using the `HttpClient` for the first time may not be reflected in subsequent requests.
 
+## Cookies
+
+By default, `HttpClient` uses an <xref:System.Net.Http.HttpClientHandler> whose <xref:System.Net.Http.HttpClientHandler.UseCookies> property is `true` and whose <xref:System.Net.Http.HttpClientHandler.CookieContainer> is shared by every request made through that `HttpClient` instance. This means any cookies returned by the server (for example, session or authentication cookies) are stored on the handler and are automatically sent back on subsequent requests made with the same `HttpClient` instance.
+
+This behavior can cause problems for apps that reuse an `HttpClient` instance, or a handler, across multiple users or logical sessions, such as a server-side app that handles requests for many users, or an app that uses <xref:System.Net.Http.IHttpClientFactory> to create and cache handlers. Cookies received while serving one user's request could be unintentionally sent on a subsequent, unrelated request, leading to information disclosure or authentication mix-ups.
+
+If you don't need automatic cookie handling, set <xref:System.Net.Http.HttpClientHandler.UseCookies> to `false` on the handler passed to the `HttpClient` constructor, and manage cookies explicitly using request and response headers instead. Alternatively, if you do need automatic cookie handling, ensure each user or session uses its own `HttpClient` instance, or its own <xref:System.Net.Http.HttpClientHandler.CookieContainer>, so that cookies aren't shared across users.
+
 ## Timeouts
 
 You can use <xref:System.Net.Http.HttpClient.Timeout> to set a default timeout for all HTTP requests from the `HttpClient` instance. The timeout only applies to the xxxAsync methods that cause a request/response to be initiated. If the timeout is reached, the <xref:System.Threading.Tasks.Task`1> for that request is cancelled.
