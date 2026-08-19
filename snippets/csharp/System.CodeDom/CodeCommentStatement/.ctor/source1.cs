@@ -3,6 +3,10 @@ using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.IO;
+using System.Linq;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 using Microsoft.CSharp;
 
 public class CodeDOMSample
@@ -57,51 +61,39 @@ public class CodeDOMSample
     public static bool CompileCSharpCode(string sourceFile,
         string exeFile)
     {
-        CSharpCodeProvider provider = new CSharpCodeProvider();
+        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(File.ReadAllText(sourceFile));
+        string trustedPlatformAssemblies =
+            (string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES");
+        MetadataReference[] references = trustedPlatformAssemblies
+            .Split(Path.PathSeparator)
+            .Select(path => MetadataReference.CreateFromFile(path))
+            .ToArray();
+        CSharpCompilation compilation = CSharpCompilation.Create(
+            Path.GetFileNameWithoutExtension(exeFile),
+            [syntaxTree],
+            references,
+            new CSharpCompilationOptions(OutputKind.ConsoleApplication));
 
-        // Build the parameters for source compilation.
-        CompilerParameters cp = new CompilerParameters();
+        using FileStream assemblyStream = File.Create(exeFile);
+        EmitResult result = compilation.Emit(assemblyStream);
 
-        // Add an assembly reference.
-        cp.ReferencedAssemblies.Add("System.dll");
-
-        // Generate an executable instead of
-        // a class library.
-        cp.GenerateExecutable = true;
-
-        // Set the assembly file name to generate.
-        cp.OutputAssembly = exeFile;
-
-        // Save the assembly as a physical file.
-        cp.GenerateInMemory = false;
-
-        // Invoke compilation.
-        CompilerResults cr = provider.CompileAssemblyFromFile(cp, sourceFile);
-
-        if (cr.Errors.Count > 0)
+        if (!result.Success)
         {
             // Display compilation errors.
-            Console.WriteLine($"Errors building {sourceFile} into {cr.PathToAssembly}");
-            foreach (CompilerError ce in cr.Errors)
+            Console.WriteLine($"Errors building {sourceFile} into {exeFile}");
+            foreach (Diagnostic diagnostic in result.Diagnostics)
             {
-                Console.WriteLine($"  {ce}");
+                Console.WriteLine($"  {diagnostic}");
                 Console.WriteLine();
             }
         }
         else
         {
-            Console.WriteLine($"Source {sourceFile} built into {cr.PathToAssembly} successfully.");
+            Console.WriteLine($"Source {sourceFile} built into {exeFile} successfully.");
         }
 
         // Return the results of compilation.
-        if (cr.Errors.Count > 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return result.Success;
     }
     // </snippet14>
 }

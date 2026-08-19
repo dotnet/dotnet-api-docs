@@ -3,6 +3,10 @@ using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.IO;
+using System.Linq;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 
 namespace BasicCodeDomApp
 {
@@ -27,22 +31,32 @@ namespace BasicCodeDomApp
             //</Snippet5>
 
             //<Snippet6>
-            CompilerParameters opt = new CompilerParameters(["System.dll"]);
-            opt.GenerateExecutable = true;
-            opt.OutputAssembly = "HelloWorld.exe";
-            opt.TreatWarningsAsErrors = true;
-            opt.IncludeDebugInformation = true;
-            opt.GenerateInMemory = true;
-            opt.CompilerOptions = "/doc:HelloWorldDoc.xml";
-
-            CompilerResults results;
-
             LogMessage("Compiling with " + providerName);
-            results = provider.CompileAssemblyFromFile(opt, sourceFileName);
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(File.ReadAllText(sourceFileName));
+            string trustedPlatformAssemblies =
+                (string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES");
+            MetadataReference[] references = trustedPlatformAssemblies
+                .Split(Path.PathSeparator)
+                .Select(path => MetadataReference.CreateFromFile(path))
+                .ToArray();
+            CSharpCompilation compilation = CSharpCompilation.Create(
+                "HelloWorld",
+                [syntaxTree],
+                references,
+                new CSharpCompilationOptions(
+                    OutputKind.ConsoleApplication,
+                    optimizationLevel: OptimizationLevel.Debug,
+                    generalDiagnosticOption: ReportDiagnostic.Error));
+
+            using FileStream assemblyStream = File.Create("HelloWorld.exe");
+            using FileStream documentationStream = File.Create("HelloWorldDoc.xml");
+            EmitResult result = compilation.Emit(
+                assemblyStream,
+                xmlDocumentationStream: documentationStream);
             //</Snippet6>
 
-            OutputResults(results);
-            if (results.NativeCompilerReturnValue != 0)
+            OutputResults(result);
+            if (!result.Success)
             {
                 LogMessage("");
                 LogMessage("Compilation failed.");
@@ -142,13 +156,12 @@ namespace BasicCodeDomApp
             Console.WriteLine(text);
         }
 
-        static void OutputResults(CompilerResults results)
+        static void OutputResults(EmitResult result)
         {
-            LogMessage("NativeCompilerReturnValue=" +
-                results.NativeCompilerReturnValue.ToString());
-            foreach (string s in results.Output)
+            LogMessage("NativeCompilerReturnValue=" + (result.Success ? 0 : 1));
+            foreach (Diagnostic diagnostic in result.Diagnostics)
             {
-                LogMessage(s);
+                LogMessage(diagnostic.ToString());
             }
         }
     }

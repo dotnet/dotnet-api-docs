@@ -2,7 +2,11 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 namespace System.CodeDom
 {
     class CodeDomGenericsDemo
@@ -49,24 +53,27 @@ namespace System.CodeDom
             t.Close();
             s.Close();
 
-            CompilerParameters opt = new CompilerParameters([
-                "System.dll",
-                "System.Xml.dll",
-                "System.Windows.Forms.dll",
-                "System.Data.dll",
-                "System.Drawing.dll"]);
-            opt.GenerateExecutable = false;
-            opt.TreatWarningsAsErrors = true;
-            opt.IncludeDebugInformation = true;
-            opt.GenerateInMemory = true;
-
-            CompilerResults results;
-
             LogMessage("Compiling with " + providerName);
-            results = provider.CompileAssemblyFromFile(opt, sourceFileName);
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(File.ReadAllText(sourceFileName));
+            string trustedPlatformAssemblies =
+                (string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES");
+            MetadataReference[] references = trustedPlatformAssemblies
+                .Split(Path.PathSeparator)
+                .Select(path => MetadataReference.CreateFromFile(path))
+                .ToArray();
+            CSharpCompilation compilation = CSharpCompilation.Create(
+                Path.GetFileNameWithoutExtension(assemblyName),
+                [syntaxTree],
+                references,
+                new CSharpCompilationOptions(
+                    OutputKind.DynamicallyLinkedLibrary,
+                    optimizationLevel: OptimizationLevel.Debug,
+                    generalDiagnosticOption: ReportDiagnostic.Error));
+            using MemoryStream assemblyStream = new MemoryStream();
+            EmitResult result = compilation.Emit(assemblyStream);
 
-            OutputResults(results);
-            if (results.NativeCompilerReturnValue != 0)
+            OutputResults(result);
+            if (!result.Success)
             {
                 LogMessage("");
                 LogMessage("Compilation failed.");
@@ -233,13 +240,12 @@ namespace System.CodeDom
             Console.WriteLine(text);
         }
 
-        static void OutputResults(CompilerResults results)
+        static void OutputResults(EmitResult result)
         {
-            LogMessage("NativeCompilerReturnValue=" +
-                results.NativeCompilerReturnValue.ToString());
-            foreach (string s in results.Output)
+            LogMessage("NativeCompilerReturnValue=" + (result.Success ? 0 : 1));
+            foreach (Diagnostic diagnostic in result.Diagnostics)
             {
-                LogMessage(s);
+                LogMessage(diagnostic.ToString());
             }
         }
     }

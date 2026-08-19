@@ -8,6 +8,10 @@ using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 
 namespace CompilerParametersSamples
 {
@@ -504,67 +508,71 @@ null);
             string exeFile)
         {
 
-            CompilerParameters cp = new CompilerParameters();
-
-            // Generate an executable instead of
-            // a class library.
-            cp.GenerateExecutable = true;
-
-            // Set the assembly file name to generate.
-            cp.OutputAssembly = exeFile;
-
-            // Save the assembly as a physical file.
-            cp.GenerateInMemory = false;
-
-            // Generate debug information.
-            cp.IncludeDebugInformation = true;
-
-            // Add an assembly reference.
-            cp.ReferencedAssemblies.Add("System.dll");
-
-            // Set the warning level at which
-            // the compiler should abort compilation
-            // if a warning of this level occurs.
-            cp.WarningLevel = 3;
-
-            // Set whether to treat all warnings as errors.
-            cp.TreatWarningsAsErrors = false;
-
+            string mainTypeName = null;
             if (provider.Supports(GeneratorSupport.EntryPointMethod))
             {
                 // Specify the class that contains
                 // the main method of the executable.
-                cp.MainClass = "DocumentSamples.DocumentProperties";
+                mainTypeName = "DocumentSamples.DocumentProperties";
             }
 
             // Invoke compilation.
-            CompilerResults cr = provider.CompileAssemblyFromFile(cp,
-sourceFile);
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(File.ReadAllText(sourceFile));
+            string trustedPlatformAssemblies =
+                (string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES");
+            MetadataReference[] references = trustedPlatformAssemblies
+                .Split(Path.PathSeparator)
+                .Select(path => MetadataReference.CreateFromFile(path))
+                .ToArray();
+            CSharpCompilation compilation = CSharpCompilation.Create(
+                Path.GetFileNameWithoutExtension(exeFile),
+                [syntaxTree],
+                references,
+                new CSharpCompilationOptions(
+                    OutputKind.ConsoleApplication,
+                    optimizationLevel: OptimizationLevel.Debug,
+                    warningLevel: 3,
+                    mainTypeName: mainTypeName));
 
-            if (cr.Errors.Count > 0)
+            using FileStream assemblyStream = File.Create(exeFile);
+            EmitResult result = compilation.Emit(assemblyStream);
+
+            if (result.Success)
+            {
+                string runtimeConfigFile =
+                    Path.ChangeExtension(exeFile, ".runtimeconfig.json");
+                File.WriteAllText(
+                    runtimeConfigFile,
+                    $$"""
+                    {
+                      "runtimeOptions": {
+                        "tfm": "net{{Environment.Version.Major}}.0",
+                        "framework": {
+                          "name": "Microsoft.NETCore.App",
+                          "version": "{{Environment.Version}}"
+                        }
+                      }
+                    }
+                    """);
+            }
+
+            if (!result.Success)
             {
                 // Display compilation errors.
-                Console.WriteLine($"Errors building {sourceFile} into {cr.PathToAssembly}");
-                foreach (CompilerError ce in cr.Errors)
+                Console.WriteLine($"Errors building {sourceFile} into {exeFile}");
+                foreach (Diagnostic diagnostic in result.Diagnostics)
                 {
-                    Console.WriteLine($"  {ce}");
+                    Console.WriteLine($"  {diagnostic}");
                     Console.WriteLine();
                 }
             }
             else
             {
-                Console.WriteLine($"Source {sourceFile} built into {cr.PathToAssembly} successfully.");
+                Console.WriteLine($"Source {sourceFile} built into {exeFile} successfully.");
             }
 
             // Return the results of compilation.
-            if (cr.Errors.Count > 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return result.Success;
         }
         //</Snippet1>
 
@@ -602,7 +610,7 @@ sourceFile);
                     if (CompileCode(provider, sourceFile, exeName))
                     {
                         Console.WriteLine("Starting DocProp executable.");
-                        Process.Start(exeName);
+                        Process.Start("dotnet", exeName);
                     }
                 }
                 else
