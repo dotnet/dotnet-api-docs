@@ -47,6 +47,10 @@ Apply these changes when they preserve behavior and sample clarity:
   `System` namespaces first.
 - Put curly braces on their own lines.
 - Normalize indentation, spacing, trailing whitespace, and final newlines.
+- Use null-propagation instead of explicit null checks.
+- Remove `this.` where it's unnecessary.
+- Add `using` statements for disposable types, and remove explicit calls to `Close()` and `Delete()`.
+- Prune unnecessary package references from project files.
 
 Don't introduce `var`; this repository prefers explicit types.
 
