@@ -49,7 +49,7 @@ Apply these changes when they preserve behavior and sample clarity:
 - Normalize indentation, spacing, trailing whitespace, and final newlines.
 - Use null-propagation instead of explicit null checks.
 - Remove `this.` where it's unnecessary.
-- Add `using` statements for disposable types, and remove explicit calls to `Close()` and `Delete()`.
+- Add `using` statements for disposable types, and remove redundant calls to `Close()` or `Dispose()`.
 - Prune unnecessary package references from project files.
 
 Don't introduce `var`; this repository prefers explicit types.
