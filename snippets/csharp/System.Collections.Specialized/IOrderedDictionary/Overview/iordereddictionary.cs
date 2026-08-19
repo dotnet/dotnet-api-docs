@@ -219,7 +219,7 @@ public class PeopleEnum : IDictionaryEnumerator
 
 class PeopleApp
 {
-    public static void Run()
+    public static void Main()
     {
         People peopleCollection = new(3)
         {
@@ -261,5 +261,5 @@ class PeopleApp
  * John Smith
  * Jim Jackson
  */
- 
+
 //</snippet00>
