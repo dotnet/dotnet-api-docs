@@ -1,15 +1,16 @@
-﻿//<Snippet1>
-using System;
-using System.CodeDom.Compiler;
-using Microsoft.CSharp;
-using Microsoft.VisualBasic;
+﻿using System;
 using System.Collections.Generic;
+using System.CodeDom.Compiler;
 
+ProviderOptions.ProviderOptionsSample.Run();
+CodeDomCompilerInfoSample.CompilerInfoSample.Run(args);
+
+//<Snippet1>
 namespace ProviderOptions
 {
-    class Program
+    class ProviderOptionsSample
     {
-        static void Main(string[] args)
+        public static void Run()
         {
             DisplayCSharpCompilerInfo();
             DisplayVBCompilerInfo();
@@ -18,40 +19,36 @@ namespace ProviderOptions
         }
         static void DisplayCSharpCompilerInfo()
         {
-            Dictionary<string, string> provOptions =
-            new Dictionary<string, string>();
+            Dictionary<string, string> provOptions = new()
+            {
+                ["CompilerVersion"] = "v4"
+            };
 
-            provOptions.Add("CompilerVersion", "v4");
-            // Get the provider for Microsoft.CSharp
+            // Get the provider for Microsoft.CSharp.
             CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp", provOptions);
 
             // Display the C# language provider information.
-            Console.WriteLine("CSharp provider is {0}",
-                provider.ToString());
-            Console.WriteLine("  Provider hash code:     {0}",
-                provider.GetHashCode().ToString());
-            Console.WriteLine("  Default file extension: {0}",
-                provider.FileExtension);
+            Console.WriteLine($"CSharp provider is {provider}");
+            Console.WriteLine($"  Provider hash code:     {provider.GetHashCode()}");
+            Console.WriteLine($"  Default file extension: {provider.FileExtension}");
 
             Console.WriteLine();
         }
 
         static void DisplayVBCompilerInfo()
         {
-            Dictionary<string, string> provOptions =
-            new Dictionary<string, string>();
+            Dictionary<string, string> provOptions = new()
+            {
+                ["CompilerVersion"] = "v3.5"
+            };
 
-            provOptions.Add("CompilerVersion", "v3.5");
-            // Get the provider for Microsoft.VisualBasic
+            // Get the provider for Microsoft.VisualBasic.
             CodeDomProvider provider = CodeDomProvider.CreateProvider("VisualBasic", provOptions);
 
             // Display the Visual Basic language provider information.
-            Console.WriteLine("Visual Basic provider is {0}",
-                provider.ToString());
-            Console.WriteLine("  Provider hash code:     {0}",
-                provider.GetHashCode().ToString());
-            Console.WriteLine("  Default file extension: {0}",
-                provider.FileExtension);
+            Console.WriteLine($"Visual Basic provider is {provider}");
+            Console.WriteLine($"  Provider hash code:     {provider.GetHashCode()}");
+            Console.WriteLine($"  Default file extension: {provider.FileExtension}");
 
             Console.WriteLine();
         }
