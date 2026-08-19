@@ -10,14 +10,15 @@ public class Example
         // Create a new sorted dictionary of strings, with string
         // keys.
         SortedDictionary<string, string> openWith =
-            new SortedDictionary<string, string>();
-
-        // Add some elements to the dictionary. There are no
-        // duplicate keys, but some of the values are duplicates.
-        openWith.Add("txt", "notepad.exe");
-        openWith.Add("bmp", "paint.exe");
-        openWith.Add("dib", "paint.exe");
-        openWith.Add("rtf", "wordpad.exe");
+            new()
+            {
+                // Add some elements to the dictionary. There are no
+                // duplicate keys, but some of the values are duplicates.
+                { "txt", "notepad.exe" },
+                { "bmp", "paint.exe" },
+                { "dib", "paint.exe" },
+                { "rtf", "wordpad.exe" }
+            };
 
         // The Add method throws an exception if the new key is
         // already in the dictionary.
@@ -92,7 +93,7 @@ public class Example
         // When you use foreach to enumerate dictionary elements,
         // the elements are retrieved as KeyValuePair objects.
         Console.WriteLine();
-        foreach( KeyValuePair<string, string> kvp in openWith )
+        foreach (KeyValuePair<string, string> kvp in openWith)
         {
             Console.WriteLine("Key = {0}, Value = {1}",
                 kvp.Key, kvp.Value);
@@ -107,7 +108,7 @@ public class Example
         // The elements of the ValueCollection are strongly typed
         // with the type that was specified for dictionary values.
         Console.WriteLine();
-        foreach( string s in valueColl )
+        foreach (string s in valueColl)
         {
             Console.WriteLine("Value = {0}", s);
         }
@@ -121,7 +122,7 @@ public class Example
         // The elements of the KeyCollection are strongly typed
         // with the type that was specified for dictionary keys.
         Console.WriteLine();
-        foreach( string s in keyColl )
+        foreach (string s in keyColl)
         {
             Console.WriteLine("Key = {0}", s);
         }

@@ -6,17 +6,18 @@ public class Example
 {
     public static void Main()
     {
-        List<string> dinosaurs = new List<string>();
-
-        dinosaurs.Add("Pachycephalosaurus");
-        dinosaurs.Add("Parasauralophus");
-        dinosaurs.Add("Mamenchisaurus");
-        dinosaurs.Add("Amargasaurus");
-        dinosaurs.Add("Coelophysis");
-        dinosaurs.Add("Oviraptor");
+        List<string> dinosaurs =
+        [
+            "Pachycephalosaurus",
+            "Parasauralophus",
+            "Mamenchisaurus",
+            "Amargasaurus",
+            "Coelophysis",
+            "Oviraptor",
+        ];
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -24,7 +25,7 @@ public class Example
         dinosaurs.Reverse();
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -32,7 +33,7 @@ public class Example
         dinosaurs.Reverse(1, 4);
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }

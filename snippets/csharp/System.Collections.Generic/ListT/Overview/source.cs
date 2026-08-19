@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Example
+namespace ListOverviewSnippet1;
+
+public class ListOverviewExample1
 {
-    public static void Main()
+    public static void Run()
     {
         //<Snippet1>
         //<snippet2>
-        List<string> dinosaurs = new List<string>();
+        List<string> dinosaurs = [];
 
         Console.WriteLine("\nCapacity: {0}", dinosaurs.Capacity);
 
@@ -18,7 +20,7 @@ public class Example
         dinosaurs.Add("Compsognathus");
         //</snippet2>
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -33,21 +35,21 @@ public class Example
         dinosaurs.Insert(2, "Compsognathus");
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
 
-	    //<snippet3>
+        //<snippet3>
         // Shows accessing the list using the Item property.
         Console.WriteLine("\ndinosaurs[3]: {0}", dinosaurs[3]);
-	    //</snippet3>
+        //</snippet3>
 
         Console.WriteLine("\nRemove(\"Compsognathus\")");
         dinosaurs.Remove("Compsognathus");
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }

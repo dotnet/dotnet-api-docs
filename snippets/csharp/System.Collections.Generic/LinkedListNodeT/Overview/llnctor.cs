@@ -4,50 +4,53 @@
 using System;
 using System.Collections.Generic;
 
-public class GenericCollection  {
+public class GenericCollection
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Create a new LinkedListNode of type String and displays its properties.
-      LinkedListNode<String> lln = new LinkedListNode<String>( "orange" );
-      Console.WriteLine( "After creating the node ...." );
-      DisplayProperties( lln );
+        // Create a new LinkedListNode of type String and displays its properties.
+        LinkedListNode<string> lln = new("orange");
+        Console.WriteLine("After creating the node ....");
+        DisplayProperties(lln);
 
-      // Create a new LinkedList.
-      LinkedList<String> ll = new LinkedList<String>();
+        // Create a new LinkedList.
+        LinkedList<string> ll = new();
 
-      // Add the "orange" node and display its properties.
-      ll.AddLast( lln );
-      Console.WriteLine( "After adding the node to the empty LinkedList ...." );
-      DisplayProperties( lln );
+        // Add the "orange" node and display its properties.
+        ll.AddLast(lln);
+        Console.WriteLine("After adding the node to the empty LinkedList ....");
+        DisplayProperties(lln);
 
-      // Add nodes before and after the "orange" node and display the "orange" node's properties.
-      ll.AddFirst( "red" );
-      ll.AddLast( "yellow" );
-      Console.WriteLine( "After adding red and yellow ...." );
-      DisplayProperties( lln );
-   }
+        // Add nodes before and after the "orange" node and display the "orange" node's properties.
+        ll.AddFirst("red");
+        ll.AddLast("yellow");
+        Console.WriteLine("After adding red and yellow ....");
+        DisplayProperties(lln);
+    }
 
-   public static void DisplayProperties( LinkedListNode<String> lln )  {
-      if ( lln.List == null )
-         Console.WriteLine( "   Node is not linked." );
-      else
-         Console.WriteLine( "   Node belongs to a linked list with {0} elements.", lln.List.Count );
+    public static void DisplayProperties(LinkedListNode<string> lln)
+    {
+        if (lln.List == null)
+            Console.WriteLine("   Node is not linked.");
+        else
+            Console.WriteLine("   Node belongs to a linked list with {0} elements.", lln.List.Count);
 
-      if ( lln.Previous == null )
-         Console.WriteLine( "   Previous node is null." );
-      else
-         Console.WriteLine( "   Value of previous node: {0}", lln.Previous.Value );
+        if (lln.Previous == null)
+            Console.WriteLine("   Previous node is null.");
+        else
+            Console.WriteLine("   Value of previous node: {0}", lln.Previous.Value);
 
-      Console.WriteLine( "   Value of current node:  {0}", lln.Value );
+        Console.WriteLine("   Value of current node:  {0}", lln.Value);
 
-      if ( lln.Next == null )
-         Console.WriteLine( "   Next node is null." );
-      else
-         Console.WriteLine( "   Value of next node:     {0}", lln.Next.Value );
+        if (lln.Next == null)
+            Console.WriteLine("   Next node is null.");
+        else
+            Console.WriteLine("   Value of next node:     {0}", lln.Next.Value);
 
-      Console.WriteLine();
-   }
+        Console.WriteLine();
+    }
 }
 
 

@@ -6,7 +6,7 @@ class Example
 {
     public static void Main()
     {
-        Queue<string> numbers = new Queue<string>();
+        Queue<string> numbers = new();
         numbers.Enqueue("one");
         numbers.Enqueue("two");
         numbers.Enqueue("three");
@@ -14,7 +14,7 @@ class Example
         numbers.Enqueue("five");
 
         // A queue can be enumerated without disturbing its contents.
-        foreach( string number in numbers )
+        foreach (string number in numbers)
         {
             Console.WriteLine(number);
         }
@@ -26,10 +26,10 @@ class Example
 
         // Create a copy of the queue, using the ToArray method and the
         // constructor that accepts an IEnumerable<T>.
-        Queue<string> queueCopy = new Queue<string>(numbers.ToArray());
+        Queue<string> queueCopy = new([.. numbers]);
 
         Console.WriteLine("\nContents of the first copy:");
-        foreach( string number in queueCopy )
+        foreach (string number in queueCopy)
         {
             Console.WriteLine(number);
         }
@@ -42,10 +42,10 @@ class Example
 
         // Create a second queue, using the constructor that accepts an
         // IEnumerable(Of T).
-        Queue<string> queueCopy2 = new Queue<string>(array2);
+        Queue<string> queueCopy2 = new(array2);
 
         Console.WriteLine("\nContents of the second copy, with duplicates and nulls:");
-        foreach( string number in queueCopy2 )
+        foreach (string number in queueCopy2)
         {
             Console.WriteLine(number);
         }

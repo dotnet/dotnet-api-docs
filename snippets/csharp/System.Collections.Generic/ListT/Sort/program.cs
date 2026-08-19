@@ -1,9 +1,11 @@
 ﻿//<snippet1>
 using System;
 using System.Collections.Generic;
+
+namespace ListSortSnippet2;
 // Simple business object. A PartId is used to identify the type of part
 // but the part name can change.
-public class Part : IEquatable<Part> , IComparable<Part>
+public class Part : IEquatable<Part>, IComparable<Part>
 {
     public string PartName { get; set; }
 
@@ -29,7 +31,7 @@ public class Part : IEquatable<Part> , IComparable<Part>
     // Default comparer for Part type.
     public int CompareTo(Part comparePart)
     {
-          // A null value means that this object is greater.
+        // A null value means that this object is greater.
         if (comparePart == null)
             return 1;
 
@@ -49,17 +51,19 @@ public class Part : IEquatable<Part> , IComparable<Part>
 }
 public class Example
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a list of parts.
-        List<Part> parts = new List<Part>();
-
-        // Add parts to the list.
-        parts.Add(new Part() { PartName = "regular seat", PartId = 1434 });
-        parts.Add(new Part() { PartName= "crank arm", PartId = 1234 });
-        parts.Add(new Part() { PartName = "shift lever", PartId = 1634 }); ;
+        List<Part> parts =
+        [
+            // Add parts to the list.
+            new Part() { PartName = "regular seat", PartId = 1434 },
+            new Part() { PartName= "crank arm", PartId = 1234 },
+            new Part() { PartName = "shift lever", PartId = 1634 },
+        ];
+        ;
         // Name intentionally left null.
-        parts.Add(new Part() {  PartId = 1334 });
+        parts.Add(new Part() { PartId = 1334 });
         parts.Add(new Part() { PartName = "banana seat", PartId = 1444 });
         parts.Add(new Part() { PartName = "cassette", PartId = 1534 });
 
@@ -85,7 +89,7 @@ public class Example
         // This shows calling the Sort(Comparison(T) overload using
         // an anonymous method for the Comparison delegate.
         // This method treats null as the lesser of two values.
-        parts.Sort(delegate(Part x, Part y)
+        parts.Sort(delegate (Part x, Part y)
         {
             if (x.PartName == null && y.PartName == null) return 0;
             else if (x.PartName == null) return -1;

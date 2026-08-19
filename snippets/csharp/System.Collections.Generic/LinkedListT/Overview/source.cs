@@ -1,7 +1,7 @@
 ﻿// <Snippet1>
 using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Text;
 
 public class Example
 {
@@ -10,8 +10,8 @@ public class Example
         // <Snippet2>
         // Create the link list.
         string[] words =
-            { "the", "fox", "jumps", "over", "the", "dog" };
-        LinkedList<string> sentence = new LinkedList<string>(words);
+            ["the", "fox", "jumps", "over", "the", "dog"];
+        LinkedList<string> sentence = new(words);
         Display(sentence, "The linked list values:");
         // </Snippet2>
 
@@ -135,7 +135,7 @@ public class Example
         Console.WriteLine("Test 17: linked list Contains 'jumps' = {0}",
             sentence.Contains("jumps"));
         //</Snippet11>
-        
+
         //<Snippet12>
         // Release all the nodes.
         sentence.Clear();
@@ -169,7 +169,7 @@ public class Example
             return;
         }
 
-        StringBuilder result = new StringBuilder("(" + node.Value + ")");
+        StringBuilder result = new("(" + node.Value + ")");
         LinkedListNode<string> nodeP = node.Previous;
 
         while (nodeP != null)
@@ -196,28 +196,28 @@ public class Example
 //the fox jumps over the dog
 
 //Test 1: Add 'today' to beginning of the list:
-//today the fox jumps over the dog
+//today the fox jumps over the dog.
 
 //Test 2: Move first node to be last node:
-//the fox jumps over the dog today
+//the fox jumps over the dog today.
 
 //Test 3: Change the last node to 'yesterday':
-//the fox jumps over the dog yesterday
+//the fox jumps over the dog yesterday.
 
 //Test 4: Move last node to be first node:
-//yesterday the fox jumps over the dog
+//yesterday the fox jumps over the dog.
 
 //Test 5: Indicate last occurence of 'the':
-//the fox jumps over (the) dog
+//the fox jumps over (the) dog.
 
 //Test 6: Add 'lazy' and 'old' after 'the':
-//the fox jumps over (the) lazy old dog
+//the fox jumps over (the) lazy old dog.
 
 //Test 7: Indicate the 'fox' node:
-//the (fox) jumps over the lazy old dog
+//the (fox) jumps over the lazy old dog.
 
 //Test 8: Add 'quick' and 'brown' before 'fox':
-//the quick brown (fox) jumps over the lazy old dog
+//the quick brown (fox) jumps over the lazy old dog.
 
 //Test 9: Indicate the 'dog' node:
 //the quick brown fox jumps over the lazy old (dog)
@@ -232,13 +232,13 @@ public class Example
 //Node 'dog' is not in the list.
 
 //Test 13: Add node removed in test 12 after a referenced node (brown):
-//the quick brown (dog) jumps over the lazy old fox
+//the quick brown (dog) jumps over the lazy old fox.
 
 //Test 14: Remove node that has the value 'old':
-//the quick brown dog jumps over the lazy fox
+//the quick brown dog jumps over the lazy fox.
 
 //Test 15: Remove last node, cast to ICollection, and add 'rhinoceros':
-//the quick brown dog jumps over the lazy rhinoceros
+//the quick brown dog jumps over the lazy rhinoceros.
 
 //Test 16: Copy the list to an array:
 //the
@@ -249,9 +249,9 @@ public class Example
 //over
 //the
 //lazy
-//rhinoceros
+//rhinoceros.
 
-//Test 17: linked list Contains 'jumps'= True
+//Test 17: linked list Contains 'jumps'= True.
 
 //Test 18: Cleared linked list Contains 'jumps'  = False
 //

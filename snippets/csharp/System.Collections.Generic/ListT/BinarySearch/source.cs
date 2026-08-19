@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Example
+namespace BinarySearchSnippet1;
+
+public class BinarySearchExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
-        List<string> dinosaurs = new List<string>();
-
-        dinosaurs.Add("Pachycephalosaurus");
-        dinosaurs.Add("Amargasaurus");
-        dinosaurs.Add("Mamenchisaurus");
-        dinosaurs.Add("Deinonychus");
+        List<string> dinosaurs =
+        [
+            "Pachycephalosaurus",
+            "Amargasaurus",
+            "Mamenchisaurus",
+            "Deinonychus",
+        ];
 
         Console.WriteLine("Initial list:");
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -24,7 +27,7 @@ public class Example
         dinosaurs.Sort();
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -37,7 +40,7 @@ public class Example
         }
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -50,7 +53,7 @@ public class Example
         }
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }

@@ -6,16 +6,14 @@ class Program
 {
     static void Main(string[] args)
     {
-        List<Cube> cubes = new List<Cube>();
+        List<Cube> cubes = [new Cube(8, 8, 4), new Cube(8, 4, 8), new Cube(8, 6, 4)];
 
-        cubes.Add(new Cube(8, 8, 4));
-        cubes.Add(new Cube(8, 4, 8));
-        cubes.Add(new Cube(8, 6, 4));
-
-        if (cubes.Contains(new Cube(8, 6, 4))) {
+        if (cubes.Contains(new Cube(8, 6, 4)))
+        {
             Console.WriteLine("An equal cube is already in the collection.");
         }
-        else {
+        else
+        {
             Console.WriteLine("Cube can be added.");
         }
 
@@ -38,10 +36,12 @@ public class Cube : IEquatable<Cube>
     public bool Equals(Cube other)
     {
         if (this.Height == other.Height && this.Length == other.Length
-            && this.Width == other.Width) {
+            && this.Width == other.Width)
+        {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }

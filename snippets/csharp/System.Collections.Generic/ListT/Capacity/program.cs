@@ -34,7 +34,7 @@ public class Example
 
     public static void Main()
     {
-        List<Part> parts = new List<Part>();
+        List<Part> parts = [];
 
         Console.WriteLine("\nCapacity: {0}", parts.Capacity);
 
