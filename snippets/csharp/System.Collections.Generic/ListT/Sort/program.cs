@@ -61,7 +61,7 @@ public class Example
             new Part() { PartName= "crank arm", PartId = 1234 },
             new Part() { PartName = "shift lever", PartId = 1634 },
         ];
-        ;
+        
         // Name intentionally left null.
         parts.Add(new Part() { PartId = 1334 });
         parts.Add(new Part() { PartName = "banana seat", PartId = 1444 });

@@ -45,7 +45,6 @@ public class Example
             new Part() { PartName = "cassette", PartId = 1534 },
             new Part() { PartName = "shift lever", PartId = 1634 },
         ];
-        ;
 
         // Write out the parts in the list. This will call the overridden ToString method
         // in the Part class.

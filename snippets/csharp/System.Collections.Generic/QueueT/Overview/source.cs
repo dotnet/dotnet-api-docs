@@ -19,14 +19,13 @@ class Example
             Console.WriteLine(number);
         }
 
-        Console.WriteLine("\nDequeuing '{0}'", numbers.Dequeue());
-        Console.WriteLine("Peek at next item to dequeue: {0}",
-            numbers.Peek());
-        Console.WriteLine("Dequeuing '{0}'", numbers.Dequeue());
+        Console.WriteLine($"\nDequeuing '{numbers.Dequeue()}'");
+        Console.WriteLine($"Peek at next item to dequeue: '{numbers.Peek()}'");
+        Console.WriteLine($"Dequeuing '{numbers.Dequeue()}'");
 
         // Create a copy of the queue, using the ToArray method and the
         // constructor that accepts an IEnumerable<T>.
-        Queue<string> queueCopy = new([.. numbers]);
+        Queue<string> queueCopy = new(numbers.ToArray());
 
         Console.WriteLine("\nContents of the first copy:");
         foreach (string number in queueCopy)
@@ -50,12 +49,11 @@ class Example
             Console.WriteLine(number);
         }
 
-        Console.WriteLine("\nqueueCopy.Contains(\"four\") = {0}",
-            queueCopy.Contains("four"));
+        Console.WriteLine($"\nqueueCopy.Contains(\"four\") = {queueCopy.Contains("four")}");
 
         Console.WriteLine("\nqueueCopy.Clear()");
         queueCopy.Clear();
-        Console.WriteLine("\nqueueCopy.Count = {0}", queueCopy.Count);
+        Console.WriteLine($"\nqueueCopy.Count = {queueCopy.Count}");
     }
 }
 
@@ -89,5 +87,7 @@ queueCopy.Contains("four") = True
 queueCopy.Clear()
 
 queueCopy.Count = 0
- */
+
+*/
+
 //</Snippet1>

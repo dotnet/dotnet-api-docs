@@ -26,7 +26,7 @@ class Example
 
         // Create a copy of the stack, using the ToArray method and the
         // constructor that accepts an IEnumerable<T>.
-        Stack<string> stack2 = new([.. numbers]);
+        Stack<string> stack2 = new(numbers.ToArray());
 
         Console.WriteLine("\nContents of the first copy:");
         foreach (string number in stack2)

@@ -6,13 +6,13 @@ public class ListConstructorExample2
     public static void Run()
     {
         // <Snippet1>
-        string[] input = [ "Apple",
+        string[] input = { "Apple",
                            "Banana",
-                           "Orange" ];
+                           "Orange" };
 
         List<string> fruits = new List<string>(input);
 
-        Console.WriteLine("\nCapacity: {0}", fruits.Capacity);
+        Console.WriteLine($"\nCapacity: {fruits.Capacity}");
         Console.WriteLine();
 
         foreach (string fruit in fruits)
@@ -52,7 +52,7 @@ public class ListConstructorExample2
         }
 
         Console.WriteLine("\noutput = fruits.GetRange(2, 3).ToArray()");
-        string[] output = [.. fruits.GetRange(2, 3)];
+        string[] output = fruits.GetRange(2, 3).ToArray();
 
         Console.WriteLine();
         foreach (string fruit in output)
