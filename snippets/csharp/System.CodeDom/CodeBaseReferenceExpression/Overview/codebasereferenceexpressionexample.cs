@@ -20,7 +20,7 @@ namespace CodeDomSamples
                 new CodeBaseReferenceExpression(),
 
                 // Method name and method parameter arguments
-                "Dispose", []);
+                "Dispose", new CodeExpression[] {});
 
             // A C# code generator produces the following source code for the preceeding example code:
 
