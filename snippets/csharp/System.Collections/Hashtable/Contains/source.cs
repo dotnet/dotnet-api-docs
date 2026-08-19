@@ -22,7 +22,7 @@ public class SamplesHashtable
 
         // Searches for a specific key.
         int myKey = 2;
-        Console.WriteLine($"The key \"{myKey}\" is {(myHT.ContainsKey(myKey) ? "in the Hashtable" : "NOT in the Hashtable")}.");
+        Console.WriteLine($"""The key "{myKey}" is {(myHT.ContainsKey(myKey) ? "in the Hashtable" : "NOT in the Hashtable")}.""");
         myKey = 6;
         Console.WriteLine($"The key \"{myKey}\" is {(myHT.ContainsKey(myKey) ? "in the Hashtable" : "NOT in the Hashtable")}.");
 
