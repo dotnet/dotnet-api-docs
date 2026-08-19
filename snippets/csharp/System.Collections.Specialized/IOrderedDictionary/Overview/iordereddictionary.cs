@@ -10,7 +10,7 @@ public class People : IOrderedDictionary
 
     public People(int numItems)
     {
-        _people = new ArrayList(numItems);
+        _people = new(numItems);
     }
 
     public int IndexOfKey(object key)
@@ -37,7 +37,7 @@ public class People : IOrderedDictionary
         }
     }
 
-    // IOrderedDictionary Members
+    // IOrderedDictionary members.
     public IDictionaryEnumerator GetEnumerator()
     {
         return new PeopleEnum(_people);
@@ -69,7 +69,7 @@ public class People : IOrderedDictionary
             _people[index] = new DictionaryEntry(key, value);
         }
     }
-    // IDictionary Members
+    // IDictionary members.
 
     public void Add(object key, object value)
     {
@@ -117,10 +117,10 @@ public class People : IOrderedDictionary
     {
         get
         {
-            ArrayList KeyCollection = new ArrayList(_people.Count);
+            ArrayList KeyCollection = new(_people.Count);
             for (int i = 0; i < _people.Count; i++)
             {
-                KeyCollection.Add( ((DictionaryEntry)_people[i]).Key );
+                KeyCollection.Add(((DictionaryEntry)_people[i]).Key);
             }
             return KeyCollection;
         }
@@ -135,16 +135,16 @@ public class People : IOrderedDictionary
     {
         get
         {
-            ArrayList ValueCollection = new ArrayList(_people.Count);
+            ArrayList ValueCollection = new(_people.Count);
             for (int i = 0; i < _people.Count; i++)
             {
-                ValueCollection.Add( ((DictionaryEntry)_people[i]).Value );
+                ValueCollection.Add(((DictionaryEntry)_people[i]).Value);
             }
             return ValueCollection;
         }
     }
 
-    // ICollection Members
+    // ICollection members.
 
     public void CopyTo(Array array, int index)
     {
@@ -175,7 +175,7 @@ public class People : IOrderedDictionary
         }
     }
 
-    // IEnumerable Members
+    // IEnumerable members.
 
     IEnumerator IEnumerable.GetEnumerator()
     {
@@ -187,8 +187,8 @@ public class PeopleEnum : IDictionaryEnumerator
 {
     public ArrayList _people;
 
-    // Enumerators are positioned before the first element
-    // until the first MoveNext() call.
+    // Enumerators are positioned before the first element.
+    // They remain there until the first MoveNext() call.
     int position = -1;
 
     public PeopleEnum(ArrayList list)
@@ -262,19 +262,21 @@ public class PeopleEnum : IDictionaryEnumerator
 }
 //</snippet01>
 
-class App
+class PeopleApp
 {
-    static void Main()
+    public static void Run()
     {
-        People peopleCollection = new People(3);
-        peopleCollection.Add("John", "Smith");
-        peopleCollection.Add("Jim", "Johnson");
-        peopleCollection.Add("Sue", "Rabon");
+        People peopleCollection = new(3)
+        {
+            { "John", "Smith" },
+            { "Jim", "Johnson" },
+            { "Sue", "Rabon" }
+        };
 
         Console.WriteLine("Displaying the entries in peopleCollection:");
         foreach (DictionaryEntry de in peopleCollection)
         {
-            Console.WriteLine("{0} {1}", de.Key, de.Value);
+            Console.WriteLine($"{de.Key} {de.Value}");
         }
 
         Console.WriteLine();
@@ -285,7 +287,7 @@ class App
 
         foreach (DictionaryEntry de in peopleCollection)
         {
-            Console.WriteLine("{0} {1}", de.Key, de.Value);
+            Console.WriteLine($"{de.Key} {de.Value}");
         }
     }
 }

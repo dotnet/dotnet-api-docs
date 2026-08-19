@@ -1,0 +1,2 @@
+﻿PeopleApp.Run();
+SimpleODApp.Run();

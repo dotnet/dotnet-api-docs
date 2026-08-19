@@ -8,7 +8,7 @@ public class SimpleOD : IOrderedDictionary
 
     public SimpleOD(int numItems)
     {
-        itemlist = new ArrayList(numItems);
+        itemlist = new(numItems);
     }
 
     public int IndexOfKey(object key)
@@ -35,7 +35,7 @@ public class SimpleOD : IOrderedDictionary
         }
     }
 
-    // IOrderedDictionary Members
+    // IOrderedDictionary members.
     public IDictionaryEnumerator GetEnumerator()
     {
         return new ODEnum(itemlist);
@@ -67,7 +67,7 @@ public class SimpleOD : IOrderedDictionary
             itemlist[index] = new DictionaryEntry(key, value);
         }
     }
-    // IDictionary Members
+    // IDictionary members.
 
     public void Add(object key, object value)
     {
@@ -115,7 +115,7 @@ public class SimpleOD : IOrderedDictionary
     {
         get
         {
-            ArrayList KeyCollection = new ArrayList(itemlist.Count);
+            ArrayList KeyCollection = new(itemlist.Count);
             for (int i = 0; i < itemlist.Count; i++)
             {
                 KeyCollection[i] = ((DictionaryEntry)itemlist[i]).Key;
@@ -133,7 +133,7 @@ public class SimpleOD : IOrderedDictionary
     {
         get
         {
-            ArrayList ValueCollection = new ArrayList(itemlist.Count);
+            ArrayList ValueCollection = new(itemlist.Count);
             for (int i = 0; i < itemlist.Count; i++)
             {
                 ValueCollection[i] = ((DictionaryEntry)itemlist[i]).Value;
@@ -142,7 +142,7 @@ public class SimpleOD : IOrderedDictionary
         }
     }
 
-    // ICollection Members
+    // ICollection members.
 
     public void CopyTo(Array array, int index)
     {
@@ -173,7 +173,7 @@ public class SimpleOD : IOrderedDictionary
         }
     }
 
-    // IEnumerable Members
+    // IEnumerable members.
 
     IEnumerator IEnumerable.GetEnumerator()
     {
@@ -185,8 +185,8 @@ public class ODEnum : IDictionaryEnumerator
 {
     public ArrayList itemlist;
 
-    // Enumerators are positioned before the first element
-    // until the first MoveNext() call.
+    // Enumerators are positioned before the first element.
+    // They remain there until the first MoveNext() call.
     int position = -1;
 
     public ODEnum(ArrayList list)
@@ -259,15 +259,17 @@ public class ODEnum : IDictionaryEnumerator
     }
 }
 
-class App
+class SimpleODApp
 {
-    static void Main()
+    public static void Run()
     {
         int index = 1;
 
-        SimpleOD myOrderedDictionary = new SimpleOD(2);
-        myOrderedDictionary.Add("Way", "ToGo");
-        myOrderedDictionary.Add("Far", "Out");
+        SimpleOD myOrderedDictionary = new(2)
+        {
+            { "Way", "ToGo" },
+            { "Far", "Out" }
+        };
 
         object obj;
         //<snippet04>

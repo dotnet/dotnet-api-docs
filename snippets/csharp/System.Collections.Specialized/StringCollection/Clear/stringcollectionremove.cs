@@ -5,46 +5,50 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesStringCollection  {
+public class SamplesStringCollection
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new StringCollection.
-      StringCollection myCol = new StringCollection();
-      String[] myArr = new String[] { "RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED" };
-      myCol.AddRange( myArr );
+        // Creates and initializes a new StringCollection.
+        StringCollection myCol = [];
+        string[] myArr = ["RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED"];
+        myCol.AddRange(myArr);
 
-      Console.WriteLine( "Initial contents of the StringCollection:" );
-      PrintValues( myCol );
+        Console.WriteLine("Initial contents of the StringCollection:");
+        PrintValues(myCol);
 
-      // Removes one element from the StringCollection.
-      myCol.Remove( "yellow" );
+        // Removes one element from the StringCollection.
+        myCol.Remove("yellow");
 
-      Console.WriteLine( "After removing \"yellow\":" );
-      PrintValues( myCol );
+        Console.WriteLine("After removing \"yellow\":");
+        PrintValues(myCol);
 
-      // Removes all occurrences of a value from the StringCollection.
-      int i = myCol.IndexOf( "RED" );
-      while ( i > -1 )  {
-         myCol.RemoveAt( i );
-         i = myCol.IndexOf( "RED" );
-      }
+        // Removes all occurrences of a value from the StringCollection.
+        int i = myCol.IndexOf("RED");
+        while (i > -1)
+        {
+            myCol.RemoveAt(i);
+            i = myCol.IndexOf("RED");
+        }
 
-      Console.WriteLine( "After removing all occurrences of \"RED\":" );
-      PrintValues( myCol );
+        Console.WriteLine("After removing all occurrences of \"RED\":");
+        PrintValues(myCol);
 
-      // Clears the entire collection.
-      myCol.Clear();
+        // Clears the entire collection.
+        myCol.Clear();
 
-      Console.WriteLine( "After clearing the collection:" );
-      PrintValues( myCol );
-   }
+        Console.WriteLine("After clearing the collection:");
+        PrintValues(myCol);
+    }
 
-   public static void PrintValues( IEnumerable myCol )  {
-      foreach ( Object obj in myCol )
-         Console.WriteLine( "   {0}", obj );
-      Console.WriteLine();
-   }
+    public static void PrintValues(IEnumerable myCol)
+    {
+        foreach (object obj in myCol)
+            Console.WriteLine($"   {obj}");
+        Console.WriteLine();
+    }
 }
 
 /*
