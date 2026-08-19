@@ -21,21 +21,18 @@
 //        file extension.
 
 using System;
-using System.Globalization;
-using System.CodeDom;
 using System.CodeDom.Compiler;
-using Microsoft.CSharp;
-using Microsoft.VisualBasic;
+using System.Globalization;
 
 namespace CodeDomCompilerInfoSample
 {
     class CompilerInfoSample
     {
         [STAThread]
-        static void Main(string[] args)
+        public static void Run(string[] args)
         {
-            String queryCommand = "";
-            String queryArg = "";
+            string queryCommand = "";
+            string queryArg = "";
             int iNumArguments = args.Length;
 
             // Get input command-line arguments.
@@ -52,24 +49,24 @@ namespace CodeDomCompilerInfoSample
             // Determine which method to call.
 
             Console.WriteLine();
-            switch(queryCommand)
+            switch (queryCommand)
             {
-                case ("LANGUAGE"):
+                case "LANGUAGE":
                     // Display compiler information for input language.
                     DisplayCompilerInfoForLanguage(queryArg);
                     break;
 
-                case ("EXTENSION"):
+                case "EXTENSION":
                     // Display compiler information for input file extension.
                     DisplayCompilerInfoUsingExtension(queryArg);
                     break;
 
-                case ("CONFIG"):
+                case "CONFIG":
                     // Display settings for the configured language provider.
                     DisplayCompilerInfoForConfigLanguage(queryArg);
                     break;
 
-                case ("ALL"):
+                case "ALL":
                     // Display compiler information for all configured
                     // language providers.
                     DisplayAllCompilerInfo();
@@ -91,16 +88,13 @@ namespace CodeDomCompilerInfoSample
         static void DisplayCSharpCompilerInfo()
         {
             // <Snippet2>
-            // Get the provider for Microsoft.CSharp
+            // Get the provider for Microsoft.CSharp.
             CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
 
             // Display the C# language provider information.
-            Console.WriteLine("CSharp provider is {0}",
-                provider.ToString());
-            Console.WriteLine("  Provider hash code:     {0}",
-                provider.GetHashCode().ToString());
-            Console.WriteLine("  Default file extension: {0}",
-                provider.FileExtension);
+            Console.WriteLine($"CSharp provider is {provider}");
+            Console.WriteLine($"  Provider hash code:     {provider.GetHashCode()}");
+            Console.WriteLine($"  Default file extension: {provider.FileExtension}");
 
             // </Snippet2>
             Console.WriteLine();
@@ -109,16 +103,13 @@ namespace CodeDomCompilerInfoSample
         static void DisplayVBCompilerInfo()
         {
             // <Snippet3>
-            // Get the provider for Microsoft.VisualBasic
+            // Get the provider for Microsoft.VisualBasic.
             CodeDomProvider provider = CodeDomProvider.CreateProvider("VisualBasic");
 
             // Display the Visual Basic language provider information.
-            Console.WriteLine("Visual Basic provider is {0}",
-                provider.ToString());
-            Console.WriteLine("  Provider hash code:     {0}",
-                provider.GetHashCode().ToString());
-            Console.WriteLine("  Default file extension: {0}",
-                provider.FileExtension);
+            Console.WriteLine($"Visual Basic provider is {provider}");
+            Console.WriteLine($"  Provider hash code:     {provider.GetHashCode()}");
+            Console.WriteLine($"  Default file extension: {provider.FileExtension}");
 
             // </Snippet3>
             Console.WriteLine();
@@ -135,12 +126,9 @@ namespace CodeDomCompilerInfoSample
                 provider = CodeDomProvider.CreateProvider("js");
 
                 // Display the JScript language provider information.
-                Console.WriteLine("JScript language provider is {0}",
-                    provider.ToString());
-                Console.WriteLine("  Provider hash code:     {0}",
-                    provider.GetHashCode().ToString());
-                Console.WriteLine("  Default file extension: {0}",
-                    provider.FileExtension);
+                Console.WriteLine($"JScript language provider is {provider}");
+                Console.WriteLine($"  Provider hash code:     {provider.GetHashCode()}");
+                Console.WriteLine($"  Default file extension: {provider.FileExtension}");
                 Console.WriteLine();
             }
             catch (System.Configuration.ConfigurationException)
@@ -163,10 +151,9 @@ namespace CodeDomCompilerInfoSample
             if (CodeDomProvider.IsDefinedExtension(fileExtension))
             {
                 CodeDomProvider provider;
-                String language = CodeDomProvider.GetLanguageFromExtension(fileExtension);
+                string language = CodeDomProvider.GetLanguageFromExtension(fileExtension);
 
-                Console.WriteLine("The language \"{0}\" is associated with file extension \"{1}\"",
-                    language, fileExtension);
+                Console.WriteLine($"The language \"{language}\" is associated with file extension \"{fileExtension}\"");
                 Console.WriteLine();
 
                 // Next, check for a corresponding language provider.
@@ -177,8 +164,7 @@ namespace CodeDomCompilerInfoSample
 
                     // Display information about this language provider.
 
-                    Console.WriteLine("Language provider:  {0}",
-                        provider.ToString());
+                    Console.WriteLine($"Language provider:  {provider}");
                     Console.WriteLine();
 
                     // Get the compiler settings for this language.
@@ -186,17 +172,14 @@ namespace CodeDomCompilerInfoSample
                     CompilerInfo langCompilerInfo = CodeDomProvider.GetCompilerInfo(language);
                     CompilerParameters langCompilerConfig = langCompilerInfo.CreateDefaultCompilerParameters();
 
-                    Console.WriteLine("  Compiler options:        {0}",
-                        langCompilerConfig.CompilerOptions);
-                    Console.WriteLine("  Compiler warning level:  {0}",
-                        langCompilerConfig.WarningLevel);
+                    Console.WriteLine($"  Compiler options:        {langCompilerConfig.CompilerOptions}");
+                    Console.WriteLine($"  Compiler warning level:  {langCompilerConfig.WarningLevel}");
                 }
             }
             else
             {
                 // Tell the user that the language provider was not found.
-                Console.WriteLine("There is no language provider associated with input file extension \"{0}\".",
-                    fileExtension);
+                Console.WriteLine($"There is no language provider associated with input file extension \"{fileExtension}\".");
             }
             // </Snippet5>
         }
@@ -213,11 +196,9 @@ namespace CodeDomCompilerInfoSample
 
                 // Display information about this language provider.
 
-                Console.WriteLine("Language provider:  {0}",
-                    provider.ToString());
+                Console.WriteLine($"Language provider:  {provider}");
                 Console.WriteLine();
-                Console.WriteLine("  Default file extension:  {0}",
-                    provider.FileExtension);
+                Console.WriteLine($"  Default file extension:  {provider.FileExtension}");
                 Console.WriteLine();
 
                 // Get the compiler settings for this language.
@@ -225,16 +206,13 @@ namespace CodeDomCompilerInfoSample
                 CompilerInfo langCompilerInfo = CodeDomProvider.GetCompilerInfo(language);
                 CompilerParameters langCompilerConfig = langCompilerInfo.CreateDefaultCompilerParameters();
 
-                Console.WriteLine("  Compiler options:        {0}",
-                    langCompilerConfig.CompilerOptions);
-                Console.WriteLine("  Compiler warning level:  {0}",
-                    langCompilerConfig.WarningLevel);
+                Console.WriteLine($"  Compiler options:        {langCompilerConfig.CompilerOptions}");
+                Console.WriteLine($"  Compiler warning level:  {langCompilerConfig.WarningLevel}");
             }
             else
             {
                 // Tell the user that the language provider was not found.
-                Console.WriteLine("There is no provider configured for input language \"{0}\".",
-                    language);
+                Console.WriteLine($"There is no provider configured for input language \"{language}\".");
             }
             // </Snippet6>
         }
@@ -248,31 +226,25 @@ namespace CodeDomCompilerInfoSample
             if (info.IsCodeDomProviderTypeValid)
             {
                 // Get a provider instance using the configured type information.
-                CodeDomProvider provider;
-                provider = (CodeDomProvider)Activator.CreateInstance(info.CodeDomProviderType);
+                CodeDomProvider provider = (CodeDomProvider)Activator.CreateInstance(info.CodeDomProviderType);
 
                 // Display information about this language provider.
-                Console.WriteLine("Language provider:  {0}",
-                    provider.ToString());
+                Console.WriteLine($"Language provider:  {provider}");
                 Console.WriteLine();
-                Console.WriteLine("  Default file extension:  {0}",
-                    provider.FileExtension);
+                Console.WriteLine($"  Default file extension:  {provider.FileExtension}");
                 Console.WriteLine();
 
                 // Get the compiler settings for this language.
 
                 CompilerParameters langCompilerConfig = info.CreateDefaultCompilerParameters();
 
-                Console.WriteLine("  Compiler options:        {0}",
-                    langCompilerConfig.CompilerOptions);
-                Console.WriteLine("  Compiler warning level:  {0}",
-                    langCompilerConfig.WarningLevel);
+                Console.WriteLine($"  Compiler options:        {langCompilerConfig.CompilerOptions}");
+                Console.WriteLine($"  Compiler warning level:  {langCompilerConfig.WarningLevel}");
             }
             else
             {
                 // Tell the user that the language provider was not found.
-                Console.WriteLine("There is no provider configured for input language \"{0}\".",
-                    configLanguage);
+                Console.WriteLine($"There is no provider configured for input language \"{configLanguage}\".");
             }
             // </Snippet7>
         }
@@ -280,24 +252,23 @@ namespace CodeDomCompilerInfoSample
         static void DisplayAllCompilerInfo()
         {
             // <Snippet8>
-            CompilerInfo [] allCompilerInfo = CodeDomProvider.GetAllCompilerInfo();
+            CompilerInfo[] allCompilerInfo = CodeDomProvider.GetAllCompilerInfo();
             foreach (CompilerInfo info in allCompilerInfo)
             {
-                String defaultLanguage;
-                String defaultExtension;
+                string defaultLanguage;
+                string defaultExtension;
 
                 CodeDomProvider provider = info.CreateProvider();
 
                 // Display information about this configured provider.
 
-                Console.WriteLine("Language provider:  {0}",
-                    provider.ToString());
+                Console.WriteLine($"Language provider:  {provider}");
                 Console.WriteLine();
 
                 Console.WriteLine("  Supported file extension(s):");
-                foreach(String extension in info.GetExtensions())
+                foreach (string extension in info.GetExtensions())
                 {
-                    Console.WriteLine("    {0}", extension);
+                    Console.WriteLine($"    {extension}");
                 }
 
                 defaultExtension = provider.FileExtension;
@@ -305,28 +276,24 @@ namespace CodeDomCompilerInfoSample
                 {
                     defaultExtension = "." + defaultExtension;
                 }
-                Console.WriteLine("  Default file extension:  {0}",
-                    defaultExtension);
+                Console.WriteLine($"  Default file extension:  {defaultExtension}");
                 Console.WriteLine();
 
                 Console.WriteLine("  Supported language(s):");
-                foreach(String language in info.GetLanguages())
+                foreach (string language in info.GetLanguages())
                 {
-                    Console.WriteLine("    {0}", language);
+                    Console.WriteLine($"    {language}");
                 }
 
                 defaultLanguage = CodeDomProvider.GetLanguageFromExtension(defaultExtension);
-                Console.WriteLine("  Default language:        {0}",
-                    defaultLanguage);
+                Console.WriteLine($"  Default language:        {defaultLanguage}");
                 Console.WriteLine();
 
                 // Get the compiler settings for this provider.
                 CompilerParameters langCompilerConfig = info.CreateDefaultCompilerParameters();
 
-                Console.WriteLine("  Compiler options:        {0}",
-                    langCompilerConfig.CompilerOptions);
-                Console.WriteLine("  Compiler warning level:  {0}",
-                    langCompilerConfig.WarningLevel);
+                Console.WriteLine($"  Compiler options:        {langCompilerConfig.CompilerOptions}");
+                Console.WriteLine($"  Compiler warning level:  {langCompilerConfig.WarningLevel}");
                 Console.WriteLine();
             }
             // </Snippet8>

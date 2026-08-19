@@ -1,55 +1,56 @@
-﻿using System;
-using System.CodeDom;
-using System.CodeDom.Compiler;
+﻿using System.CodeDom.Compiler;
 
 namespace CompilerErrorCollectionExample
 {
-	public class Class1
-	{
-		public Class1()
-		{
-		}
-
-        // CompilerErrorCollection
+    public class Class1
+    {
+        // CompilerErrorCollection.
         public void CompilerErrorCollectionExample()
         {
             //<Snippet1>
             //<Snippet2>
             // Creates an empty CompilerErrorCollection.
-            CompilerErrorCollection collection = new CompilerErrorCollection();            			
+            CompilerErrorCollection collection = new();
             //</Snippet2>
 
             //<Snippet3>
             // Adds a CompilerError to the collection.
-            collection.Add( new CompilerError("Testfile.cs", 5, 10, "CS0001", "Example error text") );
+            collection.Add(new("Testfile.cs", 5, 10, "CS0001", "Example error text"));
             //</Snippet3>
 
             //<Snippet4>
             // Adds an array of CompilerError objects to the collection.
-            CompilerError[] errors = { new CompilerError("Testfile.cs", 5, 10, "CS0001", "Example error text"), new CompilerError("Testfile.cs", 5, 10, "CS0001", "Example error text") };
-            collection.AddRange( errors );
+            CompilerError[] errors =
+            [
+                new("Testfile.cs", 5, 10, "CS0001", "Example error text"),
+                new("Testfile.cs", 5, 10, "CS0001", "Example error text")
+            ];
+            collection.AddRange(errors);
 
             // Adds a collection of CompilerError objects to the collection.
-            CompilerErrorCollection errorsCollection = new CompilerErrorCollection();
-            errorsCollection.Add( new CompilerError("Testfile.cs", 5, 10, "CS0001", "Example error text") );
-            errorsCollection.Add( new CompilerError("Testfile.cs", 5, 10, "CS0001", "Example error text") );
-            collection.AddRange( errorsCollection );
+            CompilerErrorCollection errorsCollection = new();
+            errorsCollection.Add(new("Testfile.cs", 5, 10, "CS0001", "Example error text"));
+            errorsCollection.Add(new("Testfile.cs", 5, 10, "CS0001", "Example error text"));
+            collection.AddRange(errorsCollection);
             //</Snippet4>
 
             //<Snippet5>
             // Tests for the presence of a CompilerError in the
             // collection, and retrieves its index if it is found.
-            CompilerError testError = new CompilerError("Testfile.cs", 5, 10, "CS0001", "Example error text");
+            CompilerError testError = new("Testfile.cs", 5, 10, "CS0001", "Example error text");
             int itemIndex = -1;
-            if( collection.Contains( testError ) )
-                itemIndex = collection.IndexOf( testError );
+            if (collection.Contains(testError))
+            {
+                itemIndex = collection.IndexOf(testError);
+            }
+
             //</Snippet5>
 
             //<Snippet6>
             // Copies the contents of the collection, beginning at index 0,
             // to the specified CompilerError array.
             // 'errors' is a CompilerError array.
-            collection.CopyTo( errors, 0 );
+            collection.CopyTo(errors, 0);
             //</Snippet6>
 
             //<Snippet7>
@@ -59,13 +60,13 @@ namespace CompilerErrorCollectionExample
 
             //<Snippet8>
             // Inserts a CompilerError at index 0 of the collection.
-            collection.Insert( 0, new CompilerError("Testfile.cs", 5, 10, "CS0001", "Example error text") );
+            collection.Insert(0, new("Testfile.cs", 5, 10, "CS0001", "Example error text"));
             //</Snippet8>
 
             //<Snippet9>
             // Removes the specified CompilerError from the collection.
-            CompilerError error = new CompilerError("Testfile.cs", 5, 10, "CS0001", "Example error text");
-            collection.Remove( error );
+            CompilerError error = new("Testfile.cs", 5, 10, "CS0001", "Example error text");
+            collection.Remove(error);
             //</Snippet9>
 
             //<Snippet10>
@@ -74,5 +75,5 @@ namespace CompilerErrorCollectionExample
             //</Snippet10>
             //</Snippet1>
         }
-	}
+    }
 }
