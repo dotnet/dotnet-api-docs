@@ -5,6 +5,7 @@
 // signed XML.
 //
 using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Text;
@@ -31,7 +32,7 @@ public class SignVerifyEnvelope
 
             // Verify the signature of the signed XML.
             Console.WriteLine("Verifying signature...");
-            bool result = VerifyXmlFile("SignedExample.xml");
+            bool result = VerifyXmlFile("SignedExample.xml", RSAKey);
 
             // Display the results of the signature verification to \
             // the console.
@@ -61,7 +62,10 @@ public class SignVerifyEnvelope
         doc.PreserveWhitespace = false;
 
         // Load the passed XML file using it's name.
-        doc.Load(new XmlTextReader(FileName));
+        using (XmlReader reader = XmlReader.Create(FileName))
+        {
+            doc.Load(reader);
+        }
 
         // Create a SignedXml object.
         SignedXml signedXml = new SignedXml(doc);
@@ -109,7 +113,7 @@ public class SignVerifyEnvelope
     // </Snippet2>
     // <Snippet3>
     // Verify the signature of an XML file and return the result.
-    public static Boolean VerifyXmlFile(String Name)
+    public static Boolean VerifyXmlFile(String Name, RSA TrustedKey)
     {
         // Create a new XML document.
         XmlDocument xmlDocument = new XmlDocument();
@@ -118,7 +122,10 @@ public class SignVerifyEnvelope
         xmlDocument.PreserveWhitespace = true;
 
         // Load the passed XML file into the document. 
-        xmlDocument.Load(Name);
+        using (XmlReader reader = XmlReader.Create(Name))
+        {
+            xmlDocument.Load(reader);
+        }
 
         // Create a new SignedXml object and pass it
         // the XML document class.
@@ -131,8 +138,22 @@ public class SignVerifyEnvelope
         // Load the signature node.
         signedXml.LoadXml((XmlElement)nodeList[0]);
 
-        // Check the signature and return the result.
-        return signedXml.CheckSignature();
+        // Verify the signature and retrieve the key that produced it.
+        AsymmetricAlgorithm signingKey;
+        if (!signedXml.CheckSignatureReturningKey(out signingKey))
+            return false;
+
+        // A valid signature only proves possession of some key.
+        // The caller must confirm the returned key matches a key it trusts.
+        if (signingKey is RSA rsa)
+        {
+            RSAParameters expected = TrustedKey.ExportParameters(false);
+            RSAParameters actual = rsa.ExportParameters(false);
+            return expected.Modulus.SequenceEqual(actual.Modulus)
+                && expected.Exponent.SequenceEqual(actual.Exponent);
+        }
+
+        return false;
     }
     // </Snippet3>
 

@@ -50,7 +50,11 @@ public class SignVerifyEnvelope
         doc.PreserveWhitespace = false;
 
         // Load the passed XML file using it's name.
-        doc.Load(new XmlTextReader(FileName));
+        // Load the passed XML file into the document.
+        using (XmlReader reader = XmlReader.Create(FileName))
+        {
+            doc.Load(reader);
+        }
 
         // Create a SignedXml object.
         SignedXml signedXml = new SignedXml(doc);
