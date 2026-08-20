@@ -4,10 +4,10 @@ using System.Collections;
 
 public class SamplesQueue
 {
-    public static void Main()
+    public static void Run()
     {
         // Creates and initializes a new Queue.
-        Queue myQ = new Queue();
+        Queue myQ = new();
         myQ.Enqueue("The");
         myQ.Enqueue("quick");
         myQ.Enqueue("brown");
@@ -17,8 +17,8 @@ public class SamplesQueue
         Queue mySyncdQ = Queue.Synchronized(myQ);
 
         // Displays the sychronization status of both Queues.
-        Console.WriteLine("myQ is {0}.", myQ.IsSynchronized ? "synchronized" : "not synchronized");
-        Console.WriteLine("mySyncdQ is {0}.", mySyncdQ.IsSynchronized ? "synchronized" : "not synchronized");
+        Console.WriteLine($"myQ is {(myQ.IsSynchronized ? "synchronized" : "not synchronized")}.");
+        Console.WriteLine($"mySyncdQ is {(mySyncdQ.IsSynchronized ? "synchronized" : "not synchronized")}.");
     }
 }
 /*

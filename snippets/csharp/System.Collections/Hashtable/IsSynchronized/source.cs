@@ -4,22 +4,24 @@ using System.Collections;
 
 public class SamplesHashtable2
 {
-    public static void Main()
+    public static void Run()
     {
         // Creates and initializes a new Hashtable.
-        var myHT = new Hashtable();
-        myHT.Add(0, "zero");
-        myHT.Add(1, "one");
-        myHT.Add(2, "two");
-        myHT.Add(3, "three");
-        myHT.Add(4, "four");
+        Hashtable myHT = new()
+        {
+            { 0, "zero" },
+            { 1, "one" },
+            { 2, "two" },
+            { 3, "three" },
+            { 4, "four" }
+        };
 
         // Creates a synchronized wrapper around the Hashtable.
         Hashtable mySyncdHT = Hashtable.Synchronized(myHT);
 
         // Displays the sychronization status of both Hashtables.
-        Console.WriteLine("myHT is {0}.", myHT.IsSynchronized ? "synchronized" : "not synchronized");
-        Console.WriteLine("mySyncdHT is {0}.", mySyncdHT.IsSynchronized ? "synchronized" : "not synchronized");
+        Console.WriteLine($"myHT is {(myHT.IsSynchronized ? "synchronized" : "not synchronized")}.");
+        Console.WriteLine($"mySyncdHT is {(mySyncdHT.IsSynchronized ? "synchronized" : "not synchronized")}.");
     }
 }
 

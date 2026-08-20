@@ -1,48 +1,54 @@
 ﻿// <Snippet1>
- using System;
- using System.Collections;
- public class SamplesArrayList  {
+using System;
+using System.Collections;
+public class SamplesArrayList
+{
 
-    public static void Main()  {
+    public static void Main()
+    {
 
-       // Creates a new ArrayList with five elements and initialize each element with a null value.
-       ArrayList myAL = ArrayList.Repeat( null, 5 );
+        // Creates a new ArrayList with five elements and initializes each element with a null value.
+        ArrayList myAL = ArrayList.Repeat(null, 5);
 
-       // Displays the count, capacity and values of the ArrayList.
-       Console.WriteLine( "ArrayList with five elements with a null value" );
-       Console.WriteLine( "   Count    : {0}", myAL.Count );
-       Console.WriteLine( "   Capacity : {0}", myAL.Capacity );
-       Console.Write( "   Values:" );
-       PrintValues( myAL );
+        // Displays the count, capacity and values of the ArrayList.
+        Console.WriteLine("ArrayList with five elements with a null value");
+        Console.WriteLine($"   Count    : {myAL.Count}");
+        Console.WriteLine($"   Capacity : {myAL.Capacity}");
+        Console.Write("   Values:");
+        PrintValues(myAL);
 
-       // Creates a new ArrayList with seven elements and initialize each element with the string "abc".
-       myAL = ArrayList.Repeat( "abc", 7 );
+        // Creates a new ArrayList with seven elements and initializes each element with the string "abc".
+        myAL = ArrayList.Repeat("abc", 7);
 
-       // Displays the count, capacity and values of the ArrayList.
-       Console.WriteLine( "ArrayList with seven elements with a string value" );
-       Console.WriteLine( "   Count    : {0}", myAL.Count );
-       Console.WriteLine( "   Capacity : {0}", myAL.Capacity );
-       Console.Write( "   Values:" );
-       PrintValues( myAL );
+        // Displays the count, capacity and values of the ArrayList.
+        Console.WriteLine("ArrayList with seven elements with a string value");
+        Console.WriteLine($"   Count    : {myAL.Count}");
+        Console.WriteLine($"   Capacity : {myAL.Capacity}");
+        Console.Write("   Values:");
+        PrintValues(myAL);
     }
 
-    public static void PrintValues( IEnumerable myList )  {
-       foreach ( Object obj in myList )
-          Console.Write( "   {0}", obj );
-       Console.WriteLine();
+    public static void PrintValues(IEnumerable myList)
+    {
+        foreach (object obj in myList)
+        {
+            Console.Write($"   {obj}");
+        }
+
+        Console.WriteLine();
     }
- }
- /*
- This code produces the following output.
+}
+/*
+This code produces the following output.
 
- ArrayList with five elements with a null value
-    Count    : 5
-    Capacity : 16
-    Values:
- ArrayList with seven elements with a string value
-    Count    : 7
-    Capacity : 16
-    Values:   abc   abc   abc   abc   abc   abc   abc
+ArrayList with five elements with a null value
+   Count    : 5
+   Capacity : 16
+   Values:
+ArrayList with seven elements with a string value
+   Count    : 7
+   Capacity : 16
+   Values:   abc   abc   abc   abc   abc   abc   abc
 
- */
+*/
 // </Snippet1>

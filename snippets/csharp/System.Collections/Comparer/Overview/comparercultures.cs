@@ -5,26 +5,28 @@ using System;
 using System.Collections;
 using System.Globalization;
 
-public class SamplesComparer  {
+public class SamplesComparer
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates the strings to compare.
-      String str1 = "llegar";
-      String str2 = "lugar";
-      Console.WriteLine( "Comparing \"{0}\" and \"{1}\" ...", str1, str2 );
+        // Creates the strings to compare.
+        string str1 = "llegar";
+        string str2 = "lugar";
+        Console.WriteLine($"Comparing \"{str1}\" and \"{str2}\" ...");
 
-      // Uses the DefaultInvariant Comparer.
-      Console.WriteLine( "   Invariant Comparer: {0}", Comparer.DefaultInvariant.Compare( str1, str2 ) );
+        // Uses the DefaultInvariant Comparer.
+        Console.WriteLine($"   Invariant Comparer: {Comparer.DefaultInvariant.Compare(str1, str2)}");
 
-      // Uses the Comparer based on the culture "es-ES" (Spanish - Spain, international sort).
-      Comparer myCompIntl = new Comparer( new CultureInfo( "es-ES", false ) );
-      Console.WriteLine( "   International Sort: {0}", myCompIntl.Compare( str1, str2 ) );
+        // Uses the Comparer based on the culture "es-ES" (Spanish - Spain, international sort).
+        Comparer myCompIntl = new(new CultureInfo("es-ES", false));
+        Console.WriteLine($"   International Sort: {myCompIntl.Compare(str1, str2)}");
 
-      // Uses the Comparer based on the culture identifier 0x040A (Spanish - Spain, traditional sort).
-      Comparer myCompTrad = new Comparer( new CultureInfo( 0x040A, false ) );
-      Console.WriteLine( "   Traditional Sort  : {0}", myCompTrad.Compare( str1, str2 ) );
-   }
+        // Uses the Comparer based on the culture identifier 0x040A (Spanish - Spain, traditional sort).
+        Comparer myCompTrad = new(new CultureInfo(0x040A, false));
+        Console.WriteLine($"   Traditional Sort  : {myCompTrad.Compare(str1, str2)}");
+    }
 }
 
 /*
