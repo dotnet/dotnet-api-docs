@@ -1,5 +1,4 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
 
 namespace CodeDomSamples
@@ -14,7 +13,7 @@ namespace CodeDomSamples
 
             CodeConstructor constructor1 = new CodeConstructor();
             constructor1.Attributes = MemberAttributes.Public;
-            type1.Members.Add( constructor1 );
+            type1.Members.Add(constructor1);
 
             //<Snippet3>
             // Declares a method.

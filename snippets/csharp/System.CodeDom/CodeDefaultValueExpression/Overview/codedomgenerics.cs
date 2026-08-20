@@ -1,13 +1,12 @@
 ﻿//<Snippet1>
-using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Collections;
-using System.Collections.Specialized;
-using System.IO;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Globalization;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 namespace System.CodeDom
 {
     class CodeDomGenericsDemo
@@ -54,24 +53,27 @@ namespace System.CodeDom
             t.Close();
             s.Close();
 
-            CompilerParameters opt = new CompilerParameters(new string[]{
-                                      "System.dll",
-                                      "System.Xml.dll",
-                                      "System.Windows.Forms.dll",
-                                      "System.Data.dll",
-                                      "System.Drawing.dll"});
-            opt.GenerateExecutable = false;
-            opt.TreatWarningsAsErrors = true;
-            opt.IncludeDebugInformation = true;
-            opt.GenerateInMemory = true;
-
-            CompilerResults results;
-
             LogMessage("Compiling with " + providerName);
-            results = provider.CompileAssemblyFromFile(opt, sourceFileName);
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(File.ReadAllText(sourceFileName));
+            string trustedPlatformAssemblies =
+                (string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES");
+            MetadataReference[] references = trustedPlatformAssemblies
+                .Split(Path.PathSeparator)
+                .Select(path => MetadataReference.CreateFromFile(path))
+                .ToArray();
+            CSharpCompilation compilation = CSharpCompilation.Create(
+                Path.GetFileNameWithoutExtension(assemblyName),
+                [syntaxTree],
+                references,
+                new CSharpCompilationOptions(
+                    OutputKind.DynamicallyLinkedLibrary,
+                    optimizationLevel: OptimizationLevel.Debug,
+                    generalDiagnosticOption: ReportDiagnostic.Error));
+            using MemoryStream assemblyStream = new MemoryStream();
+            EmitResult result = compilation.Emit(assemblyStream);
 
-            OutputResults(results);
-            if (results.NativeCompilerReturnValue != 0)
+            OutputResults(result);
+            if (!result.Success)
             {
                 LogMessage("");
                 LogMessage("Compilation failed.");
@@ -188,7 +190,7 @@ namespace System.CodeDom
                       new CodeVariableReferenceExpression("dict"),
                             "Count")));
 
-//<Snippet9>
+            //<Snippet9>
             methodMain.Statements.Add(new CodeExpressionStatement(
                  new CodeMethodInvokeExpression(
                       new CodeMethodReferenceExpression(
@@ -199,14 +201,14 @@ namespace System.CodeDom
                                        new CodeTypeReference("System.Int32"),}),
                                            new CodeExpression[0])));
 
-//</Snippet9>
+            //</Snippet9>
             string dictionaryTypeName = typeof(System.Collections.Generic.Dictionary<int,
                 System.Collections.Generic.List<string>>[]).FullName;
 
             CodeTypeReference dictionaryType = new CodeTypeReference(dictionaryTypeName);
             methodMain.Statements.Add(
                   new CodeVariableDeclarationStatement(dictionaryType, "dict2",
-                     new CodeArrayCreateExpression(dictionaryType, new CodeExpression[1] { new CodePrimitiveExpression(null) })));
+                     new CodeArrayCreateExpression(dictionaryType, [new CodePrimitiveExpression(null)])));
 
             methodMain.Statements.Add(ConsoleWriteLineStatement(
                            new CodePropertyReferenceExpression(
@@ -238,13 +240,12 @@ namespace System.CodeDom
             Console.WriteLine(text);
         }
 
-        static void OutputResults(CompilerResults results)
+        static void OutputResults(EmitResult result)
         {
-            LogMessage("NativeCompilerReturnValue=" +
-                results.NativeCompilerReturnValue.ToString());
-            foreach (string s in results.Output)
+            LogMessage("NativeCompilerReturnValue=" + (result.Success ? 0 : 1));
+            foreach (Diagnostic diagnostic in result.Diagnostics)
             {
-                LogMessage(s);
+                LogMessage(diagnostic.ToString());
             }
         }
     }

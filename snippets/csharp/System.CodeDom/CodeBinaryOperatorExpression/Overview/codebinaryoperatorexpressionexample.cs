@@ -1,5 +1,4 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
 
 namespace CodeDomSamples
@@ -19,7 +18,7 @@ namespace CodeDomSamples
                 CodeBinaryOperatorType.Add,
 
                 // Right operand.
-                new CodePrimitiveExpression(2) );
+                new CodePrimitiveExpression(2));
 
             // A C# code generator produces the following source code for the preceeding example code:
 

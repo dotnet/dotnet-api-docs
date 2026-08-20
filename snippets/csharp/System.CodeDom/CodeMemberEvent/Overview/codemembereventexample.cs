@@ -1,5 +1,4 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
 
 namespace CodeDomSamples
@@ -26,12 +25,12 @@ namespace CodeDomSamples
             //</Snippet3>
 
             // Adds the event to the type members collection.
-            type1.Members.Add( event1 );
+            type1.Members.Add(event1);
 
             // Declares an empty type constructor.
             CodeConstructor constructor1 = new CodeConstructor();
             constructor1.Attributes = MemberAttributes.Public;
-            type1.Members.Add( constructor1 );
+            type1.Members.Add(constructor1);
 
             // A C# code generator produces the following source code for the preceeding example code:
 
