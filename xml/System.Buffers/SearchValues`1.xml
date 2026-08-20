@@ -26,9 +26,61 @@
   <Docs>
     <typeparam name="T">The type of the values to search for.</typeparam>
     <summary>Provides an immutable, read-only set of values optimized for efficient searching.
- Instances are created by <see cref="M:System.Buffers.SearchValues.Create(System.ReadOnlySpan{System.Byte})" /> or <see cref="M:System.Buffers.SearchValues.Create(System.ReadOnlySpan{System.Char})" />.</summary>
+ Instances are created by <see cref="M:System.Buffers.SearchValues.Create(System.ReadOnlySpan{System.Byte})" />, <see cref="M:System.Buffers.SearchValues.Create(System.ReadOnlySpan{System.Char})" />, or <see cref="M:System.Buffers.SearchValues.Create(System.ReadOnlySpan{System.String},System.StringComparison)" />.</summary>
     <remarks>
-      <see cref="T:System.Buffers.SearchValues`1" /> instances are optimized for situations where the same set of values is frequently used for searching at run time.</remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+<xref:System.Buffers.SearchValues`1> instances are optimized for situations where the same set of values is frequently used for searching at run time. When you create the instance, the runtime analyzes the values and picks a search algorithm that's specialized for that set, often using vectorized (SIMD) instructions. That analysis is done once, so create the instance once and cache it, typically in a `static readonly` field.
+
+Passing a <xref:System.Buffers.SearchValues`1> to one of the searching methods on <xref:System.MemoryExtensions> is usually much faster than passing the values as a span, especially for larger sets of values. Searching a span for a set of values is the primary purpose of the type, so reach for the following methods first:
+
+| Method | Use it to |
+|--|--|
+| <xref:System.MemoryExtensions.IndexOfAny*> | Find the first position of any of the values. |
+| <xref:System.MemoryExtensions.IndexOfAnyExcept*> | Find the first position of anything that isn't one of the values. |
+| <xref:System.MemoryExtensions.LastIndexOfAny*> / <xref:System.MemoryExtensions.LastIndexOfAnyExcept*> | Search backwards for the same conditions. |
+| <xref:System.MemoryExtensions.ContainsAny*> / <xref:System.MemoryExtensions.ContainsAnyExcept*> | Test whether a span contains any of the values, or anything other than the values. |
+| <xref:System.MemoryExtensions.CountAny*> | Count how many elements in the span are in the set. |
+| <xref:System.MemoryExtensions.ReplaceAny*> / <xref:System.MemoryExtensions.ReplaceAnyExcept*> | Replace the elements that are (or aren't) in the set. |
+| <xref:System.MemoryExtensions.SplitAny*> | Split a span on any of the values. |
+
+## Common use cases
+
+Validation is one. Instead of testing each element in a loop, describe the set of allowed values once and use <xref:System.MemoryExtensions.ContainsAnyExcept*> to find out whether the input contains anything else:
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetValidation":::
+
+Escaping and encoding are another. Use <xref:System.MemoryExtensions.IndexOfAny*> to skip ahead to the next element that needs special treatment, so that everything in between is processed in bulk:
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetEscaping":::
+
+The same applies to UTF-8 data. Create a <xref:System.Buffers.SearchValues`1> of <xref:System.Byte> from a UTF-8 literal to search the bytes without transcoding them first. The benefit grows with the number of values: the <xref:System.MemoryExtensions> overloads that take individual values only go up to three, and passing a longer span of values is slower than using a cached <xref:System.Buffers.SearchValues`1>:
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetBytes":::
+
+Starting in .NET 9, you can also search for a set of substrings by creating a <xref:System.Buffers.SearchValues`1> of <xref:System.String> with <xref:System.Buffers.SearchValues.Create(System.ReadOnlySpan{System.String},System.StringComparison)>. Such an instance can only be used with the <xref:System.MemoryExtensions.IndexOfAny(System.ReadOnlySpan{System.Char},System.Buffers.SearchValues{System.String})> and <xref:System.MemoryExtensions.ContainsAny(System.ReadOnlySpan{System.Char},System.Buffers.SearchValues{System.String})> overloads that accept a `SearchValues<string>`:
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetStrings":::
+
+You can also create such an instance from a single string. Doing so is a faster alternative to <xref:System.MemoryExtensions.IndexOf(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char},System.StringComparison)>, because the value is analyzed when the instance is created instead of on every search:
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetSingleString":::
+
+## Thread safety
+
+<xref:System.Buffers.SearchValues`1> is immutable and all of its members are thread-safe, so a single cached instance can be shared across the whole app.
+
+]]></format>
+    </remarks>
+    <altmember cref="M:System.MemoryExtensions.IndexOfAny``1(System.ReadOnlySpan{``0},System.Buffers.SearchValues{``0})" />
+    <altmember cref="M:System.MemoryExtensions.IndexOfAnyExcept``1(System.ReadOnlySpan{``0},System.Buffers.SearchValues{``0})" />
+    <altmember cref="M:System.MemoryExtensions.LastIndexOfAny``1(System.ReadOnlySpan{``0},System.Buffers.SearchValues{``0})" />
+    <altmember cref="M:System.MemoryExtensions.ContainsAny``1(System.ReadOnlySpan{``0},System.Buffers.SearchValues{``0})" />
+    <altmember cref="M:System.MemoryExtensions.ContainsAnyExcept``1(System.ReadOnlySpan{``0},System.Buffers.SearchValues{``0})" />
+    <altmember cref="M:System.MemoryExtensions.CountAny``1(System.ReadOnlySpan{``0},System.Buffers.SearchValues{``0})" />
+    <altmember cref="M:System.MemoryExtensions.SplitAny``1(System.ReadOnlySpan{``0},System.Buffers.SearchValues{``0})" />
   </Docs>
   <Members>
     <Member MemberName="Contains">
@@ -57,7 +109,29 @@
         <summary>Searches for the specified value.</summary>
         <returns>
           <see langword="true" /> if <paramref name="value" /> was found; otherwise, <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Testing individual values isn't the primary function of <xref:System.Buffers.SearchValues`1>. The type is designed to search a whole span at once, so prefer the <xref:System.MemoryExtensions> methods that accept a <xref:System.Buffers.SearchValues`1>, such as <xref:System.MemoryExtensions.IndexOfAny*>, <xref:System.MemoryExtensions.IndexOfAnyExcept*>, <xref:System.MemoryExtensions.ContainsAny*>, or <xref:System.MemoryExtensions.ContainsAnyExcept*>. Those methods can process many elements at a time, whereas calling `Contains` in a loop can't.
+
+Use this method when you only have a single value at hand and there's no span to search, for example:
+
+- You're inspecting or producing elements one at a time as part of a larger operation, such as decoding, transcoding, or transforming each element.
+- You've already located an element with one of the searching methods and want to classify the element that follows it.
+- You want to reuse an existing set of values as a general-purpose lookup table for a value you got from somewhere else.
+
+The following example turns `\uXXXX` escape sequences back into the characters they represent, but leaves the ones that must stay escaped alone. Because each decoded character is computed on the fly, there's no span to search and `Contains` is the appropriate choice:
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetContains":::
+
+For a <xref:System.Buffers.SearchValues`1> of <xref:System.String>, this method tests whether the whole `value` is one of the strings in the set, using the <xref:System.StringComparison> that was specified when the instance was created. It doesn't perform a substring search. Such a lookup is slower than <xref:System.Collections.Frozen.FrozenSet`1.Contains*?displayProperty=nameWithType>, so only create a <xref:System.Buffers.SearchValues`1> of <xref:System.String> when you need to search a span for multiple substrings.
+
+]]></format>
+        </remarks>
+        <altmember cref="M:System.MemoryExtensions.ContainsAny``1(System.ReadOnlySpan{``0},System.Buffers.SearchValues{``0})" />
+        <altmember cref="M:System.MemoryExtensions.IndexOfAny``1(System.ReadOnlySpan{``0},System.Buffers.SearchValues{``0})" />
       </Docs>
     </Member>
   </Members>
