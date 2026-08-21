@@ -1,81 +1,89 @@
 ﻿// <Snippet1>
- using System;
- using System.Collections;
- public class SamplesBitArray  {
+using System;
+using System.Collections;
+public class SamplesBitArray
+{
 
-    public static void Main()  {
+    public static void Main()
+    {
 
-       // Creates and initializes two BitArrays of the same size.
-       BitArray myBA1 = new BitArray( 4 );
-       BitArray myBA2 = new BitArray( 4 );
-       myBA1[0] = myBA1[1] = false;
-       myBA1[2] = myBA1[3] = true;
-       myBA2[0] = myBA2[2] = false;
-       myBA2[1] = myBA2[3] = true;
+        // Creates and initializes two BitArrays of the same size.
+        BitArray myBA1 = new(4);
+        BitArray myBA2 = new(4);
+        myBA1[0] = myBA1[1] = false;
+        myBA1[2] = myBA1[3] = true;
+        myBA2[0] = myBA2[2] = false;
+        myBA2[1] = myBA2[3] = true;
 
-       // Performs a bitwise OR operation between BitArray instances of the same size.
-       Console.WriteLine( "Initial values" );
-       Console.Write( "myBA1:" );
-       PrintValues( myBA1, 8 );
-       Console.Write( "myBA2:" );
-       PrintValues( myBA2, 8 );
-       Console.WriteLine();
+        // Performs a bitwise OR operation between BitArray instances of the same size.
+        Console.WriteLine("Initial values");
+        Console.Write("myBA1:");
+        PrintValues(myBA1, 8);
+        Console.Write("myBA2:");
+        PrintValues(myBA2, 8);
+        Console.WriteLine();
 
-       Console.WriteLine( "Result" );
-       Console.Write( "OR:" );
-       PrintValues( myBA1.Or( myBA2 ), 8 );
-       Console.WriteLine();
+        Console.WriteLine("Result");
+        Console.Write("OR:");
+        PrintValues(myBA1.Or(myBA2), 8);
+        Console.WriteLine();
 
-       Console.WriteLine( "After OR" );
-       Console.Write( "myBA1:" );
-       PrintValues( myBA1, 8 );
-       Console.Write( "myBA2:" );
-       PrintValues( myBA2, 8 );
-       Console.WriteLine();
+        Console.WriteLine("After OR");
+        Console.Write("myBA1:");
+        PrintValues(myBA1, 8);
+        Console.Write("myBA2:");
+        PrintValues(myBA2, 8);
+        Console.WriteLine();
 
-       // Performing OR between BitArray instances of different sizes returns an exception.
-       try  {
-          BitArray myBA3 = new BitArray( 8 );
-          myBA3[0] = myBA3[1] = myBA3[2] = myBA3[3] = false;
-          myBA3[4] = myBA3[5] = myBA3[6] = myBA3[7] = true;
-          myBA1.Or( myBA3 );
-       } catch ( Exception myException )  {
-          Console.WriteLine("Exception: " + myException.ToString());
-       }
+        // Performing OR between BitArray instances of different sizes returns an exception.
+        try
+        {
+            BitArray myBA3 = new(8);
+            myBA3[0] = myBA3[1] = myBA3[2] = myBA3[3] = false;
+            myBA3[4] = myBA3[5] = myBA3[6] = myBA3[7] = true;
+            myBA1.Or(myBA3);
+        }
+        catch (Exception myException)
+        {
+            Console.WriteLine($"Exception: {myException}");
+        }
     }
 
-    public static void PrintValues( IEnumerable myList, int myWidth )  {
-       int i = myWidth;
-       foreach ( Object obj in myList ) {
-          if ( i <= 0 )  {
-             i = myWidth;
-             Console.WriteLine();
-          }
-          i--;
-          Console.Write( "{0,8}", obj );
-       }
-       Console.WriteLine();
+    public static void PrintValues(IEnumerable myList, int myWidth)
+    {
+        int i = myWidth;
+        foreach (object obj in myList)
+        {
+            if (i <= 0)
+            {
+                i = myWidth;
+                Console.WriteLine();
+            }
+            i--;
+            Console.Write($"{obj,8}");
+        }
+        Console.WriteLine();
     }
- }
+}
 
 
- /*
- This code produces the following output.
+/*
+This code produces the following output.
 
- Initial values
- myBA1:   False   False    True    True
- myBA2:   False    True   False    True
+Initial values
+myBA1:   False   False    True    True
+myBA2:   False    True   False    True
 
- Result
- OR:   False    True    True    True
+Result
+OR:   False    True    True    True
 
- After OR
- myBA1:   False    True    True    True
- myBA2:   False    True   False    True
+After OR
+myBA1:   False    True    True    True
+myBA2:   False    True   False    True
 
- Exception: System.ArgumentException: Array lengths must be the same.
-    at System.Collections.BitArray.Or(BitArray value)
-    at SamplesBitArray.Main()
- */
+Exception: System.ArgumentException: Array lengths must be the same.
+   at System.Collections.BitArray.Or(BitArray value)
+   at SamplesBitArray.Main()
+*/
 
 // </Snippet1>

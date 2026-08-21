@@ -2,6 +2,19 @@
 using System;
 using System.Collections;
 
+Person[] peopleArray =
+[
+    new("John", "Smith"),
+    new("Jim", "Johnson"),
+    new("Sue", "Rabon"),
+];
+
+People peopleList = new(peopleArray);
+foreach (Person p in peopleList)
+{
+    Console.WriteLine($"{p.firstName} {p.lastName}");
+}
+
 // Simple business object.
 public class Person
 {
@@ -31,16 +44,10 @@ public class People : IEnumerable
         }
     }
 
-// Implementation for the GetEnumerator method.
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-       return (IEnumerator) GetEnumerator();
-    }
+    // Implementation for the GetEnumerator method.
+    IEnumerator IEnumerable.GetEnumerator() => (IEnumerator)GetEnumerator();
 
-    public PeopleEnum GetEnumerator()
-    {
-        return new PeopleEnum(_people);
-    }
+    public PeopleEnum GetEnumerator() => new PeopleEnum(_people);
 }
 
 // <Snippet2>
@@ -53,10 +60,7 @@ public class PeopleEnum : IEnumerator
     // until the first MoveNext() call.
     int position = -1;
 
-    public PeopleEnum(Person[] list)
-    {
-        _people = list;
-    }
+    public PeopleEnum(Person[] list) => _people = list;
 
     public bool MoveNext()
     {
@@ -64,18 +68,9 @@ public class PeopleEnum : IEnumerator
         return (position < _people.Length);
     }
 
-    public void Reset()
-    {
-        position = -1;
-    }
+    public void Reset() => position = -1;
 
-    object IEnumerator.Current
-    {
-        get
-        {
-            return Current;
-        }
-    }
+    object IEnumerator.Current => Current;
 
     public Person Current
     {
@@ -93,23 +88,6 @@ public class PeopleEnum : IEnumerator
     }
 }
 // </Snippet2>
-
-class App
-{
-    static void Main()
-    {
-        Person[] peopleArray = new Person[3]
-        {
-            new Person("John", "Smith"),
-            new Person("Jim", "Johnson"),
-            new Person("Sue", "Rabon"),
-        };
-
-        People peopleList = new People(peopleArray);
-        foreach (Person p in peopleList)
-            Console.WriteLine(p.firstName + " " + p.lastName);
-    }
-}
 
 /* This code produces output similar to the following:
  *

@@ -4,18 +4,19 @@ using System.Collections;
 
 class Example
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a new hash table.
         //
-        Hashtable openWith = new Hashtable();
-
-        // Add some elements to the hash table. There are no
-        // duplicate keys, but some of the values are duplicates.
-        openWith.Add("txt", "notepad.exe");
-        openWith.Add("bmp", "paint.exe");
-        openWith.Add("dib", "paint.exe");
-        openWith.Add("rtf", "wordpad.exe");
+        Hashtable openWith = new()
+        {
+            // Add some elements to the hash table. There are no
+            // duplicate keys, but some of the values are duplicates.
+            { "txt", "notepad.exe" },
+            { "bmp", "paint.exe" },
+            { "dib", "paint.exe" },
+            { "rtf", "wordpad.exe" }
+        };
 
         // The Add method throws an exception if the new key is
         // already in the hash table.
@@ -30,12 +31,12 @@ class Example
 
         // The Item property is the default property, so you
         // can omit its name when accessing elements.
-        Console.WriteLine("For key = \"rtf\", value = {0}.", openWith["rtf"]);
+        Console.WriteLine($"For key = \"rtf\", value = {openWith["rtf"]}.");
 
         // The default Item property can be used to change the value
         // associated with a key.
         openWith["rtf"] = "winword.exe";
-        Console.WriteLine("For key = \"rtf\", value = {0}.", openWith["rtf"]);
+        Console.WriteLine($"For key = \"rtf\", value = {openWith["rtf"]}.");
 
         // If a key does not exist, setting the default Item property
         // for that key adds a new key/value pair.
@@ -46,15 +47,15 @@ class Example
         if (!openWith.ContainsKey("ht"))
         {
             openWith.Add("ht", "hypertrm.exe");
-            Console.WriteLine("Value added for key = \"ht\": {0}", openWith["ht"]);
+            Console.WriteLine($"Value added for key = \"ht\": {openWith["ht"]}");
         }
 
         // When you use foreach to enumerate hash table elements,
         // the elements are retrieved as KeyValuePair objects.
         Console.WriteLine();
-        foreach( DictionaryEntry de in openWith )
+        foreach (DictionaryEntry de in openWith)
         {
-            Console.WriteLine("Key = {0}, Value = {1}", de.Key, de.Value);
+            Console.WriteLine($"Key = {de.Key}, Value = {de.Value}");
         }
 
         // To get the values alone, use the Values property.
@@ -63,9 +64,9 @@ class Example
         // The elements of the ValueCollection are strongly typed
         // with the type that was specified for hash table values.
         Console.WriteLine();
-        foreach( string s in valueColl )
+        foreach (string s in valueColl)
         {
-            Console.WriteLine("Value = {0}", s);
+            Console.WriteLine($"Value = {s}");
         }
 
         // To get the keys alone, use the Keys property.
@@ -74,9 +75,9 @@ class Example
         // The elements of the KeyCollection are strongly typed
         // with the type that was specified for hash table keys.
         Console.WriteLine();
-        foreach( string s in keyColl )
+        foreach (string s in keyColl)
         {
-            Console.WriteLine("Key = {0}", s);
+            Console.WriteLine($"Key = {s}");
         }
 
         // Use the Remove method to remove a key/value pair.

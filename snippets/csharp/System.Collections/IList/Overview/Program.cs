@@ -2,80 +2,67 @@
 using System;
 using System.Collections;
 
-class Program
-{
-    static void Main()
-    {
-        var test = new SimpleList();
+SimpleList test = [];
 
-        // Populate the List.
-        Console.WriteLine("Populate the List");
-        test.Add("one");
-        test.Add("two");
-        test.Add("three");
-        test.Add("four");
-        test.Add("five");
-        test.Add("six");
-        test.Add("seven");
-        test.Add("eight");
-        test.PrintContents();
-        Console.WriteLine();
+// Populate the List.
+Console.WriteLine("Populate the List");
+test.Add("one");
+test.Add("two");
+test.Add("three");
+test.Add("four");
+test.Add("five");
+test.Add("six");
+test.Add("seven");
+test.Add("eight");
+test.PrintContents();
+Console.WriteLine();
 
-        // Remove elements from the list.
-        Console.WriteLine("Remove elements from the list");
-        test.Remove("six");
-        test.Remove("eight");
-        test.PrintContents();
-        Console.WriteLine();
+// Remove elements from the list.
+Console.WriteLine("Remove elements from the list");
+test.Remove("six");
+test.Remove("eight");
+test.PrintContents();
+Console.WriteLine();
 
-        // Add an element to the end of the list.
-        Console.WriteLine("Add an element to the end of the list");
-        test.Add("nine");
-        test.PrintContents();
-        Console.WriteLine();
+// Add an element to the end of the list.
+Console.WriteLine("Add an element to the end of the list");
+test.Add("nine");
+test.PrintContents();
+Console.WriteLine();
 
-        // Insert an element into the middle of the list.
-        Console.WriteLine("Insert an element into the middle of the list");
-        test.Insert(4, "number");
-        test.PrintContents();
-        Console.WriteLine();
+// Insert an element into the middle of the list.
+Console.WriteLine("Insert an element into the middle of the list");
+test.Insert(4, "number");
+test.PrintContents();
+Console.WriteLine();
 
-        // Check for specific elements in the list.
-        Console.WriteLine("Check for specific elements in the list");
-        Console.WriteLine($"List contains \"three\": {test.Contains("three")}");
-        Console.WriteLine($"List contains \"ten\": {test.Contains("ten")}");
-    }
-}
+// Check for specific elements in the list.
+Console.WriteLine("Check for specific elements in the list");
+Console.WriteLine($"List contains \"three\": {test.Contains("three")}");
+Console.WriteLine($"List contains \"ten\": {test.Contains("ten")}");
 
 //<snippet02>
 class SimpleList : IList
 {
     private object[] _contents = new object[8];
-    private int _count;
 
-    public SimpleList()
-    {
-        _count = 0;
-    }
+    public SimpleList() => Count = 0;
 
-    // IList Members
+    // IList Members.
     public int Add(object value)
     {
-        if (_count < _contents.Length)
+        if (Count < _contents.Length)
         {
-            _contents[_count] = value;
-            _count++;
+            _contents[Count] = value;
+            Count++;
 
-            return (_count - 1);
+            return (Count - 1);
         }
 
         return -1;
     }
 
-    public void Clear()
-    {
-        _count = 0;
-    }
+    public void Clear() => Count = 0;
 
     public bool Contains(object value)
     {
@@ -103,9 +90,9 @@ class SimpleList : IList
 
     public void Insert(int index, object value)
     {
-        if ((_count + 1 <= _contents.Length) && (index <= Count) && (index >= 0))
+        if ((Count + 1 <= _contents.Length) && (index <= Count) && (index >= 0))
         {
-            _count++;
+            Count++;
 
             for (int i = Count - 1; i > index; i--)
             {
@@ -115,26 +102,11 @@ class SimpleList : IList
         }
     }
 
-    public bool IsFixedSize
-    {
-        get
-        {
-            return true;
-        }
-    }
+    public bool IsFixedSize => true;
 
-    public bool IsReadOnly
-    {
-        get
-        {
-            return false;
-        }
-    }
+    public bool IsReadOnly => false;
 
-    public void Remove(object value)
-    {
-        RemoveAt(IndexOf(value));
-    }
+    public void Remove(object value) => RemoveAt(IndexOf(value));
 
     public void RemoveAt(int index)
     {
@@ -144,20 +116,13 @@ class SimpleList : IList
             {
                 _contents[i] = _contents[i + 1];
             }
-            _count--;
+            Count--;
         }
     }
 
     public object this[int index]
     {
-        get
-        {
-            return _contents[index];
-        }
-        set
-        {
-            _contents[index] = value;
-        }
+        get => _contents[index]; set => _contents[index] = value;
     }
 
     // ICollection members.
@@ -170,44 +135,24 @@ class SimpleList : IList
         }
     }
 
-    public int Count
-    {
-        get
-        {
-            return _count;
-        }
-    }
+    public int Count { get; private set; }
 
-    public bool IsSynchronized
-    {
-        get
-        {
-            return false;
-        }
-    }
+    public bool IsSynchronized => false;
 
     // Return the current instance since the underlying store is not
     // publicly available.
-    public object SyncRoot
-    {
-        get
-        {
-            return this;
-        }
-    }
+    public object SyncRoot => this;
 
-    // IEnumerable Members
+    // IEnumerable Members.
 
-    public IEnumerator GetEnumerator()
-    {
+    public IEnumerator GetEnumerator() =>
         // Refer to the IEnumerator documentation for an example of
         // implementing an enumerator.
         throw new NotImplementedException("The method or operation is not implemented.");
-    }
 
     public void PrintContents()
     {
-        Console.WriteLine($"List has a capacity of {_contents.Length} and currently has {_count} elements.");
+        Console.WriteLine($"List has a capacity of {_contents.Length} and currently has {Count} elements.");
         Console.Write("List contents:");
         for (int i = 0; i < Count; i++)
         {

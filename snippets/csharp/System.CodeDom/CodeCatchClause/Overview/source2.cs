@@ -1,12 +1,12 @@
-//<snippet3>
+﻿//<snippet3>
 using System;
 
 class ArgumentOutOfRangeExample
 {
     public static void Main()
     {
-        int[] array1 = {0, 0};
-        int[] array2 = {0, 0};
+        int[] array1 = [0, 0];
+        int[] array2 = [0, 0];
 
         try
         {
@@ -14,7 +14,7 @@ class ArgumentOutOfRangeExample
         }
         catch (ArgumentOutOfRangeException e)
         {
-            Console.WriteLine("Error: {0}", e);
+            Console.WriteLine($"Error: {e}");
             throw;
         }
         finally

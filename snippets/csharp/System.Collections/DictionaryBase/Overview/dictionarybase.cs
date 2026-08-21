@@ -1,208 +1,236 @@
-﻿// The following code example implements the DictionaryBase class and uses that implementation to create a dictionary of String keys and values that have a Length of 5 or less.
+﻿// The following code example implements the DictionaryBase class and uses that implementation to create a dictionary of string keys and values that have a Length of 5 or less.
 
 // <Snippet1>
 using System;
 using System.Collections;
 
-public class ShortStringDictionary : DictionaryBase  {
+public class ShortStringDictionary : DictionaryBase
+{
 
-   public String this[ String key ]  {
-      get  {
-         return( (String) Dictionary[key] );
-      }
-      set  {
-         Dictionary[key] = value;
-      }
-   }
+    public string this[string key]
+    {
+        get => ((string)Dictionary[key]); set => Dictionary[key] = value;
+    }
 
-   public ICollection Keys  {
-      get  {
-         return( Dictionary.Keys );
-      }
-   }
+    public ICollection Keys => (Dictionary.Keys);
 
-   public ICollection Values  {
-      get  {
-         return( Dictionary.Values );
-      }
-   }
+    public ICollection Values => (Dictionary.Values);
 
-   public void Add( String key, String value )  {
-      Dictionary.Add( key, value );
-   }
+    public void Add(string key, string value) => Dictionary.Add(key, value);
 
-   public bool Contains( String key )  {
-      return( Dictionary.Contains( key ) );
-   }
+    public bool Contains(string key) => (Dictionary.Contains(key));
 
-   public void Remove( String key )  {
-      Dictionary.Remove( key );
-   }
+    public void Remove(string key) => Dictionary.Remove(key);
 
-   protected override void OnInsert( Object key, Object value )  {
-      if ( key.GetType() != typeof(System.String) )
+    protected override void OnInsert(object key, object value)
+    {
+        if (key.GetType() != typeof(string))
         {
-            throw new ArgumentException( "key must be of type String.", "key" );
+            throw new ArgumentException("key must be of type string.", "key");
         }
-        else  {
-         String strKey = (String) key;
-         if ( strKey.Length > 5 )
-            throw new ArgumentException( "key must be no more than 5 characters in length.", "key" );
-      }
-
-      if ( value.GetType() != typeof(System.String) )
+        else
         {
-            throw new ArgumentException( "value must be of type String.", "value" );
+            string strKey = (string)key;
+            if (strKey.Length > 5)
+            {
+                throw new ArgumentException("key must be no more than 5 characters in length.", "key");
+            }
         }
-        else  {
-         String strValue = (String) value;
-         if ( strValue.Length > 5 )
-            throw new ArgumentException( "value must be no more than 5 characters in length.", "value" );
-      }
-   }
 
-   protected override void OnRemove( Object key, Object value )  {
-      if ( key.GetType() != typeof(System.String) )
+        if (value.GetType() != typeof(string))
         {
-            throw new ArgumentException( "key must be of type String.", "key" );
+            throw new ArgumentException("value must be of type string.", "value");
         }
-        else  {
-         String strKey = (String) key;
-         if ( strKey.Length > 5 )
-            throw new ArgumentException( "key must be no more than 5 characters in length.", "key" );
-      }
-   }
+        else
+        {
+            string strValue = (string)value;
+            if (strValue.Length > 5)
+            {
+                throw new ArgumentException("value must be no more than 5 characters in length.", "value");
+            }
+        }
+    }
 
-   protected override void OnSet( Object key, Object oldValue, Object newValue )  {
-      if ( key.GetType() != typeof(System.String) )
+    protected override void OnRemove(object key, object value)
+    {
+        if (key.GetType() != typeof(string))
         {
-            throw new ArgumentException( "key must be of type String.", "key" );
+            throw new ArgumentException("key must be of type string.", "key");
         }
-        else  {
-         String strKey = (String) key;
-         if ( strKey.Length > 5 )
-            throw new ArgumentException( "key must be no more than 5 characters in length.", "key" );
-      }
+        else
+        {
+            string strKey = (string)key;
+            if (strKey.Length > 5)
+            {
+                throw new ArgumentException("key must be no more than 5 characters in length.", "key");
+            }
+        }
+    }
 
-      if ( newValue.GetType() != typeof(System.String) )
+    protected override void OnSet(object key, object oldValue, object newValue)
+    {
+        if (key.GetType() != typeof(string))
         {
-            throw new ArgumentException( "newValue must be of type String.", "newValue" );
+            throw new ArgumentException("key must be of type string.", "key");
         }
-        else  {
-         String strValue = (String) newValue;
-         if ( strValue.Length > 5 )
-            throw new ArgumentException( "newValue must be no more than 5 characters in length.", "newValue" );
-      }
-   }
+        else
+        {
+            string strKey = (string)key;
+            if (strKey.Length > 5)
+            {
+                throw new ArgumentException("key must be no more than 5 characters in length.", "key");
+            }
+        }
 
-   protected override void OnValidate( Object key, Object value )  {
-      if ( key.GetType() != typeof(System.String) )
+        if (newValue.GetType() != typeof(string))
         {
-            throw new ArgumentException( "key must be of type String.", "key" );
+            throw new ArgumentException("newValue must be of type string.", "newValue");
         }
-        else  {
-         String strKey = (String) key;
-         if ( strKey.Length > 5 )
-            throw new ArgumentException( "key must be no more than 5 characters in length.", "key" );
-      }
+        else
+        {
+            string strValue = (string)newValue;
+            if (strValue.Length > 5)
+            {
+                throw new ArgumentException("newValue must be no more than 5 characters in length.", "newValue");
+            }
+        }
+    }
 
-      if ( value.GetType() != typeof(System.String) )
+    protected override void OnValidate(object key, object value)
+    {
+        if (key.GetType() != typeof(string))
         {
-            throw new ArgumentException( "value must be of type String.", "value" );
+            throw new ArgumentException("key must be of type string.", "key");
         }
-        else  {
-         String strValue = (String) value;
-         if ( strValue.Length > 5 )
-            throw new ArgumentException( "value must be no more than 5 characters in length.", "value" );
-      }
-   }
+        else
+        {
+            string strKey = (string)key;
+            if (strKey.Length > 5)
+            {
+                throw new ArgumentException("key must be no more than 5 characters in length.", "key");
+            }
+        }
+
+        if (value.GetType() != typeof(string))
+        {
+            throw new ArgumentException("value must be of type string.", "value");
+        }
+        else
+        {
+            string strValue = (string)value;
+            if (strValue.Length > 5)
+            {
+                throw new ArgumentException("value must be no more than 5 characters in length.", "value");
+            }
+        }
+    }
 }
 
-public class SamplesDictionaryBase  {
+public class SamplesDictionaryBase
+{
 
-   public static void Main()  {
+    public static void Run()
+    {
 
-      // Creates and initializes a new DictionaryBase.
-      ShortStringDictionary mySSC = new ShortStringDictionary();
+        // Creates and initializes a new DictionaryBase.
+        ShortStringDictionary mySSC = new()
+        {
+            // Adds elements to the collection.
+            { "One", "a" },
+            { "Two", "ab" },
+            { "Three", "abc" },
+            { "Four", "abcd" },
+            { "Five", "abcde" }
+        };
 
-      // Adds elements to the collection.
-      mySSC.Add( "One", "a" );
-      mySSC.Add( "Two", "ab" );
-      mySSC.Add( "Three", "abc" );
-      mySSC.Add( "Four", "abcd" );
-      mySSC.Add( "Five", "abcde" );
+        // Display the contents of the collection using foreach. This is the preferred method.
+        Console.WriteLine("Contents of the collection (using foreach):");
+        PrintKeysAndValues1(mySSC);
 
-      // Display the contents of the collection using foreach. This is the preferred method.
-      Console.WriteLine( "Contents of the collection (using foreach):" );
-      PrintKeysAndValues1( mySSC );
+        // Display the contents of the collection using the enumerator.
+        Console.WriteLine("Contents of the collection (using enumerator):");
+        PrintKeysAndValues2(mySSC);
 
-      // Display the contents of the collection using the enumerator.
-      Console.WriteLine( "Contents of the collection (using enumerator):" );
-      PrintKeysAndValues2( mySSC );
+        // Display the contents of the collection using the Keys property and the Item property.
+        Console.WriteLine("Initial contents of the collection (using Keys and Item):");
+        PrintKeysAndValues3(mySSC);
 
-      // Display the contents of the collection using the Keys property and the Item property.
-      Console.WriteLine( "Initial contents of the collection (using Keys and Item):" );
-      PrintKeysAndValues3( mySSC );
+        // Tries to add a value that is too long.
+        try
+        {
+            mySSC.Add("Ten", "abcdefghij");
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+        }
 
-      // Tries to add a value that is too long.
-      try  {
-         mySSC.Add( "Ten", "abcdefghij" );
-      }
-      catch ( ArgumentException e )  {
-         Console.WriteLine( e.ToString() );
-      }
+        // Tries to add a key that is too long.
+        try
+        {
+            mySSC.Add("Eleven", "ijk");
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+        }
 
-      // Tries to add a key that is too long.
-      try  {
-         mySSC.Add( "Eleven", "ijk" );
-      }
-      catch ( ArgumentException e )  {
-         Console.WriteLine( e.ToString() );
-      }
+        Console.WriteLine();
 
-      Console.WriteLine();
+        // Searches the collection with Contains.
+        Console.WriteLine($"Contains \"Three\": {mySSC.Contains("Three")}");
+        Console.WriteLine($"Contains \"Twelve\": {mySSC.Contains("Twelve")}");
+        Console.WriteLine();
 
-      // Searches the collection with Contains.
-      Console.WriteLine( "Contains \"Three\": {0}", mySSC.Contains( "Three" ) );
-      Console.WriteLine( "Contains \"Twelve\": {0}", mySSC.Contains( "Twelve" ) );
-      Console.WriteLine();
+        // Removes an element from the collection.
+        mySSC.Remove("Two");
 
-      // Removes an element from the collection.
-      mySSC.Remove( "Two" );
+        // Displays the contents of the collection.
+        Console.WriteLine("After removing \"Two\":");
+        PrintKeysAndValues1(mySSC);
+    }
 
-      // Displays the contents of the collection.
-      Console.WriteLine( "After removing \"Two\":" );
-      PrintKeysAndValues1( mySSC );
-   }
+    // Uses the foreach statement which hides the complexity of the enumerator.
+    // NOTE: The foreach statement is the preferred way of enumerating the contents of a collection.
+    public static void PrintKeysAndValues1(ShortStringDictionary myCol)
+    {
+        foreach (DictionaryEntry myDE in myCol)
+        {
+            Console.WriteLine($"   {myDE.Key,-5} : {myDE.Value}");
+        }
 
-   // Uses the foreach statement which hides the complexity of the enumerator.
-   // NOTE: The foreach statement is the preferred way of enumerating the contents of a collection.
-   public static void PrintKeysAndValues1( ShortStringDictionary myCol )  {
-      foreach ( DictionaryEntry myDE in myCol )
-         Console.WriteLine( "   {0,-5} : {1}", myDE.Key, myDE.Value );
-      Console.WriteLine();
-   }
+        Console.WriteLine();
+    }
 
-   // Uses the enumerator.
-   // NOTE: The foreach statement is the preferred way of enumerating the contents of a collection.
-   public static void PrintKeysAndValues2( ShortStringDictionary myCol )  {
-      DictionaryEntry myDE;
-      System.Collections.IEnumerator myEnumerator = myCol.GetEnumerator();
-      while ( myEnumerator.MoveNext() )
-         if ( myEnumerator.Current != null )  {
-            myDE = (DictionaryEntry) myEnumerator.Current;
-            Console.WriteLine( "   {0,-5} : {1}", myDE.Key, myDE.Value );
-         }
-      Console.WriteLine();
-   }
+    // Uses the enumerator.
+    // NOTE: The foreach statement is the preferred way of enumerating the contents of a collection.
+    public static void PrintKeysAndValues2(ShortStringDictionary myCol)
+    {
+        DictionaryEntry myDE;
+        System.Collections.IEnumerator myEnumerator = myCol.GetEnumerator();
+        while (myEnumerator.MoveNext())
+        {
+            if (myEnumerator.Current != null)
+            {
+                myDE = (DictionaryEntry)myEnumerator.Current;
+                Console.WriteLine($"   {myDE.Key,-5} : {myDE.Value}");
+            }
+        }
 
-   // Uses the Keys property and the Item property.
-   public static void PrintKeysAndValues3( ShortStringDictionary myCol )  {
-      ICollection myKeys = myCol.Keys;
-      foreach ( String k in myKeys )
-         Console.WriteLine( "   {0,-5} : {1}", k, myCol[k] );
-      Console.WriteLine();
-   }
+        Console.WriteLine();
+    }
+
+    // Uses the Keys property and the Item property.
+    public static void PrintKeysAndValues3(ShortStringDictionary myCol)
+    {
+        ICollection myKeys = myCol.Keys;
+        foreach (string k in myKeys)
+        {
+            Console.WriteLine($"   {k,-5} : {myCol[k]}");
+        }
+
+        Console.WriteLine();
+    }
 }
 
 
@@ -232,13 +260,13 @@ Initial contents of the collection (using Keys and Item):
 
 System.ArgumentException: value must be no more than 5 characters in length.
 Parameter name: value
-   at ShortStringDictionary.OnValidate(Object key, Object value)
-   at System.Collections.DictionaryBase.System.Collections.IDictionary.Add(Object key, Object value)
+   at ShortStringDictionary.OnValidate(object key, object value)
+   at System.Collections.DictionaryBase.System.Collections.IDictionary.Add(object key, object value)
    at SamplesDictionaryBase.Main()
 System.ArgumentException: key must be no more than 5 characters in length.
 Parameter name: key
-   at ShortStringDictionary.OnValidate(Object key, Object value)
-   at System.Collections.DictionaryBase.System.Collections.IDictionary.Add(Object key, Object value)
+   at ShortStringDictionary.OnValidate(object key, object value)
+   at System.Collections.DictionaryBase.System.Collections.IDictionary.Add(object key, object value)
    at SamplesDictionaryBase.Main()
 
 Contains "Three": True

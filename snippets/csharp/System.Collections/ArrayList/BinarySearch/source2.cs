@@ -13,28 +13,29 @@ public class SimpleStringComparer : IComparer
 
 public class MyArrayList : ArrayList
 {
-    public static void Main()
+    public static void Run()
     {
         // Creates and initializes a new ArrayList.
-        MyArrayList coloredAnimals = new MyArrayList();
-
-        coloredAnimals.Add("White Tiger");
-        coloredAnimals.Add("Pink Bunny");
-        coloredAnimals.Add("Red Dragon");
-        coloredAnimals.Add("Green Frog");
-        coloredAnimals.Add("Blue Whale");
-        coloredAnimals.Add("Black Cat");
-        coloredAnimals.Add("Yellow Lion");
+        MyArrayList coloredAnimals =
+        [
+            "White Tiger",
+            "Pink Bunny",
+            "Red Dragon",
+            "Green Frog",
+            "Blue Whale",
+            "Black Cat",
+            "Yellow Lion",
+        ];
 
         // BinarySearch requires a sorted ArrayList.
         coloredAnimals.Sort();
 
-        // Compare results of an iterative search with a binary search
+        // Compare results of an iterative search with a binary search.
         int index = coloredAnimals.IterativeSearch("White Tiger");
-        Console.WriteLine("Iterative search, item found at index: {0}", index);
+        Console.WriteLine($"Iterative search, item found at index: {index}");
 
         index = coloredAnimals.BinarySearch("White Tiger", new SimpleStringComparer());
-        Console.WriteLine("Binary search, item found at index:    {0}", index);
+        Console.WriteLine($"Binary search, item found at index:    {index}");
     }
 
     public int IterativeSearch(object finditem)

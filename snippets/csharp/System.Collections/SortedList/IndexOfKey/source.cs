@@ -1,51 +1,57 @@
-// <Snippet1>
- using System;
- using System.Collections;
- public class SamplesSortedList  {
+﻿// <Snippet1>
+using System;
+using System.Collections;
+public class SamplesSortedList
+{
 
-    public static void Main()  {
+    public static void Main()
+    {
 
-       // Creates and initializes a new SortedList.
-       SortedList mySL = new SortedList();
-       mySL.Add( 1, "one" );
-       mySL.Add( 3, "three" );
-       mySL.Add( 2, "two" );
-       mySL.Add( 4, "four" );
-       mySL.Add( 0, "zero" );
+        // Creates and initializes a new SortedList.
+        SortedList mySL = new()
+        {
+            { 1, "one" },
+            { 3, "three" },
+            { 2, "two" },
+            { 4, "four" },
+            { 0, "zero" }
+        };
 
-       // Displays the values of the SortedList.
-       Console.WriteLine( "The SortedList contains the following values:" );
-       PrintIndexAndKeysAndValues( mySL );
+        // Displays the values of the SortedList.
+        Console.WriteLine("The SortedList contains the following values:");
+        PrintIndexAndKeysAndValues(mySL);
 
-       // Searches for a specific key.
-       int myKey = 2;
-       Console.WriteLine( "The key \"{0}\" is at index {1}.", myKey, mySL.IndexOfKey( myKey ) );
+        // Searches for a specific key.
+        int myKey = 2;
+        Console.WriteLine($"The key \"{myKey}\" is at index {mySL.IndexOfKey(myKey)}.");
 
-       // Searches for a specific value.
-       string myValue = "three";
-       Console.WriteLine( "The value \"{0}\" is at index {1}.", myValue, mySL.IndexOfValue( myValue ) );
+        // Searches for a specific value.
+        string myValue = "three";
+        Console.WriteLine($"The value \"{myValue}\" is at index {mySL.IndexOfValue(myValue)}.");
     }
 
-    public static void PrintIndexAndKeysAndValues( SortedList myList )  {
-       Console.WriteLine( "\t-INDEX-\t-KEY-\t-VALUE-" );
-       for ( int i = 0; i < myList.Count; i++ )  {
-          Console.WriteLine( "\t[{0}]:\t{1}\t{2}", i, myList.GetKey(i), myList.GetByIndex(i) );
-       }
-       Console.WriteLine();
+    public static void PrintIndexAndKeysAndValues(SortedList myList)
+    {
+        Console.WriteLine("\t-INDEX-\t-KEY-\t-VALUE-");
+        for (int i = 0; i < myList.Count; i++)
+        {
+            Console.WriteLine($"\t[{i}]:\t{myList.GetKey(i)}\t{myList.GetByIndex(i)}");
+        }
+        Console.WriteLine();
     }
- }
- /*
- This code produces the following output.
+}
+/*
+This code produces the following output.
 
- The SortedList contains the following values:
-     -INDEX-    -KEY-    -VALUE-
-     [0]:    0    zero
-     [1]:    1    one
-     [2]:    2    two
-     [3]:    3    three
-     [4]:    4    four
+The SortedList contains the following values:
+    -INDEX-    -KEY-    -VALUE-
+    [0]:    0    zero
+    [1]:    1    one
+    [2]:    2    two
+    [3]:    3    three
+    [4]:    4    four
 
- The key "2" is at index 2.
- The value "three" is at index 3.
- */
- // </Snippet1>
+The key "2" is at index 2.
+The value "three" is at index 3.
+*/
+// </Snippet1>
