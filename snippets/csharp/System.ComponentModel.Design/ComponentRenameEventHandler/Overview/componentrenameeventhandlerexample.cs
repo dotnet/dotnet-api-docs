@@ -14,15 +14,15 @@ namespace MiscCompModSamples
         public void LinkComponentRenameEvent(IComponentChangeService changeService)
         {
             // Registers an event handler for the ComponentRename event.
-            changeService.ComponentRename += new ComponentRenameEventHandler(this.OnComponentRename);            
+            changeService.ComponentRename += new ComponentRenameEventHandler(OnComponentRename);
         }
 
         private void OnComponentRename(object sender, ComponentRenameEventArgs e)
         {
-            // Displayss component renamed information on the console.           
-            Console.WriteLine("Type of the component that has been renamed: "+e.Component.GetType().FullName);                  
-            Console.WriteLine("New name of the component that has been renamed: "+e.NewName);
-            Console.WriteLine("Old name of the component that has been renamed: "+e.OldName);
+            // Displays component renamed information on the console.
+            Console.WriteLine($"Type of the component that has been renamed: {e.Component.GetType().FullName}");
+            Console.WriteLine($"New name of the component that has been renamed: {e.NewName}");
+            Console.WriteLine($"Old name of the component that has been renamed: {e.OldName}");
         }
         //</Snippet1>
 	}

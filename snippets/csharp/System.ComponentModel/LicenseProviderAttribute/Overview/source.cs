@@ -29,7 +29,7 @@ public static class Class1
         /* Prints the name of the license provider by retrieving the LicenseProviderAttribute 
          * from the AttributeCollection. */
         LicenseProviderAttribute myAttribute = (LicenseProviderAttribute)attributes[typeof(LicenseProviderAttribute)];
-        Console.WriteLine("The license provider for this class is: " + myAttribute.LicenseProvider.ToString());
+        Console.WriteLine($"The license provider for this class is: {myAttribute.LicenseProvider}");
 
         return 0;
     }

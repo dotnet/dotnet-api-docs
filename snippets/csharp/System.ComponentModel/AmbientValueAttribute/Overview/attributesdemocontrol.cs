@@ -5,9 +5,9 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
-using System.Globalization;
 // </snippet2>
 
 // This sample demonstrates the use of various attributes for
@@ -497,10 +497,7 @@ public class LogEntry<T> where T : IComparable
             {
                 LogEntry<T> le = value as LogEntry<T>;
 
-                string stringRepresentation =
-                    string.Format("{0} | {1}",
-                    le.Entry,
-                    le.EntryTime);
+                string stringRepresentation = $"{le.Entry} | {le.EntryTime}";
 
                 return stringRepresentation;
             }

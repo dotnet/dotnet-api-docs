@@ -14,8 +14,8 @@ namespace DesignerCollectionExample
             // Create a DesignerCollection using a constructor
             // that accepts an array of IDesignerHost objects with 
             // which to initialize the array.
-            DesignerCollection collection = new DesignerCollection( 
-                new IDesignerHost[] { designerhost1, designerhost2 } );
+            DesignerCollection collection = new DesignerCollection(
+                new IDesignerHost[] { designerhost1, designerhost2 });
             //</Snippet1>
         }
 
@@ -30,8 +30,10 @@ namespace DesignerCollectionExample
             // Access each IDesignerHost in the DesignerCollection using
             // the collection's indexer property, and output the class name 
             // of the root component associated with each IDesignerHost.            
-            for( int i=0; i<collection.Count; i++ )
-                Console.WriteLine( collection[i].RootComponentClassName );
+            for (int i = 0; i < collection.Count; i++)
+            {
+                Console.WriteLine(collection[i].RootComponentClassName);
+            }
             //</Snippet3>
         }
     }
