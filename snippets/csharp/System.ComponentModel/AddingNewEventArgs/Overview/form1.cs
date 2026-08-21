@@ -1,11 +1,8 @@
-﻿// <snippet1>
+// <snippet1>
 // <snippet2>
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Data.SqlClient;
 using System.Windows.Forms;
 // </snippet2>
 
@@ -17,13 +14,13 @@ public class Form1 : System.Windows.Forms.Form
     // <snippet5>
     // This is the BindingSource that will provide data for
     // the DataGridView control.
-    private BindingSource customersBindingSource = new BindingSource();
+    private BindingSource customersBindingSource = new();
 
     // This is the DataGridView control that will display our data.
-    private DataGridView customersDataGridView = new DataGridView();
+    private DataGridView customersDataGridView = new();
 
     // Set up the StatusBar for displaying ListChanged events.
-    private StatusBar status = new StatusBar();
+    private StatusBar status = new();
 
     // </snippet5>
 
@@ -31,7 +28,7 @@ public class Form1 : System.Windows.Forms.Form
     public Form1()
     {
         // Set up the form.
-        this.Size = new Size(800, 800);
+        this.Size = new(800, 800);
         this.Load += new EventHandler(Form1_Load);
         this.Controls.Add(status);
 
@@ -40,43 +37,40 @@ public class Form1 : System.Windows.Forms.Form
         this.Controls.Add(customersDataGridView);
 
         // Attach an event handler for the AddingNew event.
-        this.customersBindingSource.AddingNew += 
+        this.customersBindingSource.AddingNew +=
             new AddingNewEventHandler(customersBindingSource_AddingNew);
 
         // Attach an event handler for the ListChanged event.
-        this.customersBindingSource.ListChanged += 
+        this.customersBindingSource.ListChanged +=
             new ListChangedEventHandler(customersBindingSource_ListChanged);
     }
     // </snippet6>
 
     // <snippet7>
-    private void Form1_Load(System.Object sender, System.EventArgs e)
+    private void Form1_Load(object sender, EventArgs e)
     {
         // Add a DemoCustomer to cause a row to be displayed.
         this.customersBindingSource.AddNew();
 
-        // Bind the BindingSource to the DataGridView 
+        // Bind the BindingSource to the DataGridView
         // control's DataSource.
-        this.customersDataGridView.DataSource = 
-            this.customersBindingSource;
+        this.customersDataGridView.DataSource = this.customersBindingSource;
     }
     // </snippet7>
 
     // <snippet8>
     // This event handler provides custom item-creation behavior.
-    void customersBindingSource_AddingNew(
-        object sender, 
-        AddingNewEventArgs e)
+    void customersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
     {
         e.NewObject = DemoCustomer.CreateNewCustomer();
     }
     // </snippet8>
 
     // <snippet9>
-    // This event handler detects changes in the BindingSource 
+    // This event handler detects changes in the BindingSource
     // list or changes to items within the list.
     void customersBindingSource_ListChanged(
-        object sender, 
+        object sender,
         ListChangedEventArgs e)
     {
         status.Text = e.ListChangedType.ToString();
@@ -97,17 +91,14 @@ public class Form1 : System.Windows.Forms.Form
 public class DemoCustomer
 {
     // These fields hold the values for the public properties.
-    private Guid idValue = Guid.NewGuid();
-    private string customerName = String.Empty;
-    private string companyNameValue = String.Empty;
-    private string phoneNumberValue = String.Empty;
+    private string customerName = string.Empty;
 
     // The constructor is private to enforce the factory pattern.
     private DemoCustomer()
     {
         customerName = "no data";
-        companyNameValue = "no data";
-        phoneNumberValue = "no data";
+        CompanyName = "no data";
+        PhoneNumber = "no data";
     }
 
     // This is the public factory method.
@@ -118,39 +109,11 @@ public class DemoCustomer
 
     // This property represents an ID, suitable
     // for use as a primary key in a database.
-    public Guid ID
-    {
-        get
-        {
-            return this.idValue;
-        }
-    }
+    public Guid ID { get; } = Guid.NewGuid();
 
-    public string CompanyName
-    {
-        get
-        {
-            return this.companyNameValue;
-        }
+    public string CompanyName { get; set; } = string.Empty;
 
-        set
-        {
-            this.companyNameValue = value;
-        }
-    }
-
-    public string PhoneNumber
-    {
-        get
-        {
-            return this.phoneNumberValue;
-        }
-
-        set
-        {
-            this.phoneNumberValue = value;
-        }
-    }
+    public string PhoneNumber { get; set; } = string.Empty;
 }
 // </snippet4>
 // </snippet1>

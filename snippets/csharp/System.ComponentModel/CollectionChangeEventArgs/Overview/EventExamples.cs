@@ -784,14 +784,12 @@ private void ApplicationContext1_ThreadExit(Object sender, EventArgs e) {
 //</snippet75>
 
 //<snippet76>
-private void AutoCompleteStringCollection1_CollectionChanged(Object sender, CollectionChangeEventArgs e) {
-
-System.Text.StringBuilder messageBoxCS = new System.Text.StringBuilder();
-messageBoxCS.AppendFormat("{0} = {1}", "Action", e.Action );
-messageBoxCS.AppendLine();
-messageBoxCS.AppendFormat("{0} = {1}", "Element", e.Element );
-messageBoxCS.AppendLine();
-MessageBox.Show(messageBoxCS.ToString(), "CollectionChanged Event" );
+private void AutoCompleteStringCollection1_CollectionChanged(object sender, CollectionChangeEventArgs e)
+{
+    System.Text.StringBuilder messageBoxCS = new();
+    messageBoxCS.AppendLine($"Action = {e.Action}");
+    messageBoxCS.AppendLine($"Element = {e.Element}");
+    MessageBox.Show(messageBoxCS.ToString(), "CollectionChanged Event");
 }
 //</snippet76>
 
@@ -1378,18 +1376,14 @@ private void BindingSource1_CurrentItemChanged(Object sender, EventArgs e) {
 //</snippet133>
 
 //<snippet134>
-private void BindingSource1_ListChanged(Object sender, ListChangedEventArgs e) {
-
-System.Text.StringBuilder messageBoxCS = new System.Text.StringBuilder();
-messageBoxCS.AppendFormat("{0} = {1}", "ListChangedType", e.ListChangedType );
-messageBoxCS.AppendLine();
-messageBoxCS.AppendFormat("{0} = {1}", "NewIndex", e.NewIndex );
-messageBoxCS.AppendLine();
-messageBoxCS.AppendFormat("{0} = {1}", "OldIndex", e.OldIndex );
-messageBoxCS.AppendLine();
-messageBoxCS.AppendFormat("{0} = {1}", "PropertyDescriptor", e.PropertyDescriptor );
-messageBoxCS.AppendLine();
-MessageBox.Show(messageBoxCS.ToString(), "ListChanged Event" );
+private void BindingSource1_ListChanged(object sender, ListChangedEventArgs e)
+{
+    System.Text.StringBuilder messageBoxCS = new();
+    messageBoxCS.AppendLine($"ListChangedType = {e.ListChangedType}");
+    messageBoxCS.AppendLine($"NewIndex = {e.NewIndex}");
+    messageBoxCS.AppendLine($"OldIndex = {e.OldIndex}");
+    messageBoxCS.AppendLine($"PropertyDescriptor = {e.PropertyDescriptor}");
+    MessageBox.Show(messageBoxCS.ToString(), "ListChanged Event");
 }
 //</snippet134>
 
@@ -6303,14 +6297,12 @@ MessageBox.Show(messageBoxCS.ToString(), "LoadCompleted Event" );
 //</snippet516>
 
 //<snippet517>
-private void PictureBox1_LoadProgressChanged(Object sender, ProgressChangedEventArgs e) {
-
-System.Text.StringBuilder messageBoxCS = new System.Text.StringBuilder();
-messageBoxCS.AppendFormat("{0} = {1}", "ProgressPercentage", e.ProgressPercentage );
-messageBoxCS.AppendLine();
-messageBoxCS.AppendFormat("{0} = {1}", "UserState", e.UserState );
-messageBoxCS.AppendLine();
-MessageBox.Show(messageBoxCS.ToString(), "LoadProgressChanged Event" );
+private void PictureBox1_LoadProgressChanged(object sender, ProgressChangedEventArgs e)
+{
+    System.Text.StringBuilder messageBoxCS = new();
+    messageBoxCS.AppendLine($"ProgressPercentage = {e.ProgressPercentage}");
+    messageBoxCS.AppendLine($"UserState = {e.UserState}");
+    MessageBox.Show(messageBoxCS.ToString(), "LoadProgressChanged Event");
 }
 //</snippet517>
 

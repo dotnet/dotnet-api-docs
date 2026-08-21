@@ -1,29 +1,12 @@
-﻿// <snippet1>
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DSMSample
+// <snippet1>
+namespace DSMSampleBasic
 {
     // <snippet2>
     public class SampleObject
     {
-        private string stringValue = null;
-        private int intValue = int.MinValue;
+        public string StringProperty { get; set; }
 
-        public string StringProperty 
-        { 
-            get { return this.stringValue; }
-
-            set { this.stringValue = value; }
-        }
-
-        public int IntProperty 
-        {
-            get { return this.intValue; }
-
-            set{ this.intValue = value; }
-        }
+        public int IntProperty { get; set; } = int.MinValue;
     }
     // </snippet2>
 }
