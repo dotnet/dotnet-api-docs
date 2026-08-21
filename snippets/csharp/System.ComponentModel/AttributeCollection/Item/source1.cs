@@ -6,6 +6,7 @@ public class Form2 : Form
 {
     protected Button button1;
     protected TextBox textBox1;
+
     // <Snippet1>
     void PrintIndexItem2()
     {
@@ -15,8 +16,7 @@ public class Form2 : Form
 
         // Gets the designer attribute from the collection.
         DesignerAttribute myDesigner;
-        // You must supply a valid fully qualified assembly name here.
-        myDesigner = (DesignerAttribute)attributes[Type.GetType("Assembly text name, Version, Culture, PublicKeyToken")];
+        myDesigner = (DesignerAttribute)attributes[typeof(DesignerAttribute)];
         textBox1.Text = myDesigner.DesignerTypeName;
     }
     // </Snippet1>

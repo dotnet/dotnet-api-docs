@@ -1,8 +1,8 @@
-// <snippet1>
-namespace DSMSampleBasic
+﻿// <snippet1>
+namespace DSMSample
 {
     // <snippet2>
-    public class SampleObject
+    public class SampleObject2
     {
         public string StringProperty { get; set; }
 

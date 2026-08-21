@@ -1,4 +1,4 @@
-// <snippet10>
+﻿// <snippet10>
 namespace DSMSample
 {
     // <snippet11>
@@ -16,7 +16,7 @@ namespace DSMSample
     class Program
     {
         // <snippet13>
-        static void Main(string[] args)
+        static void Main()
         {
             // <snippet14>
             SampleObject root = new();

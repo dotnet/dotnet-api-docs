@@ -1,26 +1,25 @@
-// <snippet1>
+﻿// <snippet1>
 // <snippet2>
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
 // </snippet2>
 
 // <snippet3>
 // This form demonstrates using a BindingSource to provide
 // data from a collection of custom types to a DataGridView control.
-public class Form1 : System.Windows.Forms.Form
+public class Form1 : Form
 {
     // <snippet5>
     // This is the BindingSource that will provide data for
     // the DataGridView control.
-    private BindingSource customersBindingSource = new();
+    private BindingSource customersBindingSource = [];
 
     // This is the DataGridView control that will display our data.
     private DataGridView customersDataGridView = new();
 
-    // Set up the StatusBar for displaying ListChanged events.
-    private StatusBar status = new();
+    // Set up the StatusStrip for displaying ListChanged events.
+    private StatusStrip status = new();
 
     // </snippet5>
 
@@ -28,20 +27,20 @@ public class Form1 : System.Windows.Forms.Form
     public Form1()
     {
         // Set up the form.
-        this.Size = new(800, 800);
-        this.Load += new EventHandler(Form1_Load);
-        this.Controls.Add(status);
+        Size = new(800, 800);
+        Load += new EventHandler(Form1_Load);
+        Controls.Add(status);
 
         // Set up the DataGridView control.
-        this.customersDataGridView.Dock = DockStyle.Fill;
-        this.Controls.Add(customersDataGridView);
+        customersDataGridView.Dock = DockStyle.Fill;
+        Controls.Add(customersDataGridView);
 
         // Attach an event handler for the AddingNew event.
-        this.customersBindingSource.AddingNew +=
+        customersBindingSource.AddingNew +=
             new AddingNewEventHandler(customersBindingSource_AddingNew);
 
         // Attach an event handler for the ListChanged event.
-        this.customersBindingSource.ListChanged +=
+        customersBindingSource.ListChanged +=
             new ListChangedEventHandler(customersBindingSource_ListChanged);
     }
     // </snippet6>
@@ -50,11 +49,11 @@ public class Form1 : System.Windows.Forms.Form
     private void Form1_Load(object sender, EventArgs e)
     {
         // Add a DemoCustomer to cause a row to be displayed.
-        this.customersBindingSource.AddNew();
+        customersBindingSource.AddNew();
 
         // Bind the BindingSource to the DataGridView
         // control's DataSource.
-        this.customersDataGridView.DataSource = this.customersBindingSource;
+        customersDataGridView.DataSource = customersBindingSource;
     }
     // </snippet7>
 
@@ -90,13 +89,10 @@ public class Form1 : System.Windows.Forms.Form
 // This class implements a simple customer type.
 public class DemoCustomer
 {
-    // These fields hold the values for the public properties.
-    private string customerName = string.Empty;
-
     // The constructor is private to enforce the factory pattern.
     private DemoCustomer()
     {
-        customerName = "no data";
+        CustomerName = "no data";
         CompanyName = "no data";
         PhoneNumber = "no data";
     }
@@ -110,6 +106,8 @@ public class DemoCustomer
     // This property represents an ID, suitable
     // for use as a primary key in a database.
     public Guid ID { get; } = Guid.NewGuid();
+
+    public string CustomerName { get; set; } = string.Empty;
 
     public string CompanyName { get; set; } = string.Empty;
 
