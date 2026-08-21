@@ -6,7 +6,7 @@ class Example
 {
     public static void Main()
     {
-        Stack<string> numbers = new Stack<string>();
+        Stack<string> numbers = new();
         numbers.Push("one");
         numbers.Push("two");
         numbers.Push("three");
@@ -14,7 +14,7 @@ class Example
         numbers.Push("five");
 
         // A stack can be enumerated without disturbing its contents.
-        foreach( string number in numbers )
+        foreach (string number in numbers)
         {
             Console.WriteLine(number);
         }
@@ -26,10 +26,10 @@ class Example
 
         // Create a copy of the stack, using the ToArray method and the
         // constructor that accepts an IEnumerable<T>.
-        Stack<string> stack2 = new Stack<string>(numbers.ToArray());
+        Stack<string> stack2 = new(numbers.ToArray());
 
         Console.WriteLine("\nContents of the first copy:");
-        foreach( string number in stack2 )
+        foreach (string number in stack2)
         {
             Console.WriteLine(number);
         }
@@ -42,10 +42,10 @@ class Example
 
         // Create a second stack, using the constructor that accepts an
         // IEnumerable(Of T).
-        Stack<string> stack3 = new Stack<string>(array2);
+        Stack<string> stack3 = new(array2);
 
         Console.WriteLine("\nContents of the second copy, with duplicates and nulls:");
-        foreach( string number in stack3 )
+        foreach (string number in stack3)
         {
             Console.WriteLine(number);
         }

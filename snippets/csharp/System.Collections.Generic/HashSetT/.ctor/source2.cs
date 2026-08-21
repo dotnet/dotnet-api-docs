@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-class Program
+class HashSetConstructorExample2
 {
-    public static void Main()
+    public static void Run()
     {
         //<snippet03>
         HashSet<string> allVehicles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        List<string> someVehicles = new List<string>();
-
-        someVehicles.Add("Planes");
-        someVehicles.Add("Trains");
-        someVehicles.Add("Automobiles");
+        List<string> someVehicles = ["Planes", "Trains", "Automobiles"];
 
         // Add in the vehicles contained in the someVehicles list.
         allVehicles.UnionWith(someVehicles);
