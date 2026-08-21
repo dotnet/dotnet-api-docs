@@ -50,13 +50,13 @@ public class Form1 : Form
     /// </summary>
     void InitializeComponent()
     {
-        trackBar1 = new System.Windows.Forms.TrackBar();
-        trackBar2 = new System.Windows.Forms.TrackBar();
-        trackBar3 = new System.Windows.Forms.TrackBar();
-        panel1 = new Panel();
-        label1 = new Label();
-        label2 = new Label();
-        label3 = new Label();
+        trackBar1 = new();
+        trackBar2 = new();
+        trackBar3 = new();
+        panel1 = new();
+        label1 = new();
+        label2 = new();
+        label3 = new();
         //<Snippet4>
         trackBar1.BeginInit();
         trackBar2.BeginInit();
@@ -146,15 +146,15 @@ public class Form1 : Form
     //<Snippet3>
     void showColorValueLabels()
     {
-        label1.Text = "Red value is : " + trackBar1.Value.ToString();
-        label2.Text = "Green Value is : " + trackBar2.Value.ToString();
-        label3.Text = "Blue Value is : " + trackBar3.Value.ToString();
+        label1.Text = $"Red value is : {trackBar1.Value}";
+        label2.Text = $"Green Value is : {trackBar2.Value}";
+        label3.Text = $"Blue Value is : {trackBar3.Value}";
     }
     void trackBar_Scroll(object sender, EventArgs e)
     {
         System.Windows.Forms.TrackBar myTB = (System.Windows.Forms.TrackBar)sender;
         panel1.BackColor = Color.FromArgb(trackBar1.Value, trackBar2.Value, trackBar3.Value);
-        myTB.Text = "Value is " + myTB.Value.ToString();
+        myTB.Text = $"Value is {myTB.Value}";
         showColorValueLabels();
     }
     //</Snippet3>

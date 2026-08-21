@@ -6,23 +6,28 @@ namespace IListSourceCS;
 public class Employee : BusinessObjectBase
 {
     string _name;
-    decimal parkingId;
+    decimal _parkingId;
 
-    public Employee() : this(string.Empty, 0) { }
-    public Employee(string name) : this(name, 0) { }
+    public Employee() : this(string.Empty, 0)
+    {
+    }
 
-    public Employee(string name, decimal parkingId) : base()
+    public Employee(string name) : this(name, 0)
+    {
+    }
+
+    public Employee(string name, decimal parkingId)
     {
         ID = Guid.NewGuid().ToString();
 
-        // Set values
+        // Set values.
         Name = name;
         ParkingID = parkingId;
     }
 
     public string ID { get; }
 
-    const string NAME = "Name";
+    const string NameProperty = "Name";
     public string Name
     {
         get => _name;
@@ -33,23 +38,23 @@ public class Employee : BusinessObjectBase
                 _name = value;
 
                 // Raise the PropertyChanged event.
-                OnPropertyChanged(NAME);
+                OnPropertyChanged(NameProperty);
             }
         }
     }
 
-    const string PARKING_ID = "Salary";
+    const string ParkingIdProperty = "Salary";
     public decimal ParkingID
     {
-        get => parkingId;
+        get => _parkingId;
         set
         {
-            if (parkingId != value)
+            if (_parkingId != value)
             {
-                parkingId = value;
+                _parkingId = value;
 
                 // Raise the PropertyChanged event.
-                OnPropertyChanged(PARKING_ID);
+                OnPropertyChanged(ParkingIdProperty);
             }
         }
     }

@@ -11,8 +11,8 @@ namespace CodeDomSerializerSample
         public override object Deserialize(IDesignerSerializationManager manager, object codeObject)
         {
             // Associate the component with the serializer.
-            CodeDomSerializer baseClassSerializer = (CodeDomSerializer)manager.
-            GetSerializer(typeof(MyComponent).BaseType, typeof(CodeDomSerializer));
+            CodeDomSerializer baseClassSerializer = (CodeDomSerializer)manager.GetSerializer(
+                typeof(MyComponent).BaseType, typeof(CodeDomSerializer));
 
             /* This is the simplest case, in which the class just calls the base class
                 to do the work. */
@@ -22,9 +22,9 @@ namespace CodeDomSerializerSample
         public override object Serialize(IDesignerSerializationManager manager, object value)
         {
             /* Associate the component with the serializer in the same manner as with
-                Deserialize */
-            CodeDomSerializer baseClassSerializer = (CodeDomSerializer)manager.
-                GetSerializer(typeof(MyComponent).BaseType, typeof(CodeDomSerializer));
+                Deserialize. */
+            CodeDomSerializer baseClassSerializer = (CodeDomSerializer)manager.GetSerializer(
+                typeof(MyComponent).BaseType, typeof(CodeDomSerializer));
 
             object codeObject = baseClassSerializer.Serialize(manager, value);
 

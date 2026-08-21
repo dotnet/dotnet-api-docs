@@ -27,7 +27,7 @@ public class LibraryItem : INotifyPropertyChanged, IEditableObject
         DueDate = dueDate;
     }
 
-    public override string ToString() => string.Format("{0}, {1:c}, {2:D}", Title, CallNumber, DueDate);
+    public override string ToString() => $"{Title}, {CallNumber:c}, {DueDate:D}";
 
     public string Title
     {
@@ -86,7 +86,7 @@ public class LibraryItem : INotifyPropertyChanged, IEditableObject
         NotifyPropertyChanged("");
     }
 
-    public virtual void EndEdit() => copyData = new ItemData();
+    public virtual void EndEdit() => copyData = default;
 
     #endregion
 
@@ -151,12 +151,11 @@ public class MusicCD : LibraryItem
     public override void EndEdit()
     {
         base.EndEdit();
-        copyData = new MusicData();
+        copyData = default;
     }
 
-    public override string ToString() => string.Format(
-            "Album: {0}\nArtist: {1}\nTracks: {2}\nDue Date: {3:d}\nCall Number: {4}",
-            Title, Artist, NumberOfTracks, DueDate, CallNumber);
+    public override string ToString() =>
+        $"Album: {Title}\nArtist: {Artist}\nTracks: {NumberOfTracks}\nDue Date: {DueDate:d}\nCall Number: {CallNumber}";
 }
 
 public class Book : LibraryItem
@@ -218,12 +217,11 @@ public class Book : LibraryItem
     public override void EndEdit()
     {
         base.EndEdit();
-        copyData = new BookData();
+        copyData = default;
     }
 
-    public override string ToString() => string.Format(
-            "Title: {0}\nAuthor: {1}\nGenre: {2}\nDue Date: {3:d}\nCall Number: {4}",
-            Title, Author, Genre, DueDate, CallNumber);
+    public override string ToString() =>
+        $"Title: {Title}\nAuthor: {Author}\nGenre: {Genre}\nDue Date: {DueDate:d}\nCall Number: {CallNumber}";
 }
 
 public class MovieDVD : LibraryItem
@@ -300,11 +298,11 @@ public class MovieDVD : LibraryItem
     public override void EndEdit()
     {
         base.EndEdit();
-        copyData = new MovieData();
+        copyData = default;
     }
 
-    public override string ToString() => string.Format("Title: {0}\nDirector: {1}\nGenre: {2}\nLength: {3}\nDue Date: {4:d}\nCall Number: {5}",
-            Title, Director, Genre, Length, DueDate, CallNumber);
+    public override string ToString() =>
+        $"Title: {Title}\nDirector: {Director}\nGenre: {Genre}\nLength: {Length}\nDue Date: {DueDate:d}\nCall Number: {CallNumber}";
 }
 
 public class LibraryCatalog : ObservableCollection<LibraryItem>

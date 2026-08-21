@@ -12,7 +12,13 @@ public class Sample
     }
     // </Snippet1>
 
-    public enum MyPropertyEnum { option1, option2, option3 };
+    public enum MyPropertyEnum
+    {
+        option1,
+        option2,
+        option3
+    }
+
     public class MyClassConverter;
 
     // <Snippet2>

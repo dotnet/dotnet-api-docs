@@ -26,8 +26,7 @@ public static class Class1
         TypeConverterAttribute myAttribute =
             (TypeConverterAttribute)attributes[typeof(TypeConverterAttribute)];
 
-        Console.WriteLine("The type conveter for this class is: " +
-            myAttribute.ConverterTypeName);
+        Console.WriteLine($"The type conveter for this class is: {myAttribute.ConverterTypeName}");
 
         return 0;
     }

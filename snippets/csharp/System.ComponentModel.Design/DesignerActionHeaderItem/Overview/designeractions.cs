@@ -12,7 +12,6 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
 using System.Text;
-using System.Reflection;
 
 namespace DesignerActions
 {
@@ -54,7 +53,7 @@ public class Form1 : System.Windows.Forms.Form
     [STAThread]
     static void Main()
     {
-        Form1 f1 = new Form1();
+        Form1 f1 = new();
         f1.ShowDialog();
     }
 }
@@ -66,20 +65,8 @@ public class Form1 : System.Windows.Forms.Form
 [Designer(typeof(ColorLabelDesigner))]
 public class ColorLabel : System.Windows.Forms.Label
 {
-    private bool colorLockedValue = false;
-
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    public bool ColorLocked
-    {
-        get
-        {
-            return colorLockedValue;
-        }
-        set
-        {
-            colorLockedValue = value;
-        }
-    }
+    public bool ColorLocked { get; set; }
 
     public override Color BackColor
     {
@@ -91,8 +78,7 @@ public class ColorLabel : System.Windows.Forms.Label
         {
             if (ColorLocked)
                 return;
-            else
-                base.BackColor = value;
+            base.BackColor = value;
         }
     }
 
@@ -106,8 +92,7 @@ public class ColorLabel : System.Windows.Forms.Label
         {
             if (ColorLocked)
                 return;
-            else
-                base.ForeColor = value;
+            base.ForeColor = value;
         }
     }
 }
@@ -156,7 +141,7 @@ public class ColorLabelActionList :
 //</snippet3>
 
     //<snippet10>
-    private DesignerActionUIService designerActionUISvc = null;
+    private DesignerActionUIService designerActionUISvc;
     //</snippet10>
 
     //The constructor associates the control 
@@ -176,7 +161,7 @@ public class ColorLabelActionList :
 
     // Helper method to retrieve control properties. Use of 
     // GetProperties enables undo and menu updates to work properly.
-    private PropertyDescriptor GetPropertyByName(String propName)
+    private PropertyDescriptor GetPropertyByName(string propName)
     {
         PropertyDescriptor prop;
         prop = TypeDescriptor.GetProperties(colLabel)[propName];
@@ -184,8 +169,7 @@ public class ColorLabelActionList :
              throw new ArgumentException(
                   "Matching ColorLabel property not found!",
                    propName);
-        else
-            return prop;
+        return prop;
     }
 
     // Properties that are targets of DesignerActionPropertyItem entries.
@@ -234,7 +218,7 @@ public class ColorLabelActionList :
     }
     //</snippet11>
 
-    public String Text
+    public string Text
     {
         get
         {
@@ -269,7 +253,7 @@ public class ColorLabelActionList :
 //<snippet7>
     public override DesignerActionItemCollection GetSortedActionItems()
     {
-        DesignerActionItemCollection items = new DesignerActionItemCollection();
+        DesignerActionItemCollection items = new();
 
         //Define static section header entries.
         items.Add(new DesignerActionHeaderItem("Appearance"));
@@ -301,9 +285,9 @@ public class ColorLabelActionList :
                          "Sets the display text."));
 
         //Create entries for static Information section.
-        StringBuilder location = new StringBuilder("Location: ");
+        StringBuilder location = new("Location: ");
         location.Append(colLabel.Location);
-        StringBuilder size = new StringBuilder("Size: ");
+        StringBuilder size = new("Size: ");
         size.Append(colLabel.Size);
         items.Add(new DesignerActionTextItem(location.ToString(),
                          "Information"));

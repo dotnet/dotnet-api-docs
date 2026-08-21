@@ -7,7 +7,8 @@ using System.Windows.Forms;
 public class MyClass : IExtenderProvider
 {
     protected CultureInfo ciMine;
-    // Provides the Get portion of MyProperty. 
+
+    // Provides the Get portion of MyProperty.
     public CultureInfo GetMyProperty(Control myControl) =>
         // Insert code here.
         ciMine;
@@ -18,7 +19,7 @@ public class MyClass : IExtenderProvider
         // Insert code here.
     }
 
-    /* When you inherit from IExtenderProvider, you must implement the 
+    /* When you inherit from IExtenderProvider, you must implement the
      * CanExtend method. */
     public bool CanExtend(object target) => target is Control;
 
