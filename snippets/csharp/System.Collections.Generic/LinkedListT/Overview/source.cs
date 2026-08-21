@@ -151,11 +151,7 @@ public class Example
     private static void Display(LinkedList<string> words, string test)
     {
         Console.WriteLine(test);
-        foreach (string word in words)
-        {
-            Console.Write($"{word} ");
-        }
-        Console.WriteLine();
+        Console.WriteLine(string.Join(" ", words));
         Console.WriteLine();
     }
 

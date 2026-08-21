@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ListSortSnippet1;
-
-public class Example
+public class ListSortExample
 {
     public static void Run()
     {
         // <Snippet2>
-        string[] names = [ "Samuel", "Dakota", "Koani", "Saya", "Vanya", "Jody",
+        ReadOnlySpan<string> names = [ "Samuel", "Dakota", "Koani", "Saya", "Vanya", "Jody",
                          "Yiska", "Yuma", "Jody", "Nikita" ];
         List<string> nameList = [];
         nameList.AddRange(names);
@@ -31,6 +29,7 @@ public class Example
         //
         //    List in sorted order:
         //       Dakota   Jody   Jody   Koani   Nikita   Samuel   Saya   Vanya   Yiska   Yuma
+
         // </Snippet2>
     }
 }

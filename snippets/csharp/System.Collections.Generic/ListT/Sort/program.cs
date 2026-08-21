@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 
-namespace ListSortSnippet2;
 // Simple business object. A PartId is used to identify the type of part
 // but the part name can change.
 public class Part : IEquatable<Part>, IComparable<Part>
@@ -13,7 +12,7 @@ public class Part : IEquatable<Part>, IComparable<Part>
 
     public override string ToString()
     {
-        return "ID: " + PartId + "   Name: " + PartName;
+        return $"ID: {PartId}   Name: {PartName}";
     }
     public override bool Equals(object obj)
     {
@@ -24,7 +23,6 @@ public class Part : IEquatable<Part>, IComparable<Part>
     }
     public int SortByNameAscending(string name1, string name2)
     {
-
         return name1.CompareTo(name2);
     }
 
@@ -36,7 +34,7 @@ public class Part : IEquatable<Part>, IComparable<Part>
             return 1;
 
         else
-            return this.PartId.CompareTo(comparePart.PartId);
+            return PartId.CompareTo(comparePart.PartId);
     }
     public override int GetHashCode()
     {
@@ -45,11 +43,11 @@ public class Part : IEquatable<Part>, IComparable<Part>
     public bool Equals(Part other)
     {
         if (other == null) return false;
-        return (this.PartId.Equals(other.PartId));
+        return PartId.Equals(other.PartId);
     }
     // Should also override == and != operators.
 }
-public class Example
+public class PartExample
 {
     public static void Run()
     {
@@ -57,11 +55,11 @@ public class Example
         List<Part> parts =
         [
             // Add parts to the list.
-            new Part() { PartName = "regular seat", PartId = 1434 },
-            new Part() { PartName= "crank arm", PartId = 1234 },
-            new Part() { PartName = "shift lever", PartId = 1634 },
+            new() { PartName = "regular seat", PartId = 1434 },
+            new() { PartName= "crank arm", PartId = 1234 },
+            new() { PartName = "shift lever", PartId = 1634 },
         ];
-        
+
         // Name intentionally left null.
         parts.Add(new Part() { PartId = 1334 });
         parts.Add(new Part() { PartName = "banana seat", PartId = 1444 });
@@ -105,7 +103,7 @@ public class Example
 
         /*
 
-            Before sort:
+        Before sort:
 		ID: 1434   Name: regular seat
 		ID: 1234   Name: crank arm
 		ID: 1634   Name: shift lever
@@ -129,7 +127,7 @@ public class Example
 		ID: 1434   Name: regular seat
 		ID: 1634   Name: shift lever
 
-         */
+        */
     }
 }
 //</snippet1>

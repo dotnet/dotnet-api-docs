@@ -1,2 +1,2 @@
-﻿ListSortSnippet1.Example.Run();
-ListSortSnippet2.Example.Run();
+﻿PartExample.Run();
+ListSortExample.Run();
