@@ -106,7 +106,7 @@ public class SignVerifyEnvelope
         
         KeyInfoX509Data kdata = new KeyInfoX509Data(cert);
 
-        X509IssuerSerial xserial;
+        X509IssuerSerial xserial = default;
 
         xserial.IssuerName = cert.IssuerName.ToString();
         xserial.SerialNumber = cert.SerialNumber;
