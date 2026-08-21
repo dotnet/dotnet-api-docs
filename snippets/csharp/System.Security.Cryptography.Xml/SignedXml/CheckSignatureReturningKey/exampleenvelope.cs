@@ -140,20 +140,27 @@ public class SignVerifyEnvelope
 
         // Verify the signature and retrieve the key that produced it.
         AsymmetricAlgorithm signingKey;
-        if (!signedXml.CheckSignatureReturningKey(out signingKey))
-            return false;
+        bool verified = signedXml.CheckSignatureReturningKey(out signingKey);
 
-        // A valid signature only proves possession of some key.
-        // The caller must confirm the returned key matches a key it trusts.
-        if (signingKey is RSA rsa)
+        // The returned key is owned by the caller and can hold native
+        // handles, so dispose it once the comparison is complete.
+        using (signingKey)
         {
-            RSAParameters expected = TrustedKey.ExportParameters(false);
-            RSAParameters actual = rsa.ExportParameters(false);
-            return expected.Modulus.SequenceEqual(actual.Modulus)
-                && expected.Exponent.SequenceEqual(actual.Exponent);
-        }
+            if (!verified)
+                return false;
 
-        return false;
+            // A valid signature only proves possession of some key.
+            // The caller must confirm the returned key matches a key it trusts.
+            if (signingKey is RSA rsa)
+            {
+                RSAParameters expected = TrustedKey.ExportParameters(false);
+                RSAParameters actual = rsa.ExportParameters(false);
+                return expected.Modulus.SequenceEqual(actual.Modulus)
+                    && expected.Exponent.SequenceEqual(actual.Exponent);
+            }
+
+            return false;
+        }
     }
     // </Snippet3>
 
