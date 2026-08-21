@@ -12,18 +12,21 @@ public class Verify {
 
         Console.WriteLine("Verifying " + args[0] + "...");
 
-    	// Create a SignedXml.
-        SignedXml signedXml = new SignedXml();
+        RSA trustedKey = RSA.Create();
+        // ... load trustedKey from an out-of-band source ...
 
-        // Load the XML.
         XmlDocument xmlDocument = new XmlDocument();
         xmlDocument.PreserveWhitespace = true;
-        xmlDocument.Load(new XmlTextReader(args[0]));
+        using (XmlReader reader = XmlReader.Create(args[0]))
+        {
+            xmlDocument.Load(reader);
+        }
 
+        SignedXml signedXml = new SignedXml(xmlDocument);
         XmlNodeList nodeList = xmlDocument.GetElementsByTagName("Signature");
         signedXml.LoadXml((XmlElement)nodeList[0]);
 
-        if (signedXml.CheckSignature()) {
+        if (signedXml.CheckSignature(trustedKey)) {
             Console.WriteLine("Signature check OK");
         } else {
             Console.WriteLine("Signature check FAILED");

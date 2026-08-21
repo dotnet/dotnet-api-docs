@@ -13,7 +13,7 @@ Class XmlLicenseTransformExample
 
 
     '<SNIPPET2>
-    Public Shared Sub CheckSignatureWithEncryptedGrant(ByVal fileName As String, ByVal decryptor As IRelDecryptor)
+    Public Shared Sub CheckSignatureWithEncryptedGrant(ByVal fileName As String, ByVal decryptor As IRelDecryptor, ByVal trustedKey As AsymmetricAlgorithm)
         ' Create a new XML document.
         Dim xmlDocument As New XmlDocument()
         Dim nsManager As New XmlNamespaceManager(xmlDocument.NameTable)
@@ -22,7 +22,9 @@ Class XmlLicenseTransformExample
         xmlDocument.PreserveWhitespace = True
 
         ' Load the passed XML file into the document. 
-        xmlDocument.Load(fileName)
+        Using reader As XmlReader = XmlReader.Create(fileName)
+           xmlDocument.Load(reader)
+        End Using
         nsManager.AddNamespace("dsig", SignedXml.XmlDsigNamespaceUrl)
 
         ' Find the "Signature" node and create a new XmlNodeList object.
@@ -54,7 +56,7 @@ Class XmlLicenseTransformExample
             End If
 
             ' Check the signature and display the result.
-            Dim result As Boolean = signedXml.CheckSignature()
+            Dim result As Boolean = signedXml.CheckSignature(trustedKey)
 
             If result Then
                 Console.WriteLine("SUCCESS: CheckSignatureWithEncryptedGrant - issuer index #" + i.ToString())

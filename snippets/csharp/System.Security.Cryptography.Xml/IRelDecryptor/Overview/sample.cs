@@ -12,7 +12,7 @@ namespace XMLDSIGExample
         {
         }
         //<SNIPPET2>
-        public static void CheckSignatureWithEncryptedGrant(string fileName, IRelDecryptor decryptor)
+        public static void CheckSignatureWithEncryptedGrant(string fileName, IRelDecryptor decryptor, AsymmetricAlgorithm trustedKey)
         {
             // Create a new XML document.
             XmlDocument xmlDocument = new XmlDocument();
@@ -22,7 +22,10 @@ namespace XMLDSIGExample
             xmlDocument.PreserveWhitespace = true;
 
             // Load the passed XML file into the document.
-            xmlDocument.Load(fileName);
+            using (XmlReader reader = XmlReader.Create(fileName))
+            {
+                xmlDocument.Load(reader);
+            }
             nsManager.AddNamespace("dsig", SignedXml.XmlDsigNamespaceUrl);
 
             // Find the "Signature" node and create a new XmlNodeList object.
@@ -51,7 +54,7 @@ namespace XMLDSIGExample
                 }
 
                 // Check the signature and display the result.
-                bool result = signedXml.CheckSignature();
+                bool result = signedXml.CheckSignature(trustedKey);
 
                 if (result)
                     Console.WriteLine("SUCCESS: CheckSignatureWithEncryptedGrant - issuer index #" +
