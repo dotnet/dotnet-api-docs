@@ -47,7 +47,9 @@ Public Class SignVerifyEnvelope
       doc.PreserveWhitespace = False
       
       ' Load the passed XML file using it's name.
-      doc.Load(New XmlTextReader(FileName))
+      Using reader As XmlReader = XmlReader.Create(FileName)
+         doc.Load(reader)
+      End Using
       
       ' Create a SignedXml object.
       Dim signedXml As New SignedXml(doc)
