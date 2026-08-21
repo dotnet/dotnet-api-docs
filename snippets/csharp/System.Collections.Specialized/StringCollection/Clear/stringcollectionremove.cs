@@ -7,13 +7,11 @@ using System.Collections.Specialized;
 
 public class SamplesStringCollection
 {
-
     public static void Main()
     {
-
         // Creates and initializes a new StringCollection.
         StringCollection myCol = [];
-        Span<string> myArr = ["RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED"];
+        string[] myArr = ["RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED"];
         myCol.AddRange(myArr);
 
         Console.WriteLine("Initial contents of the StringCollection:");
@@ -52,6 +50,7 @@ public class SamplesStringCollection
 }
 
 /*
+
 This code produces the following output.
 
 Initial contents of the StringCollection:
@@ -87,4 +86,5 @@ After removing all occurrences of "RED":
 After clearing the collection:
 
 */
+
 // </snippet1>
