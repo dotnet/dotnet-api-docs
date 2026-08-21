@@ -13,7 +13,7 @@ public class SamplesStringCollection
 
         // Creates and initializes a new StringCollection.
         StringCollection myCol = [];
-        string[] myArr = ["RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED"];
+        Span<string> myArr = ["RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED"];
         myCol.AddRange(myArr);
 
         Console.WriteLine("Initial contents of the StringCollection:");
