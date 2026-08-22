@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports System.Diagnostics
+﻿Imports System.Diagnostics
 
 Module Module1
     Sub Main()
@@ -9,9 +8,8 @@ Module Module1
             process.StartInfo.RedirectStandardOutput = True
             process.Start()
 
-            ' Synchronously read the standard output of the spawned process. 
-            Dim reader As StreamReader = process.StandardOutput
-            Dim output As String = reader.ReadToEnd()
+            ' Synchronously read the standard output of the spawned process.
+            Dim output As String = process.StandardOutput.ReadToEnd()
             Console.WriteLine(output)
 
             process.WaitForExit()
