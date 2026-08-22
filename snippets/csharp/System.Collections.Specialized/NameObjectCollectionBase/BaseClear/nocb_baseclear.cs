@@ -6,56 +6,68 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class MyCollection : NameObjectCollectionBase  {
+public class MyCollection : NameObjectCollectionBase
+{
 
-   private DictionaryEntry _de = new DictionaryEntry();
+    private DictionaryEntry _de = new();
 
-   // Gets a key-and-value pair (DictionaryEntry) using an index.
-   public DictionaryEntry this[ int index ]  {
-      get  {
-         _de.Key = this.BaseGetKey( index );
-         _de.Value = this.BaseGet( index );
-         return( _de );
-      }
-   }
+    // Gets a key-and-value pair (DictionaryEntry) using an index.
+    public DictionaryEntry this[int index]
+    {
+        get
+        {
+            _de.Key = this.BaseGetKey(index);
+            _de.Value = this.BaseGet(index);
+            return (_de);
+        }
+    }
 
-   // Adds elements from an IDictionary into the new collection.
-   public MyCollection( IDictionary d )  {
-      foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
-      }
-   }
+    // Adds elements from an IDictionary into the new collection.
+    public MyCollection(IDictionary d)
+    {
+        foreach (DictionaryEntry de in d)
+        {
+            this.BaseAdd((string)de.Key, de.Value);
+        }
+    }
 
-   // Clears all the elements in the collection.
-   public void Clear()  {
-      this.BaseClear();
-   }
+    // Clears all the elements in the collection.
+    public void Clear()
+    {
+        this.BaseClear();
+    }
 }
 
-public class SamplesNameObjectCollectionBase  {
+public class SamplesNameObjectCollectionBase
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new MyCollection instance.
-      IDictionary d = new ListDictionary();
-      d.Add( "red", "apple" );
-      d.Add( "yellow", "banana" );
-      d.Add( "green", "pear" );
-      MyCollection myCol = new MyCollection( d );
-      Console.WriteLine( "Initial state of the collection (Count = {0}):", myCol.Count );
-      PrintKeysAndValues( myCol );
+        // Creates and initializes a new MyCollection instance.
+        IDictionary d = new ListDictionary
+      {
+          { "red", "apple" },
+          { "yellow", "banana" },
+          { "green", "pear" }
+      };
+        MyCollection myCol = new(d);
+        Console.WriteLine($"Initial state of the collection (Count = {myCol.Count}):");
+        PrintKeysAndValues(myCol);
 
-      // Removes all elements from the collection.
-      myCol.Clear();
-      Console.WriteLine( "After clearing the collection (Count = {0}):", myCol.Count );
-      PrintKeysAndValues( myCol );
-   }
+        // Removes all elements from the collection.
+        myCol.Clear();
+        Console.WriteLine($"After clearing the collection (Count = {myCol.Count}):");
+        PrintKeysAndValues(myCol);
+    }
 
-   public static void PrintKeysAndValues( MyCollection myCol )  {
-      for ( int i = 0; i < myCol.Count; i++ )  {
-         Console.WriteLine( "[{0}] : {1}, {2}", i, myCol[i].Key, myCol[i].Value );
-      }
-   }
+    public static void PrintKeysAndValues(MyCollection myCol)
+    {
+        for (int i = 0; i < myCol.Count; i++)
+        {
+            Console.WriteLine($"[{i}] : {myCol[i].Key}, {myCol[i].Value}");
+        }
+    }
 }
 
 

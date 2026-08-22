@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesListDictionary
+public class SamplesListDictionarySyncRoot
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
-        ListDictionary myCollection = new ListDictionary();
-        lock(myCollection.SyncRoot)
+        ListDictionary myCollection = [];
+        lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)
             {
@@ -20,7 +20,7 @@ public class SamplesListDictionary
 
     public static void Dummy()
     {
-        ListDictionary myListDictionary = new ListDictionary();
+        ListDictionary myListDictionary = [];
         // <Snippet3>
         foreach (DictionaryEntry de in myListDictionary)
         {

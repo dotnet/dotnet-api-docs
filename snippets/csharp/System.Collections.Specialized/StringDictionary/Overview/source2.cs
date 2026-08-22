@@ -2,15 +2,15 @@
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesStringDictionary
+public class SamplesStringDictionarySyncRoot
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
-        StringDictionary myCollection = new StringDictionary();
-        lock(myCollection.SyncRoot)
+        StringDictionary myCollection = [];
+        lock (myCollection.SyncRoot)
         {
-            foreach (Object item in myCollection)
+            foreach (object item in myCollection)
             {
                 // Insert your code here.
             }
