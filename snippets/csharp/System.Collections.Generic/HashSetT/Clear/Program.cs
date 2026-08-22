@@ -7,7 +7,7 @@ class Program
     {
         //<snippet01>
         //<snippet02>
-        HashSet<int> Numbers = new HashSet<int>();
+        HashSet<int> Numbers = [];
 
         for (int i = 0; i < 10; i++)
         {

@@ -10,14 +10,14 @@ namespace Find
     {
         private static string IDtoFind = "bk109";
 
-        private static List<Book> Books = new List<Book>();
+        private static List<Book> Books = [];
         public static void Main(string[] args)
         {
             FillList();
 
             // Find a book by its ID.
             Book result = Books.Find(
-            delegate(Book bk)
+            delegate (Book bk)
             {
                 return bk.ID == IDtoFind;
             }
@@ -33,9 +33,9 @@ namespace Find
 
             // Find last book in collection published before 2001.
             result = Books.FindLast(
-            delegate(Book bk)
+            delegate (Book bk)
             {
-                DateTime year2001 = new DateTime(2001,01,01);
+                DateTime year2001 = new(2001, 01, 01);
                 return bk.Publish_date < year2001;
             });
             if (result != null)
@@ -60,7 +60,7 @@ namespace Find
 
             // Find all books under $10.00.
             results = Books.FindAll(
-            delegate(Book bk)
+            delegate (Book bk)
             {
                 return bk.Price < 10.00;
             }
@@ -102,8 +102,10 @@ namespace Find
             // Evaluate each element and set set values in the book object.
             foreach (XElement el in elements)
             {
-                Book book = new Book();
-                book.ID = el.Attribute("id").Value;
+                Book book = new()
+                {
+                    ID = el.Attribute("id").Value
+                };
                 IEnumerable<XElement> props = el.Elements();
                 foreach (XElement p in props)
                 {
@@ -148,7 +150,7 @@ namespace Find
             {
                 return true;
             }
-	    else
+            else
             {
                 return false;
             }

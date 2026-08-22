@@ -4,18 +4,18 @@ using System.Collections.Generic;
 
 class Program
 {
-    static Dictionary<Box, String> boxes;
+    static Dictionary<Box, string> boxes;
 
     static void Main()
     {
-        BoxSameDimensions boxDim = new BoxSameDimensions();
+        BoxSameDimensions boxDim = new();
         boxes = new Dictionary<Box, string>(boxDim);
 
         Console.WriteLine("Boxes equality by dimensions:");
-        Box redBox = new Box(8, 4, 8);
-        Box greenBox = new Box(8, 6, 8);
-        Box blueBox = new Box(8, 4, 8);
-        Box yellowBox = new Box(8, 8, 8);
+        Box redBox = new(8, 4, 8);
+        Box greenBox = new(8, 6, 8);
+        Box blueBox = new(8, 4, 8);
+        Box yellowBox = new(8, 8, 8);
         AddBox(redBox, "red");
         AddBox(greenBox, "green");
         AddBox(blueBox, "blue");
@@ -24,12 +24,12 @@ class Program
         Console.WriteLine();
         Console.WriteLine("Boxes equality by volume:");
 
-        BoxSameVolume boxVolume = new BoxSameVolume();
+        BoxSameVolume boxVolume = new();
         boxes = new Dictionary<Box, string>(boxVolume);
-        Box pinkBox = new Box(8, 4, 8);
-        Box orangeBox = new Box(8, 6, 8);
-        Box purpleBox = new Box(4, 8, 8);
-        Box brownBox = new Box(8, 8, 4);
+        Box pinkBox = new(8, 4, 8);
+        Box orangeBox = new(8, 6, 8);
+        Box purpleBox = new(4, 8, 8);
+        Box brownBox = new(8, 8, 4);
         AddBox(pinkBox, "pink");
         AddBox(orangeBox, "orange");
         AddBox(purpleBox, "purple");

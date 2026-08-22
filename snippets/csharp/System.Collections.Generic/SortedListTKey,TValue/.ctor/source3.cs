@@ -2,24 +2,25 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class SortedListConstructorExample4
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a new sorted list of strings, with string keys and
         // an initial capacity of 4.
         SortedList<string, string> openWith =
-                               new SortedList<string, string>(4);
-
-        // Add 4 elements to the list.
-        openWith.Add("txt", "notepad.exe");
-        openWith.Add("bmp", "paint.exe");
-        openWith.Add("dib", "paint.exe");
-        openWith.Add("rtf", "wordpad.exe");
+                               new SortedList<string, string>(4)
+                               {
+                                   // Add 4 elements to the list.
+                                   { "txt", "notepad.exe" },
+                                   { "bmp", "paint.exe" },
+                                   { "dib", "paint.exe" },
+                                   { "rtf", "wordpad.exe" }
+                               };
 
         // List the contents of the sorted list.
         Console.WriteLine();
-        foreach( KeyValuePair<string, string> kvp in openWith )
+        foreach (KeyValuePair<string, string> kvp in openWith)
         {
             Console.WriteLine("Key = {0}, Value = {1}",
                kvp.Key, kvp.Value);

@@ -2,22 +2,23 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class DictionaryInterfaceOverviewExample1
 {
-    public static void Main()
+    public static void Run()
     {
         //<Snippet2>
         // Create a new dictionary of strings, with string keys,
         // and access it through the IDictionary generic interface.
         IDictionary<string, string> openWith =
-            new Dictionary<string, string>();
-
-        // Add some elements to the dictionary. There are no
-        // duplicate keys, but some of the values are duplicates.
-        openWith.Add("txt", "notepad.exe");
-        openWith.Add("bmp", "paint.exe");
-        openWith.Add("dib", "paint.exe");
-        openWith.Add("rtf", "wordpad.exe");
+            new Dictionary<string, string>
+            {
+                // Add some elements to the dictionary. There are no
+                // duplicate keys, but some of the values are duplicates.
+                { "txt", "notepad.exe" },
+                { "bmp", "paint.exe" },
+                { "dib", "paint.exe" },
+                { "rtf", "wordpad.exe" }
+            };
 
         // The Add method throws an exception if the new key is
         // already in the dictionary.
@@ -92,7 +93,7 @@ public class Example
         // When you use foreach to enumerate dictionary elements,
         // the elements are retrieved as KeyValuePair objects.
         Console.WriteLine();
-        foreach( KeyValuePair<string, string> kvp in openWith )
+        foreach (KeyValuePair<string, string> kvp in openWith)
         {
             Console.WriteLine("Key = {0}, Value = {1}",
                 kvp.Key, kvp.Value);
@@ -106,7 +107,7 @@ public class Example
         // The elements of the ValueCollection are strongly typed
         // with the type that was specified for dictionary values.
         Console.WriteLine();
-        foreach( string s in icoll )
+        foreach (string s in icoll)
         {
             Console.WriteLine("Value = {0}", s);
         }
@@ -119,7 +120,7 @@ public class Example
         // The elements of the ValueCollection are strongly typed
         // with the type that was specified for dictionary values.
         Console.WriteLine();
-        foreach( string s in icoll )
+        foreach (string s in icoll)
         {
             Console.WriteLine("Key = {0}", s);
         }
