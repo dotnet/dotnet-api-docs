@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesStringCollection
+public class SamplesStringCollectionSyncRoot
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
-        StringCollection myCollection = new StringCollection();
-        lock(myCollection.SyncRoot)
+        StringCollection myCollection = [];
+        lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)
             {

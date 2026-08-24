@@ -5,73 +5,80 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesHybridDictionary  {
+public class SamplesHybridDictionary
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new HybridDictionary.
-      HybridDictionary myCol = new HybridDictionary();
-      myCol.Add( "Braeburn Apples", "1.49" );
-      myCol.Add( "Fuji Apples", "1.29" );
-      myCol.Add( "Gala Apples", "1.49" );
-      myCol.Add( "Golden Delicious Apples", "1.29" );
-      myCol.Add( "Granny Smith Apples", "0.89" );
-      myCol.Add( "Red Delicious Apples", "0.99" );
-      myCol.Add( "Plantain Bananas", "1.49" );
-      myCol.Add( "Yellow Bananas", "0.79" );
-      myCol.Add( "Strawberries", "3.33" );
-      myCol.Add( "Cranberries", "5.98" );
-      myCol.Add( "Navel Oranges", "1.29" );
-      myCol.Add( "Grapes", "1.99" );
-      myCol.Add( "Honeydew Melon", "0.59" );
-      myCol.Add( "Seedless Watermelon", "0.49" );
-      myCol.Add( "Pineapple", "1.49" );
-      myCol.Add( "Nectarine", "1.99" );
-      myCol.Add( "Plums", "1.69" );
-      myCol.Add( "Peaches", "1.99" );
+        // Creates and initializes a new HybridDictionary.
+        HybridDictionary myCol = new()
+      {
+          { "Braeburn Apples", "1.49" },
+          { "Fuji Apples", "1.29" },
+          { "Gala Apples", "1.49" },
+          { "Golden Delicious Apples", "1.29" },
+          { "Granny Smith Apples", "0.89" },
+          { "Red Delicious Apples", "0.99" },
+          { "Plantain Bananas", "1.49" },
+          { "Yellow Bananas", "0.79" },
+          { "Strawberries", "3.33" },
+          { "Cranberries", "5.98" },
+          { "Navel Oranges", "1.29" },
+          { "Grapes", "1.99" },
+          { "Honeydew Melon", "0.59" },
+          { "Seedless Watermelon", "0.49" },
+          { "Pineapple", "1.49" },
+          { "Nectarine", "1.99" },
+          { "Plums", "1.69" },
+          { "Peaches", "1.99" }
+      };
 
-      // Display the contents of the collection using foreach. This is the preferred method.
-      Console.WriteLine( "Displays the elements using foreach:" );
-      PrintKeysAndValues1( myCol );
+        // Display the contents of the collection using foreach. This is the preferred method.
+        Console.WriteLine("Displays the elements using foreach:");
+        PrintKeysAndValues1(myCol);
 
-      // Display the contents of the collection using the enumerator.
-      Console.WriteLine( "Displays the elements using the IDictionaryEnumerator:" );
-      PrintKeysAndValues2( myCol );
+        // Display the contents of the collection using the enumerator.
+        Console.WriteLine("Displays the elements using the IDictionaryEnumerator:");
+        PrintKeysAndValues2(myCol);
 
-      // Display the contents of the collection using the Keys, Values, Count, and Item properties.
-      Console.WriteLine( "Displays the elements using the Keys, Values, Count, and Item properties:" );
-      PrintKeysAndValues3( myCol );
-   }
+        // Display the contents of the collection using the Keys, Values, Count, and Item properties.
+        Console.WriteLine("Displays the elements using the Keys, Values, Count, and Item properties:");
+        PrintKeysAndValues3(myCol);
+    }
 
-   // Uses the foreach statement which hides the complexity of the enumerator.
-   // NOTE: The foreach statement is the preferred way of enumerating the contents of a collection.
-   public static void PrintKeysAndValues1( IDictionary myCol )  {
-      Console.WriteLine( "   KEY                       VALUE" );
-      foreach ( DictionaryEntry de in myCol )
-         Console.WriteLine( "   {0,-25} {1}", de.Key, de.Value );
-      Console.WriteLine();
-   }
+    // Uses the foreach statement which hides the complexity of the enumerator.
+    // NOTE: The foreach statement is the preferred way of enumerating the contents of a collection.
+    public static void PrintKeysAndValues1(IDictionary myCol)
+    {
+        Console.WriteLine("   KEY                       VALUE");
+        foreach (DictionaryEntry de in myCol)
+            Console.WriteLine($"   {de.Key,-25} {de.Value}");
+        Console.WriteLine();
+    }
 
-   // Uses the enumerator.
-   // NOTE: The foreach statement is the preferred way of enumerating the contents of a collection.
-   public static void PrintKeysAndValues2( IDictionary myCol )  {
-      IDictionaryEnumerator myEnumerator = myCol.GetEnumerator();
-      Console.WriteLine( "   KEY                       VALUE" );
-      while ( myEnumerator.MoveNext() )
-         Console.WriteLine( "   {0,-25} {1}", myEnumerator.Key, myEnumerator.Value );
-      Console.WriteLine();
-   }
+    // Uses the enumerator.
+    // NOTE: The foreach statement is the preferred way of enumerating the contents of a collection.
+    public static void PrintKeysAndValues2(IDictionary myCol)
+    {
+        IDictionaryEnumerator myEnumerator = myCol.GetEnumerator();
+        Console.WriteLine("   KEY                       VALUE");
+        while (myEnumerator.MoveNext())
+            Console.WriteLine($"   {myEnumerator.Key,-25} {myEnumerator.Value}");
+        Console.WriteLine();
+    }
 
-   // Uses the Keys, Values, Count, and Item properties.
-   public static void PrintKeysAndValues3( HybridDictionary myCol )  {
-      String[] myKeys = new String[myCol.Count];
-      myCol.Keys.CopyTo( myKeys, 0 );
+    // Uses the Keys, Values, Count, and Item properties.
+    public static void PrintKeysAndValues3(HybridDictionary myCol)
+    {
+        string[] myKeys = new string[myCol.Count];
+        myCol.Keys.CopyTo(myKeys, 0);
 
-      Console.WriteLine( "   INDEX KEY                       VALUE" );
-      for ( int i = 0; i < myCol.Count; i++ )
-         Console.WriteLine( "   {0,-5} {1,-25} {2}", i, myKeys[i], myCol[myKeys[i]] );
-      Console.WriteLine();
-   }
+        Console.WriteLine("   INDEX KEY                       VALUE");
+        for (int i = 0; i < myCol.Count; i++)
+            Console.WriteLine($"   {i,-5} {myKeys[i],-25} {myCol[myKeys[i]]}");
+        Console.WriteLine();
+    }
 }
 
 /*
