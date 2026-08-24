@@ -43,7 +43,7 @@ public class Employee : BusinessObjectBase
         }
     }
 
-    const string ParkingIdProperty = "Salary";
+    const string ParkingIdProperty = nameof(ParkingID);
     public decimal ParkingID
     {
         get => _parkingId;
