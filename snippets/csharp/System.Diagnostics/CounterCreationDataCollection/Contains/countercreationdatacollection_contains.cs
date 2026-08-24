@@ -31,11 +31,12 @@ public class CounterCreationDataCollectionExample
                 for (int i = 0; i < numberOfCounters; i++)
                 {
                     Console.Write("Enter the counter name for {0} counter : ", i);
-                    myCounterCreationData[i] = new CounterCreationData();
-                    myCounterCreationData[i].CounterName = Console.ReadLine();
+                    myCounterCreationData[i] = new CounterCreationData
+                    {
+                        CounterName = Console.ReadLine()
+                    };
                 }
-                CounterCreationDataCollection myCounterCollection =
-                   new CounterCreationDataCollection();
+                CounterCreationDataCollection myCounterCollection = new();
                 // Add the 'CounterCreationData[]' to 'CounterCollection'.
                 myCounterCollection.AddRange(myCounterCreationData);
 

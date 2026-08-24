@@ -7,7 +7,7 @@ class StandardAsyncOutputExample
     private static int s_lineCount = 0;
     private static readonly StringBuilder s_output = new();
 
-    public static void Main()
+    public static void Run()
     {
         Process process = new();
         process.StartInfo.FileName = "ipconfig.exe";

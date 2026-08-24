@@ -5,7 +5,7 @@ using System.Threading;
 
 class MySample1
 {
-    public static void Main()
+    public static void Run()
     {
         string logName;
 

@@ -9,10 +9,10 @@
 using System;
 using System.Diagnostics;
 
-public class CounterCreationExample
+public class CounterCreationCollectionCopyExample
 {
 
-    public static void Main()
+    public static void Run()
     {
         try
         {

@@ -36,12 +36,14 @@ public class CounterCreationDataCollectionExample
                 for (int i = 0; i < numberOfCounters; i++)
                 {
                     Console.Write("Enter the counter name for {0} counter ", i);
-                    myCounterCreationData[i] = new CounterCreationData();
-                    myCounterCreationData[i].CounterName = Console.ReadLine();
+                    myCounterCreationData[i] = new CounterCreationData
+                    {
+                        CounterName = Console.ReadLine()
+                    };
                 }
                 CounterCreationDataCollection myCounterCollection =
                    new CounterCreationDataCollection(myCounterCreationData);
-                CounterCreationData myInsertCounterCreationData = new CounterCreationData(
+                CounterCreationData myInsertCounterCreationData = new(
                    "CounterInsert", "", PerformanceCounterType.NumberOfItems32);
                 // Insert an instance of 'CounterCreationData' in the 'CounterCreationDataCollection'.
                 myCounterCollection.Insert(myCounterCollection.Count - 1,

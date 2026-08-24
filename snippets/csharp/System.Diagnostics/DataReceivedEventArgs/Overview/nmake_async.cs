@@ -82,7 +82,7 @@ namespace ProcessAsyncStreamSamples
                 Console.WriteLine($"Nmake output logged to {buildLogFile}");
 
                 s_buildLogStream.WriteLine();
-                s_buildLogStream.WriteLine(DateTime.Now.ToString());
+                s_buildLogStream.WriteLine(DateTime.Now);
                 if (!string.IsNullOrEmpty(nmakeArguments))
                 {
                     s_buildLogStream.Write("Command line = NMake {0}",
@@ -180,7 +180,7 @@ namespace ProcessAsyncStreamSamples
                     LogToFile("StdErr", "<Max build log limit reached!>",
                         true);
 
-                    // Stop reading the output streams
+                    // Stop reading the output streams.
                     if (sendingProcess is Process p)
                     {
                         p.CancelErrorRead();
@@ -215,14 +215,13 @@ namespace ProcessAsyncStreamSamples
 
             if (s_buildLogStream != null)
             {
-                s_buildLogStream.WriteLine("[{0}] {1}",
-                    DateTime.Now.ToString(), logString.ToString());
+                s_buildLogStream.WriteLine("[{0}] {1}", DateTime.Now, logString);
                 s_buildLogStream.Flush();
             }
 
             if (echoToConsole)
             {
-                Console.WriteLine(logString.ToString());
+                Console.WriteLine(logString);
             }
         }
     }
@@ -234,7 +233,7 @@ namespace ProcessAsyncStreamSamples
     class ProcessSample
     {
         /// The main entry point for the application.
-        static void Run()
+        public static void Run()
         {
             try
             {
@@ -243,7 +242,7 @@ namespace ProcessAsyncStreamSamples
             catch (InvalidOperationException e)
             {
                 Console.WriteLine("Exception:");
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
             }
         }
     }

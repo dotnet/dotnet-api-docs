@@ -5,7 +5,7 @@ using System.Threading;
 
 class MySample
 {
-    public static void Main()
+    public static void Run()
     {
         // Create the source, if it does not already exist.
         if (!EventLog.SourceExists("MySource"))

@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 class MySample
 {
-    public static void Main()
+    public static void Run()
     {
         EventLog[] remoteEventLogs;
 

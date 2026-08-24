@@ -2,7 +2,6 @@
 // <Snippet11>
 using System;
 using System.Diagnostics;
-using Microsoft.VisualBasic;
 
 class Binomial
 {
@@ -30,7 +29,7 @@ class Binomial
         Trace.Listeners.Add(defaultListener);
 
         // Assign the log file specification from the command line, if entered.
-        if (args.Length>=2)
+        if (args.Length >= 2)
         {
             defaultListener.LogFileName = args[1];
         }
@@ -38,28 +37,27 @@ class Binomial
         // </Snippet3>
 
         // Validate the number of possibilities argument.
-        if (args.Length>=1)
+        if (args.Length >= 1)
 
-            // Verify that the argument is a number within the correct range.
+        // Verify that the argument is a number within the correct range.
         {
             try
             {
-                const decimal MAX_POSSIBILITIES = 99;
+                const decimal MaxPossibilities = 99;
                 possibilities = Decimal.Parse(args[0]);
-                if (possibilities<0||possibilities>MAX_POSSIBILITIES)
+                if (possibilities < 0 || possibilities > MaxPossibilities)
                 {
-                    throw new Exception(String.Format("The number of possibilities must " +
-                        "be in the range 0..{0}.", MAX_POSSIBILITIES));
+                    throw new Exception(
+                        $"The number of possibilities must be in the range 0..{MaxPossibilities}.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                string failMessage = String.Format("\"{0}\" " +
-                    "is not a valid number of possibilities.", args[0]);
+                string failMessage = $"\"{args[0]}\" is not a valid number of possibilities.";
                 defaultListener.Fail(failMessage, ex.Message);
                 if (!defaultListener.AssertUiEnabled)
                 {
-                    Console.WriteLine(failMessage+ "\n" +ex.Message);
+                    Console.WriteLine(failMessage + "\n" + ex.Message);
                 }
                 return;
             }
@@ -79,7 +77,7 @@ class Binomial
             return;
         }
 
-        for(iter=0; iter<=possibilities; iter++)
+        for (iter = 0; iter <= possibilities; iter++)
         {
             // <Snippet7>
             decimal result;
@@ -94,14 +92,14 @@ class Binomial
                 result = CalcBinomial(possibilities, iter);
                 // </Snippet9>
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                string failMessage = String.Format("An exception was raised when " +
-                    "calculating Binomial( {0}, {1} ).", possibilities, iter);
+                string failMessage =
+                    $"An exception was raised when calculating Binomial( {possibilities}, {iter} ).";
                 defaultListener.Fail(failMessage, ex.Message);
                 if (!defaultListener.AssertUiEnabled)
                 {
-                    Console.WriteLine(failMessage+ "\n" +ex.Message);
+                    Console.WriteLine(failMessage + "\n" + ex.Message);
                 }
                 return;
             }
@@ -109,9 +107,9 @@ class Binomial
             // <Snippet10>
 
             // Format the trace and console output.
-            binomial = String.Format("Binomial( {0}, {1} ) = ", possibilities, iter);
+            binomial = $"Binomial( {possibilities}, {iter} ) = ";
             defaultListener.Write(binomial);
-            defaultListener.WriteLine(result.ToString());
+            defaultListener.WriteLine(result);
             Console.WriteLine("{0} {1}", binomial, result);
             // </Snippet10>
         }
@@ -123,9 +121,9 @@ class Binomial
         // Calculate a binomial coefficient, and minimize the chance of overflow.
         decimal result = 1;
         decimal iter;
-        for(iter=1; iter<=possibilities-outcomes; iter++)
+        for (iter = 1; iter <= possibilities - outcomes; iter++)
         {
-            result *= outcomes+iter;
+            result *= outcomes + iter;
             result /= iter;
         }
         return result;

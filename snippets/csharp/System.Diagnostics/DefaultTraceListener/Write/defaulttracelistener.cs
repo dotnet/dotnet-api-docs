@@ -1,7 +1,6 @@
 ﻿// <Snippet1>
 using System;
 using System.Diagnostics;
-using Microsoft.VisualBasic;
 
 class DefaultTraceListenerMod
 {
@@ -26,35 +25,34 @@ class DefaultTraceListenerMod
         // </Snippet3>
 
         // Assign the log file specification from the command line, if entered.
-        if (args.Length>=2)
+        if (args.Length >= 2)
         {
             defaultListener.LogFileName = args[1];
         }
 
         // Validate the number of possibilities argument.
-        if (args.Length>=1)
+        if (args.Length >= 1)
 
-            // <Snippet5>
-            // Verify that the argument is a number within the correct range.
+        // <Snippet5>
+        // Verify that the argument is a number within the correct range.
         {
             try
             {
-                const decimal MAX_POSSIBILITIES = 99;
+                const decimal MaxPossibilities = 99;
                 possibilities = Decimal.Parse(args[0]);
-                if (possibilities<0||possibilities>MAX_POSSIBILITIES)
+                if (possibilities < 0 || possibilities > MaxPossibilities)
                 {
-                    throw new Exception(String.Format("The number of possibilities must " +
-                        "be in the range 0..{0}.", MAX_POSSIBILITIES));
+                    throw new Exception(
+                        $"The number of possibilities must be in the range 0..{MaxPossibilities}.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                string failMessage = String.Format("\"{0}\" " +
-                    "is not a valid number of possibilities.", args[0]);
+                string failMessage = $"\"{args[0]}\" is not a valid number of possibilities.";
                 defaultListener.Fail(failMessage, ex.Message);
                 if (!defaultListener.AssertUiEnabled)
                 {
-                    Console.WriteLine(failMessage+ "\n" + ex.Message);
+                    Console.WriteLine(failMessage + "\n" + ex.Message);
                 }
                 return;
             }
@@ -77,19 +75,22 @@ class DefaultTraceListenerMod
         }
 
         decimal iter;
-        for(iter=0; iter<=possibilities; iter++)
+        for (iter = 0; iter <= possibilities; iter++)
         {
 
             // <Snippet4>
             // Compute the next binomial coefficient.
             // If an exception is thrown, quit.
             decimal result = CalcBinomial(possibilities, iter);
-            if (result==0) {return;}
+            if (result == 0)
+            {
+                return;
+            }
 
             // Format the trace and console output.
-            string binomial = String.Format("Binomial( {0}, {1} ) = ", possibilities, iter);
+            string binomial = $"Binomial( {possibilities}, {iter} ) = ";
             defaultListener.Write(binomial);
-            defaultListener.WriteLine(result.ToString());
+            defaultListener.WriteLine(result);
             Console.WriteLine("{0} {1}", binomial, result);
             // </Snippet4>
         }
@@ -106,17 +107,17 @@ class DefaultTraceListenerMod
             // Calculate a binomial coefficient, and minimize the chance
             // of overflow.
             decimal iter;
-            for(iter=1; iter<=possibilities-outcomes; iter++)
+            for (iter = 1; iter <= possibilities - outcomes; iter++)
             {
-                result *= outcomes+iter;
+                result *= outcomes + iter;
                 result /= iter;
             }
             return result;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            string failMessage = String.Format("An exception was raised when " +
-                "calculating Binomial( {0}, {1} ).", possibilities, outcomes);
+            string failMessage =
+                $"An exception was raised when calculating Binomial( {possibilities}, {outcomes} ).";
             defaultListener.Fail(failMessage, ex.Message);
             if (!defaultListener.AssertUiEnabled)
             {
