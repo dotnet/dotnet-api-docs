@@ -2,24 +2,25 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class DictionaryConstructorExample4
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a new dictionary of strings, with string keys and
         // an initial capacity of 4.
         Dictionary<string, string> openWith =
-                               new Dictionary<string, string>(4);
-
-        // Add 4 elements to the dictionary.
-        openWith.Add("txt", "notepad.exe");
-        openWith.Add("bmp", "paint.exe");
-        openWith.Add("dib", "paint.exe");
-        openWith.Add("rtf", "wordpad.exe");
+                               new Dictionary<string, string>(4)
+                               {
+                                   // Add 4 elements to the dictionary.
+                                   { "txt", "notepad.exe" },
+                                   { "bmp", "paint.exe" },
+                                   { "dib", "paint.exe" },
+                                   { "rtf", "wordpad.exe" }
+                               };
 
         // List the contents of the dictionary.
         Console.WriteLine();
-        foreach( KeyValuePair<string, string> kvp in openWith )
+        foreach (KeyValuePair<string, string> kvp in openWith)
         {
             Console.WriteLine("Key = {0}, Value = {1}",
                kvp.Key, kvp.Value);
