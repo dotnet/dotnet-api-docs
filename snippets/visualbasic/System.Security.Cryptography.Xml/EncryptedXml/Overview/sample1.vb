@@ -15,7 +15,9 @@ Module Program
         ' Load an XML file into the XmlDocument object.
         Try
             xmlDoc.PreserveWhitespace = True
-            xmlDoc.Load("test.xml")
+            Using reader As XmlReader = XmlReader.Create("test.xml")
+               xmlDoc.Load(reader)
+            End Using
         Catch e As Exception
             Console.WriteLine(e.Message)
             Return

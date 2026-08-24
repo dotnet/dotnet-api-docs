@@ -5,37 +5,40 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesStringDictionary  {
+public class SamplesStringDictionary
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new StringDictionary.
-      StringDictionary myCol = new StringDictionary();
-      myCol.Add( "red", "rojo" );
-      myCol.Add( "green", "verde" );
-      myCol.Add( "blue", "azul" );
+        // Creates and initializes a new StringDictionary.
+        StringDictionary myCol = new();
+        myCol.Add("red", "rojo");
+        myCol.Add("green", "verde");
+        myCol.Add("blue", "azul");
 
-      // Displays the values in the StringDictionary.
-      Console.WriteLine( "Initial contents of the StringDictionary:" );
-      PrintKeysAndValues( myCol );
+        // Displays the values in the StringDictionary.
+        Console.WriteLine("Initial contents of the StringDictionary:");
+        PrintKeysAndValues(myCol);
 
-      // Deletes an element.
-      myCol.Remove( "green" );
-      Console.WriteLine( "The collection contains the following elements after removing \"green\":" );
-      PrintKeysAndValues( myCol );
+        // Deletes an element.
+        myCol.Remove("green");
+        Console.WriteLine("The collection contains the following elements after removing \"green\":");
+        PrintKeysAndValues(myCol);
 
-      // Clears the entire collection.
-      myCol.Clear();
-      Console.WriteLine( "The collection contains the following elements after it is cleared:" );
-      PrintKeysAndValues( myCol );
-   }
+        // Clears the entire collection.
+        myCol.Clear();
+        Console.WriteLine("The collection contains the following elements after it is cleared:");
+        PrintKeysAndValues(myCol);
+    }
 
-   public static void PrintKeysAndValues( StringDictionary myCol )  {
-      Console.WriteLine( "   KEY        VALUE" );
-      foreach ( DictionaryEntry de in myCol )
-         Console.WriteLine( "   {0,-10} {1}", de.Key, de.Value );
-      Console.WriteLine();
-   }
+    public static void PrintKeysAndValues(StringDictionary myCol)
+    {
+        Console.WriteLine("   KEY        VALUE");
+        foreach (DictionaryEntry de in myCol)
+            Console.WriteLine($"   {de.Key,-10} {de.Value}");
+        Console.WriteLine();
+    }
 }
 
 /*

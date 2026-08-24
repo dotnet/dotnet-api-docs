@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-class Program
+class HashSetConstructorExample1
 {
-    static void Main()
+    public static void Run()
     {
         //<snippet02>
         HashSet<int> lowNumbers = new HashSet<int>();

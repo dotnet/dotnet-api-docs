@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 public class Form2 : Form
@@ -19,6 +19,5 @@ public class Form2 : Form
         // Prints the display name for the property.
         textBox1.Text = myProperty.DisplayName;
     }
-
     // </Snippet1>
 }

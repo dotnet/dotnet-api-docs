@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Example
+public class DictionaryInterfaceOverviewExample2
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a new dictionary of strings, with string keys.
         //
-        Dictionary<int, string> exDictionary = new Dictionary<int, string>();
-
-        // Add some elements to the dictionary. There are no
-        // duplicate keys, but some of the values are duplicates.
-        exDictionary.Add(0, "notepad.exe");
-        exDictionary.Add(1, "paint.exe");
-        exDictionary.Add(2, "paint.exe");
-        exDictionary.Add(3, "wordpad.exe");
+        Dictionary<int, string> exDictionary = new()
+        {
+            // Add some elements to the dictionary. There are no
+            // duplicate keys, but some of the values are duplicates.
+            { 0, "notepad.exe" },
+            { 1, "paint.exe" },
+            { 2, "paint.exe" },
+            { 3, "wordpad.exe" }
+        };
         IDictionary<int, string> myDictionary = exDictionary;
         // <Snippet11>
         foreach (KeyValuePair<int, string> kvp in myDictionary)

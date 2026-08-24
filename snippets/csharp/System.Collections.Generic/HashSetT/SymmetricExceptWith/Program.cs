@@ -7,8 +7,8 @@ class Program
     static void Main()
     {
         //<snippet02>
-        HashSet<int> lowNumbers = new HashSet<int>();
-        HashSet<int> highNumbers = new HashSet<int>();
+        HashSet<int> lowNumbers = [];
+        HashSet<int> highNumbers = [];
 
         for (int i = 0; i < 6; i++)
         {
