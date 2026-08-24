@@ -74,7 +74,10 @@ public class SignVerifyEnvelope
         doc.PreserveWhitespace = false;
 
         // Load the passed XML file using it's name.
-        doc.Load(new XmlTextReader(FileName));
+        using (XmlReader reader = XmlReader.Create(FileName))
+        {
+            doc.Load(reader);
+        }
 
         // Create a SignedXml object.
         SignedXml signedXml = new SignedXml(doc);
@@ -103,7 +106,7 @@ public class SignVerifyEnvelope
         
         KeyInfoX509Data kdata = new KeyInfoX509Data(cert);
 
-        X509IssuerSerial xserial;
+        X509IssuerSerial xserial = default;
 
         xserial.IssuerName = cert.IssuerName.ToString();
         xserial.SerialNumber = cert.SerialNumber;
@@ -157,7 +160,10 @@ public class SignVerifyEnvelope
         XmlDocument xmlDocument = new XmlDocument();
 
         // Load the passed XML file into the document. 
-        xmlDocument.Load(FileName);
+        using (XmlReader reader = XmlReader.Create(FileName))
+        {
+            xmlDocument.Load(reader);
+        }
 
         // Create a new SignedXml object and pass it
         // the XML document class.
