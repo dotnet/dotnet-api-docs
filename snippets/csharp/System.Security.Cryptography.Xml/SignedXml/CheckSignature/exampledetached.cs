@@ -101,7 +101,10 @@ class XMLDSIGDetached
         XmlDocument xmlDocument = new XmlDocument();
 
         // Load the passedXML file into the document.
-        xmlDocument.Load(XmlSigFileName);
+        using (XmlReader reader = XmlReader.Create(XmlSigFileName))
+        {
+            xmlDocument.Load(reader);
+        }
 	
         // Create a new SignedXml object.
         SignedXml signedXml = new SignedXml();

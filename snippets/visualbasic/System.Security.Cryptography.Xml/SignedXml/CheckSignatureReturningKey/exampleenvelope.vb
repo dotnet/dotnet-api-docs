@@ -4,6 +4,7 @@
 ' envelope signature. It then verifies the 
 ' signed XML.
 '
+Imports System.Linq
 Imports System.Security.Cryptography
 Imports System.Security.Cryptography.Xml
 Imports System.Text
@@ -30,7 +31,7 @@ Public Class SignVerifyEnvelope
          
          ' Verify the signature of the signed XML.
          Console.WriteLine("Verifying signature...")
-         Dim result As Boolean = VerifyXmlFile("SignedExample.xml")
+         Dim result As Boolean = VerifyXmlFile("SignedExample.xml", RSAKey)
          
          ' Display the results of the signature verification to \
          ' the console.
@@ -55,7 +56,9 @@ Public Class SignVerifyEnvelope
       doc.PreserveWhitespace = False
       
       ' Load the passed XML file using it's name.
-      doc.Load(New XmlTextReader(FileName))
+      Using reader As XmlReader = XmlReader.Create(FileName)
+         doc.Load(reader)
+      End Using
       
       ' Create a SignedXml object.
       Dim signedXml As New SignedXml(doc)
@@ -105,7 +108,7 @@ Public Class SignVerifyEnvelope
    ' </Snippet2>
    ' <Snippet3>
    ' Verify the signature of an XML file and return the result.
-   Public Shared Function VerifyXmlFile(Name As [String]) As [Boolean]
+   Public Shared Function VerifyXmlFile(Name As [String], TrustedKey As RSA) As [Boolean]
       ' Create a new XML document.
       Dim xmlDocument As New XmlDocument()
       
@@ -113,7 +116,9 @@ Public Class SignVerifyEnvelope
       xmlDocument.PreserveWhitespace = True
       
       ' Load the passed XML file into the document. 
-      xmlDocument.Load(Name)
+      Using reader As XmlReader = XmlReader.Create(Name)
+         xmlDocument.Load(reader)
+      End Using
       
       ' Create a new SignedXml object and pass it
       ' the XML document class.
@@ -126,8 +131,28 @@ Public Class SignVerifyEnvelope
       ' Load the signature node.
       signedXml.LoadXml(CType(nodeList(0), XmlElement))
       
-      ' Check the signature and return the result.
-      Return signedXml.CheckSignature()
+      ' Verify the signature and retrieve the key that produced it.
+      Dim signingKey As AsymmetricAlgorithm = Nothing
+      Dim verified As Boolean = signedXml.CheckSignatureReturningKey(signingKey)
+
+      ' The returned key is owned by the caller and can hold native
+      ' handles, so dispose it once the comparison is complete.
+      Using signingKey
+         If Not verified Then
+            Return False
+         End If
+
+         ' A valid signature only proves possession of some key.
+         ' The caller must confirm the returned key matches a key it trusts.
+         If TypeOf signingKey Is RSA Then
+            Dim rsa As RSA = CType(signingKey, RSA)
+            Dim expected As RSAParameters = TrustedKey.ExportParameters(False)
+            Dim actual As RSAParameters = rsa.ExportParameters(False)
+            Return expected.Modulus.SequenceEqual(actual.Modulus) AndAlso expected.Exponent.SequenceEqual(actual.Exponent)
+         End If
+
+         Return False
+      End Using
    End Function 
    
    ' </Snippet3>

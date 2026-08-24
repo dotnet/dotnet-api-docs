@@ -27,7 +27,7 @@ Module SignVerifyEnvelope
             ' Verify the signature of the signed XML.
             Console.WriteLine("Verifying signature...")
 
-            Dim result As Boolean = VerifyXmlFile("SignedExample.xml")
+            Dim result As Boolean = VerifyXmlFile("SignedExample.xml", Key)
 
             ' Display the results of the signature verification to \
             ' the console.
@@ -102,10 +102,13 @@ Module SignVerifyEnvelope
 
 
     ' Verify the signature of an XML file and return the result.
-    Function VerifyXmlFile(ByVal Name As String) As [Boolean]
+    Function VerifyXmlFile(ByVal Name As String, Key As RSA) As [Boolean]
         ' Check the arguments.  
         If Name Is Nothing Then
             Throw New ArgumentNullException("Name")
+        End If
+        If Key Is Nothing Then
+            Throw New ArgumentNullException("Key")
         End If
         ' Create a new XML document.
         Dim xmlDocument As New XmlDocument()
@@ -114,7 +117,9 @@ Module SignVerifyEnvelope
         xmlDocument.PreserveWhitespace = True
 
         ' Load the passed XML file into the document. 
-        xmlDocument.Load(Name)
+        Using reader As XmlReader = XmlReader.Create(Name)
+           xmlDocument.Load(reader)
+        End Using
 
         ' Create a new SignedXml object and pass it
         ' the XML document class.
@@ -128,7 +133,7 @@ Module SignVerifyEnvelope
         signedXml.LoadXml(CType(nodeList(0), XmlElement))
 
         ' Check the signature and return the result.
-        Return signedXml.CheckSignature()
+        Return signedXml.CheckSignature(Key)
 
     End Function
 End Module
