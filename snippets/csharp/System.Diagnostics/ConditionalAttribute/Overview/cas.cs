@@ -14,10 +14,8 @@ class Test
         Method2();
 
         Console.WriteLine("Using the Debug class");
+        Trace.Listeners.Add(new ConsoleTraceListener());
         Debug.WriteLine("DEBUG is defined");
-#if DEBUG
-        Console.WriteLine("DEBUG is defined");
-#endif
     }
 
     //<snippet8>
