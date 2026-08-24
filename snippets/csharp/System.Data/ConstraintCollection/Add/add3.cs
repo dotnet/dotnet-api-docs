@@ -10,19 +10,16 @@ public class Form4
     {
         try
         {
-            DataColumn parentColumn =
-                dataSet.Tables["Suppliers"].Columns["SupplierID"];
-            DataColumn childColumn =
-                dataSet.Tables["Products"].Columns["SupplierID"];
-            dataSet.Tables["Products"].Constraints.Add
-                ("ProductsSuppliers", parentColumn, childColumn);
+            DataColumn parentColumn = dataSet.Tables["Suppliers"].Columns["SupplierID"];
+            DataColumn childColumn = dataSet.Tables["Products"].Columns["SupplierID"];
+            dataSet.Tables["Products"].Constraints.Add(
+                "ProductsSuppliers", parentColumn, childColumn);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             // In case the constraint already exists,
             // catch the collision here and respond.
-            Console.WriteLine("Exception of type {0} occurred.",
-                ex.GetType());
+            Console.WriteLine($"Exception of type {ex.GetType()} occurred.");
         }
     }
     // </Snippet1>
