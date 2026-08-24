@@ -14,16 +14,16 @@ namespace MiscCompModSamples
         public void LinkComponentChangedEvent(IComponentChangeService changeService)
         {
             // Registers an event handler for the ComponentChanged event.
-            changeService.ComponentChanged += new ComponentChangedEventHandler(this.OnComponentChanged);            
+            changeService.ComponentChanged += new ComponentChangedEventHandler(OnComponentChanged);
         }
 
         private void OnComponentChanged(object sender, ComponentChangedEventArgs e)
         {
             // Displays changed component information on the console.
-            Console.WriteLine("Type of the component that has changed: "+e.Component.GetType().FullName);      
-            Console.WriteLine("Name of the member of the component that has changed: "+e.Member.Name);            
-            Console.WriteLine("Old value of the member: "+e.OldValue.ToString());
-            Console.WriteLine("New value of the member: "+e.NewValue.ToString());
+            Console.WriteLine($"Type of the component that has changed: {e.Component.GetType().FullName}");
+            Console.WriteLine($"Name of the member of the component that has changed: {e.Member.Name}");
+            Console.WriteLine($"Old value of the member: {e.OldValue}");
+            Console.WriteLine($"New value of the member: {e.NewValue}");
         }
         //</Snippet1>
 	}

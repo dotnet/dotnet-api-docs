@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 public class Form1 : Form
@@ -9,19 +10,15 @@ public class Form1 : Form
     void MyEnumerator()
     {
         // Creates a new collection and assigns it the attributes for button1.
-        AttributeCollection attributes;
-        attributes = TypeDescriptor.GetAttributes(button1);
+        AttributeCollection attributes = TypeDescriptor.GetAttributes(button1);
 
         // Creates an enumerator for the collection.
-        System.Collections.IEnumerator ie = attributes.GetEnumerator();
+        IEnumerator enumerator = attributes.GetEnumerator();
 
         // Prints the type of each attribute in the collection.
-        object myAttribute;
-        while (ie.MoveNext())
+        while (enumerator.MoveNext())
         {
-            myAttribute = ie.Current;
-            textBox1.Text += myAttribute.ToString();
-            textBox1.Text += '\n';
+            textBox1.Text += $"{enumerator.Current}\n";
         }
     }
     // </Snippet1>

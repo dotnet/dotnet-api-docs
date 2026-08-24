@@ -32,8 +32,7 @@ public class Class1
              * by retrieving the DesignOnlyAttribute from the AttributeCollection. */
             DesignOnlyAttribute myAttribute =
                (DesignOnlyAttribute)attributes[typeof(DesignOnlyAttribute)];
-            Console.WriteLine("This property is design only :" +
-               myAttribute.IsDesignOnly.ToString());
+            Console.WriteLine($"This property is design only :{myAttribute.IsDesignOnly}");
             // </Snippet2>
             return 1;
         }
