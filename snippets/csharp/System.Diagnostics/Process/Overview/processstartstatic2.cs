@@ -1,4 +1,4 @@
-// This sample starts the argument-echo helper in the same snippet project.
+﻿// This sample starts the argument-echo helper in the same snippet project.
 
 using System;
 using System.Diagnostics;

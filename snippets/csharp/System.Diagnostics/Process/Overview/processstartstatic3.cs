@@ -1,4 +1,4 @@
-// This helper displays the arguments passed by the process-start sample.
+﻿// This helper displays the arguments passed by the process-start sample.
 
 using System;
 
