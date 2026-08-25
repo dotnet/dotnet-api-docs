@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
-public class Form1 : Form
-{
-    protected TextBox textBox1;
+// <Snippet1>
+// Get the file version for Notepad.
+FileVersionInfo fileVersionInfo =
+    FileVersionInfo.GetVersionInfo(Path.Combine(Environment.SystemDirectory, "Notepad.exe"));
 
-    // <Snippet1>
-    private void GetProductMajorPart()
-    {
-        // Get the file version for the notepad.
-        FileVersionInfo myFileVersionInfo =
-            FileVersionInfo.GetVersionInfo(Environment.SystemDirectory + "\\Notepad.exe");
-
-        // Print the product major part number.
-        textBox1.Text = "Product major part number: " + myFileVersionInfo.ProductMajorPart;
-    }
-    // </Snippet1>
-}
+// Display the ProductMajorPart property.
+Console.WriteLine($"Product major part number: {fileVersionInfo.ProductMajorPart}");
+// </Snippet1>

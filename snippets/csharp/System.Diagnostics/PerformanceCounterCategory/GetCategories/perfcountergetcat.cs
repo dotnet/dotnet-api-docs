@@ -1,62 +1,55 @@
-﻿//<snippet1>
+﻿// <snippet1>
 using System;
 using System.Diagnostics;
 
 class PerfCounterCatGetCatMod
 {
-
-    //<snippet2>
-    public static void Main(string[] args)
+    // <snippet2>
+    public static void Run(string[] args)
     {
         string machineName = "";
-        PerformanceCounterCategory[] categories;
 
         // Copy the machine name argument into the local variable.
         try
         {
-            machineName = args[0]=="."? "": args[0];
+            machineName = args[0] == "." ? "" : args[0];
         }
-        catch
+        catch (Exception)
         {
         }
 
         // Generate a list of categories registered on the specified computer.
+        PerformanceCounterCategory[] categories;
         try
         {
-            if (machineName.Length > 0)
-            {
-                categories = PerformanceCounterCategory.GetCategories(machineName);
-            }
-            else
-            {
-                categories = PerformanceCounterCategory.GetCategories();
-            }
+            categories = machineName.Length > 0
+                ? PerformanceCounterCategory.GetCategories(machineName)
+                : PerformanceCounterCategory.GetCategories();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            Console.WriteLine("Unable to get categories on " +
-                (machineName.Length > 0 ? "computer \"{0}\":": "this computer:"), machineName);
+            string location = machineName.Length > 0 ? $"computer \"{machineName}\":" : "this computer:";
+            Console.WriteLine($"Unable to get categories on {location}");
             Console.WriteLine(ex.Message);
             return;
         }
 
-        Console.WriteLine("These categories are registered on " +
-            (machineName.Length > 0 ? "computer \"{0}\":": "this computer:"), machineName);
+        string registeredLocation = machineName.Length > 0 ? $"computer \"{machineName}\":" : "this computer:";
+        Console.WriteLine($"These categories are registered on {registeredLocation}");
 
         // Create and sort an array of category names.
         string[] categoryNames = new string[categories.Length];
-        int objX;
-        for(objX = 0; objX < categories.Length; objX++)
+        for (int i = 0; i < categories.Length; i++)
         {
-            categoryNames[objX] = categories[objX].CategoryName;
+            categoryNames[i] = categories[i].CategoryName;
         }
         Array.Sort(categoryNames);
 
-        for(objX = 0; objX < categories.Length; objX++)
+        for (int i = 0; i < categories.Length; i++)
         {
-            Console.WriteLine("{0,4} - {1}", objX + 1, categoryNames[objX]);
+            Console.WriteLine($"{i + 1,4} - {categoryNames[i]}");
         }
     }
-    //</snippet2>
+    // </snippet2>
 }
-//</snippet1>
+// </snippet1>

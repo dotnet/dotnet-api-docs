@@ -1,25 +1,22 @@
 ﻿// <Snippet1>
 using System;
 using System.Diagnostics;
-using System.Threading;
 
 class MySample
 {
-
-    public static void Main()
+    public static void Run()
     {
-
-        // Create the source, if it does not already exist.
+        // Create the source if it doesn't already exist.
         if (!EventLog.SourceExists("MySource"))
         {
-            // An event log source should not be created and immediately used.
-            // There is a latency time to enable the source, it should be created
-            // prior to executing the application that uses the source.
+            // An event log source shouldn't be created and immediately used.
+            // The source takes time to become enabled.
+    // Create it before executing the application that uses it.
             // Execute this sample a second time to use the new source.
             EventLog.CreateEventSource("MySource", "myNewLog");
             Console.WriteLine("CreatingEventSource");
             Console.WriteLine("Exiting, execute the application a second time to use the source.");
-            // The source is created.  Exit the application to allow it to be registered.
+            // The source is created. Exit the application to allow it to be registered.
             return;
         }
 
@@ -27,5 +24,4 @@ class MySample
         EventLog.WriteEntry("MySource", "Writing to event log.");
     }
 }
-
 // </Snippet1>

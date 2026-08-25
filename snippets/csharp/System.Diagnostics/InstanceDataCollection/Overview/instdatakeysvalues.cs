@@ -1,14 +1,14 @@
-﻿//<snippet1>
+﻿// <snippet1>
 using System;
-using System.Diagnostics;
 using System.Collections;
+using System.Diagnostics;
 
 class InstDataKeysValuesMod
 {
 
-    //<snippet5>
+    // <snippet5>
     private static string categoryName;
-    //</snippet5>
+    // </snippet5>
 
     public static void Main()
     {
@@ -20,9 +20,9 @@ class InstDataKeysValuesMod
         Console.WriteLine("These categories are registered on this computer:");
 
         int catX;
-        for(catX=0; catX<categories.Length; catX++)
+        for (catX = 0; catX < categories.Length; catX++)
         {
-            Console.WriteLine("{0,4} - {1}", catX+1, categories[catX].CategoryName);
+            Console.WriteLine("{0,4} - {1}", catX + 1, categories[catX].CategoryName);
         }
 
         // Ask the user to choose a category.
@@ -33,23 +33,23 @@ class InstDataKeysValuesMod
         try
         {
             categoryNum = int.Parse(catNumStr);
-            if (categoryNum<1||categoryNum>categories.Length)
+            if (categoryNum < 1 || categoryNum > categories.Length)
             {
-                throw new Exception(String.Format("The category number must be in the " +
+                throw new Exception(string.Format("The category number must be in the " +
                     "range 1..{0}.", categories.Length));
             }
             categoryName = categories[(categoryNum - 1)].CategoryName;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine("\"{0}\" is not a valid category number." +
                 "\r\n{1}", catNumStr, ex.Message);
             return;
         }
-        //<snippet4>
+        // <snippet4>
 
         // Process the InstanceDataCollectionCollection for this category.
-        PerformanceCounterCategory pcc = new PerformanceCounterCategory(categoryName);
+        PerformanceCounterCategory pcc = new(categoryName);
         InstanceDataCollectionCollection idColCol = pcc.ReadCategory();
 
         ICollection idColColKeys = idColCol.Keys;
@@ -66,21 +66,21 @@ class InstDataKeysValuesMod
         // Display the InstanceDataCollectionCollection Keys and Values.
         // The Keys and Values collections have the same number of elements.
         int index;
-        for(index=0; index<idCCKeysArray.Length; index++)
+        for (index = 0; index < idCCKeysArray.Length; index++)
         {
             Console.WriteLine("  Next InstanceDataCollectionCollection " +
                 "Key is \"{0}\"", idCCKeysArray[index]);
             ProcessInstanceDataCollection(idCCValuesArray[index]);
         }
-        //</snippet4>
+        // </snippet4>
     }
 
-    //<snippet3>
-    //<snippet2>
+    // <snippet3>
+    // <snippet2>
     // Display the contents of an InstanceDataCollection.
     public static void ProcessInstanceDataCollection(InstanceDataCollection idCol)
     {
-        //</snippet2>
+        // </snippet2>
 
         ICollection idColKeys = idCol.Keys;
         string[] idColKeysArray = new string[idColKeys.Count];
@@ -89,25 +89,25 @@ class InstDataKeysValuesMod
         ICollection idColValues = idCol.Values;
         InstanceData[] idColValuesArray = new InstanceData[idColValues.Count];
         idColValues.CopyTo(idColValuesArray, 0);
-        //<snippet6>
+        // <snippet6>
 
         Console.WriteLine("  InstanceDataCollection for \"{0}\" " +
             "has {1} elements.", idCol.CounterName, idCol.Count);
-        //</snippet6>
+        // </snippet6>
 
         // Display the InstanceDataCollection Keys and Values.
         // The Keys and Values collections have the same number of elements.
         int index;
-        for(index=0; index<idColKeysArray.Length; index++)
+        for (index = 0; index < idColKeysArray.Length; index++)
         {
             Console.WriteLine("    Next InstanceDataCollection " +
                 "Key is \"{0}\"", idColKeysArray[index]);
             ProcessInstanceDataObject(idColValuesArray[index]);
         }
-        //<snippet7>
+        // <snippet7>
     }
-    //</snippet7>
-    //</snippet3>
+    // </snippet7>
+    // </snippet3>
 
     // Display the contents of an InstanceData object.
     public static void ProcessInstanceDataObject(InstanceData instData)
@@ -123,4 +123,4 @@ class InstDataKeysValuesMod
             "      TimeStamp: {6,-34} TimeStamp100nSec: {7}", sample.CounterType, sample.SystemFrequency, sample.BaseValue, sample.RawValue, sample.CounterFrequency, sample.CounterTimeStamp, sample.TimeStamp, sample.TimeStamp100nSec);
     }
 }
-//</snippet1>
+// </snippet1>
