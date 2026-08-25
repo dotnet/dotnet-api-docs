@@ -78,7 +78,7 @@ class CreateSourceSample
                     // To set the message and register the source remotely, use system-wide environment variables.
                     // Use variables that are valid on that computer, such as "%SystemRoot%\system32\myresource.dll".
                     Console.WriteLine("Message resource file ignored for remote event log.");
-                    registerSource = false;
+                    mySourceData.MessageResourceFile = string.Empty;
                 }
             }
         }

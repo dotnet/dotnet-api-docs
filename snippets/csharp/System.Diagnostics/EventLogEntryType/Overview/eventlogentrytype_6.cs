@@ -28,7 +28,7 @@ try
         // Create a new source in a specified log on a system.
         // An event log source shouldn't be created and immediately used.
         // The source takes time to become enabled.
-    // Create it before executing the application that uses it.
+        // Create it before executing the application that uses it.
         // Execute this sample a second time to use the new source.
         EventLog.CreateEventSource(mySource, myLog);
         Console.WriteLine("Creating the event source, press the Enter key to exit the application, \n" +

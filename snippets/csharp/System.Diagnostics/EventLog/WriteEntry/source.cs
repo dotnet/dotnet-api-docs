@@ -11,7 +11,7 @@ class MySample
         {
             // An event log source shouldn't be created and immediately used.
             // The source takes time to become enabled.
-    // Create it before executing the application that uses it.
+            // Create it before executing the application that uses it.
             // Execute this sample a second time to use the new source.
             EventLog.CreateEventSource("MySource", "myNewLog");
             Console.WriteLine("CreatingEventSource");

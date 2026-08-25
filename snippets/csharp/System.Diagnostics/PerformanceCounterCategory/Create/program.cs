@@ -251,8 +251,6 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        Snippet.Run();
-        PerformanceCounterCategory.Delete("Orders");
         PerfCounter1.Run(args);
     }
 }
