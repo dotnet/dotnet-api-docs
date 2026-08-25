@@ -1,8 +1,9 @@
-﻿using System.Diagnostics;
+using System;
+using System.Diagnostics;
 
 // <Snippet1>
 // Create an index for an array.
-int index;
+int index = default;
 
 void Method()
 {
@@ -12,3 +13,5 @@ void Method()
     Trace.Assert(index > -1);
 }
 // </Snippet1>
+
+_ = (Action)Method;

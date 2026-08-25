@@ -26,9 +26,8 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
-using System.Reflection;
 using System.IO;
-using System.Security.Permissions;
+using System.Reflection;
 
 namespace Testing
 {
@@ -36,7 +35,7 @@ namespace Testing
     {
         //<Snippet9>
         // Initialize the trace source.
-        static TraceSource ts = new TraceSource("TraceTest");
+        static TraceSource ts = new("TraceTest");
         //</Snippet9>
         //<Snippet2>
         [SwitchAttribute("SourceSwitch", typeof(SourceSwitch))]
@@ -48,7 +47,7 @@ namespace Testing
                 // Initialize trace switches.
                 //<Snippet7>
 #if(!ConfigFile)
-                SourceSwitch sourceSwitch = new SourceSwitch("SourceSwitch", "Verbose");
+                SourceSwitch sourceSwitch = new("SourceSwitch", "Verbose");
                 ts.Switch = sourceSwitch;
                 int idxConsole = ts.Listeners.Add(new System.Diagnostics.ConsoleTraceListener());
                 ts.Listeners[idxConsole].Name = "console";
@@ -92,7 +91,7 @@ namespace Testing
                 ts.TraceData(TraceEventType.Warning, 7, new object());
                 //</Snippet30>
                 //<Snippet31>
-                ts.TraceData(TraceEventType.Warning, 8, new object[] { "Message 1", "Message 2" });
+                ts.TraceData(TraceEventType.Warning, 8, ["Message 1", "Message 2"]);
                 //</Snippet31>
                 // Activity tests.
                 //<Snippet32>
@@ -111,7 +110,7 @@ namespace Testing
             catch (Exception e)
             {
                 // Catch any unexpected exception.
-                Console.WriteLine("Unexpected exception: " + e.ToString());
+                Console.WriteLine($"Unexpected exception: {e}");
                 Console.Read();
             }
         }

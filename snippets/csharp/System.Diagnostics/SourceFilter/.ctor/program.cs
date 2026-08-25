@@ -40,9 +40,8 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
-using System.Reflection;
 using System.IO;
-using System.Security.Permissions;
+using System.Reflection;
 
 namespace Testing
 {
@@ -52,9 +51,9 @@ namespace Testing
         const string DELIMITEDFILE = "DelimitedListOutput.log";
         const string TESTLISTENERFILE = "C:\\Temp\\TestListener.txt";
         //<Snippet2>
-        public static TraceSwitch traceSwitch = new TraceSwitch("TraceSwitch", "Verbose");
-        public static BooleanSwitch boolSwitch = new BooleanSwitch("BoolSwitch", "True");
-        public static SourceSwitch sourceSwitch = new SourceSwitch("SourceSwitch", "Verbose");
+        public static TraceSwitch traceSwitch = new("TraceSwitch", "Verbose");
+        public static BooleanSwitch boolSwitch = new("BoolSwitch", "True");
+        public static SourceSwitch sourceSwitch = new("SourceSwitch", "Verbose");
         //</Snippet2>
         static void Main()
         {
@@ -64,7 +63,7 @@ namespace Testing
                 // Initialize trace switches.
                 //<Snippet3>
 #if(!ConfigFile)
-                TraceSwitch traceSwitch = new TraceSwitch("TraceSwitch", "Verbose");
+                TraceSwitch traceSwitch = new("TraceSwitch", "Verbose");
 #endif
                 //</Snippet3>
                 //<Snippet4>
@@ -72,7 +71,7 @@ namespace Testing
                 //</Snippet4>
                 //<Snippet5>
 #if(!ConfigFile)
-                BooleanSwitch boolSwitch = new BooleanSwitch("BoolSwitch", "True");
+                BooleanSwitch boolSwitch = new("BoolSwitch", "True");
 #endif
                 //</Snippet5>
                 //<Snippet6>
@@ -80,7 +79,7 @@ namespace Testing
                 //</Snippet6>
                 //<Snippet7>
 #if(!ConfigFile)
-                SourceSwitch sourceSwitch = new SourceSwitch("SourceSwitch", "Verbose");
+                SourceSwitch sourceSwitch = new("SourceSwitch", "Verbose");
 #endif
                 //</Snippet7>
                 //<Snippet8>
@@ -88,7 +87,7 @@ namespace Testing
                 //</Snippet8>
                 // Initialize trace source.
                 //<Snippet9>
-                MyTraceSource ts = new MyTraceSource("TraceTest");
+                MyTraceSource ts = new("TraceTest");
                 //</Snippet9>
                 //<Snippet10>
                 Console.WriteLine(ts.Switch.DisplayName);
@@ -107,11 +106,11 @@ namespace Testing
                 //</Snippet12>
                 //<Snippet13>
                 // Display the SwitchLevelAttribute for the BooleanSwitch.
-                Object[] attribs = typeof(BooleanSwitch).GetCustomAttributes(typeof(SwitchLevelAttribute), false);
+                object[] attribs = typeof(BooleanSwitch).GetCustomAttributes(typeof(SwitchLevelAttribute), false);
                 if (attribs.Length == 0)
                     Console.WriteLine("Error, couldn't find SwitchLevelAttribute on BooleanSwitch.");
                 else
-                    Console.WriteLine(((SwitchLevelAttribute)attribs[0]).SwitchLevelType.ToString());
+                    Console.WriteLine(((SwitchLevelAttribute)attribs[0]).SwitchLevelType);
                 //</Snippet13>
 #if(ConfigFile)
                 //<Snippet14>
@@ -192,7 +191,7 @@ namespace Testing
                 ts.TraceData(TraceEventType.Warning, 9, new object());
                 //</Snippet30>
                 //<Snippet31>
-                ts.TraceData(TraceEventType.Warning, 10, new object[] { "Message 1", "Message 2" });
+                ts.TraceData(TraceEventType.Warning, 10, ["Message 1", "Message 2"]);
                 //</Snippet31>
                 // Activity tests.
                 //<Snippet32>
@@ -214,7 +213,7 @@ namespace Testing
                 try
                 {
                     Console.WriteLine("Examining " + TEXTFILE);
-                    StreamReader logfile = new StreamReader(TEXTFILE);
+                    StreamReader logfile = new(TEXTFILE);
                     while (!logfile.EndOfStream)
                         Console.WriteLine(logfile.ReadLine());
 
@@ -233,7 +232,7 @@ namespace Testing
                 try
                 {
                     Console.WriteLine("Examining " + DELIMITEDFILE);
-                    StreamReader logfile = new StreamReader(DELIMITEDFILE);
+                    StreamReader logfile = new(DELIMITEDFILE);
                     while (!logfile.EndOfStream)
                         Console.WriteLine(logfile.ReadLine());
                     logfile.Close();
@@ -250,7 +249,7 @@ namespace Testing
             catch (Exception e)
             {
                 // Catch any unexpected exception.
-                Console.WriteLine("Unexpected exception: " + e.ToString());
+                Console.WriteLine($"Unexpected exception: {e}");
                 Console.Read();
             }
         }
@@ -261,14 +260,15 @@ namespace Testing
     {
         string firstAttribute = "";
         string secondAttribute = "";
-        public MyTraceSource(string n) : base(n) {}
+        public MyTraceSource(string n) : base(n) { }
 
         public string FirstTraceSourceAttribute
         {
-            get {
+            get
+            {
                 foreach (DictionaryEntry de in this.Attributes)
                     if (de.Key.ToString().ToLower() == "firsttracesourceattribute")
-                        firstAttribute = de.Value.ToString() ;
+                        firstAttribute = de.Value.ToString();
                 return firstAttribute;
             }
             set { firstAttribute = value; }
@@ -276,18 +276,20 @@ namespace Testing
 
         public string SecondTraceSourceAttribute
         {
-            get {
+            get
+            {
                 foreach (DictionaryEntry de in this.Attributes)
                     if (de.Key.ToString().ToLower() == "secondtracesourceattribute")
                         secondAttribute = de.Value.ToString();
-                return secondAttribute; }
+                return secondAttribute;
+            }
             set { secondAttribute = value; }
         }
 
         protected override string[] GetSupportedAttributes()
         {
             // Allow the use of the attributes in the configuration file.
-            return new string[] { "FirstTraceSourceAttribute", "SecondTraceSourceAttribute" };
+            return ["FirstTraceSourceAttribute", "SecondTraceSourceAttribute"];
         }
     }
     //</Snippet33>
@@ -311,18 +313,17 @@ namespace Testing
 
         protected override string[] GetSupportedAttributes()
         {
-            return new string[] { "customsourceSwitchattribute" };
+            return ["customsourceSwitchattribute"];
         }
     }
     //</snippet34>
 
     // Very basic test listener derived from TextWriterTraceListener.
     //<Snippet35>
-    [HostProtection(Synchronization = true)]
     public class TestListener : TextWriterTraceListener
     {
         public TestListener(string fileName) : base(fileName) { }
-        public TestListener(string fileName, string name) : base(fileName, name) {}
+        public TestListener(string fileName, string name) : base(fileName, name) { }
 
         public override void Write(string s)
         {
@@ -336,7 +337,7 @@ namespace Testing
         {
             // The following string array will allow the use of
             // the name "customListenerAttribute" in the configuration file.
-            return new string[] { "customListenerAttribute" };
+            return ["customListenerAttribute"];
         }
     }
     //</Snippet35>

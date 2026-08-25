@@ -3,19 +3,19 @@ using System.Diagnostics;
 
 public class Example
 {
-    public static void Main()
+    public static void Run()
     {
-        var p = new Process();
+        using Process p = new();
+        p.StartInfo = SampleProcess.CreateStartInfo("helper");
         p.StartInfo.UseShellExecute = false;
         p.StartInfo.RedirectStandardOutput = true;
         string eOut = null;
         p.StartInfo.RedirectStandardError = true;
         p.ErrorDataReceived += new DataReceivedEventHandler((sender, e) =>
                                    { eOut += e.Data; });
-        p.StartInfo.FileName = "Write500Lines.exe";
         p.Start();
 
-        // To avoid deadlocks, use an asynchronous read operation on at least one of the streams.  
+        // To avoid deadlocks, use an asynchronous read operation on at least one of the streams.
         p.BeginErrorReadLine();
         string output = p.StandardOutput.ReadToEnd();
         p.WaitForExit();

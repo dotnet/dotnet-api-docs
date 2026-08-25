@@ -10,9 +10,9 @@ public class App5
     private static PerformanceCounter PC;
     private static PerformanceCounter BPC;
 
-    public static void Main()
+    public static void Run()
     {
-        ArrayList samplesList = new ArrayList();
+        ArrayList samplesList = [];
 
         // If the category does not exist, create the category and exit.
         // Performance counters should not be created and immediately used.
@@ -32,18 +32,22 @@ public class App5
         if (!PerformanceCounterCategory.Exists("RawFractionSampleCategory"))
         {
 
-            CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
+            CounterCreationDataCollection CCDC = [];
 
             // Add the counter.
-            CounterCreationData rf = new CounterCreationData();
-            rf.CounterType = PerformanceCounterType.RawFraction;
-            rf.CounterName = "RawFractionSample";
+            CounterCreationData rf = new()
+            {
+                CounterType = PerformanceCounterType.RawFraction,
+                CounterName = "RawFractionSample"
+            };
             CCDC.Add(rf);
 
             // Add the base counter.
-            CounterCreationData rfBase = new CounterCreationData();
-            rfBase.CounterType = PerformanceCounterType.RawBase;
-            rfBase.CounterName = "RawFractionSampleBase";
+            CounterCreationData rfBase = new()
+            {
+                CounterType = PerformanceCounterType.RawBase,
+                CounterName = "RawFractionSampleBase"
+            };
             CCDC.Add(rfBase);
 
             // Create the category.
@@ -78,7 +82,7 @@ public class App5
     private static void CollectSamples(ArrayList samplesList)
     {
 
-        Random r = new Random(DateTime.Now.Millisecond);
+        Random r = new(DateTime.Now.Millisecond);
 
         // Initialize the performance counter.
         PC.NextSample();
@@ -100,7 +104,7 @@ public class App5
             // Copy out the next value every ten times around the loop.
             if ((j % 10) == 9)
             {
-                Console.WriteLine(";       NextValue() = " + PC.NextValue().ToString());
+                Console.WriteLine($";       NextValue() = {PC.NextValue()}");
                 OutputSample(PC.NextSample());
                 samplesList.Add(PC.NextSample());
             }
@@ -144,11 +148,11 @@ public class App5
     //		Average - SUM (N / D) /x
     //		Example - Paging File\% Usage Peak
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
-    private static Single MyComputeCounterValue(CounterSample rfSample)
+    private static float MyComputeCounterValue(CounterSample rfSample)
     {
-        Single numerator = (Single)rfSample.RawValue;
-        Single denomenator = (Single)rfSample.BaseValue;
-        Single counterValue = (numerator / denomenator) * 100;
+        float numerator = (float)rfSample.RawValue;
+        float denomenator = (float)rfSample.BaseValue;
+        float counterValue = (numerator / denomenator) * 100;
         return (counterValue);
     }
 

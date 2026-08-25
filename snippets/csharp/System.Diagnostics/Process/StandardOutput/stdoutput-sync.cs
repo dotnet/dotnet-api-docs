@@ -3,15 +3,15 @@ using System.Diagnostics;
 
 public class Example2
 {
-    public static void Main()
+    public static void Run()
     {
-        var p = new Process();
+        using Process p = new();
+        p.StartInfo = SampleProcess.CreateStartInfo("helper");
         p.StartInfo.UseShellExecute = false;
         p.StartInfo.RedirectStandardOutput = true;
-        p.StartInfo.FileName = "Write500Lines.exe";
         p.Start();
 
-        // To avoid deadlocks, always read the output stream first and then wait.  
+        // To avoid deadlocks, always read the output stream first and then wait.
         string output = p.StandardOutput.ReadToEnd();
         p.WaitForExit();
 

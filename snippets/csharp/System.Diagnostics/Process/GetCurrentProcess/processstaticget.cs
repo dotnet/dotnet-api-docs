@@ -1,7 +1,7 @@
 ﻿// <Snippet1>
 using System;
-using System.Diagnostics;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace MyProcessSample
 {
@@ -42,7 +42,7 @@ namespace MyProcessSample
 
         static void Main()
         {
-            MyProcess myProcess = new MyProcess();
+            MyProcess myProcess = new();
             myProcess.BindToRunningProcesses();
         }
     }

@@ -7,7 +7,7 @@ class StackTraceSample
     [STAThread]
     static void Main(string[] args)
     {
-        StackTraceSample sample = new StackTraceSample();
+        StackTraceSample sample = new();
         try
         {
             sample.MyPublicMethod();
@@ -17,8 +17,8 @@ class StackTraceSample
             // Create a StackTrace that captures
             // filename, line number, and column
             // information for the current thread.
-            StackTrace st = new StackTrace(true);
-            for(int i =0; i< st.FrameCount; i++ )
+            StackTrace st = new(true);
+            for (int i = 0; i < st.FrameCount; i++)
             {
                 // Note that high up the call stack, there is only
                 // one stack frame.
@@ -33,14 +33,14 @@ class StackTraceSample
         }
     }
 
-    public void MyPublicMethod ()
+    public void MyPublicMethod()
     {
         MyProtectedMethod();
     }
 
-    protected void MyProtectedMethod ()
+    protected void MyProtectedMethod()
     {
-        MyInternalClass mic = new MyInternalClass();
+        MyInternalClass mic = new();
         mic.ThrowsException();
     }
 
@@ -52,27 +52,27 @@ class StackTraceSample
             {
                 throw new Exception("A problem was encountered.");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Create a StackTrace that captures filename,
                 // line number and column information.
-                StackTrace st = new StackTrace(true);
+                StackTrace st = new(true);
                 string stackIndent = "";
-                for(int i =0; i< st.FrameCount; i++ )
+                for (int i = 0; i < st.FrameCount; i++)
                 {
                     // Note that at this level, there are four
                     // stack frames, one for each method invocation.
                     StackFrame sf = st.GetFrame(i);
                     Console.WriteLine();
                     Console.WriteLine(stackIndent + " Method: {0}",
-                        sf.GetMethod() );
-                    Console.WriteLine(  stackIndent + " File: {0}",
+                        sf.GetMethod());
+                    Console.WriteLine(stackIndent + " File: {0}",
                         sf.GetFileName());
-                    Console.WriteLine(  stackIndent + " Line Number: {0}",
+                    Console.WriteLine(stackIndent + " Line Number: {0}",
                         sf.GetFileLineNumber());
                     stackIndent += "  ";
                 }
-                throw e;
+                throw;
             }
         }
     }

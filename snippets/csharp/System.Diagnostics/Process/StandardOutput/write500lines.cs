@@ -2,10 +2,12 @@
 
 public class Example3
 {
-    public static void Main()
+    public static void Run()
     {
         for (int ctr = 0; ctr < 500; ctr++)
+        {
             Console.WriteLine($"Line {ctr + 1} of 500 written: {(ctr + 1) / 500.0:P2}");
+        }
 
         Console.Error.WriteLine("\nSuccessfully wrote 500 lines.\n");
     }

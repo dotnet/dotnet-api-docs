@@ -9,9 +9,8 @@
 
 // <Snippet1>
 using System;
-using System.IO;
 using System.Diagnostics;
-using System.ComponentModel;
+using System.IO;
 
 namespace ProcessStandardInputSample
 {
@@ -23,8 +22,8 @@ namespace ProcessStandardInputSample
 
             // Start the Sort.exe process with redirected input.
             // Use the sort command to sort the input text.
-            using (Process myProcess = new Process())
             {
+                using Process myProcess = new();
                 myProcess.StartInfo.FileName = "Sort.exe";
                 myProcess.StartInfo.UseShellExecute = false;
                 myProcess.StartInfo.RedirectStandardInput = true;
@@ -36,7 +35,7 @@ namespace ProcessStandardInputSample
                 // Prompt the user for input text lines to sort.
                 // Write each line to the StandardInput stream of
                 // the sort command.
-                String inputText;
+                string inputText;
                 int numLines = 0;
                 do
                 {
