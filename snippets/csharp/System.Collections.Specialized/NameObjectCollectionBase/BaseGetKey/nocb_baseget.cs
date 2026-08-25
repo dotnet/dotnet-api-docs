@@ -6,61 +6,75 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class MyCollection : NameObjectCollectionBase  {
+public class MyCollection : NameObjectCollectionBase
+{
 
-   private DictionaryEntry _de = new DictionaryEntry();
+    private DictionaryEntry _de = new();
 
-   // Gets a key-and-value pair (DictionaryEntry) using an index.
-   public DictionaryEntry this[ int index ]  {
-      get  {
-         _de.Key = this.BaseGetKey( index );
-         _de.Value = this.BaseGet( index );
-         return( _de );
-      }
-   }
+    // Gets a key-and-value pair (DictionaryEntry) using an index.
+    public DictionaryEntry this[int index]
+    {
+        get
+        {
+            _de.Key = this.BaseGetKey(index);
+            _de.Value = this.BaseGet(index);
+            return (_de);
+        }
+    }
 
-   // Gets or sets the value associated with the specified key.
-   public Object this[ String key ]  {
-      get  {
-         return( this.BaseGet( key ) );
-      }
-      set  {
-         this.BaseSet( key, value );
-      }
-   }
+    // Gets or sets the value associated with the specified key.
+    public object this[string key]
+    {
+        get
+        {
+            return (this.BaseGet(key));
+        }
+        set
+        {
+            this.BaseSet(key, value);
+        }
+    }
 
-   // Adds elements from an IDictionary into the new collection.
-   public MyCollection( IDictionary d )  {
-      foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
-      }
-   }
+    // Adds elements from an IDictionary into the new collection.
+    public MyCollection(IDictionary d)
+    {
+        foreach (DictionaryEntry de in d)
+        {
+            this.BaseAdd((string)de.Key, de.Value);
+        }
+    }
 }
 
-public class SamplesNameObjectCollectionBase  {
+public class SamplesNameObjectCollectionBase
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new MyCollection instance.
-      IDictionary d = new ListDictionary();
-      d.Add( "red", "apple" );
-      d.Add( "yellow", "banana" );
-      d.Add( "green", "pear" );
-      MyCollection myCol = new MyCollection( d );
-      Console.WriteLine( "Initial state of the collection (Count = {0}):", myCol.Count );
-      PrintKeysAndValues( myCol );
+        // Creates and initializes a new MyCollection instance.
+        IDictionary d = new ListDictionary
+      {
+          { "red", "apple" },
+          { "yellow", "banana" },
+          { "green", "pear" }
+      };
+        MyCollection myCol = new(d);
+        Console.WriteLine($"Initial state of the collection (Count = {myCol.Count}):");
+        PrintKeysAndValues(myCol);
 
-      // Gets specific keys and values.
-      Console.WriteLine( "The key at index 0 is {0}.", myCol[0].Key );
-      Console.WriteLine( "The value at index 0 is {0}.", myCol[0].Value );
-      Console.WriteLine( "The value associated with the key \"green\" is {0}.", myCol["green"] );
-   }
+        // Gets specific keys and values.
+        Console.WriteLine($"The key at index 0 is {myCol[0].Key}.");
+        Console.WriteLine($"The value at index 0 is {myCol[0].Value}.");
+        Console.WriteLine($"The value associated with the key \"green\" is {myCol["green"]}.");
+    }
 
-   public static void PrintKeysAndValues( MyCollection myCol )  {
-      for ( int i = 0; i < myCol.Count; i++ )  {
-         Console.WriteLine( "[{0}] : {1}, {2}", i, myCol[i].Key, myCol[i].Value );
-      }
-   }
+    public static void PrintKeysAndValues(MyCollection myCol)
+    {
+        for (int i = 0; i < myCol.Count; i++)
+        {
+            Console.WriteLine($"[{i}] : {myCol[i].Key}, {myCol[i].Value}");
+        }
+    }
 }
 
 

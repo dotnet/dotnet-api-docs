@@ -16,28 +16,28 @@ class TestCollectionsUtils
 
         // Select cities from the table using mixed case.
         Console.WriteLine("Case insensitive hashtable results:\n");
-        Console.WriteLine("{0}'s population is: {1}", "Trapperville", population1["trapperville"]);
-        Console.WriteLine("{0}'s population is: {1}", "Doggerton", population1["DOGGERTON"]);
-        Console.WriteLine("{0}'s population is: {1}", "New Hollow", population1["New hoLLow"]);
-        Console.WriteLine("{0}'s population is: {1}", "McHenry", population1["MchenrY"]);
+        Console.WriteLine($"{"Trapperville"}'s population is: {population1["trapperville"]}");
+        Console.WriteLine($"{"Doggerton"}'s population is: {population1["DOGGERTON"]}");
+        Console.WriteLine($"{"New Hollow"}'s population is: {population1["New hoLLow"]}");
+        Console.WriteLine($"{"McHenry"}'s population is: {population1["MchenrY"]}");
 
         SortedList population2 = CollectionsUtil.CreateCaseInsensitiveSortedList();
 
         foreach (string city in population1.Keys)
         {
-           population2.Add(city, population1[city]);
+            population2.Add(city, population1[city]);
         }
 
         // Select cities from the sorted list using mixed case.
         Console.WriteLine("\nCase insensitive sorted list results:\n");
-        Console.WriteLine("{0}'s population is: {1}", "Trapperville", population2["trapPeRVille"]);
-        Console.WriteLine("{0}'s population is: {1}", "Doggerton", population2["dOGGeRtON"]);
-        Console.WriteLine("{0}'s population is: {1}", "New Hollow", population2["nEW hOLLOW"]);
-        Console.WriteLine("{0}'s population is: {1}", "McHenry", population2["MchEnrY"]);
+        Console.WriteLine($"{"Trapperville"}'s population is: {population2["trapPeRVille"]}");
+        Console.WriteLine($"{"Doggerton"}'s population is: {population2["dOGGeRtON"]}");
+        Console.WriteLine($"{"New Hollow"}'s population is: {population2["nEW hOLLOW"]}");
+        Console.WriteLine($"{"McHenry"}'s population is: {population2["MchEnrY"]}");
     }
 }
 
-// This program displays the following output to the console
+// This program displays the following output to the console.
 //
 // Case insensitive hashtable results:
 //

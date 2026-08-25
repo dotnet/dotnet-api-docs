@@ -6,85 +6,105 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class MyCollection : NameObjectCollectionBase  {
+public class MyCollection : NameObjectCollectionBase
+{
 
-   private DictionaryEntry _de = new DictionaryEntry();
+    private DictionaryEntry _de = new();
 
-   // Gets a key-and-value pair (DictionaryEntry) using an index.
-   public DictionaryEntry this[ int index ]  {
-      get  {
-         _de.Key = this.BaseGetKey( index );
-         _de.Value = this.BaseGet( index );
-         return( _de );
-      }
-   }
+    // Gets a key-and-value pair (DictionaryEntry) using an index.
+    public DictionaryEntry this[int index]
+    {
+        get
+        {
+            _de.Key = this.BaseGetKey(index);
+            _de.Value = this.BaseGet(index);
+            return (_de);
+        }
+    }
 
-   // Adds elements from an IDictionary into the new collection.
-   public MyCollection( IDictionary d )  {
-      foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
-      }
-   }
+    // Adds elements from an IDictionary into the new collection.
+    public MyCollection(IDictionary d)
+    {
+        foreach (DictionaryEntry de in d)
+        {
+            this.BaseAdd((string)de.Key, de.Value);
+        }
+    }
 
-   // Gets a String array that contains all the keys in the collection.
-   public String[] AllKeys  {
-      get  {
-         return( this.BaseGetAllKeys() );
-      }
-   }
+    // Gets a String array that contains all the keys in the collection.
+    public string[] AllKeys
+    {
+        get
+        {
+            return (this.BaseGetAllKeys());
+        }
+    }
 
-   // Gets an Object array that contains all the values in the collection.
-   public Array AllValues  {
-      get  {
-         return( this.BaseGetAllValues() );
-      }
-   }
+    // Gets an Object array that contains all the values in the collection.
+    public Array AllValues
+    {
+        get
+        {
+            return (this.BaseGetAllValues());
+        }
+    }
 
-   // Gets a String array that contains all the values in the collection.
-   public String[] AllStringValues  {
-      get  {
-         return( (String[]) this.BaseGetAllValues( typeof(System.String) ) );
-      }
-   }
+    // Gets a String array that contains all the values in the collection.
+    public string[] AllStringValues
+    {
+        get
+        {
+            return ((string[])this.BaseGetAllValues(typeof(string)));
+        }
+    }
 }
 
-public class SamplesNameObjectCollectionBase  {
+public class SamplesNameObjectCollectionBase
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new MyCollection instance.
-      IDictionary d = new ListDictionary();
-      d.Add( "red", "apple" );
-      d.Add( "yellow", "banana" );
-      d.Add( "green", "pear" );
-      MyCollection myCol = new MyCollection( d );
-      Console.WriteLine( "Initial state of the collection (Count = {0}):", myCol.Count );
-      PrintKeysAndValues( myCol );
+        // Creates and initializes a new MyCollection instance.
+        IDictionary d = new ListDictionary
+      {
+          { "red", "apple" },
+          { "yellow", "banana" },
+          { "green", "pear" }
+      };
+        MyCollection myCol = new(d);
+        Console.WriteLine($"Initial state of the collection (Count = {myCol.Count}):");
+        PrintKeysAndValues(myCol);
 
-      // Displays the list of keys.
-      Console.WriteLine( "The list of keys:" );
-      foreach ( String s in myCol.AllKeys )  {
-         Console.WriteLine( "   {0}", s );
-      }
+        // Displays the list of keys.
+        Console.WriteLine("The list of keys:");
+        foreach (string s in myCol.AllKeys)
+        {
+            Console.WriteLine($"   {s}");
+        }
 
-      // Displays the list of values of type Object.
-      Console.WriteLine( "The list of values (Object):" );
-      foreach ( Object o in myCol.AllValues )  {
-         Console.WriteLine( "   {0}", o.ToString() );
-      }
+        // Displays the list of values of type Object.
+        Console.WriteLine("The list of values (Object):");
+        foreach (object o in myCol.AllValues)
+        {
+            Console.WriteLine($"   {o}");
+        }
 
-      // Displays the list of values of type String.
-      Console.WriteLine( "The list of values (String):" );
-      foreach ( String s in myCol.AllValues )  {
-         Console.WriteLine( "   {0}", s );
-      }
-   }
+        // Displays the list of values of type String.
+        Console.WriteLine("The list of values (String):");
+        foreach (string s in myCol.AllValues)
+        {
+            Console.WriteLine($"   {s}");
+        }
+    }
 
-   public static void PrintKeysAndValues( MyCollection myCol )  {
-      for ( int i = 0; i < myCol.Count; i++ )  {
-         Console.WriteLine( "[{0}] : {1}, {2}", i, myCol[i].Key, myCol[i].Value );
-      }
-   }
+    public static void PrintKeysAndValues(MyCollection myCol)
+    {
+        for (int i = 0; i < myCol.Count; i++)
+        {
+            Console.WriteLine($"[{i}] : {myCol[i].Key}, {myCol[i].Value}");
+        }
+    }
 }
 
 

@@ -13,14 +13,12 @@ public class Form1 : Form
         EventDescriptorCollection events = TypeDescriptor.GetEvents(button1);
 
         // Creates an enumerator.
-        IEnumerator ie = events.GetEnumerator();
+        IEnumerator enumerator = events.GetEnumerator();
 
         // Prints the name of each event in the collection.
-        object myEvent;
-        while (ie.MoveNext())
+        while (enumerator.MoveNext())
         {
-            myEvent = ie.Current;
-            textBox1.Text += myEvent.ToString() + '\n';
+            textBox1.Text += $"{enumerator.Current}\n";
         }
     }
 

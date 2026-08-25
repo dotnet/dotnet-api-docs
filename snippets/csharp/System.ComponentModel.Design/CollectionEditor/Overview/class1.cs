@@ -1,109 +1,56 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Web.UI.Design;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
-namespace EditorAttributeExamples
+namespace EditorExamples
 {
-    public class Class1 : System.ComponentModel.Component
+    public class Class1 : Component
     {
-        // System.ComponentModel.Design.CollectionEditor EditorAttribute example
+        // System.ComponentModel.Design.CollectionEditor Editor example.
         //<Snippet1>
-        [EditorAttribute(typeof(System.ComponentModel.Design.CollectionEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        public ICollection testCollection
-        {
-            get
-            {
-                return Icollection;
-            }
-            set
-            {
-                Icollection = value;
-            }
-        }
-        private ICollection Icollection;
+        [Editor(typeof(CollectionEditor), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public ICollection testCollection { get; set; }
         //</Snippet1>
 
-        // System.Drawing.Design.FontEditor EditorAttribute example
+        // FontEditor Editor example.
         //<Snippet2>
-        [EditorAttribute(typeof(System.Drawing.Design.FontEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        public Font testFont
-        {
-            get
-            {
-                return font;
-            }
-            set
-            {
-                font = value;
-            }
-        }
-        private Font font;
+        [Editor(typeof(FontEditor), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Font testFont { get; set; }
         //</Snippet2>
 
-        // System.Drawing.Design.ImageEditor EditorAttribute example
+        // ImageEditor Editor example.
         //<Snippet3>
-        [EditorAttribute(typeof(System.Drawing.Design.ImageEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        public Image testImage
-        {
-            get
-            {
-                return testImg;
-            }
-            set
-            {
-                testImg = value;
-            }
-        }
-        private Image testImg;                
+        [Editor(typeof(ImageEditor), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Image testImage { get; set; }
         //</Snippet3>
 
-        // System.Windows.Forms.Design.AnchorEditor EditorAttribute example
+        // System.Windows.Forms.Design.AnchorEditor Editor example.
         //<Snippet4>
-        [EditorAttribute(typeof(System.Windows.Forms.Design.AnchorEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        public System.Windows.Forms.AnchorStyles testAnchor
-        {
-            get
-            {
-                return anchor;
-            }
-            set
-            {
-                anchor = value;
-            }
-        }
-        private AnchorStyles anchor;       
+        [Editor(typeof(System.Windows.Forms.Design.AnchorEditor), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public AnchorStyles testAnchor { get; set; }
         //</Snippet4>
 
-        // System.Windows.Forms.Design.FileNameEditor EditorAttribute example
+        // System.Windows.Forms.Design.FileNameEditor Editor example.
         //<Snippet5>
-        [EditorAttribute(typeof(System.Windows.Forms.Design.FileNameEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        public string testFilename
-        {
-            get
-            {
-                return filename;
-            }
-            set
-            {
-                filename = value;
-            }
-        }
-        private string filename;       
+        [Editor(typeof(System.Windows.Forms.Design.FileNameEditor), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public string testFilename { get; set; }
         //</Snippet5>
 
         public Class1()
         {
             // Initialize collections for design-mode editor testing.
-            Icollection = new int[] { 0, 2, 4, 6, 8, 12, 14 };
-            font = new Font("Arial", 8);           
+            testCollection = new int[] { 0, 2, 4, 6, 8, 12, 14 };
+            testFont = new("Arial", 8);
             testAnchor = AnchorStyles.None;
-            filename = string.Empty;
+            testFilename = string.Empty;
         }
     }
 }

@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Specialized;
 
-public class OrderedDictionarySample
+public class OrderedDictionarySyncRootSample
 {
-    public static void Main()
+    public static void Run()
     {
-        OrderedDictionary myOrderedDictionary = new OrderedDictionary();
+        OrderedDictionary myOrderedDictionary = [];
         // <Snippet06>
         foreach (DictionaryEntry de in myOrderedDictionary)
         {

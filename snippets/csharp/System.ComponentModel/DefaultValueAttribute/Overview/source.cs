@@ -20,7 +20,7 @@ public class Form1 : Form
          * from the AttributeCollection. */
         DefaultValueAttribute myAttribute =
             (DefaultValueAttribute)attributes[typeof(DefaultValueAttribute)];
-        Console.WriteLine("The default value is: " + myAttribute.Value.ToString());
+        Console.WriteLine($"The default value is: {myAttribute.Value}");
         // </Snippet2>
     }
 }

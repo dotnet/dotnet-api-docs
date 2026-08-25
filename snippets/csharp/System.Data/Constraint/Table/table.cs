@@ -2,13 +2,13 @@
 using System.Data;
 using System.Windows.Forms;
 
-public class Form4: Form
+public class Form4 : Form
 {
-
-// <Snippet1>
- private void GetDataTable(UniqueConstraint constraint){
-    DataTable table = constraint.Table;
-    Console.WriteLine(table.TableName);
- }
-// </Snippet1>
+    // <Snippet1>
+    private void GetDataTable(UniqueConstraint constraint)
+    {
+        DataTable table = constraint.Table;
+        Console.WriteLine(table.TableName);
+    }
+    // </Snippet1>
 }

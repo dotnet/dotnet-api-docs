@@ -5,7 +5,7 @@ using System.Windows.Forms.Design;
 
 namespace TypeCategoryTabExample;
 
-// This component adds a TypeCategoryTab to the property browser 
+// This component adds a TypeCategoryTab to the property browser
 // that is available for any components in the current design mode document.
 [PropertyTab(typeof(TypeCategoryTab), PropertyTabScope.Document)]
 public class TypeCategoryTabComponent : Component
@@ -15,7 +15,7 @@ public class TypeCategoryTabComponent : Component
     }
 }
 
-// A TypeCategoryTab property tab lists properties by the 
+// A TypeCategoryTab property tab lists properties by the
 // category of the type of each property.
 public class TypeCategoryTab : PropertyTab
 {
@@ -24,19 +24,25 @@ public class TypeCategoryTab : PropertyTab
     }
 
     //<Snippet2>
-    // Returns the properties of the specified component extended with 
+    // Returns the properties of the specified component extended with
     // a CategoryAttribute reflecting the name of the type of the property.
     public override PropertyDescriptorCollection GetProperties(object component, System.Attribute[] attributes)
     {
-        PropertyDescriptorCollection props = attributes == null ? TypeDescriptor.GetProperties(component) : TypeDescriptor.GetProperties(component, attributes);
+        PropertyDescriptorCollection props = attributes == null
+            ? TypeDescriptor.GetProperties(component)
+            : TypeDescriptor.GetProperties(component, attributes);
         PropertyDescriptor[] propArray = new PropertyDescriptor[props.Count];
         for (int i = 0; i < props.Count; i++)
         {
-            // Create a new PropertyDescriptor from the old one, with 
+            // Create a new PropertyDescriptor from the old one, with
             // a CategoryAttribute matching the name of the type.
-            propArray[i] = TypeDescriptor.CreateProperty(props[i].ComponentType, props[i], new CategoryAttribute(props[i].PropertyType.Name));
+            propArray[i] = TypeDescriptor.CreateProperty(
+                props[i].ComponentType,
+                props[i],
+                new CategoryAttribute(props[i].PropertyType.Name));
         }
-        return new PropertyDescriptorCollection(propArray);
+
+        return new(propArray);
     }
 
     public override PropertyDescriptorCollection GetProperties(object component) => GetProperties(component, null);
