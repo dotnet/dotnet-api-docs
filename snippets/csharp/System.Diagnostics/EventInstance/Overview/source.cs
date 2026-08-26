@@ -79,7 +79,7 @@ namespace EventLogSamples
 
             if (EventLog.SourceExists(sourceName))
             {
-                Console.WriteLine("Deleting event source {0}.", sourceName);
+                Console.WriteLine($"Deleting event source {sourceName}.");
                 EventLog.DeleteEventSource(sourceName);
             }
         }
@@ -102,8 +102,7 @@ namespace EventLogSamples
                 // All event resource identifiers correspond to text in this file.
                 if (!System.IO.File.Exists(messageFile))
                 {
-                    Console.WriteLine("Input message resource file does not exist - {0}",
-                        messageFile);
+                    Console.WriteLine($"Input message resource file does not exist - {messageFile}");
                     messageFile = "";
                 }
                 else
@@ -117,8 +116,7 @@ namespace EventLogSamples
                     mySourceData.CategoryCount = CategoryCount;
                     mySourceData.ParameterResourceFile = messageFile;
 
-                    Console.WriteLine("Event source message resource file set to {0}",
-                        messageFile);
+                    Console.WriteLine($"Event source message resource file set to {messageFile}");
                 }
 
                 Console.WriteLine("Registering new source for event log.");
@@ -215,8 +213,7 @@ namespace EventLogSamples
             }
             else
             {
-                Console.WriteLine("Warning - event source {0} not registered",
-                    sourceName);
+                Console.WriteLine($"Warning - event source {sourceName} not registered");
             }
             //</Snippet8>
         }
@@ -254,8 +251,7 @@ namespace EventLogSamples
             }
             else
             {
-                Console.WriteLine("Warning - event source {0} not registered",
-                    sourceName);
+                Console.WriteLine($"Warning - event source {sourceName} not registered");
             }
 
             //</Snippet9>
@@ -283,7 +279,7 @@ namespace EventLogSamples
                     Console.WriteLine($"Entry ID    = {entry.InstanceId}");
                     Console.WriteLine($"Reported at {entry.TimeWritten}");
                     Console.WriteLine("Message text:");
-                    Console.WriteLine("\t{0}", entry.Message);
+                    Console.WriteLine($"\t{entry.Message}");
                 }
             }
             Console.WriteLine();

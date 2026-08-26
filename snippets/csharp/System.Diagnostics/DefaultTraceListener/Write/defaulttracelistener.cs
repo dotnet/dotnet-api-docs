@@ -52,7 +52,7 @@ class DefaultTraceListenerMod
                 defaultListener.Fail(failMessage, ex.Message);
                 if (!defaultListener.AssertUiEnabled)
                 {
-                    Console.WriteLine(failMessage + "\n" + ex.Message);
+                    Console.WriteLine($"{failMessage}\n{ex.Message}");
                 }
                 return;
             }
@@ -74,24 +74,24 @@ class DefaultTraceListenerMod
             return;
         }
 
-        decimal iter;
-        for (iter = 0; iter <= possibilities; iter++)
+        decimal i;
+        for (i = 0; i <= possibilities; i++)
         {
 
             // <Snippet4>
             // Compute the next binomial coefficient.
             // If an exception is thrown, quit.
-            decimal result = CalcBinomial(possibilities, iter);
+            decimal result = CalcBinomial(possibilities, i);
             if (result == 0)
             {
                 return;
             }
 
             // Format the trace and console output.
-            string binomial = $"Binomial( {possibilities}, {iter} ) = ";
+            string binomial = $"Binomial( {possibilities}, {i} ) = ";
             defaultListener.Write(binomial);
             defaultListener.WriteLine(result);
-            Console.WriteLine("{0} {1}", binomial, result);
+            Console.WriteLine($"{binomial} {result}");
             // </Snippet4>
         }
     }
@@ -106,11 +106,11 @@ class DefaultTraceListenerMod
         {
             // Calculate a binomial coefficient, and minimize the chance
             // of overflow.
-            decimal iter;
-            for (iter = 1; iter <= possibilities - outcomes; iter++)
+            decimal i;
+            for (i = 1; i <= possibilities - outcomes; i++)
             {
-                result *= outcomes + iter;
-                result /= iter;
+                result *= outcomes + i;
+                result /= i;
             }
             return result;
         }
@@ -121,7 +121,7 @@ class DefaultTraceListenerMod
             defaultListener.Fail(failMessage, ex.Message);
             if (!defaultListener.AssertUiEnabled)
             {
-                Console.WriteLine(failMessage + "\n" + ex.Message);
+                Console.WriteLine($"{failMessage}\n{ex.Message}");
             }
             return 0;
         }

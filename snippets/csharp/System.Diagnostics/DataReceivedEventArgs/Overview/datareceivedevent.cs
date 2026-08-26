@@ -19,7 +19,7 @@ class StandardAsyncOutputExample
             if (!string.IsNullOrEmpty(e.Data))
             {
                 s_lineCount++;
-                s_output.Append("\n[" + s_lineCount + "]: " + e.Data);
+                s_output.Append($"\n[{s_lineCount}]: {e.Data}");
             }
         });
 

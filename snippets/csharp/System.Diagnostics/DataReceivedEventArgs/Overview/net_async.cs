@@ -143,7 +143,7 @@ namespace ProcessAsyncStreamSamples
             if (!string.IsNullOrEmpty(outLine.Data))
             {
                 // Add the text to the collected output.
-                s_netOutput!.Append(Environment.NewLine + "  " + outLine.Data);
+                s_netOutput!.Append($"{Environment.NewLine}  {outLine.Data}");
             }
         }
 

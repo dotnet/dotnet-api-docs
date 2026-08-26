@@ -24,7 +24,7 @@ class MySample2
         EventLog myLog = new EventLog("myNewLog", ".", "MySource");
 
         // Write an entry to the log.
-        myLog.WriteEntry("Writing to event log on " + myLog.MachineName);
+        myLog.WriteEntry($"Writing to event log on {myLog.MachineName}");
     }
 }
 

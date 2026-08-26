@@ -10,11 +10,11 @@ class MySample
 
         remoteEventLogs = EventLog.GetEventLogs("myServer");
 
-        Console.WriteLine("Number of logs on computer: " + remoteEventLogs.Length);
+        Console.WriteLine($"Number of logs on computer: {remoteEventLogs.Length}");
 
         foreach (EventLog log in remoteEventLogs)
         {
-            Console.WriteLine("Log: " + log.Log);
+            Console.WriteLine($"Log: {log.Log}");
         }
     }
 }

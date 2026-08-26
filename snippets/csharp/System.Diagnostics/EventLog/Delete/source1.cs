@@ -20,7 +20,7 @@ class MySample1
             EventLog.DeleteEventSource("MySource");
             EventLog.Delete(logName);
 
-            Console.WriteLine(logName + " deleted.");
+            Console.WriteLine($"{logName} deleted.");
         }
         else
         {

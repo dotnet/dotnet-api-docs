@@ -80,8 +80,8 @@ namespace EventLogSamples
                 long sizeKB = 0;
 
                 Console.WriteLine();
-                Console.WriteLine("{0}:", e.LogDisplayName);
-                Console.WriteLine("  Log name = \t\t {0}", e.Log);
+                Console.WriteLine($"{e.LogDisplayName}:");
+                Console.WriteLine($"  Log name = \t\t {e.Log}");
 
                 Console.WriteLine($"  Number of event log entries = {e.Entries.Count}");
 
@@ -94,7 +94,7 @@ namespace EventLogSamples
                     object temp = regEventLog.GetValue("File");
                     if (temp != null)
                     {
-                        Console.WriteLine("  Log file path = \t {0}", temp.ToString());
+                        Console.WriteLine($"  Log file path = \t {temp}");
                         FileInfo file = new(temp.ToString());
 
                         // Get the current size of the event log file.
@@ -123,8 +123,7 @@ namespace EventLogSamples
                 switch (e.OverflowAction)
                 {
                     case OverflowAction.OverwriteOlder:
-                        Console.WriteLine("\t Entries are retained a minimum of {0} days.",
-                            e.MinimumRetentionDays);
+                        Console.WriteLine($"\t Entries are retained a minimum of {e.MinimumRetentionDays} days.");
                         break;
                     case OverflowAction.DoNotOverwrite:
                         Console.WriteLine("\t Older entries are not overwritten.");
@@ -149,7 +148,7 @@ namespace EventLogSamples
                 // Display the current overflow setting of the
                 // specified event log.
                 using EventLog inputLog = new(logName);
-                Console.WriteLine("  Event log {0}", inputLog.Log);
+                Console.WriteLine($"  Event log {inputLog.Log}");
 
                 OverflowAction logOverflow = inputLog.OverflowAction;
                 int numDays = inputLog.MinimumRetentionDays;
@@ -176,7 +175,7 @@ namespace EventLogSamples
             }
             else
             {
-                Console.WriteLine("Event log {0} was not found.", logName);
+                Console.WriteLine($"Event log {logName} was not found.");
             }
         }
         // </Snippet3>

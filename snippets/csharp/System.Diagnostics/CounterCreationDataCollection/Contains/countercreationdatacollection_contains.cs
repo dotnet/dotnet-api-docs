@@ -30,7 +30,7 @@ public class CounterCreationDataCollectionExample
                    new CounterCreationData[numberOfCounters];
                 for (int i = 0; i < numberOfCounters; i++)
                 {
-                    Console.Write("Enter the counter name for {0} counter : ", i);
+                    Console.Write($"Enter the counter name for {i} counter : ");
                     myCounterCreationData[i] = new CounterCreationData
                     {
                         CounterName = Console.ReadLine()
@@ -49,8 +49,8 @@ public class CounterCreationDataCollectionExample
                     if (myCounterCollection.Contains(myCounterCreationData[0]))
                     {
                         myCounterCollection.Remove(myCounterCreationData[0]);
-                        Console.WriteLine("'{0}' counter is removed from the " +
-                           "CounterCreationDataCollection", myCounterCreationData[0].CounterName);
+                        Console.WriteLine(
+                            $"'{myCounterCreationData[0].CounterName}' counter is removed from the CounterCreationDataCollection");
                     }
                 }
                 else
@@ -67,7 +67,7 @@ public class CounterCreationDataCollectionExample
         }
         catch (Exception e)
         {
-            Console.WriteLine("Exception: {0}.", e.Message);
+            Console.WriteLine($"Exception: {e.Message}.");
             return;
         }
     }

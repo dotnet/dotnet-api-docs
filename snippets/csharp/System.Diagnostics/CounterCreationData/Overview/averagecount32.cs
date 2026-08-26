@@ -89,7 +89,7 @@ public class App
         {
 
             int value = r.Next(1, 10);
-            Console.Write(j + " = " + value);
+            Console.Write($"{j} = {value}");
 
             avgCounter64Sample.IncrementBy(value);
 
@@ -119,14 +119,12 @@ public class App
             OutputSample((CounterSample)samplesList[i + 1]);
 
             // Use .NET to calculate the counter value.
-            Console.WriteLine(".NET computed counter value = " +
-                CounterSampleCalculator.ComputeCounterValue((CounterSample)samplesList[i],
-                (CounterSample)samplesList[i + 1]));
+            Console.WriteLine($".NET computed counter value = {CounterSampleCalculator.ComputeCounterValue(
+                (CounterSample)samplesList[i], (CounterSample)samplesList[i + 1])}");
 
             // Calculate the counter value manually.
-            Console.WriteLine("My computed counter value = " +
-                MyComputeCounterValue((CounterSample)samplesList[i],
-                (CounterSample)samplesList[i + 1]));
+            Console.WriteLine($"My computed counter value = {MyComputeCounterValue(
+                (CounterSample)samplesList[i], (CounterSample)samplesList[i + 1])}");
         }
     }
 
@@ -157,14 +155,14 @@ public class App
     {
         Console.WriteLine("\r\n+++++++++++");
         Console.WriteLine("Sample values - \r\n");
-        Console.WriteLine("   BaseValue        = " + s.BaseValue);
-        Console.WriteLine("   CounterFrequency = " + s.CounterFrequency);
-        Console.WriteLine("   CounterTimeStamp = " + s.CounterTimeStamp);
-        Console.WriteLine("   CounterType      = " + s.CounterType);
-        Console.WriteLine("   RawValue         = " + s.RawValue);
-        Console.WriteLine("   SystemFrequency  = " + s.SystemFrequency);
-        Console.WriteLine("   TimeStamp        = " + s.TimeStamp);
-        Console.WriteLine("   TimeStamp100nSec = " + s.TimeStamp100nSec);
+        Console.WriteLine($"   BaseValue        = {s.BaseValue}");
+        Console.WriteLine($"   CounterFrequency = {s.CounterFrequency}");
+        Console.WriteLine($"   CounterTimeStamp = {s.CounterTimeStamp}");
+        Console.WriteLine($"   CounterType      = {s.CounterType}");
+        Console.WriteLine($"   RawValue         = {s.RawValue}");
+        Console.WriteLine($"   SystemFrequency  = {s.SystemFrequency}");
+        Console.WriteLine($"   TimeStamp        = {s.TimeStamp}");
+        Console.WriteLine($"   TimeStamp100nSec = {s.TimeStamp100nSec}");
         Console.WriteLine("++++++++++++++++++++++");
     }
 }

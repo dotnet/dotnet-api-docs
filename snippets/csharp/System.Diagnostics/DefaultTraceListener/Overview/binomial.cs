@@ -13,7 +13,7 @@ class Binomial
 
         // <Snippet2>
         decimal possibilities;
-        decimal iter;
+        decimal i;
         // </Snippet2>
 
         // <Snippet3>
@@ -57,7 +57,7 @@ class Binomial
                 defaultListener.Fail(failMessage, ex.Message);
                 if (!defaultListener.AssertUiEnabled)
                 {
-                    Console.WriteLine(failMessage + "\n" + ex.Message);
+                    Console.WriteLine($"{failMessage}\n{ex.Message}");
                 }
                 return;
             }
@@ -77,7 +77,7 @@ class Binomial
             return;
         }
 
-        for (iter = 0; iter <= possibilities; iter++)
+        for (i = 0; i <= possibilities; i++)
         {
             // <Snippet7>
             decimal result;
@@ -89,17 +89,17 @@ class Binomial
             try
             {
                 // <Snippet9>
-                result = CalcBinomial(possibilities, iter);
+                result = CalcBinomial(possibilities, i);
                 // </Snippet9>
             }
             catch (Exception ex)
             {
                 string failMessage =
-                    $"An exception was raised when calculating Binomial( {possibilities}, {iter} ).";
+                    $"An exception was raised when calculating Binomial( {possibilities}, {i} ).";
                 defaultListener.Fail(failMessage, ex.Message);
                 if (!defaultListener.AssertUiEnabled)
                 {
-                    Console.WriteLine(failMessage + "\n" + ex.Message);
+                    Console.WriteLine($"{failMessage}\n{ex.Message}");
                 }
                 return;
             }
@@ -107,10 +107,10 @@ class Binomial
             // <Snippet10>
 
             // Format the trace and console output.
-            binomial = $"Binomial( {possibilities}, {iter} ) = ";
+            binomial = $"Binomial( {possibilities}, {i} ) = ";
             defaultListener.Write(binomial);
             defaultListener.WriteLine(result);
-            Console.WriteLine("{0} {1}", binomial, result);
+            Console.WriteLine($"{binomial} {result}");
             // </Snippet10>
         }
     }
@@ -120,11 +120,11 @@ class Binomial
 
         // Calculate a binomial coefficient, and minimize the chance of overflow.
         decimal result = 1;
-        decimal iter;
-        for (iter = 1; iter <= possibilities - outcomes; iter++)
+        decimal i;
+        for (i = 1; i <= possibilities - outcomes; i++)
         {
-            result *= outcomes + iter;
-            result /= iter;
+            result *= outcomes + i;
+            result /= i;
         }
         return result;
     }

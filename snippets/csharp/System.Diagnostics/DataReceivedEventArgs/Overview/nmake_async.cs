@@ -85,8 +85,7 @@ namespace ProcessAsyncStreamSamples
                 s_buildLogStream.WriteLine(DateTime.Now);
                 if (!string.IsNullOrEmpty(nmakeArguments))
                 {
-                    s_buildLogStream.Write("Command line = NMake {0}",
-                        nmakeArguments);
+                    s_buildLogStream.Write($"Command line = NMake {nmakeArguments}");
                 }
                 else
                 {
@@ -205,7 +204,7 @@ namespace ProcessAsyncStreamSamples
 
             if (!string.IsNullOrEmpty(logPrefix))
             {
-                logString.AppendFormat("{0}> ", logPrefix);
+                logString.Append($"{logPrefix}> ");
             }
 
             if (!string.IsNullOrEmpty(logText))
@@ -215,7 +214,7 @@ namespace ProcessAsyncStreamSamples
 
             if (s_buildLogStream != null)
             {
-                s_buildLogStream.WriteLine("[{0}] {1}", DateTime.Now, logString);
+                s_buildLogStream.WriteLine($"[{DateTime.Now}] {logString}");
                 s_buildLogStream.Flush();
             }
 
