@@ -148,7 +148,13 @@ The data in the optional `<KeyInfo>` element (that is, the <xref:System.Security
 
 In particular, when the <xref:System.Security.Cryptography.Xml.SignedXml.KeyInfo> value represents a bare RSA, DSA or ECDSA public key,  the document could have been tampered with, despite the <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature*> method reporting that the signature is valid. This can happen because the entity doing the tampering just has to generate a new key and re-sign the tampered document with that new key. So, unless your application verifies that the public key is an expected value, the document should be treated as if it were tampered with. This requires that your application examine the public key embedded within the document and verify it against a list of known values for the document context. For example, if the document could be understood to be issued by a known user, you'd check the key against a list of known keys used by that user.
 
-You can also verify the key after processing the document by using the <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignatureReturningKey*> method, instead of using the <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature*> method. But, for the optimal security, you should verify the key beforehand.
+Because of this, <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature*> is not designed to authenticate documents from an untrusted source on its own. The recommended pattern is to obtain the expected signer's verification key or certificate ahead of time from a source that is independent of the signed document — for example, from application configuration or from a curated list of allowed signer keys or certificates — and pass it explicitly to one of the overloads that accepts a key:
+
+- <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.AsymmetricAlgorithm)>
+- <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.KeyedHashAlgorithm)>
+- <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean)>
+
+If you must inspect the key embedded in the document, use the <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignatureReturningKey*> method and verify that the returned key matches an expected value before treating the document as authentic. But for optimal security, verify the key beforehand by using one of the overloads listed above; the parameterless <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature> overload is not suitable for verifying untrusted input.
 
 Alternately, consider trying the user's registered public keys, rather than reading what's in the `<KeyInfo>` element.
 
@@ -549,6 +555,18 @@ The following code example shows how to sign and verify a single element of an X
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
+> [!IMPORTANT]
+> This overload selects a verification key based on the <xref:System.Security.Cryptography.Xml.SignedXml.KeyInfo> element of the signed document. Because that element is under the control of whoever produced the document, a `true` result proves only that the signed portions of the document match the signature computed with that key — not that the key belongs to a trusted signer. Do not use this overload to authenticate documents from an untrusted source unless the verification key has already been validated by other means.
+>
+> The recommended pattern is to obtain the verification key or certificate ahead of time (from application configuration or another source independent of the signed document) and pass it to one of the overloads that accepts a key:
+>
+> - <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.AsymmetricAlgorithm)>
+> - <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.KeyedHashAlgorithm)>
+> - <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean)> with `verifySignatureOnly` set to `false`
+>
+> See the [Remarks](xref:System.Security.Cryptography.Xml.SignedXml) section on the class page for the full trust rationale.
+
  This method also computes the digest of the references and the value of the signature.
 
  If an XML document was signed with an X.509 signature, the <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature*> method will search the "AddressBook" store for certificates suitable for the verification. For example, if the certificate is referenced by a Subject Key Identifier (SKI), the <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature*> method will select certificates with this SKI and try them one after another until it can verify the certificate.
@@ -556,6 +574,8 @@ The following code example shows how to sign and verify a single element of an X
 
 
 ## Examples
+ The following code examples show how to sign an XML document and verify the signature by passing an explicit verification key to an overload of <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature*>. Prefer this pattern over calling the parameterless overload.
+
  The following code example shows how to sign and verify an entire XML document using an enveloped signature.
 
  :::code language="csharp" source="~/snippets/csharp/System.Security.Cryptography.Xml/SignedXml/Overview/exampleenvelope.cs" id="Snippet1":::
@@ -817,8 +837,20 @@ The X.509 certificate is verified. The <xref:System.Security.Cryptography.Xml.Si
         <remarks>
           <format type="text/markdown"><![CDATA[
 
+## Remarks
+
+> [!IMPORTANT]
+> The key returned in `signingKey` is selected based on the <xref:System.Security.Cryptography.Xml.SignedXml.KeyInfo> element of the signed document, which is under the control of whoever produced the document. A `true` result proves only that the signed portions of the document match the signature computed with the returned key — not that the key belongs to a trusted signer. This overload is not suitable for authenticating documents from an untrusted source unless the caller compares `signingKey` against a key that the application already trusts before treating the document as authentic.
+>
+> For most scenarios, prefer an overload that takes the verification key up front so trust is established before verification:
+>
+> - <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.AsymmetricAlgorithm)>
+> - <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignature(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean)>
+>
+> See the [Remarks](xref:System.Security.Cryptography.Xml.SignedXml) section on the class page for additional guidance.
+
 ## Examples
- The following code example shows how to sign and verify an entire XML document using an enveloping signature.
+ The following code example shows how to sign an XML document, verify the signature by using <xref:System.Security.Cryptography.Xml.SignedXml.CheckSignatureReturningKey*>, and then confirm that the returned key matches a key that the application already trusts.
 
  :::code language="csharp" source="~/snippets/csharp/System.Security.Cryptography.Xml/SignedXml/CheckSignatureReturningKey/exampleenvelope.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Security.Cryptography.Xml/SignedXml/CheckSignatureReturningKey/exampleenvelope.vb" id="Snippet1":::
