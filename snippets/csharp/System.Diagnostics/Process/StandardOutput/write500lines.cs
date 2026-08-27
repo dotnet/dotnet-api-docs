@@ -12,7 +12,9 @@ public class Example3
         Console.Error.WriteLine("\nSuccessfully wrote 500 lines.\n");
     }
 }
+
 // The example displays the following output:
+
 //      Line 1 of 500 written: 0,20%
 //      Line 2 of 500 written: 0,40%
 //      Line 3 of 500 written: 0,60%

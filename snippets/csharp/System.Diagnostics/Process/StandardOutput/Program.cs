@@ -8,10 +8,10 @@ switch (args.Length > 0 ? args[0] : null)
         StandardOutputExample.Run();
         break;
     case "async":
-        Example.Run();
+        AsyncExample.Run();
         break;
     case "sync":
-        Example2.Run();
+        SyncExample.Run();
         break;
     case "helper":
         Example3.Run();
