@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 class InstDataKeysValuesMod
 {
-
     // <snippet5>
     private static string categoryName;
     // </snippet5>
@@ -35,15 +34,13 @@ class InstDataKeysValuesMod
             categoryNum = int.Parse(catNumStr);
             if (categoryNum < 1 || categoryNum > categories.Length)
             {
-                throw new Exception(string.Format("The category number must be in the " +
-                    "range 1..{0}.", categories.Length));
+                throw new Exception($"The category number must be in the range 1..{categories.Length}.");
             }
             categoryName = categories[(categoryNum - 1)].CategoryName;
         }
         catch (Exception ex)
         {
-            Console.WriteLine("\"{0}\" is not a valid category number." +
-                "\r\n{1}", catNumStr, ex.Message);
+            Console.WriteLine($"'{catNumStr}' is not a valid category number.\r\n{ex.Message}");
             return;
         }
         // <snippet4>
@@ -60,16 +57,14 @@ class InstDataKeysValuesMod
         InstanceDataCollection[] idCCValuesArray = new InstanceDataCollection[idColColValues.Count];
         idColColValues.CopyTo(idCCValuesArray, 0);
 
-        Console.WriteLine("InstanceDataCollectionCollection for \"{0}\" " +
-            "has {1} elements.", categoryName, idColCol.Count);
+        Console.WriteLine($"InstanceDataCollectionCollection for '{0categoryName}' has {1idColCol.Count} elements.");
 
         // Display the InstanceDataCollectionCollection Keys and Values.
         // The Keys and Values collections have the same number of elements.
         int index;
         for (index = 0; index < idCCKeysArray.Length; index++)
         {
-            Console.WriteLine("  Next InstanceDataCollectionCollection " +
-                "Key is \"{0}\"", idCCKeysArray[index]);
+            Console.WriteLine($"  Next InstanceDataCollectionCollection key is '{idCCKeysArray[index]}'");
             ProcessInstanceDataCollection(idCCValuesArray[index]);
         }
         // </snippet4>
@@ -81,7 +76,6 @@ class InstDataKeysValuesMod
     public static void ProcessInstanceDataCollection(InstanceDataCollection idCol)
     {
         // </snippet2>
-
         ICollection idColKeys = idCol.Keys;
         string[] idColKeysArray = new string[idColKeys.Count];
         idColKeys.CopyTo(idColKeysArray, 0);
@@ -91,8 +85,7 @@ class InstDataKeysValuesMod
         idColValues.CopyTo(idColValuesArray, 0);
         // <snippet6>
 
-        Console.WriteLine("  InstanceDataCollection for \"{0}\" " +
-            "has {1} elements.", idCol.CounterName, idCol.Count);
+        Console.WriteLine($"  InstanceDataCollection for '{idCol.CounterName}' has {idCol.Count} elements.");
         // </snippet6>
 
         // Display the InstanceDataCollection Keys and Values.
@@ -100,8 +93,7 @@ class InstDataKeysValuesMod
         int index;
         for (index = 0; index < idColKeysArray.Length; index++)
         {
-            Console.WriteLine("    Next InstanceDataCollection " +
-                "Key is \"{0}\"", idColKeysArray[index]);
+            Console.WriteLine($"    Next InstanceDataCollection key is '{idColKeysArray[index]}'");
             ProcessInstanceDataObject(idColValuesArray[index]);
         }
         // <snippet7>
