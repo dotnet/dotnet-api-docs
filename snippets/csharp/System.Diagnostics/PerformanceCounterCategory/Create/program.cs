@@ -95,23 +95,19 @@ public class PerfCounter1
         {
             Console.WriteLine(
                 "Instantiating Custom Counter Orders, Trucks, United States");
-            counter1 = new PerformanceCounter(
-                "Orders", "Trucks", "United States", false);
+            counter1 = new("Orders", "Trucks", "United States", false);
             counter1.RawValue = 5;
             Console.WriteLine(
                 "Instantiating Custom Counter Orders, Trucks, Europe");
-            counter2 = new PerformanceCounter(
-                "Orders", "Trucks", "Europe", false);
+            counter2 = new("Orders", "Trucks", "Europe", false);
             counter2.RawValue = 10;
             Console.WriteLine(
                 "Instantiating Custom Counter Orders, Rate of Sales, Total");
-            counter3 = new PerformanceCounter(
-                "Orders", "Rate of Sales", "Total", false);
+            counter3 = new("Orders", "Rate of Sales", "Total", false);
             counter3.RawValue = 10;
             Console.WriteLine(
                 "Instantiating Custom Counter Inventory, Trucks");
-            counter4 = new PerformanceCounter(
-                "Inventory", "Trucks", false);
+            counter4 = new("Inventory", "Trucks", false);
             counter4.RawValue = 15;
 
             timer1.Start();
@@ -145,7 +141,7 @@ public class PerfCounter1
                 counter2.Decrement();
                 counter3.IncrementBy(1);
                 counter4.IncrementBy(150);
-                ++finalCount;
+                finalCount++;
             }
             catch (Exception e)
             {
@@ -189,28 +185,24 @@ public class PerfCounter1
                         return;
 
                     float value1 = counter1.NextValue();
-                    Console.WriteLine(
-                                "Custom Counter Orders, Trucks, United States: {0}", value1);
+                    Console.WriteLine($"Custom Counter Orders, Trucks, United States: {value1}");
 
                     float value2 = counter2.NextValue();
-                    Console.WriteLine(
-                        "Custom Counter Orders, Trucks, Europe: {0}", value2);
+                    Console.WriteLine($"Custom Counter Orders, Trucks, Europe: {value2}");
 
                     float value3 = counter3.NextValue();
-                    Console.WriteLine(
-                        "Custom Counter Orders, Rate of sales, United Total: {0}", value3);
+                    Console.WriteLine($"Custom Counter Orders, Rate of sales, United Total: {value3}");
 
                     float value4 = counter4.NextValue();
-                    Console.WriteLine(
-                        "Custom Counter Inventory, Trucks, United States: {0}", value4);
+                    Console.WriteLine($"Custom Counter Inventory, Trucks, United States: {value4}");
 
                     if (finalCount < 5)
                     {
-                        ++finalCount;
+                        finalCount++;
                     }
                     else
                     {
-                        ++finalCount;
+                        finalCount++;
                         signal.Set();
                     }
                 }
@@ -227,20 +219,16 @@ public class PerfCounter1
             Console.WriteLine(
                 "Instantiating Custom Counter Orders, Trucks, United States");
             // Instantiate a counter with category "Orders", counter name "Trucks", and instance "United States".
-            counter1 = new PerformanceCounter(
-                "Orders", "Trucks", "United States");
+            counter1 = new("Orders", "Trucks", "United States");
             Console.WriteLine("Instantiating Custom Counter Orders, Trucks, Europe");
             // Instantiate a counter with category "Orders", counter name "Trucks", and instance "Europe".
-            counter2 = new PerformanceCounter(
-                "Orders", "Trucks", "Europe");
+            counter2 = new("Orders", "Trucks", "Europe");
             Console.WriteLine("Instantiating Custom Counter Orders, Rate of Sales.");
             // Instantiate a counter with category "Orders", counter name "Rate of Sales", and a single instance.
-            counter3 = new PerformanceCounter(
-                "Orders", "Rate of Sales", "Total");
+            counter3 = new("Orders", "Rate of Sales", "Total");
             Console.WriteLine("Instantiating Custom Counter Inventory, Trucks, Only instance.");
             // Instantiate a single instance counter, category "Inventory", counter name "Trucks".
-            counter4 = new PerformanceCounter(
-                "Inventory", "Trucks", false);
+            counter4 = new("Inventory", "Trucks", false);
 
             timer1.Start();
         }

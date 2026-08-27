@@ -2,7 +2,7 @@
 using System.Diagnostics;
 
 // <snippet1>
-using PerformanceCounter performanceCounter = new PerformanceCounter();
+using PerformanceCounter performanceCounter = new();
 performanceCounter.CategoryName = "Process";
 performanceCounter.CounterName = "Private Bytes";
 performanceCounter.InstanceName = "Explorer";

@@ -14,18 +14,18 @@ public class App
 {
     private static PerformanceCounter PC;
 
-	public static void Main()
-	{	
-		ArrayList samplesList = new();
+    public static void Main()
+    {
+        ArrayList samplesList = new();
 
-		SetupCategory();
+        SetupCategory();
         CreateCounters();
-		CollectSamples(samplesList);
-	}
+        CollectSamples(samplesList);
+    }
 
     private static bool SetupCategory()
     {
-        if ( !PerformanceCounterCategory.Exists("ElapsedTimeSampleCategory") )
+        if (!PerformanceCounterCategory.Exists("ElapsedTimeSampleCategory"))
         {
             CounterCreationDataCollection CCDC = new();
 
@@ -33,26 +33,26 @@ public class App
             CounterCreationData ETimeData = new();
             ETimeData.CounterType = PerformanceCounterType.ElapsedTime;
             ETimeData.CounterName = "ElapsedTimeSample";
-            CCDC.Add(ETimeData);	
-		
+            CCDC.Add(ETimeData);
+
             // Create the category.
             PerformanceCounterCategory.Create("ElapsedTimeSampleCategory",
                 "Demonstrates usage of the ElapsedTime performance counter type.",
                 CCDC);
 
-            return(true);
+            return true;
         }
         else
         {
             Console.WriteLine("Category exists - ElapsedTimeSampleCategory");
-            return(false);
+            return false;
         }
     }
 
     private static void CreateCounters()
     {
         // Create the counter.
-        PC = new PerformanceCounter("ElapsedTimeSampleCategory",
+        PC = new("ElapsedTimeSampleCategory",
             "ElapsedTimeSample",
             false);
     }
@@ -76,7 +76,7 @@ public class App
                 Console.WriteLine($"NextValue() = {PC.NextValue()}");
                 Console.WriteLine($"Actual elapsed time = {DateTime.Now.Subtract(Start)}");
                 OutputSample(PC.NextSample());
-                samplesList.Add( PC.NextSample() );
+                samplesList.Add(PC.NextSample());
             }
 
             // Reset the counter on 100th iteration.
@@ -91,25 +91,25 @@ public class App
 
         Console.WriteLine($"Elapsed time = {DateTime.Now.Subtract(Start)}");
     }
-	
-	private static void OutputSample(CounterSample s)
-	{
-		Console.WriteLine("\r\n+++++++++++");
-		Console.WriteLine("Sample values - \r\n");
-		Console.WriteLine("   BaseValue        = " + s.BaseValue);
-		Console.WriteLine("   CounterFrequency = " + s.CounterFrequency);
-		Console.WriteLine("   CounterTimeStamp = " + s.CounterTimeStamp);
-		Console.WriteLine("   CounterType      = " + s.CounterType);
-		Console.WriteLine("   RawValue         = " + s.RawValue);
-		Console.WriteLine("   SystemFrequency  = " + s.SystemFrequency);
-		Console.WriteLine("   TimeStamp        = " + s.TimeStamp);
-		Console.WriteLine("   TimeStamp100nSec = " + s.TimeStamp100nSec);
-		Console.WriteLine("++++++++++++++++++++++");
-	}
 
-	// Reads the counter information to enable setting the RawValue.
-	[DllImport("Kernel32.dll")]
-	public static extern bool QueryPerformanceCounter(out long value);
+    private static void OutputSample(CounterSample s)
+    {
+        Console.WriteLine("\r\n+++++++++++");
+        Console.WriteLine("Sample values - \r\n");
+        Console.WriteLine($"   BaseValue        = {s.BaseValue}");
+        Console.WriteLine($"   CounterFrequency = {s.CounterFrequency}");
+        Console.WriteLine($"   CounterTimeStamp = {s.CounterTimeStamp}");
+        Console.WriteLine($"   CounterType      = {s.CounterType}");
+        Console.WriteLine($"   RawValue         = {s.RawValue}");
+        Console.WriteLine($"   SystemFrequency  = {s.SystemFrequency}");
+        Console.WriteLine($"   TimeStamp        = {s.TimeStamp}");
+        Console.WriteLine($"   TimeStamp100nSec = {s.TimeStamp100nSec}");
+        Console.WriteLine("++++++++++++++++++++++");
+    }
+
+    // Reads the counter information to enable setting the RawValue.
+    [DllImport("Kernel32.dll")]
+    public static extern bool QueryPerformanceCounter(out long value);
 }
 //</snippet1>
 

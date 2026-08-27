@@ -9,7 +9,7 @@ class PerfCounterCatPropsMod
     {
         string categoryName = "";
         string machineName = "";
-        PerformanceCounterCategory pcc = new PerformanceCounterCategory();
+        PerformanceCounterCategory pcc = new();
 
         // Prompt for fields and set the corresponding properties.
         while (categoryName.Length == 0)
