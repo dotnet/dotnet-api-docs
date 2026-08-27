@@ -19,7 +19,7 @@ public class Form1 : Form
     public Form1()
     {
         InitializeComponent();
-        // TODO: Add any constructor code after InitializeComponent call
+        // TODO: Add any constructor code after InitializeComponent call.
     }
 
     /// <summary>
@@ -78,7 +78,7 @@ public class Form1 : Form
     }
 
     protected static void OnRefresh(RefreshEventArgs e) =>
-        Console.WriteLine(e.ComponentChanged.ToString());
+        Console.WriteLine(e.ComponentChanged);
     //</snippet1>
 }
 
@@ -95,7 +95,7 @@ class Control : Component
             if (!position.Equals(value))
             {
                 position = value;
-                //RaisePropertyChangedEvent(position);
+                // RaisePropertyChangedEvent(position).
             }
         }
     }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using ClassLibrary1;
@@ -17,11 +14,11 @@ namespace ConsoleApplication7
 
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            DirectoryCatalog catalog = new DirectoryCatalog(".");
-            CompositionContainer container = new CompositionContainer(catalog);
-            Test2 test = new Test2();
+            DirectoryCatalog catalog = new(".");
+            CompositionContainer container = new(catalog);
+            Test2 test = new();
             container.SatisfyImportsOnce(test);
             Console.WriteLine(test.data.data);
             Console.ReadLine();

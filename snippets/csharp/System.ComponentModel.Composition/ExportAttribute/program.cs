@@ -10,7 +10,7 @@ namespace ConsoleApplication3
     [Export]
     public class MyExport1
     {
-        public string data = "Test Data 1.";
+        public string data { get; } = "Test Data 1.";
     }
 
     public class MyImporter1
@@ -28,7 +28,7 @@ namespace ConsoleApplication3
     [Export(typeof(MyInterface))]
     public class MyExport2 : MyInterface
     {
-        public string data = "Test Data 2.";
+        public string data { get; } = "Test Data 2.";
     }
 
     public class MyImporter2
@@ -43,7 +43,7 @@ namespace ConsoleApplication3
     [Export("MyContractName", typeof(MyInterface))]
     public class MyExport3 : MyInterface
     {
-        public string data = "Test Data 3.";
+        public string data { get; } = "Test Data 3.";
     }
 
     public class MyImporter3

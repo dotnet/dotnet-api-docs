@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Globalization;
 using System.Resources;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace IResourceServiceExample
 {
@@ -18,12 +17,12 @@ namespace IResourceServiceExample
     {
         // Initializes a string array used to store strings that 
         // this control displays.
-        public string[] resource_strings = new string[] { "Initial Default String #1", "Initial Default String #2" };
+        public string[] resource_strings = ["Initial Default String #1", "Initial Default String #2"];
 
         public ResourceTestControl()
         {
-            this.BackColor = Color.White;
-            this.Size = new Size(408, 160);
+            BackColor = Color.White;
+            Size = new Size(408, 160);
         }
 
         // Draws the strings contained in the string array.
@@ -32,7 +31,7 @@ namespace IResourceServiceExample
             e.Graphics.DrawString("IResourceService Example Designer Control", new Font(FontFamily.GenericMonospace, 10), new SolidBrush(Color.Blue), 2, 2);
             e.Graphics.DrawString("String list:  (use shortcut menu in design mode)", new Font(FontFamily.GenericMonospace, 8), new SolidBrush(Color.Black), 2, 20);
             
-            for(int i=0; i<resource_strings.Length; i++)
+            for (int i = 0; i < resource_strings.Length; i++)
             {
                 e.Graphics.DrawString(resource_strings[i], new Font(FontFamily.GenericMonospace, 8), new SolidBrush(Color.SeaGreen), 2, 38+(i*18));
             }
@@ -49,16 +48,18 @@ namespace IResourceServiceExample
         public ResourceTestControlDesigner()
         {}
 
-        public override System.ComponentModel.Design.DesignerVerbCollection Verbs
+        public override DesignerVerbCollection Verbs
         {
             get
             {
                 // Creates a collection of designer verb menu commands 
                 // that link to event handlers in this designer.
-                return new DesignerVerbCollection( new DesignerVerb[] { 
-                    new DesignerVerb("Load Strings from Default Resources File", new EventHandler(this.LoadResources)),
-                    new DesignerVerb("Create Default Resources File", new EventHandler(this.CreateResources)),
-                    new DesignerVerb("Clear ResourceTestControl String List", new EventHandler(this.ClearStrings)) });
+                return new DesignerVerbCollection(
+                [
+                    new("Load Strings from Default Resources File", LoadResources),
+                    new("Create Default Resources File", CreateResources),
+                    new("Clear ResourceTestControl String List", ClearStrings)
+                ]);
             }
         }
 
@@ -87,8 +88,8 @@ namespace IResourceServiceExample
                 de.MoveNext();
                 s3 = (string)((DictionaryEntry)de.Current).Value;
                 de.MoveNext();
-                rtc.resource_strings = new string[] {s1, s2, s3};
-                this.Control.Refresh();
+                rtc.resource_strings = [s1, s2, s3];
+                Control.Refresh();
             }
         }
 
@@ -114,8 +115,8 @@ namespace IResourceServiceExample
             if(this.Control.GetType() == typeof(ResourceTestControl))
             {
                 ResourceTestControl rtc = (ResourceTestControl)this.Control;
-                rtc.resource_strings = new string[] { "Test String #1", "Test String #2" };
-                this.Control.Refresh();
+                rtc.resource_strings = ["Test String #1", "Test String #2"];
+                Control.Refresh();
             }
         }
     }
