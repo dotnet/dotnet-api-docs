@@ -1,4 +1,4 @@
-﻿// Place this code into a console project named ArgsEcho to build the argsecho.exe target.
+﻿// This console project builds the ArgsEcho.exe target.
 
 using System;
 

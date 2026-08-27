@@ -1,4 +1,4 @@
-﻿// This example creates the Write500Lines.exe target used by the other examples in this section.
+﻿// This project creates the Write500Lines.exe target used by the other examples in this section.
 
 using System;
 
