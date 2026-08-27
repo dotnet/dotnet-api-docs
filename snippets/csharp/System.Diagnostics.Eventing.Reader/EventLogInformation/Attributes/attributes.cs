@@ -1,7 +1,10 @@
-﻿// <snippet1>
-using System.Diagnostics.Eventing.Reader;
+﻿using System.Diagnostics.Eventing.Reader;
 using System.IO;
 
-EventLogInformation eventLogInformation;
+using EventLogSession session = new();
+EventLogInformation eventLogInformation =
+    session.GetLogInformation("Application", PathType.LogName);
+
+// <snippet1>
 FileAttributes? fileAttributes = (FileAttributes?)eventLogInformation.Attributes;
 // </snippet1>
