@@ -25,7 +25,10 @@ class ProcessInformation
 
             // <Snippet4>
             int i = 0;
-            ProcessStartInfo startInfo = new(fileName);
+            ProcessStartInfo startInfo = new(fileName)
+            {
+                UseShellExecute = true
+            };
 
             // Display the possible verbs.
             foreach (string verb in startInfo.Verbs)
