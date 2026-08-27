@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 public class Example
 {
-    public static void Main()
+    public static void Run()
     {
         Process p = new();
         p.StartInfo.UseShellExecute = false;
