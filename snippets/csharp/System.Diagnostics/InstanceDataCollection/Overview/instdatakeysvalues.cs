@@ -57,7 +57,7 @@ class InstDataKeysValuesMod
         InstanceDataCollection[] idCCValuesArray = new InstanceDataCollection[idColColValues.Count];
         idColColValues.CopyTo(idCCValuesArray, 0);
 
-        Console.WriteLine($"InstanceDataCollectionCollection for '{0categoryName}' has {1idColCol.Count} elements.");
+        Console.WriteLine($"InstanceDataCollectionCollection for '{categoryName}' has {idColCol.Count} elements.");
 
         // Display the InstanceDataCollectionCollection Keys and Values.
         // The Keys and Values collections have the same number of elements.
