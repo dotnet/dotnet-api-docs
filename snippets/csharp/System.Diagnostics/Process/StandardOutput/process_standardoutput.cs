@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Diagnostics;
 
 class StandardOutputExample
@@ -14,8 +13,7 @@ class StandardOutputExample
             process.Start();
 
             // Synchronously read the standard output of the spawned process.
-            StreamReader reader = process.StandardOutput;
-            string output = reader.ReadToEnd();
+            string output = process.StandardOutput.ReadToEnd();
 
             // Write the redirected output to this application's window.
             Console.WriteLine(output);
