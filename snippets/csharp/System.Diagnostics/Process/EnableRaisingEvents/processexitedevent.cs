@@ -13,7 +13,8 @@ class PrintProcessClass
     {
         eventHandled = new TaskCompletionSource<bool>();
 
-        using (myProcess = new Process())
+        using Process process = new();
+        myProcess = process;
         {
             try
             {
@@ -32,7 +33,7 @@ class PrintProcessClass
             }
 
             // Wait for Exited event, but not more than 30 seconds.
-            await Task.WhenAny(eventHandled.Task,Task.Delay(30000));
+            await Task.WhenAny(eventHandled.Task, Task.Delay(30000));
         }
     }
 
@@ -56,7 +57,7 @@ class PrintProcessClass
         }
 
         // Create the process and print the document.
-        PrintProcessClass myPrintProcess = new PrintProcessClass();
+        PrintProcessClass myPrintProcess = new();
         await myPrintProcess.PrintDoc(args[0]);
     }
 }

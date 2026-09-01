@@ -1,22 +1,25 @@
 ﻿using System;
-using System.Data;
 using System.Diagnostics;
 
 public class Form1
 {
-    public enum Option { First, Second };
+    public enum Option
+    {
+        First,
+        Second
+    }
 
     protected double result;
     public void Method(Option option)
     {
         try
         {
-            // try something here
+            // Try something here.
         }
         // <Snippet1>
         catch (Exception)
         {
-            Trace.Fail("Unknown Option " + option + ", using the default.");
+            Trace.Fail($"Unknown Option {option}, using the default.");
         }
         // </Snippet1>
         // <Snippet2>
@@ -28,7 +31,7 @@ public class Form1
 
             // Insert additional cases.
             default:
-                Trace.Fail("Unknown Option " + option);
+                Trace.Fail($"Unknown Option {option}");
                 result = 1.0;
                 break;
         }

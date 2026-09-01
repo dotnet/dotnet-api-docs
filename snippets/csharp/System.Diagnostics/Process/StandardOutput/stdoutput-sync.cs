@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 
-public class Example2
+public class SyncExample
 {
-    public static void Main()
+    public static void Run()
     {
         var p = new Process();
         p.StartInfo.UseShellExecute = false;
@@ -18,7 +18,9 @@ public class Example2
         Console.WriteLine($"The last 50 characters in the output stream are:\n'{output.Substring(output.Length - 50)}'");
     }
 }
+
 // The example displays the following output:
+
 //      Successfully wrote 500 lines.
 //
 //      The last 50 characters in the output stream are:

@@ -1,8 +1,8 @@
 ﻿// <Snippet1>
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
 class ProcessInformation
@@ -10,32 +10,35 @@ class ProcessInformation
     [STAThread]
     static void Main()
     {
-        OpenFileDialog openFileDialog1 = new OpenFileDialog();
-
-        openFileDialog1.InitialDirectory = "c:\\";
-        openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-        openFileDialog1.FilterIndex = 2;
-        openFileDialog1.RestoreDirectory = true;
-        openFileDialog1.CheckFileExists = true;
+        OpenFileDialog openFileDialog1 = new()
+        {
+            InitialDirectory = "c:\\",
+            Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*",
+            FilterIndex = 2,
+            RestoreDirectory = true,
+            CheckFileExists = true
+        };
 
         if (openFileDialog1.ShowDialog() == DialogResult.OK)
         {
-            var fileName = openFileDialog1.FileName;
+            string fileName = openFileDialog1.FileName;
 
             // <Snippet4>
             int i = 0;
-            var startInfo = new ProcessStartInfo(fileName);
+            ProcessStartInfo startInfo = new(fileName)
+            {
+                UseShellExecute = true
+            };
 
             // Display the possible verbs.
-            foreach (var verb in startInfo.Verbs)
+            foreach (string verb in startInfo.Verbs)
             {
                 Console.WriteLine($"  {i++}. {verb}");
             }
 
             Console.Write("Select the index of the verb: ");
-            var indexInput = Console.ReadLine();
-            int index;
-            if (Int32.TryParse(indexInput, out index))
+            string indexInput = Console.ReadLine();
+            if (int.TryParse(indexInput, out int index))
             {
                 if (index < 0 || index >= i)
                 {
@@ -43,7 +46,7 @@ class ProcessInformation
                     return;
                 }
 
-                var verbToUse = startInfo.Verbs[index];
+                string verbToUse = startInfo.Verbs[index];
 
                 startInfo.Verb = verbToUse;
                 if (verbToUse.ToLower().IndexOf("printto") >= 0)
@@ -52,20 +55,18 @@ class ProcessInformation
                     // The address must be in the form \\server\printer.
                     // The printer address is passed as the Arguments property.
                     Console.Write("Enter the network address of the target printer: ");
-                    var arguments = Console.ReadLine();
+                    string arguments = Console.ReadLine();
                     startInfo.Arguments = arguments;
                 }
 
                 try
                 {
-                    using (var newProcess = new Process())
-                    {
-                        newProcess.StartInfo = startInfo;
-                        newProcess.Start();
+                    using Process newProcess = new();
+                    newProcess.StartInfo = startInfo;
+                    newProcess.Start();
 
-                        Console.WriteLine($"{newProcess.ProcessName} for file {fileName} " +
-                                          $"started successfully with verb '{startInfo.Verb}'!");
-                    }
+                    Console.WriteLine($"{newProcess.ProcessName} for file {fileName} " +
+                                      $"started successfully with verb '{startInfo.Verb}'!");
                 }
                 catch (Win32Exception e)
                 {

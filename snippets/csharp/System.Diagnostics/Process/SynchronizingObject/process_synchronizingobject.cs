@@ -39,7 +39,7 @@ namespace ProcessSynchronizingObject
         #region Windows Form Designer generated code
         private void InitializeComponent()
         {
-            this.button1 = new process_SynchronizingObject.MyButton();
+            button1 = new MyButton();
             this.SuspendLayout();
             //
             // button1
@@ -64,7 +64,7 @@ namespace ProcessSynchronizingObject
         #endregion
 
         [STAThread]
-        static void Main()
+        public static void Run()
         {
             Application.Run(new Form1());
         }
@@ -73,9 +73,9 @@ namespace ProcessSynchronizingObject
         private MyButton button1;
         private void button1_Click(object sender, System.EventArgs e)
         {
-            using (Process myProcess = new Process())
             {
-                ProcessStartInfo myProcessStartInfo = new ProcessStartInfo("mspaint");
+                using Process myProcess = new();
+                ProcessStartInfo myProcessStartInfo = new("mspaint");
                 myProcess.StartInfo = myProcessStartInfo;
                 myProcess.Start();
                 myProcess.Exited += new EventHandler(MyProcessExited);
@@ -88,7 +88,7 @@ namespace ProcessSynchronizingObject
                 myProcess.WaitForExit();
             }
         }
-        private void MyProcessExited(Object source, EventArgs e)
+        private void MyProcessExited(object source, EventArgs e)
         {
             MessageBox.Show("The process has exited.");
         }
