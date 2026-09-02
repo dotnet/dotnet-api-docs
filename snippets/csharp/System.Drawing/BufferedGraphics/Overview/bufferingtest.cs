@@ -13,7 +13,7 @@ namespace BufferingExample
 
         private byte bufferingMode;
         private string[] bufferingModeStrings =
-            [ "Draw to Form without OptimizedDoubleBufferring control style",
+            [ "Draw to Form without OptimizedDoubleBuffering control style",
           "Draw to Form using OptimizedDoubleBuffering control style",
           "Draw to HDC for form" ];
 
