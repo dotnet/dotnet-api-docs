@@ -1,24 +1,25 @@
-﻿using System.Drawing;
-using System;
-using System.Windows.Forms;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Windows.Forms;
 
-public class Form1:
+public class BitmapConstructorForm12 :
     System.Windows.Forms.Form
 
 {
     #region " Windows Form Designer generated code "
 
-    public Form1() : base()
-    {        
+    public BitmapConstructorForm12() : base()
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
         PopulateListBoxWithFonts();
         PopulateListBoxWithGraphicsResolution();
-        this.Paint += new PaintEventHandler(Form1_Paint);
-        this.Button1.Click += new EventHandler(Button1_Click);
-        
+        Paint += new PaintEventHandler(Form1_Paint);
+        Button1.Click += new EventHandler(Button1_Click);
+
         //Add any initialization after the InitializeComponent() call
     }
 
@@ -27,16 +28,13 @@ public class Form1:
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
 
     //Required by the Windows Form Designer
-    private System.ComponentModel.IContainer components;
+    private System.ComponentModel.IContainer components = null;
 
     //NOTE: The following procedure is required by the Windows Form Designer
     //It can be modified using the Windows Form Designer.  
@@ -46,32 +44,32 @@ public class Form1:
     [System.Diagnostics.DebuggerStepThrough]
     private void InitializeComponent()
     {
-        this.listBox1 = new System.Windows.Forms.ListBox();
-        this.Button1 = new System.Windows.Forms.Button();
-        this.SuspendLayout();
+        listBox1 = new System.Windows.Forms.ListBox();
+        Button1 = new System.Windows.Forms.Button();
+        SuspendLayout();
         //
         //listBox1
         //
-        this.listBox1.Location = new System.Drawing.Point(88, 112);
-        this.listBox1.Name = "listBox1";
-        this.listBox1.Size = new System.Drawing.Size(120, 95);
-        this.listBox1.TabIndex = 0;
+        listBox1.Location = new System.Drawing.Point(88, 112);
+        listBox1.Name = "listBox1";
+        listBox1.Size = new System.Drawing.Size(120, 95);
+        listBox1.TabIndex = 0;
         //
         //Button1
         //
-        this.Button1.Location = new System.Drawing.Point(120, 24);
-        this.Button1.Name = "Button1";
-        this.Button1.TabIndex = 1;
-        this.Button1.Text = "Button1";
+        Button1.Location = new System.Drawing.Point(120, 24);
+        Button1.Name = "Button1";
+        Button1.TabIndex = 1;
+        Button1.Text = "Button1";
         //
         //Form1
         //
-        this.ClientSize = new System.Drawing.Size(292, 266);
-        this.Controls.Add(this.Button1);
-        this.Controls.Add(this.listBox1);
-        this.Name = "Form1";
-        this.Text = "Form1";
-        this.ResumeLayout(false);
+        ClientSize = new System.Drawing.Size(292, 266);
+        Controls.Add(Button1);
+        Controls.Add(listBox1);
+        Name = "Form1";
+        Text = "Form1";
+        ResumeLayout(false);
     }
 
     #endregion
@@ -86,7 +84,7 @@ public class Form1:
     {
         listBox1.Width = 200;
         listBox1.Location = new Point(40, 120);
-        foreach ( FontFamily oneFontFamily in FontFamily.Families )
+        foreach (FontFamily oneFontFamily in FontFamily.Families)
         {
             listBox1.Items.Add(oneFontFamily.Name);
         }
@@ -101,11 +99,11 @@ public class Form1:
     private void PopulateListBoxWithGraphicsResolution()
     {
         Graphics boxGraphics = listBox1.CreateGraphics();
-        Graphics formGraphics = this.CreateGraphics();
+        Graphics formGraphics = CreateGraphics();
 
-        listBox1.Items.Add("ListBox horizontal resolution: " 
+        listBox1.Items.Add("ListBox horizontal resolution: "
             + boxGraphics.DpiX);
-        listBox1.Items.Add("ListBox vertical resolution: " 
+        listBox1.Items.Add("ListBox vertical resolution: "
             + boxGraphics.DpiY);
 
         boxGraphics.Dispose();
@@ -126,16 +124,17 @@ public class Form1:
         string text = "&Click Here";
 
         // Declare a new StringFormat.
-        StringFormat format = new StringFormat();
-
-        // Set the HotkeyPrefix property.
-        format.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.Show;
+        StringFormat format = new StringFormat
+        {
+            // Set the HotkeyPrefix property.
+            HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.Show
+        };
 
         // Draw the string.
-        Brush theBrush = 
+        Brush theBrush =
             SystemBrushes.FromSystemColor(SystemColors.Highlight);
 
-        e.Graphics.DrawString(text, this.Font, theBrush, 30, 40, format);
+        e.Graphics.DrawString(text, Font, theBrush, 30, 40, format);
     }
     //</snippet2>
 
@@ -170,14 +169,14 @@ public class Form1:
         shadowLocation = shadowLocation + new Size(5, 5);
 
         // Create a rectangleF. 
-        RectangleF rectFToFill = 
+        RectangleF rectFToFill =
             new RectangleF(shadowLocation, shadowSize);
 
         // Create a custom brush using a semi-transparent color, and 
         // then fill in the rectangle.
         Color customColor = Color.FromArgb(50, Color.Gray);
         SolidBrush shadowBrush = new SolidBrush(customColor);
-        e.Graphics.FillRectangles(shadowBrush, new RectangleF[]{rectFToFill});
+        e.Graphics.FillRectangles(shadowBrush, [rectFToFill]);
 
         // Dispose of the brush.
         shadowBrush.Dispose();
@@ -198,17 +197,17 @@ public class Form1:
         string text = "Can you read this?";
 
         // Create a GraphicsPath.
-        System.Drawing.Drawing2D.GraphicsPath path = 
+        System.Drawing.Drawing2D.GraphicsPath path =
             new System.Drawing.Drawing2D.GraphicsPath();
 
         // Add the string to the path; declare the font, font style, size, and
         // vertical format for the string.
-        path.AddString(text, this.Font.FontFamily, 1, 15, 
-            new PointF(0.0F, 0.0F), 
+        path.AddString(text, Font.FontFamily, 1, 15,
+            new PointF(0.0F, 0.0F),
             new StringFormat(StringFormatFlags.DirectionVertical));
 
         // Declare a matrix that will be used to rotate the text.
-        System.Drawing.Drawing2D.Matrix rotateMatrix = 
+        System.Drawing.Drawing2D.Matrix rotateMatrix =
             new System.Drawing.Drawing2D.Matrix();
 
         // Set the rotation angle and starting point for the text.
@@ -218,7 +217,7 @@ public class Form1:
         path.Transform(rotateMatrix);
 
         // Set the SmoothingMode to high quality for best readability.
-        e.Graphics.SmoothingMode = 
+        e.Graphics.SmoothingMode =
             System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
         // Fill in the path to draw the string.
@@ -237,8 +236,8 @@ public class Form1:
     //<snippet6>
     private void DisplayKnownColors(PaintEventArgs e)
     {
-        this.Size = new Size(650, 550);
-        
+        Size = new Size(650, 550);
+
         // Get all the values from the KnownColor enumeration.
         System.Array colorsArray = Enum.GetValues(typeof(KnownColor));
         KnownColor[] allColors = new KnownColor[colorsArray.Length];
@@ -250,7 +249,7 @@ public class Form1:
         float y = 0;
         float x = 10.0F;
 
-        for(int i = 0; i < allColors.Length; i++)
+        for (int i = 0; i < allColors.Length; i++)
         {
 
             // If x is a multiple of 30, start a new column.
@@ -267,10 +266,10 @@ public class Form1:
 
             // Create a custom brush from the color and use it to draw
             // the brush's name.
-            SolidBrush aBrush = 
+            SolidBrush aBrush =
                 new SolidBrush(Color.FromName(allColors[i].ToString()));
-            e.Graphics.DrawString(allColors[i].ToString(), 
-                this.Font, aBrush, x, y);
+            e.Graphics.DrawString(allColors[i].ToString(),
+                Font, aBrush, x, y);
 
             // Dispose of the custom brush.
             aBrush.Dispose();
@@ -356,14 +355,14 @@ public class Form1:
             new System.Drawing.Drawing2D.GraphicsPath();
 
         // Create a rectangle.
-        RectangleF layoutRectangle = 
+        RectangleF layoutRectangle =
             new RectangleF(20.0F, 20.0F, 40.0F, 50.0F);
 
         // Add the rectangle to the path.
         myPath.AddRectangle(layoutRectangle);
 
         // Add a string to the path.
-        myPath.AddString("Path", this.Font.FontFamily, 2, 10.0F, 
+        myPath.AddString("Path", Font.FontFamily, 2, 10.0F,
             layoutRectangle, new StringFormat(StringFormatFlags.NoWrap));
 
         // Draw the path.
@@ -376,9 +375,9 @@ public class Form1:
     //</snippet10>
 
     [STAThread]
-    public static void Main()
+    public static void Run()
     {
-        Application.Run(new Form1());
+        Application.Run(new BitmapConstructorForm12());
     }
 
     private void Form1_Paint(object sender, PaintEventArgs e)
@@ -400,15 +399,15 @@ public class Form1:
     // Button1 and paste the following code into it. Associate the 
     // Button1_Click method with the button's Click event.
     //<snippet11>
-    private void Button1_Click(System.Object sender, System.EventArgs e)
+    private void Button1_Click(object sender, System.EventArgs e)
     {
         if (Button1.Font.Style != FontStyle.Bold)
-                Button1.Font = new Font(FontFamily.GenericSansSerif,
-                12.0F, FontStyle.Bold);
+            Button1.Font = new Font(FontFamily.GenericSansSerif,
+            12.0F, FontStyle.Bold);
     }
     //</snippet11>
 
-// The following code example demonstrates how to construct a Region
+    // The following code example demonstrates how to construct a Region
     // using the RegionData class. This example is designed to be used with Windows
     // Forms. To run this example paste it into a form and handle the form's Paint event
     // by calling the DemonstrateRegionData method, passing e as PaintEventArgs.
@@ -433,13 +432,13 @@ public class Form1:
         e.Graphics.ExcludeClip(region2);
 
         // Fill in the client rectangle.
-        e.Graphics.FillRectangle(Brushes.Red, this.ClientRectangle);
+        e.Graphics.FillRectangle(Brushes.Red, ClientRectangle);
 
         region2.Dispose();
     }
     // </snippet12>
 
-// The following code example demonstrates how use the Data from
+    // The following code example demonstrates how use the Data from
     // one region to set the Data for another region. This example is designed 
     // to be used with Windows Forms. To run this example paste
     // it into a form and handle the form's Paint event
@@ -476,30 +475,30 @@ public class Form1:
         e.Graphics.ExcludeClip(region3);
 
         // Fill in the client rectangle.
-        e.Graphics.FillRectangle(Brushes.Red, this.ClientRectangle);
+        e.Graphics.FillRectangle(Brushes.Red, ClientRectangle);
 
         region3.Dispose();
     }
     // </snippet13>
 
- 	//<snippetConstructor>
-        private void BitmapConstructorEx(PaintEventArgs e)
-        {
+    //<snippetConstructor>
+    private void BitmapConstructorEx(PaintEventArgs e)
+    {
 
-            // Create a bitmap.
-            Bitmap bmp = new Bitmap("c:\\fakePhoto.jpg");
-            
-           // Retrieve the bitmap data from the bitmap.
-            System.Drawing.Imaging.BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), 
-                ImageLockMode.ReadOnly, bmp.PixelFormat);
+        // Create a bitmap.
+        Bitmap bmp = new Bitmap("c:\\fakePhoto.jpg");
 
-            //Create a new bitmap.
-            Bitmap newBitmap = new Bitmap(200, 200, bmpData.Stride, bmp.PixelFormat, bmpData.Scan0);
+        // Retrieve the bitmap data from the bitmap.
+        System.Drawing.Imaging.BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
+            ImageLockMode.ReadOnly, bmp.PixelFormat);
 
-            bmp.UnlockBits(bmpData);
+        //Create a new bitmap.
+        Bitmap newBitmap = new Bitmap(200, 200, bmpData.Stride, bmp.PixelFormat, bmpData.Scan0);
 
-            // Draw the new bitmap.
-            e.Graphics.DrawImage(newBitmap, 10, 10);
-        }
-        //</snippetConstructor>
+        bmp.UnlockBits(bmpData);
+
+        // Draw the new bitmap.
+        e.Graphics.DrawImage(newBitmap, 10, 10);
+    }
+    //</snippetConstructor>
 }

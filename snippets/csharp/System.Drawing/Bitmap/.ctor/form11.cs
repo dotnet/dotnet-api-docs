@@ -2,14 +2,14 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-public class Form1:
+public class BitmapConstructorForm11 :
     System.Windows.Forms.Form
 
 {
     #region " Windows Form Designer generated code "
 
-    public Form1() : base()
-    {        
+    public BitmapConstructorForm11() : base()
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
@@ -22,16 +22,13 @@ public class Form1:
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
 
     //Required by the Windows Form Designer
-    private System.ComponentModel.IContainer components;
+    private System.ComponentModel.IContainer components = null;
 
     //NOTE: The following procedure is required by the Windows Form Designer
     //It can be modified using the Windows Form Designer.  
@@ -42,10 +39,10 @@ public class Form1:
         // 
         // Form1
         // 
-        this.ClientSize = new System.Drawing.Size(292, 266);
-        this.Name = "Form1";
-        this.Text = "Form1";
-        this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
+        ClientSize = new System.Drawing.Size(292, 266);
+        Name = "Form1";
+        Text = "Form1";
+        Paint += new System.Windows.Forms.PaintEventHandler(Form1_Paint);
     }
 
     #endregion
@@ -73,9 +70,9 @@ public class Form1:
     }
     //</snippet1>
 
-    public static void Main()
+    public static void Run()
     {
-        Application.Run(new Form1());
+        Application.Run(new BitmapConstructorForm11());
     }
 
     private void Form1_Paint(object sender, PaintEventArgs e)

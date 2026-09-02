@@ -2,19 +2,19 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-public class Form1:
+public class BitmapConstructorForm1 :
     System.Windows.Forms.Form
 
 {
     #region " Windows Form Designer generated code "
 
-    public Form1() : base()
-    {        
+    public BitmapConstructorForm1() : base()
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
-        this.Button1.Click += new EventHandler(Button1_Click);
-        this.Button2.Click += new EventHandler(Button2_Click);
+        Button1.Click += new EventHandler(Button1_Click);
+        Button2.Click += new EventHandler(Button2_Click);
         InitializeBitmap();
         InitializeStreamBitmap();
 
@@ -26,16 +26,13 @@ public class Form1:
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
 
     //Required by the Windows Form Designer
-    private System.ComponentModel.IContainer components;
+    private System.ComponentModel.IContainer components = null;
 
     //NOTE: The following procedure is required by the Windows Form Designer
     //It can be modified using the Windows Form Designer.  
@@ -47,43 +44,43 @@ public class Form1:
     [System.Diagnostics.DebuggerStepThrough]
     private void InitializeComponent()
     {
-        this.Button1 = new System.Windows.Forms.Button();
-        this.PictureBox1 = new System.Windows.Forms.PictureBox();
-        this.Button2 = new System.Windows.Forms.Button();
-        this.SuspendLayout();
+        Button1 = new System.Windows.Forms.Button();
+        PictureBox1 = new System.Windows.Forms.PictureBox();
+        Button2 = new System.Windows.Forms.Button();
+        SuspendLayout();
         // 
         // Button1
         // 
-        this.Button1.Location = new System.Drawing.Point(24, 192);
-        this.Button1.Name = "Button1";
-        this.Button1.Size = new System.Drawing.Size(96, 23);
-        this.Button1.TabIndex = 2;
-        this.Button1.Text = "Rotate and Flip";
+        Button1.Location = new System.Drawing.Point(24, 192);
+        Button1.Name = "Button1";
+        Button1.Size = new System.Drawing.Size(96, 23);
+        Button1.TabIndex = 2;
+        Button1.Text = "Rotate and Flip";
         // 
         // PictureBox1
         // 
-        this.PictureBox1.Location = new System.Drawing.Point(48, 40);
-        this.PictureBox1.Name = "PictureBox1";
-        this.PictureBox1.Size = new System.Drawing.Size(168, 72);
-        this.PictureBox1.TabIndex = 3;
-        this.PictureBox1.TabStop = false;
+        PictureBox1.Location = new System.Drawing.Point(48, 40);
+        PictureBox1.Name = "PictureBox1";
+        PictureBox1.Size = new System.Drawing.Size(168, 72);
+        PictureBox1.TabIndex = 3;
+        PictureBox1.TabStop = false;
         // 
         // Button2
         // 
-        this.Button2.Location = new System.Drawing.Point(152, 192);
-        this.Button2.Name = "Button2";
-        this.Button2.TabIndex = 4;
-        this.Button2.Text = "Button2";
+        Button2.Location = new System.Drawing.Point(152, 192);
+        Button2.Name = "Button2";
+        Button2.TabIndex = 4;
+        Button2.Text = "Button2";
         // 
         // Form1
         // 
-        this.ClientSize = new System.Drawing.Size(292, 266);
-        this.Controls.Add(this.Button2);
-        this.Controls.Add(this.PictureBox1);
-        this.Controls.Add(this.Button1);
-        this.Name = "Form1";
-        this.Text = "Form1";
-        this.ResumeLayout(false);
+        ClientSize = new System.Drawing.Size(292, 266);
+        Controls.Add(Button2);
+        Controls.Add(PictureBox1);
+        Controls.Add(Button1);
+        Name = "Form1";
+        Text = "Form1";
+        ResumeLayout(false);
     }
 
     #endregion
@@ -120,20 +117,20 @@ public class Form1:
     {
         try
         {
-            bitmap1 = (Bitmap)Bitmap.FromFile(@"C:\Documents and Settings\" + 
+            bitmap1 = (Bitmap)Bitmap.FromFile(@"C:\Documents and Settings\" +
                 @"All Users\Documents\My Music\music.bmp");
             PictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             PictureBox1.Image = bitmap1;
         }
-        catch(System.IO.FileNotFoundException)
+        catch (System.IO.FileNotFoundException)
         {
-            MessageBox.Show("There was an error." + 
+            MessageBox.Show("There was an error." +
                 "Check the path to the bitmap.");
         }
     }
     //</snippet4>
 
-    private void Button1_Click(System.Object sender, System.EventArgs e)
+    private void Button1_Click(object sender, System.EventArgs e)
     {
 
         if (bitmap1 != null)
@@ -153,11 +150,11 @@ public class Form1:
     // a form that contains a button named Button2. Paste the code into the
     // form and associate this method with the button's Click event.
     //<snippet1>
-    private void Button2_Click(System.Object sender, System.EventArgs e)
+    private void Button2_Click(object sender, System.EventArgs e)
     {
 
         Bitmap bitmap1 = Bitmap.FromHicon(SystemIcons.Hand.Handle);
-        Graphics formGraphics = this.CreateGraphics();
+        Graphics formGraphics = CreateGraphics();
         GraphicsUnit units = GraphicsUnit.Point;
 
         RectangleF bmpRectangleF = bitmap1.GetBounds(ref units);
@@ -179,23 +176,23 @@ public class Form1:
     {
         try
         {
-            System.Net.WebRequest request = 
+            System.Net.WebRequest request =
                 System.Net.WebRequest.Create(
                 "http://www.microsoft.com//h/en-us/r/ms_masthead_ltr.gif");
             System.Net.WebResponse response = request.GetResponse();
-            System.IO.Stream responseStream = 
+            System.IO.Stream responseStream =
                 response.GetResponseStream();
             Bitmap bitmap2 = new Bitmap(responseStream);
             PictureBox1.Image = bitmap2;
         }
-        catch(System.Net.WebException)
+        catch (System.Net.WebException)
         {
             MessageBox.Show("There was an error opening the image file."
                + "Check the URL");
         }
     }
     //</snippet2>
- // The following code example demonstrates how to use the Image.PixelFormat,
+    // The following code example demonstrates how to use the Image.PixelFormat,
     // Image.Height, Image.Width, and BitmapData.Scan0 properties; the Bitmap.LockBits 
     // and Bitmap.UnlockBits methods; and the ImageLockMode enumeration. 
     // This example is designed to be used with Windows
@@ -204,45 +201,45 @@ public class Form1:
     // This example assumes the existence of an 24bpp image file named fakePhoto.jpg at c:\.
     //<snippet5>
     private void LockUnlockBitsExample(PaintEventArgs e)
-        {
+    {
 
-            // Create a new bitmap.
-            Bitmap bmp = new Bitmap("c:\\fakePhoto.jpg");
+        // Create a new bitmap.
+        Bitmap bmp = new Bitmap("c:\\fakePhoto.jpg");
 
-            // Lock the bitmap's bits.  
-            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-            System.Drawing.Imaging.BitmapData bmpData =
-                bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                bmp.PixelFormat);
+        // Lock the bitmap's bits.
+        Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+        System.Drawing.Imaging.BitmapData bmpData =
+            bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+            bmp.PixelFormat);
 
-            // Get the address of the first line.
-            IntPtr ptr = bmpData.Scan0;
+        // Get the address of the first line.
+        IntPtr ptr = bmpData.Scan0;
 
-            // Declare an array to hold the bytes of the bitmap.
-            int bytes  = Math.Abs(bmpData.Stride) * bmp.Height;
-            byte[] rgbValues = new byte[bytes];
+        // Declare an array to hold the bytes of the bitmap.
+        int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
+        byte[] rgbValues = new byte[bytes];
 
-            // Copy the RGB values into the array.
-            System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+        // Copy the RGB values into the array.
+        System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-            // Set every third value to 255. A 24bpp bitmap will look red.  
-            for (int counter = 2; counter < rgbValues.Length; counter += 3)
-                rgbValues[counter] = 255;
+        // Set every third value to 255. A 24bpp bitmap will look red.
+        for (int counter = 2; counter < rgbValues.Length; counter += 3)
+            rgbValues[counter] = 255;
 
-            // Copy the RGB values back to the bitmap
-            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+        // Copy the RGB values back to the bitmap
+        System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
 
-            // Unlock the bits.
-            bmp.UnlockBits(bmpData);
+        // Unlock the bits.
+        bmp.UnlockBits(bmpData);
 
-            // Draw the modified image.
-            e.Graphics.DrawImage(bmp, 0, 150);
-        }
-    
+        // Draw the modified image.
+        e.Graphics.DrawImage(bmp, 0, 150);
+    }
+
     //</snippet5>
 
-    public static void Main()
+    public static void Run()
     {
-        Application.Run(new Form1());
+        Application.Run(new BitmapConstructorForm1());
     }
 }
