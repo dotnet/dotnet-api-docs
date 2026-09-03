@@ -2,21 +2,21 @@
 // Specify /d:TRACE when compiling.
 
 using System;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 
 class Test
 {
     static void Main()
     {
         // Create a file for output named TestFile.txt.
-        using (FileStream myFileStream =
-            new FileStream("TestFile.txt", FileMode.Append))
+        using FileStream myFileStream =
+            new("TestFile.txt", FileMode.Append);
         {
             // Create a new text writer using the output stream
             // and add it to the trace listeners.
             TextWriterTraceListener myTextListener =
-                new TextWriterTraceListener(myFileStream);
+                new(myFileStream);
             Trace.Listeners.Add(myTextListener);
 
             // Write output to the file.

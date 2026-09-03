@@ -7,13 +7,13 @@ class MyConsoleApp
     [STAThread]
     static void Main()
     {
-        MyConsoleApp myApp = new MyConsoleApp();
+        MyConsoleApp myApp = new();
         myApp.MyPublicMethod();
     }
 
     public void MyPublicMethod()
     {
-        MyInnerClass helperClass = new MyInnerClass();
+        MyInnerClass helperClass = new();
         helperClass.ThrowsException();
     }
 
@@ -21,10 +21,12 @@ class MyConsoleApp
     {
         public void ThrowsException()
         {
-            try {
+            try
+            {
                 throw new Exception("A problem was encountered.");
             }
-            catch (Exception) {
+            catch (Exception)
+            {
 
                 // Create a StackTrace starting at the next level
                 // stack frame.  Skip the first frame, the frame of
@@ -32,15 +34,15 @@ class MyConsoleApp
                 // of the ThrowsException method.  Include the line
                 // number, file name, and column number information
                 // for each frame.
-//<snippet3>
-                StackTrace st = new StackTrace(1, true);
-                StackFrame [] stFrames = st.GetFrames();
+                //<snippet3>
+                StackTrace st = new(1, true);
+                StackFrame[] stFrames = st.GetFrames();
 
-                foreach(StackFrame sf in stFrames )
+                foreach (StackFrame sf in stFrames)
                 {
-                   Console.WriteLine("Method: {0}", sf.GetMethod() );
+                    Console.WriteLine("Method: {0}", sf.GetMethod());
                 }
-//</snippet3>
+                //</snippet3>
             }
         }
     }

@@ -22,17 +22,17 @@
 //</configuration>
 
 using System;
-using System.Diagnostics;
-using System.Configuration;
-using System.Reflection;
 using System.Collections;
+using System.Configuration;
+using System.Diagnostics;
+using System.Reflection;
 namespace CustomTraceListener
 {
     class Program
     {
         static void Main(string[] args)
         {
-            TraceSource ts = new TraceSource("TraceTest");
+            TraceSource ts = new("TraceTest");
             Console.WriteLine(ts.Switch.DisplayName);
             foreach (TraceListener traceListener in ts.Listeners)
             {
@@ -75,7 +75,7 @@ namespace CustomTraceListener
         }
         protected override string[] GetSupportedAttributes()
         {
-            return new string[] { "Source" };
+            return ["Source"];
         }
     }
 }

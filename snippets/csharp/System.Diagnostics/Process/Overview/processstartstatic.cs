@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using System.ComponentModel;
 
 namespace MyProcessSample
 {
-    class MyProcess
+    class MyProcessStaticSample
     {
         // Opens the Internet Explorer application.
         void OpenApplication(string myFavoritesPath)
@@ -32,8 +31,10 @@ namespace MyProcessSample
         // both in a minimized mode.
         void OpenWithStartInfo()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo("IExplore.exe");
-            startInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            ProcessStartInfo startInfo = new("IExplore.exe")
+            {
+                WindowStyle = ProcessWindowStyle.Minimized
+            };
 
             Process.Start(startInfo);
 
@@ -42,13 +43,13 @@ namespace MyProcessSample
             Process.Start(startInfo);
         }
 
-        static void Main()
+        public static void Run()
         {
             // Get the path that stores favorite links.
             string myFavoritesPath =
                 Environment.GetFolderPath(Environment.SpecialFolder.Favorites);
 
-            MyProcess myProcess = new MyProcess();
+            MyProcessStaticSample myProcess = new();
 
             myProcess.OpenApplication(myFavoritesPath);
             myProcess.OpenWithArguments();
