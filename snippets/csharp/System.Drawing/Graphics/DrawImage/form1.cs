@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Forms;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Windows.Forms;
 
 namespace System.Drawing.ClassicGraphicsExamples2CS
 {
@@ -34,16 +34,13 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
+            if (disposing)
             {
-                if (components != null) 
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
@@ -53,9 +50,9 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.Size = new System.Drawing.Size(300,300);
-            this.Text = "Form1";
+            components = new System.ComponentModel.Container();
+            Size = new System.Drawing.Size(300, 300);
+            Text = "Form1";
         }
         #endregion
 
@@ -65,58 +62,58 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // Define DrawImageAbort callback method.
         private bool DrawImageCallback8(IntPtr callBackData)
         {
-                     
+
             // Test for call that passes callBackData parameter.
-            if(callBackData==IntPtr.Zero)
+            if (callBackData == IntPtr.Zero)
             {
-                     
+
                 // If no callBackData passed, abort DrawImage method.
                 return true;
             }
             else
             {
-                     
+
                 // If callBackData passed, continue DrawImage method.
                 return false;
             }
         }
         public void DrawImageRect4FloatAttribAbortData(PaintEventArgs e)
         {
-                     
+
             // Create callback method.
             Graphics.DrawImageAbort imageCallback
                 = new Graphics.DrawImageAbort(DrawImageCallback8);
             IntPtr imageCallbackData = new IntPtr(1);
-                     
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                     
+
             // Create rectangle for displaying original image.
             Rectangle destRect1 = new Rectangle(100, 25, 450, 150);
-                     
+
             // Create coordinates of rectangle for source image.
             float x = 50.0F;
             float y = 50.0F;
             float width = 150.0F;
             float height = 150.0F;
             GraphicsUnit units = GraphicsUnit.Pixel;
-                     
+
             // Draw original image to screen.
             e.Graphics.DrawImage(newImage, destRect1, x, y, width, height, units);
-                     
+
             // Create rectangle for adjusted image.
             Rectangle destRect2 = new Rectangle(100, 175, 450, 150);
-                     
+
             // Create image attributes and set large gamma.
             ImageAttributes imageAttr = new ImageAttributes();
             imageAttr.SetGamma(4.0F);
-                     
+
             // Draw adjusted image to screen.
             try
             {
                 checked
                 {
-                     
+
                     // Draw adjusted image to screen.
                     e.Graphics.DrawImage(
                         newImage,
@@ -144,13 +141,13 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet56>
         public void DrawImageRectF(PaintEventArgs e)
         {
-                     
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                     
+
             // Create rectangle for displaying image.
             RectangleF rect = new RectangleF(100.0F, 100.0F, 450.0F, 150.0F);
-                     
+
             // Draw image to screen.
             e.Graphics.DrawImage(newImage, rect);
         }
@@ -160,17 +157,17 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet57>
         public void DrawImageRectFRectF(PaintEventArgs e)
         {
-                     
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                     
+
             // Create rectangle for displaying image.
             RectangleF destRect = new RectangleF(100.0F, 100.0F, 450.0F, 150.0F);
-                     
+
             // Create rectangle for source image.
             RectangleF srcRect = new RectangleF(50.0F, 50.0F, 150.0F, 150.0F);
             GraphicsUnit units = GraphicsUnit.Pixel;
-                     
+
             // Draw image to screen.
             e.Graphics.DrawImage(newImage, destRect, srcRect, units);
         }
@@ -180,14 +177,14 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet58>
         public void DrawImage2Int(PaintEventArgs e)
         {
-                        
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                        
+
             // Create coordinates for upper-left corner of image.
             int x = 100;
             int y = 100;
-                        
+
             // Draw image to screen.
             e.Graphics.DrawImage(newImage, x, y);
         }
@@ -197,18 +194,18 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet59>
         public void DrawImage2IntRect(PaintEventArgs e)
         {
-                     
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                     
+
             // Create coordinates for upper-left corner of image.
             int x = 100;
             int y = 100;
-                     
+
             // Create rectangle for source image.
             Rectangle srcRect = new Rectangle(50, 50, 150, 150);
             GraphicsUnit units = GraphicsUnit.Pixel;
-                     
+
             // Draw image to screen.
             e.Graphics.DrawImage(newImage, x, y, srcRect, units);
         }
@@ -218,18 +215,18 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet60>
         public void DrawImage4Int(PaintEventArgs e)
         {
-                     
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                     
+
             // Create coordinates for upper-left corner.
-                     
+
             // of image and for size of image.
             int x = 100;
             int y = 100;
             int width = 450;
             int height = 150;
-                     
+
             // Draw image to screen.
             e.Graphics.DrawImage(newImage, x, y, width, height);
         }
@@ -239,14 +236,14 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet61>
         public void DrawImage2Float(PaintEventArgs e)
         {
-                     
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                     
+
             // Create coordinates for upper-left corner of image.
             float x = 100.0F;
             float y = 100.0F;
-                     
+
             // Draw image to screen.
             e.Graphics.DrawImage(newImage, x, y);
         }
@@ -256,18 +253,18 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet62>
         public void DrawImage2FloatRectF(PaintEventArgs e)
         {
-                     
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                     
+
             // Create coordinates for upper-left corner of image.
             float x = 100.0F;
             float y = 100.0F;
-                     
+
             // Create rectangle for source image.
             RectangleF srcRect = new RectangleF(50.0F, 50.0F, 150.0F, 150.0F);
             GraphicsUnit units = GraphicsUnit.Pixel;
-                     
+
             // Draw image to screen.
             e.Graphics.DrawImage(newImage, x, y, srcRect, units);
         }
@@ -277,18 +274,18 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet63>
         public void DrawImage4Float(PaintEventArgs e)
         {
-                     
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                     
+
             // Create coordinates for upper-left corner.
-                     
+
             // of image and for size of image.
             float x = 100.0F;
             float y = 100.0F;
             float width = 450.0F;
             float height = 150.0F;
-                     
+
             // Draw image to screen.
             e.Graphics.DrawImage(newImage, x, y, width, height);
         }
@@ -298,13 +295,13 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet64>
         public void DrawImageUnscaledPoint(PaintEventArgs e)
         {
-                     
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                     
+
             // Create point for upper-left corner of image.
             Point ulCorner = new Point(100, 100);
-                     
+
             // Draw image to screen.
             e.Graphics.DrawImageUnscaled(newImage, ulCorner);
         }
@@ -314,14 +311,14 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet65>
         public void DrawImageUnscaledInt(PaintEventArgs e)
         {
-                     
+
             // Create image.
             Image newImage = Image.FromFile("SampImag.jpg");
-                     
+
             // Create coordinates for upper-left corner of image.
             int x = 100;
             int y = 100;
-                     
+
             // Draw image to screen.
             e.Graphics.DrawImageUnscaled(newImage, x, y);
         }
@@ -331,14 +328,14 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet66>
         public void DrawLinePoint(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create points that define line.
             Point point1 = new Point(100, 100);
             Point point2 = new Point(500, 100);
-                     
+
             // Draw line to screen.
             e.Graphics.DrawLine(blackPen, point1, point2);
         }
@@ -348,14 +345,14 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet67>
         public void DrawLinePointF(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create points that define line.
             PointF point1 = new PointF(100.0F, 100.0F);
             PointF point2 = new PointF(500.0F, 100.0F);
-                     
+
             // Draw line to screen.
             e.Graphics.DrawLine(blackPen, point1, point2);
         }
@@ -365,16 +362,16 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet68>
         public void DrawLineInt(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create coordinates of points that define line.
             int x1 = 100;
             int y1 = 100;
             int x2 = 500;
             int y2 = 100;
-                     
+
             // Draw line to screen.
             e.Graphics.DrawLine(blackPen, x1, y1, x2, y2);
         }
@@ -384,16 +381,16 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet69>
         public void DrawLineFloat(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create coordinates of points that define line.
             float x1 = 100.0F;
             float y1 = 100.0F;
             float x2 = 500.0F;
             float y2 = 100.0F;
-                     
+
             // Draw line to screen.
             e.Graphics.DrawLine(blackPen, x1, y1, x2, y2);
         }
@@ -403,19 +400,19 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet70>
         public void DrawLinesPoint(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen pen = new Pen(Color.Black, 3);
-                     
+
             // Create array of points that define lines to draw.
             Point[] points =
-                     {
+                     [
                          new Point(10,  10),
                          new Point(10, 100),
                          new Point(200,  50),
                          new Point(250, 300)
-                     };
-                     
+                     ];
+
             //Draw lines to screen.
             e.Graphics.DrawLines(pen, points);
         }
@@ -425,19 +422,19 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet71>
         public void DrawLinesPointF(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen pen = new Pen(Color.Black, 3);
-                     
+
             // Create array of points that define lines to draw.
             PointF[] points =
-                     {
+                     [
                          new PointF(10.0F,  10.0F),
                          new PointF(10.0F, 100.0F),
                          new PointF(200.0F,  50.0F),
                          new PointF(250.0F, 300.0F)
-                     };
-                     
+                     ];
+
             //Draw lines to screen.
             e.Graphics.DrawLines(pen, points);
         }
@@ -447,14 +444,14 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet72>
         public void DrawPathEllipse(PaintEventArgs e)
         {
-                     
+
             // Create graphics path object and add ellipse.
             GraphicsPath graphPath = new GraphicsPath();
             graphPath.AddEllipse(0, 0, 200, 100);
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Draw graphics path to screen.
             e.Graphics.DrawPath(blackPen, graphPath);
         }
@@ -464,17 +461,17 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet73>
         public void DrawPieRectangle(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create rectangle for ellipse.
             Rectangle rect = new Rectangle(0, 0, 200, 100);
-                     
+
             // Create start and sweep angles.
-            float startAngle =  0.0F;
+            float startAngle = 0.0F;
             float sweepAngle = 45.0F;
-                     
+
             // Draw pie to screen.
             e.Graphics.DrawPie(blackPen, rect, startAngle, sweepAngle);
         }
@@ -484,17 +481,17 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet74>
         public void DrawPieRectangleF(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create rectangle for ellipse.
             RectangleF rect = new RectangleF(0.0F, 0.0F, 200.0F, 100.0F);
-                     
+
             // Create start and sweep angles.
-            float startAngle =  0.0F;
+            float startAngle = 0.0F;
             float sweepAngle = 45.0F;
-                     
+
             // Draw pie to screen.
             e.Graphics.DrawPie(blackPen, rect, startAngle, sweepAngle);
         }
@@ -504,20 +501,20 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet75>
         public void DrawPieInt(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create location and size of ellipse.
             int x = 0;
             int y = 0;
             int width = 200;
             int height = 100;
-                     
+
             // Create start and sweep angles.
-            int startAngle =  0;
+            int startAngle = 0;
             int sweepAngle = 45;
-                     
+
             // Draw pie to screen.
             e.Graphics.DrawPie(blackPen, x, y, width, height, startAngle, sweepAngle);
         }
@@ -527,20 +524,20 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet76>
         public void DrawPieFloat(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create location and size of ellipse.
             float x = 0.0F;
             float y = 0.0F;
             float width = 200.0F;
             float height = 100.0F;
-                     
+
             // Create start and sweep angles.
-            float startAngle =  0.0F;
+            float startAngle = 0.0F;
             float sweepAngle = 45.0F;
-                     
+
             // Draw pie to screen.
             e.Graphics.DrawPie(blackPen, x, y, width, height, startAngle, sweepAngle);
         }
@@ -550,20 +547,20 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet77>
         public void DrawPolygonPointF(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create points that define polygon.
-            PointF point1 = new PointF(50.0F,  50.0F);
-            PointF point2 = new PointF(100.0F,  25.0F);
-            PointF point3 = new PointF(200.0F,   5.0F);
-            PointF point4 = new PointF(250.0F,  50.0F);
+            PointF point1 = new PointF(50.0F, 50.0F);
+            PointF point2 = new PointF(100.0F, 25.0F);
+            PointF point3 = new PointF(200.0F, 5.0F);
+            PointF point4 = new PointF(250.0F, 50.0F);
             PointF point5 = new PointF(300.0F, 100.0F);
             PointF point6 = new PointF(350.0F, 200.0F);
             PointF point7 = new PointF(250.0F, 250.0F);
             PointF[] curvePoints =
-                     {
+                     [
                          point1,
                          point2,
                          point3,
@@ -571,8 +568,8 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
                          point5,
                          point6,
                          point7
-                     };
-                     
+                     ];
+
             // Draw polygon curve to screen.
             e.Graphics.DrawPolygon(blackPen, curvePoints);
         }
@@ -582,20 +579,20 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet78>
         public void DrawPolygonPoint(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create points that define polygon.
-            Point point1 = new Point(50,  50);
-            Point point2 = new Point(100,  25);
-            Point point3 = new Point(200,   5);
-            Point point4 = new Point(250,  50);
+            Point point1 = new Point(50, 50);
+            Point point2 = new Point(100, 25);
+            Point point3 = new Point(200, 5);
+            Point point4 = new Point(250, 50);
             Point point5 = new Point(300, 100);
             Point point6 = new Point(350, 200);
             Point point7 = new Point(250, 250);
             Point[] curvePoints =
-                     {
+                     [
                          point1,
                          point2,
                          point3,
@@ -603,8 +600,8 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
                          point5,
                          point6,
                          point7
-                     };
-                     
+                     ];
+
             // Draw polygon to screen.
             e.Graphics.DrawPolygon(blackPen, curvePoints);
         }
@@ -614,13 +611,13 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet79>
         public void DrawRectangleRectangle(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create rectangle.
             Rectangle rect = new Rectangle(0, 0, 200, 200);
-                     
+
             // Draw rectangle to screen.
             e.Graphics.DrawRectangle(blackPen, rect);
         }
@@ -630,16 +627,16 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet80>
         public void DrawRectangleInt(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create location and size of rectangle.
             int x = 0;
             int y = 0;
             int width = 200;
             int height = 200;
-                     
+
             // Draw rectangle to screen.
             e.Graphics.DrawRectangle(blackPen, x, y, width, height);
         }
@@ -649,16 +646,16 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet81>
         public void DrawRectangleFloat(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create location and size of rectangle.
             float x = 0.0F;
             float y = 0.0F;
             float width = 200.0F;
             float height = 200.0F;
-                     
+
             // Draw rectangle to screen.
             e.Graphics.DrawRectangle(blackPen, x, y, width, height);
         }
@@ -668,18 +665,18 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet82>
         public void DrawRectanglesRectangle(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create array of rectangles.
             Rectangle[] rects =
-                     {
+                     [
                          new Rectangle( 0,   0, 100, 200),
                          new Rectangle(100, 200, 250,  50),
                          new Rectangle(300,   0,  50, 100)
-                     };
-                     
+                     ];
+
             // Draw rectangles to screen.
             e.Graphics.DrawRectangles(blackPen, rects);
         }
@@ -689,18 +686,18 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet83>
         public void DrawRectanglesRectangleF(PaintEventArgs e)
         {
-                     
+
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 3);
-                     
+
             // Create array of rectangles.
             RectangleF[] rects =
-                     {
+                     [
                          new RectangleF( 0.0F,   0.0F, 100.0F, 200.0F),
                          new RectangleF(100.0F, 200.0F, 250.0F,  50.0F),
                          new RectangleF(300.0F,   0.0F,  50.0F, 100.0F)
-                     };
-                     
+                     ];
+
             // Draw rectangles to screen.
             e.Graphics.DrawRectangles(blackPen, rects);
         }
@@ -710,17 +707,17 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet84>
         public void DrawStringPointF(PaintEventArgs e)
         {
-                     
+
             // Create string to draw.
-            String drawString = "Sample Text";
-                     
+            string drawString = "Sample Text";
+
             // Create font and brush.
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
-                     
+
             // Create point for upper-left corner of drawing.
             PointF drawPoint = new PointF(150.0F, 150.0F);
-                     
+
             // Draw string to screen.
             e.Graphics.DrawString(drawString, drawFont, drawBrush, drawPoint);
         }
@@ -730,21 +727,23 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet85>
         public void DrawStringPointFFormat(PaintEventArgs e)
         {
-                     
+
             // Create string to draw.
-            String drawString = "Sample Text";
-                     
+            string drawString = "Sample Text";
+
             // Create font and brush.
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
-                     
+
             // Create point for upper-left corner of drawing.
             PointF drawPoint = new PointF(150.0F, 50.0F);
-                     
+
             // Set format of string.
-            StringFormat drawFormat = new StringFormat();
-            drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
-                     
+            StringFormat drawFormat = new StringFormat
+            {
+                FormatFlags = StringFormatFlags.DirectionVertical
+            };
+
             // Draw string to screen.
             e.Graphics.DrawString(drawString, drawFont, drawBrush, drawPoint, drawFormat);
         }
@@ -754,25 +753,25 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet86>
         public void DrawStringRectangleF(PaintEventArgs e)
         {
-                     
+
             // Create string to draw.
-            String drawString = "Sample Text";
-                     
+            string drawString = "Sample Text";
+
             // Create font and brush.
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
-                     
+
             // Create rectangle for drawing.
             float x = 150.0F;
             float y = 150.0F;
             float width = 200.0F;
             float height = 50.0F;
             RectangleF drawRect = new RectangleF(x, y, width, height);
-                     
+
             // Draw rectangle to screen.
             Pen blackPen = new Pen(Color.Black);
             e.Graphics.DrawRectangle(blackPen, x, y, width, height);
-                     
+
             // Draw string to screen.
             e.Graphics.DrawString(drawString, drawFont, drawBrush, drawRect);
         }
@@ -782,29 +781,31 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet87>
         public void DrawStringRectangleFFormat(PaintEventArgs e)
         {
-                     
+
             // Create string to draw.
-            String drawString = "Sample Text";
-                     
+            string drawString = "Sample Text";
+
             // Create font and brush.
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
-                     
+
             // Create rectangle for drawing.
             float x = 150.0F;
             float y = 150.0F;
             float width = 200.0F;
             float height = 50.0F;
             RectangleF drawRect = new RectangleF(x, y, width, height);
-                     
+
             // Draw rectangle to screen.
             Pen blackPen = new Pen(Color.Black);
             e.Graphics.DrawRectangle(blackPen, x, y, width, height);
-                     
+
             // Set format of string.
-            StringFormat drawFormat = new StringFormat();
-            drawFormat.Alignment = StringAlignment.Center;
-                     
+            StringFormat drawFormat = new StringFormat
+            {
+                Alignment = StringAlignment.Center
+            };
+
             // Draw string to screen.
             e.Graphics.DrawString(drawString, drawFont, drawBrush, drawRect, drawFormat);
         }
@@ -814,18 +815,18 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet88>
         public void DrawStringFloat(PaintEventArgs e)
         {
-                     
+
             // Create string to draw.
-            String drawString = "Sample Text";
-                     
+            string drawString = "Sample Text";
+
             // Create font and brush.
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
-                     
+
             // Create point for upper-left corner of drawing.
             float x = 150.0F;
             float y = 150.0F;
-                     
+
             // Draw string to screen.
             e.Graphics.DrawString(drawString, drawFont, drawBrush, x, y);
         }
@@ -835,22 +836,24 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet89>
         public void DrawStringFloatFormat(PaintEventArgs e)
         {
-                     
+
             // Create string to draw.
-            String drawString = "Sample Text";
-                     
+            string drawString = "Sample Text";
+
             // Create font and brush.
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
-                     
+
             // Create point for upper-left corner of drawing.
             float x = 150.0F;
-            float y =  50.0F;
-                     
+            float y = 50.0F;
+
             // Set format of string.
-            StringFormat drawFormat = new StringFormat();
-            drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
-                     
+            StringFormat drawFormat = new StringFormat
+            {
+                FormatFlags = StringFormatFlags.DirectionVertical
+            };
+
             // Draw string to screen.
             e.Graphics.DrawString(drawString, drawFont, drawBrush, x, y, drawFormat);
         }
@@ -860,19 +863,19 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet90>
         public void EndContainerState(PaintEventArgs e)
         {
-                     
+
             // Begin graphics container.
             GraphicsContainer containerState = e.Graphics.BeginContainer();
-                     
+
             // Translate world transformation.
             e.Graphics.TranslateTransform(100.0F, 100.0F);
-                     
+
             // Fill translated rectangle in container with red.
             e.Graphics.FillRectangle(new SolidBrush(Color.Red), 0, 0, 200, 200);
-                     
+
             // End graphics container.
             e.Graphics.EndContainer(containerState);
-                     
+
             // Fill untransformed rectangle with green.
             e.Graphics.FillRectangle(new SolidBrush(Color.Green), 0, 0, 200, 200);
         }
@@ -882,16 +885,16 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet91>
         public void ExcludeClipRegion(PaintEventArgs e)
         {
-                     
+
             // Create rectangle for region.
             Rectangle excludeRect = new Rectangle(100, 100, 200, 200);
-                     
+
             // Create region for exclusion.
             Region excludeRegion = new Region(excludeRect);
-                     
+
             // Set clipping region to exclude region.
             e.Graphics.ExcludeClip(excludeRegion);
-                     
+
             // Fill large rectangle to show clipping region.
             e.Graphics.FillRectangle(new SolidBrush(Color.Blue), 0, 0, 300, 300);
         }
@@ -901,13 +904,13 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet92>
         public void ExcludeClipRectangle(PaintEventArgs e)
         {
-                     
+
             // Create rectangle for exclusion.
             Rectangle excludeRect = new Rectangle(100, 100, 200, 200);
-                     
+
             // Set clipping region to exclude rectangle.
             e.Graphics.ExcludeClip(excludeRect);
-                     
+
             // Fill large rectangle to show clipping region.
             e.Graphics.FillRectangle(new SolidBrush(Color.Blue), 0, 0, 300, 300);
         }
@@ -917,17 +920,17 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet93>
         public void FillClosedCurvePoint(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             //Create array of points for curve.
             Point point1 = new Point(100, 100);
-            Point point2 = new Point(200,  50);
+            Point point2 = new Point(200, 50);
             Point point3 = new Point(250, 200);
             Point point4 = new Point(50, 150);
-            Point[] points = {point1, point2, point3, point4};
-                     
+            Point[] points = [point1, point2, point3, point4];
+
             // Fill curve on screen.
             e.Graphics.FillClosedCurve(redBrush, points);
         }
@@ -937,20 +940,20 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet94>
         public void FillClosedCurvePointFillMode(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             //Create array of points for curve.
             Point point1 = new Point(100, 100);
-            Point point2 = new Point(200,  50);
+            Point point2 = new Point(200, 50);
             Point point3 = new Point(250, 200);
             Point point4 = new Point(50, 150);
-            Point[] points = {point1, point2, point3, point4};
-                     
+            Point[] points = [point1, point2, point3, point4];
+
             // Set fill mode.
             FillMode newFillMode = FillMode.Winding;
-                     
+
             // Fill curve on screen.
             e.Graphics.FillClosedCurve(redBrush, points, newFillMode);
         }
@@ -960,23 +963,23 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet95>
         public void FillClosedCurvePointFillModeTension(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create array of points for curve.
             Point point1 = new Point(100, 100);
-            Point point2 = new Point(200,  50);
+            Point point2 = new Point(200, 50);
             Point point3 = new Point(250, 200);
             Point point4 = new Point(50, 150);
-            Point[] points = {point1, point2, point3, point4};
-                     
+            Point[] points = [point1, point2, point3, point4];
+
             // Set fill mode.
             FillMode newFillMode = FillMode.Winding;
-                     
+
             // Set tension.
             float tension = 1.0F;
-                     
+
             // Fill curve on screen.
             e.Graphics.FillClosedCurve(redBrush, points, newFillMode, tension);
         }
@@ -986,17 +989,17 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet96>
         public void FillClosedCurvePointF(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             //Create array of points for curve.
             PointF point1 = new PointF(100.0F, 100.0F);
-            PointF point2 = new PointF(200.0F,  50.0F);
+            PointF point2 = new PointF(200.0F, 50.0F);
             PointF point3 = new PointF(250.0F, 200.0F);
             PointF point4 = new PointF(50.0F, 150.0F);
-            PointF[] points = {point1, point2, point3, point4};
-                     
+            PointF[] points = [point1, point2, point3, point4];
+
             // Fill curve on screen.
             e.Graphics.FillClosedCurve(redBrush, points);
         }
@@ -1006,20 +1009,20 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet97>
         public void FillClosedCurvePointFFillMode(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create array of points for curve.
             PointF point1 = new PointF(100.0F, 100.0F);
-            PointF point2 = new PointF(200.0F,  50.0F);
+            PointF point2 = new PointF(200.0F, 50.0F);
             PointF point3 = new PointF(250.0F, 200.0F);
             PointF point4 = new PointF(50.0F, 150.0F);
-            PointF[] points = {point1, point2, point3, point4};
-                     
+            PointF[] points = [point1, point2, point3, point4];
+
             // Set fill mode.
             FillMode newFillMode = FillMode.Winding;
-                     
+
             // Fill curve on screen.
             e.Graphics.FillClosedCurve(redBrush, points, newFillMode);
         }
@@ -1029,23 +1032,23 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet98>
         public void FillClosedCurvePointFFillModeTension(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create array of points for curve.
             PointF point1 = new PointF(100.0F, 100.0F);
-            PointF point2 = new PointF(200.0F,  50.0F);
+            PointF point2 = new PointF(200.0F, 50.0F);
             PointF point3 = new PointF(250.0F, 200.0F);
             PointF point4 = new PointF(50.0F, 150.0F);
-            PointF[] points = {point1, point2, point3, point4};
-                     
+            PointF[] points = [point1, point2, point3, point4];
+
             // Set fill mode.
             FillMode newFillMode = FillMode.Winding;
-                     
+
             // Set tension.
             float tension = 1.0F;
-                     
+
             // Fill curve on screen.
             e.Graphics.FillClosedCurve(redBrush, points, newFillMode, tension);
         }
@@ -1055,17 +1058,17 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet99>
         public void FillEllipseRectangle(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create rectangle for ellipse.
             int x = 0;
             int y = 0;
             int width = 200;
             int height = 100;
             Rectangle rect = new Rectangle(x, y, width, height);
-                     
+
             // Fill ellipse on screen.
             e.Graphics.FillEllipse(redBrush, rect);
         }
@@ -1075,17 +1078,17 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet100>
         public void FillEllipseRectangleF(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create rectangle for ellipse.
             float x = 0.0F;
             float y = 0.0F;
             float width = 200.0F;
             float height = 100.0F;
             RectangleF rect = new RectangleF(x, y, width, height);
-                     
+
             // Fill ellipse on screen.
             e.Graphics.FillEllipse(redBrush, rect);
         }
@@ -1095,16 +1098,16 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet101>
         public void FillEllipseInt(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create location and size of ellipse.
             int x = 0;
             int y = 0;
             int width = 200;
             int height = 100;
-                     
+
             // Fill ellipse on screen.
             e.Graphics.FillEllipse(redBrush, x, y, width, height);
         }
@@ -1114,16 +1117,16 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet102>
         public void FillEllipseFloat(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create location and size of ellipse.
             float x = 0.0F;
             float y = 0.0F;
             float width = 200.0F;
             float height = 100.0F;
-                     
+
             // Fill ellipse on screen.
             e.Graphics.FillEllipse(redBrush, x, y, width, height);
         }
@@ -1133,14 +1136,14 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet103>
         public void FillPathEllipse(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create graphics path object and add ellipse.
             GraphicsPath graphPath = new GraphicsPath();
             graphPath.AddEllipse(0, 0, 200, 100);
-                     
+
             // Fill graphics path to screen.
             e.Graphics.FillPath(redBrush, graphPath);
         }
@@ -1150,17 +1153,17 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet104>
         public void FillPieRectangle(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create rectangle for ellipse.
             Rectangle rect = new Rectangle(0, 0, 200, 100);
-                     
+
             // Create start and sweep angles.
-            float startAngle =  0.0F;
+            float startAngle = 0.0F;
             float sweepAngle = 45.0F;
-                     
+
             // Fill pie to screen.
             e.Graphics.FillPie(redBrush, rect, startAngle, sweepAngle);
         }
@@ -1170,20 +1173,20 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet105>
         public void FillPieInt(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create location and size of ellipse.
             int x = 0;
             int y = 0;
             int width = 200;
             int height = 100;
-                     
+
             // Create start and sweep angles.
-            int startAngle =  0;
+            int startAngle = 0;
             int sweepAngle = 45;
-                     
+
             // Fill pie to screen.
             e.Graphics.FillPie(redBrush, x, y, width, height, startAngle, sweepAngle);
         }
@@ -1193,20 +1196,20 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         // <snippet106>
         public void FillPieFloat(PaintEventArgs e)
         {
-                     
+
             // Create solid brush.
             SolidBrush redBrush = new SolidBrush(Color.Red);
-                     
+
             // Create location and size of ellipse.
             float x = 0.0F;
             float y = 0.0F;
             float width = 200.0F;
             float height = 100.0F;
-                     
+
             // Create start and sweep angles.
-            float startAngle =  0.0F;
+            float startAngle = 0.0F;
             float sweepAngle = 45.0F;
-                     
+
             // Fill pie to screen.
             e.Graphics.FillPie(redBrush, x, y, width, height, startAngle, sweepAngle);
         }
@@ -1228,7 +1231,7 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
             Point point5 = new Point(300, 100);
             Point point6 = new Point(350, 200);
             Point point7 = new Point(250, 250);
-            Point[] curvePoints = {point1, point2, point3, point4, point5, point6, point7};
+            Point[] curvePoints = [point1, point2, point3, point4, point5, point6, point7];
 
             // Draw polygon to screen.
             e.Graphics.FillPolygon(blueBrush, curvePoints);
@@ -1251,7 +1254,7 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
             Point point5 = new Point(300, 100);
             Point point6 = new Point(350, 200);
             Point point7 = new Point(250, 250);
-            Point[] curvePoints = {point1, point2, point3, point4, point5, point6, point7};
+            Point[] curvePoints = [point1, point2, point3, point4, point5, point6, point7];
 
             // Define fill mode.
             FillMode newFillMode = FillMode.Winding;
@@ -1277,7 +1280,7 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
             PointF point5 = new PointF(300.0F, 100.0F);
             PointF point6 = new PointF(350.0F, 200.0F);
             PointF point7 = new PointF(250.0F, 250.0F);
-            PointF[] curvePoints = {point1, point2, point3, point4, point5, point6, point7};
+            PointF[] curvePoints = [point1, point2, point3, point4, point5, point6, point7];
 
             // Fill polygon to screen.
             e.Graphics.FillPolygon(blueBrush, curvePoints);
@@ -1300,7 +1303,7 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
             PointF point5 = new PointF(300.0F, 100.0F);
             PointF point6 = new PointF(350.0F, 200.0F);
             PointF point7 = new PointF(250.0F, 250.0F);
-            PointF[] curvePoints = {point1, point2, point3, point4, point5, point6, point7};
+            PointF[] curvePoints = [point1, point2, point3, point4, point5, point6, point7];
 
             // Define fill mode.
             FillMode newFillMode = FillMode.Winding;
@@ -1314,7 +1317,7 @@ namespace System.Drawing.ClassicGraphicsExamples2CS
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main() 
+        static void Main()
         {
             Application.Run(new Form1());
         }

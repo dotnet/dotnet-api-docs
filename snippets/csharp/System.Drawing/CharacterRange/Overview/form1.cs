@@ -2,20 +2,20 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-public class Form1:
+public class Form1 :
     System.Windows.Forms.Form
 
 {
     #region " Windows Form Designer generated code "
 
     public Form1() : base()
-    {        
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
-        this.Button1.Click += new EventHandler(Button1_Click);
-        this.Button2.Click += new EventHandler(Button2_Click);
-        this.Paint += new PaintEventHandler(Form1_Paint);
+        Button1.Click += new EventHandler(Button1_Click);
+        Button2.Click += new EventHandler(Button2_Click);
+        Paint += new PaintEventHandler(Form1_Paint);
 
         //Add any initialization after the InitializeComponent() call
     }
@@ -25,10 +25,7 @@ public class Form1:
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -44,32 +41,32 @@ public class Form1:
     [System.Diagnostics.DebuggerStepThrough]
     private void InitializeComponent()
     {
-        this.Button1 = new System.Windows.Forms.Button();
-        this.Button2 = new System.Windows.Forms.Button();
-        this.SuspendLayout();
+        Button1 = new System.Windows.Forms.Button();
+        Button2 = new System.Windows.Forms.Button();
+        SuspendLayout();
         //
         //Button1
         //
-        this.Button1.Location = new System.Drawing.Point(40, 208);
-        this.Button1.Name = "Button1";
-        this.Button1.TabIndex = 0;
-        this.Button1.Text = "Button1";
+        Button1.Location = new System.Drawing.Point(40, 208);
+        Button1.Name = "Button1";
+        Button1.TabIndex = 0;
+        Button1.Text = "Button1";
         //
         //Button2
         //
-        this.Button2.Location = new System.Drawing.Point(152, 208);
-        this.Button2.Name = "Button2";
-        this.Button2.TabIndex = 1;
-        this.Button2.Text = "Button2";
+        Button2.Location = new System.Drawing.Point(152, 208);
+        Button2.Name = "Button2";
+        Button2.TabIndex = 1;
+        Button2.Text = "Button2";
         //
         //Form1
         //
-        this.ClientSize = new System.Drawing.Size(292, 266);
-        this.Controls.Add(this.Button2);
-        this.Controls.Add(this.Button1);
-        this.Name = "Form1";
-        this.Text = "Form1";
-        this.ResumeLayout(false);
+        ClientSize = new System.Drawing.Size(292, 266);
+        Controls.Add(Button2);
+        Controls.Add(Button1);
+        Name = "Form1";
+        Text = "Form1";
+        ResumeLayout(false);
     }
 
     #endregion
@@ -92,9 +89,9 @@ public class Form1:
 
         // Create a CharacterRange array with the searchWord 
         // location and length.
-        CharacterRange[] ranges = 
-            new CharacterRange[]{new CharacterRange
-            (message.IndexOf(searchWord), searchWord.Length)};
+        CharacterRange[] ranges =
+            [new CharacterRange
+            (message.IndexOf(searchWord), searchWord.Length)];
 
         // Construct a StringFormat object.
         StringFormat stringFormat1 = new StringFormat();
@@ -114,15 +111,15 @@ public class Form1:
 
         // Get the Region to highlight by calling the 
         // MeasureCharacterRanges method.
-        Region[] charRegion = e.Graphics.MeasureCharacterRanges(message, 
+        Region[] charRegion = e.Graphics.MeasureCharacterRanges(message,
             largeFont, displayRectangleF, stringFormat1);
 
         // Draw the message string on the form.
-        e.Graphics.DrawString(message, largeFont, Brushes.Blue, 
+        e.Graphics.DrawString(message, largeFont, Brushes.Blue,
             displayRectangleF);
 
         // Fill in the region using a semi-transparent color.
-        e.Graphics.FillRegion(new SolidBrush(Color.FromArgb(50, Color.Fuchsia)), 
+        e.Graphics.FillRegion(new SolidBrush(Color.FromArgb(50, Color.Fuchsia)),
             charRegion[0]);
 
         largeFont.Dispose();
@@ -141,12 +138,12 @@ public class Form1:
     // your form and associate the Button1_Click method with the button's
     // Click event.
     //<snippet2>    
-    private void Button1_Click(System.Object sender, System.EventArgs e)
+    private void Button1_Click(object sender, System.EventArgs e)
     {
 
-        if (this.BackColor == SystemColors.ControlDark)
+        if (BackColor == SystemColors.ControlDark)
         {
-            this.BackColor = SystemColors.Control;
+            BackColor = SystemColors.Control;
         }
     }
     //</snippet2>
@@ -157,16 +154,16 @@ public class Form1:
     // into your form and associate the Button2_Click method with the
     //  button's Click event.
     //<snippet3>
-    private void Button2_Click(System.Object sender, System.EventArgs e)
+    private void Button2_Click(object sender, System.EventArgs e)
     {
 
-        if (this.BackColor != SystemColors.ControlDark)
+        if (BackColor != SystemColors.ControlDark)
         {
-            this.BackColor = SystemColors.ControlDark;
+            BackColor = SystemColors.ControlDark;
         }
-        if (!(this.Font.Bold))
+        if (!(Font.Bold))
         {
-            this.Font = new Font(this.Font, FontStyle.Bold);
+            Font = new Font(Font, FontStyle.Bold);
         }
     }
     //</snippet3>

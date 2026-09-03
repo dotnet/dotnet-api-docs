@@ -8,7 +8,7 @@ namespace BufferingExample
     public class BufferingExamples : Form
     {
         private BufferedGraphicsContext appDomainBufferedGraphicsContext;
-        private BufferedGraphics grafx;	
+        private BufferedGraphics grafx;
 
         public BufferingExamples() : base()
         {
@@ -34,36 +34,36 @@ namespace BufferingExample
             //<Snippet3>
             // Allocates a graphics buffer using the pixel format
             // of the specified Graphics object.
-            grafx = appDomainBufferedGraphicsContext.Allocate(this.CreateGraphics(),
-                 new Rectangle( 0, 0, 400, 400 ));
+            grafx = appDomainBufferedGraphicsContext.Allocate(CreateGraphics(),
+                 new Rectangle(0, 0, 400, 400));
             //</Snippet3>
 
             //<Snippet4>
             // Allocates a graphics buffer using the pixel format
             // of the specified handle to a device context.
-            grafx = appDomainBufferedGraphicsContext.Allocate(this.Handle,
-                 new Rectangle( 0, 0, 400, 400 ));
+            grafx = appDomainBufferedGraphicsContext.Allocate(Handle,
+                 new Rectangle(0, 0, 400, 400));
             //</Snippet4>
         }
 
         //<Snippet5>
         private void RenderToGraphics(Graphics g)
         {
-            grafx.Render( g );
+            grafx.Render(g);
         }
         //</Snippet5>
 
         //<Snippet6>
         private void RenderToDeviceContextHandle(IntPtr hDC)
         {
-            grafx.Render( hDC );
+            grafx.Render(hDC);
         }
         //</Snippet6>
 
         [STAThread]
         public static void Main(string[] args)
         {
-	    Application.Run(new BufferingExamples());
+            Application.Run(new BufferingExamples());
         }
     }
 }

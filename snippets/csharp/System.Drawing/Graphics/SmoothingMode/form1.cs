@@ -2,18 +2,18 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-public class Form1:
+public class Form1 :
     System.Windows.Forms.Form
 
 {
     #region " Windows Form Designer generated code "
 
     public Form1() : base()
-    {        
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
-        this.Paint += new PaintEventHandler(Form1_Paint);
+        Paint += new PaintEventHandler(Form1_Paint);
 
         //Add any initialization after the InitializeComponent() call
     }
@@ -23,10 +23,7 @@ public class Form1:
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -41,7 +38,7 @@ public class Form1:
     private void InitializeComponent()
     {
         components = new System.ComponentModel.Container();
-        this.Text = "Form1";
+        Text = "Form1";
     }
 
     #endregion
@@ -57,16 +54,17 @@ public class Form1:
     {
 
         // Create a new pen.
-        Pen skyBluePen = new Pen(Brushes.DeepSkyBlue);
+        Pen skyBluePen = new Pen(Brushes.DeepSkyBlue)
+        {
+            // Set the pen's width.
+            Width = 8.0F,
 
-        // Set the pen's width.
-        skyBluePen.Width = 8.0F;
-
-        // Set the LineJoin property.
-        skyBluePen.LineJoin = System.Drawing.Drawing2D.LineJoin.Bevel;
+            // Set the LineJoin property.
+            LineJoin = System.Drawing.Drawing2D.LineJoin.Bevel
+        };
 
         // Draw a rectangle.
-        e.Graphics.DrawRectangle(skyBluePen, 
+        e.Graphics.DrawRectangle(skyBluePen,
             new Rectangle(40, 40, 150, 200));
 
         //Dispose of the pen.
@@ -86,13 +84,14 @@ public class Form1:
     {
 
         // Create a new custom pen.
-        Pen redPen = new Pen(Brushes.Red, 6.0F);
+        Pen redPen = new Pen(Brushes.Red, 6.0F)
+        {
+            // Set the StartCap property.
+            StartCap = System.Drawing.Drawing2D.LineCap.RoundAnchor,
 
-        // Set the StartCap property.
-        redPen.StartCap = System.Drawing.Drawing2D.LineCap.RoundAnchor;
-
-        // Set the EndCap property.
-        redPen.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            // Set the EndCap property.
+            EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
+        };
 
         // Draw a line.
         e.Graphics.DrawLine(redPen, 40.0F, 40.0F, 145.0F, 185.0F);
@@ -115,26 +114,27 @@ public class Form1:
     {
 
         // Set the SmoothingMode property to smooth the line.
-        e.Graphics.SmoothingMode = 
+        e.Graphics.SmoothingMode =
             System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
         // Create a new Pen object.
-        Pen greenPen = new Pen(Color.Green);
+        Pen greenPen = new Pen(Color.Green)
+        {
+            // Set the width to 6.
+            Width = 6.0F,
 
-        // Set the width to 6.
-        greenPen.Width = 6.0F;
+            // Set the DashCap to round.
+            DashCap = System.Drawing.Drawing2D.DashCap.Round,
 
-        // Set the DashCap to round.
-        greenPen.DashCap = System.Drawing.Drawing2D.DashCap.Round;
-
-        // Create a custom dash pattern.
-        greenPen.DashPattern = new float[]{4.0F, 2.0F, 1.0F, 3.0F};
+            // Create a custom dash pattern.
+            DashPattern = [4.0F, 2.0F, 1.0F, 3.0F]
+        };
 
         // Draw a line.
         e.Graphics.DrawLine(greenPen, 20.0F, 20.0F, 100.0F, 240.0F);
 
         // Change the SmoothingMode to none.
-        e.Graphics.SmoothingMode = 
+        e.Graphics.SmoothingMode =
             System.Drawing.Drawing2D.SmoothingMode.None;
 
         // Draw another line.
@@ -152,7 +152,7 @@ public class Form1:
     //<snippet4>
     private void UsePensClass(PaintEventArgs e)
     {
-        e.Graphics.DrawEllipse(Pens.SlateBlue, 
+        e.Graphics.DrawEllipse(Pens.SlateBlue,
             new Rectangle(40, 40, 140, 140));
     }
     //</snippet4>

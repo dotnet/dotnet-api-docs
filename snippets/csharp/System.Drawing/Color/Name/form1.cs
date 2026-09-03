@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
-public class Form1:
+public class Form1 :
     System.Windows.Forms.Form
 
 {
     #region " Windows Form Designer generated code "
 
     public Form1() : base()
-    {        
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
@@ -26,10 +26,7 @@ public class Form1:
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -46,42 +43,42 @@ public class Form1:
     [System.Diagnostics.DebuggerStepThrough]
     private void InitializeComponent()
     {
-        this.Button1 = new System.Windows.Forms.Button();
-        this.PictureBox1 = new System.Windows.Forms.PictureBox();
-        this.Button2 = new System.Windows.Forms.Button();
-        this.SuspendLayout();
+        Button1 = new System.Windows.Forms.Button();
+        PictureBox1 = new System.Windows.Forms.PictureBox();
+        Button2 = new System.Windows.Forms.Button();
+        SuspendLayout();
         //
         //Button1
         //
-        this.Button1.Location = new System.Drawing.Point(184, 40);
-        this.Button1.Name = "Button1";
-        this.Button1.TabIndex = 0;
-        this.Button1.Text = "Button1";
+        Button1.Location = new System.Drawing.Point(184, 40);
+        Button1.Name = "Button1";
+        Button1.TabIndex = 0;
+        Button1.Text = "Button1";
         //
         //PictureBox1
         //
-        this.PictureBox1.Location = new System.Drawing.Point(112, 160);
-        this.PictureBox1.Name = "PictureBox1";
-        this.PictureBox1.Size = new System.Drawing.Size(128, 88);
-        this.PictureBox1.TabIndex = 3;
-        this.PictureBox1.TabStop = false;
+        PictureBox1.Location = new System.Drawing.Point(112, 160);
+        PictureBox1.Name = "PictureBox1";
+        PictureBox1.Size = new System.Drawing.Size(128, 88);
+        PictureBox1.TabIndex = 3;
+        PictureBox1.TabStop = false;
         //
         //Button2
         //
-        this.Button2.Location = new System.Drawing.Point(184, 88);
-        this.Button2.Name = "Button2";
-        this.Button2.TabIndex = 2;
-        this.Button2.Text = "Button2";
+        Button2.Location = new System.Drawing.Point(184, 88);
+        Button2.Name = "Button2";
+        Button2.TabIndex = 2;
+        Button2.Text = "Button2";
         //
         //Form1
         //
-        this.ClientSize = new System.Drawing.Size(292, 266);
-        this.Controls.Add(this.PictureBox1);
-        this.Controls.Add(this.Button2);
-        this.Controls.Add(this.Button1);
-        this.Name = "Form1";
-        this.Text = "Form1";
-        this.ResumeLayout(false);
+        ClientSize = new System.Drawing.Size(292, 266);
+        Controls.Add(PictureBox1);
+        Controls.Add(Button2);
+        Controls.Add(Button1);
+        Name = "Form1";
+        Text = "Form1";
+        ResumeLayout(false);
     }
 
     #endregion
@@ -103,8 +100,8 @@ public class Form1:
     {
 
         // Construct a new Rectangle .
-        Rectangle  displayRectangle = 
-            new Rectangle (new Point(40, 40), new Size (80, 80));
+        Rectangle displayRectangle =
+            new Rectangle(new Point(40, 40), new Size(80, 80));
 
         // Construct 2 new StringFormat objects
         StringFormat format1 = new StringFormat(StringFormatFlags.NoClip);
@@ -120,9 +117,9 @@ public class Form1:
         // Draw the bounding rectangle and a string for each
         // StringFormat object.
         e.Graphics.DrawRectangle(Pens.Black, displayRectangle);
-        e.Graphics.DrawString("Showing Format1", this.Font, 
+        e.Graphics.DrawString("Showing Format1", Font,
             Brushes.Red, (RectangleF)displayRectangle, format1);
-        e.Graphics.DrawString("Showing Format2", this.Font, 
+        e.Graphics.DrawString("Showing Format2", Font,
             Brushes.Red, (RectangleF)displayRectangle, format2);
     }
     //</snippet1>
@@ -140,11 +137,11 @@ public class Form1:
         string quote = "Not everything that can be counted counts," +
             " and not everything that counts can be counted.";
         format1.Trimming = StringTrimming.EllipsisWord;
-        e.Graphics.DrawString(quote, this.Font, Brushes.Black, 
+        e.Graphics.DrawString(quote, Font, Brushes.Black,
             new RectangleF(10.0F, 10.0F, 90.0F, 50.0F), format1);
     }
     //</snippet6>
-    
+
     private void Form1_Paint(object sender, PaintEventArgs e)
     {
 
@@ -172,7 +169,7 @@ public class Form1:
         {
             // Set the Image property of the PictureBox to an image retrieved
             // from the file system.
-            PictureBox1.Image = 
+            PictureBox1.Image =
                 Image.FromFile("C:\\Documents and Settings\\All Users\\" +
                 "Documents\\My Pictures\\Sample Pictures\\sunset.jpg");
 
@@ -187,7 +184,7 @@ public class Form1:
             Button1.BackColor = Color.Transparent;
             Button2.BackColor = Color.Transparent;
         }
-        catch(System.IO.FileNotFoundException)
+        catch (System.IO.FileNotFoundException)
         {
             MessageBox.Show("There was an error." +
                 "Make sure the image file path is valid.");
@@ -202,14 +199,14 @@ public class Form1:
     // Paste the code into a form that contains a button named Button1
     // and associate the Button1_Click method with the button's Click event.
     //<snippet3>
-    private void Button1_Click(System.Object sender, System.EventArgs e)
+    private void Button1_Click(object sender, System.EventArgs e)
     {
 
         // Construct a new Point with integers.
         Point Point1 = new Point(100, 100);
 
         // Create a Graphics object.
-        Graphics formGraphics = this.CreateGraphics();
+        Graphics formGraphics = CreateGraphics();
 
         // Construct another Point, this time using a Size.
         Point Point2 = new Point(new Size(100, 100));
@@ -218,10 +215,10 @@ public class Form1:
         // and if so print out their x and y values.
         if (Point1 == Point2)
         {
-            formGraphics.DrawString(String.Format("Point1.X: " +
+            formGraphics.DrawString(string.Format("Point1.X: " +
                 "{0},Point2.X: {1}, Point1.Y: {2}, Point2.Y {3}",
-                new object[]{Point1.X, Point2.X, Point1.Y, Point2.Y}),
-                this.Font, Brushes.Black, new PointF(10, 70));
+                new object[] { Point1.X, Point2.X, Point1.Y, Point2.Y }),
+                Font, Brushes.Black, new PointF(10, 70));
         }
     }
     //</snippet3>
@@ -233,11 +230,11 @@ public class Form1:
     // and associate the Button2_Click method with the button's 
     // Click event.
     //<snippet4>
-    private void Button2_Click(System.Object sender, System.EventArgs e)
+    private void Button2_Click(object sender, System.EventArgs e)
     {
 
         Button2.Width = 100;
-        Button2.Text = "Color: "+Button2.BackColor.Name;
+        Button2.Text = "Color: " + Button2.BackColor.Name;
     }
     //</snippet4>
 
@@ -251,29 +248,31 @@ public class Form1:
     //<snippet5>
     private void DemonstrateBlend(PaintEventArgs e)
     {
-        Blend blend1 = new Blend(9);
+        Blend blend1 = new Blend(9)
+        {
+            // Set the values in the Factors array to be all green,
+            // go to all blue, and then go back to green.
+            Factors = [0.0F, 0.2F, 0.5F, 0.7F, 1.0F,
+                                            0.7F, 0.5F, 0.2F, 0.0F],
 
-        // Set the values in the Factors array to be all green, 
-        // go to all blue, and then go back to green.
-        blend1.Factors = new float[]{0.0F, 0.2F, 0.5F, 0.7F, 1.0F, 
-                                        0.7F, 0.5F, 0.2F, 0.0F};
-
-        // Set the positions.
-        blend1.Positions = 
-            new float[]{0.0F, 0.1F, 0.3F, 0.4F, 0.5F, 0.6F, 
-            0.7F, 0.8F, 1.0F};
+            // Set the positions.
+            Positions =
+                [0.0F, 0.1F, 0.3F, 0.4F, 0.5F, 0.6F,
+                0.7F, 0.8F, 1.0F]
+        };
 
         // Declare a rectangle to draw the Blend in.
         Rectangle rectangle1 = new Rectangle(10, 10, 120, 100);
 
         // Create a new LinearGradientBrush using the rectangle, 
         // green and blue. and 90-degree angle.
-        LinearGradientBrush brush1 = 
-            new LinearGradientBrush(rectangle1, Color.LightGreen, 
-            Color.Blue, 90, true);
-
-        // Set the Blend property on the brush to the custom blend.
-        brush1.Blend = blend1;
+        LinearGradientBrush brush1 =
+            new LinearGradientBrush(rectangle1, Color.LightGreen,
+            Color.Blue, 90, true)
+            {
+                // Set the Blend property on the brush to the custom blend.
+                Blend = blend1
+            };
 
         // Fill in an ellipse with the brush.
         e.Graphics.FillEllipse(brush1, rectangle1);
