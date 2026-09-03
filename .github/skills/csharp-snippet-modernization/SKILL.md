@@ -34,7 +34,7 @@ Apply these changes when they preserve behavior and sample clarity:
       timeZoneTime.DateTime);
   ```
 - Use raw string literals (or interpolated raw string literals) for paragraph-style output.
-- Use target-typed `new` when the target type is evident, for example, `HttpClient client = new()`.
+- Use the `new` operator to construct objects. Omit the type name after `new` when the target type is evident.
 - Use collection expressions to initialize collections and arrays wherever possible.
 - Convert eligible value-producing `switch` statements to switch expressions.
 - Use auto-implemented properties instead of defining a separate field.
