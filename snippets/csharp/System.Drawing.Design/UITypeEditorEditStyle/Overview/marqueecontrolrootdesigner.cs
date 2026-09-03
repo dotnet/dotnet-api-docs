@@ -33,14 +33,11 @@ namespace MarqueeControlLibrary.Design
             base.Initialize(component);
 
             IComponentChangeService cs =
-                GetService(typeof(IComponentChangeService)) 
+                GetService(typeof(IComponentChangeService))
                 as IComponentChangeService;
 
-            if (cs != null)
-            {
-                cs.ComponentChanged +=
+            cs?.ComponentChanged +=
                     new ComponentChangedEventHandler(OnComponentChanged);
-            }
             // </snippet580>
 
             // <snippet590>

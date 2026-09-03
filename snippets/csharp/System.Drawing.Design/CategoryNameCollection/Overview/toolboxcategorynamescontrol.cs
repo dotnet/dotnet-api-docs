@@ -3,15 +3,15 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Data;
 using System.Windows.Forms;
 
 namespace ToolboxCategoryNamesControl
 {
     public class ToolboxCategoryNamesControl : System.Windows.Forms.UserControl
-	{		
+	{
         private System.Drawing.Design.IToolboxService toolboxService;
         private System.Drawing.Design.CategoryNameCollection categoryNames;
 
