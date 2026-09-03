@@ -7,57 +7,57 @@ using System.Windows.Forms;
 
 namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
 {
-	/// <summary>
-	/// Summary description for Form1.
-	/// </summary>
-	public class Form1 : System.Windows.Forms.Form
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+    /// <summary>
+    /// Summary description for Form1.
+    /// </summary>
+    public class Form1 : System.Windows.Forms.Form
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
 
-		public Form1()
-		{
-			//
-			// Required for Windows Form Designer support.
-			//
-			InitializeComponent();
+        public Form1()
+        {
+            //
+            // Required for Windows Form Designer support.
+            //
+            InitializeComponent();
 
-			//
-			// TODO: Add any constructor code after InitializeComponent call.
-			//
-		}
+            //
+            // TODO: Add any constructor code after InitializeComponent call.
+            //
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				components?.Dispose();
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                components?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.components = new System.ComponentModel.Container();
-			this.Size = new System.Drawing.Size(300,300);
-			this.Text = "Form1";
-		}
-		#endregion
+        #region Windows Form Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.Size = new System.Drawing.Size(300, 300);
+            this.Text = "Form1";
+        }
+        #endregion
 
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		///
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        ///
 
         // Snippet for: M:System.Drawing.Drawing2D.GraphicsPathIterator.CopyData(System.Drawing.PointF[]@,System.Byte[]@,System.Int32,System.Int32)
         // <snippet1>
@@ -101,16 +101,16 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
 
             // List the set of points and types and types to the left side
             // of the screen.
-            for(i=0; i<myPathPointCount; i++)
+            for (i = 0; i < myPathPointCount; i++)
             {
-                e.Graphics.DrawString(myPathPoints[i].X.ToString()+
+                e.Graphics.DrawString(myPathPoints[i].X.ToString() +
                     ", " + myPathPoints[i].Y.ToString() + ", " +
                     myPathTypes[i].ToString(),
                     myFont,
                     myBrush,
                     20,
                     j);
-                j+=20;
+                j += 20;
             }
 
             // Create a GraphicsPathIterator for myPath and rewind it.
@@ -130,8 +130,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             myPathIterator.NextMarker(out myStartIndex, out myEndIndex);
 
             // Copy all the points and types from the starting index to the
-            // ending index to the points array and the types array.
-            // respectively.
+            // ending index to the points array and the types array respectively.
             int numPointsCopied = myPathIterator.CopyData(
                 ref points,
                 ref types,
@@ -141,7 +140,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             // List the copied points to the right side of the screen.
             j = 20;
             int copiedStartIndex = 0;
-            for(i=0; i<numPointsCopied; i++)
+            for (i = 0; i < numPointsCopied; i++)
             {
                 copiedStartIndex = myStartIndex + i;
                 e.Graphics.DrawString(
@@ -152,7 +151,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
                     myBrush,
                     200,
                     j);
-                j+=20;
+                j += 20;
             }
         }
         // </snippet1>
@@ -195,16 +194,16 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
                 20,
                 j);
             j += 20;
-            for(i=0; i<myPathPointCount; i++)
+            for (i = 0; i < myPathPointCount; i++)
             {
-                e.Graphics.DrawString(myPathPoints[i].X.ToString()+
+                e.Graphics.DrawString(myPathPoints[i].X.ToString() +
                     ", " + myPathPoints[i].Y.ToString() + ", " +
                     myPathTypes[i].ToString(),
                     myFont,
                     myBrush,
                     20,
                     j);
-                j+=20;
+                j += 20;
             }
 
             // Create a GraphicsPathIterator for myPath.
@@ -223,7 +222,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
                 200,
                 j);
             j += 20;
-            for(i=0; i<points.Length; i++)
+            for (i = 0; i < points.Length; i++)
             {
                 e.Graphics.DrawString("Point: " + i +
                     ", " + "Value: " + points[i].ToString() + ", " +
@@ -232,7 +231,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
                     myBrush,
                     200,
                     j);
-                j+=20;
+                j += 20;
             }
         }
         // </snippet2>
@@ -255,8 +254,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             myPath.AddEllipse(220, 220, 100, 100);
 
             // Create a GraphicsPathIterator for myPath.
-            GraphicsPathIterator myPathIterator = new
-(myPath);
+            GraphicsPathIterator myPathIterator = new(myPath);
 
             // Test for a curve.
             bool myHasCurve = myPathIterator.HasCurve();
@@ -302,19 +300,18 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
 
             // List the values for all of path points and types to
             // the left side of the screen.
-            for(i=0; i < myPathPointCount; i++)
+            for (i = 0; i < myPathPointCount; i++)
             {
-                e.Graphics.DrawString(myPathPoints[i].X.ToString()+
+                e.Graphics.DrawString(myPathPoints[i].X.ToString() +
                     ", " + myPathPoints[i].Y.ToString() + ", " +
-                    myPathTypes[i].ToString(),  myFont, myBrush,
+                    myPathTypes[i].ToString(), myFont, myBrush,
                     20, j);
 
-                j+=20;
+                j += 20;
             }
 
             // Create a GraphicsPathIterator.
-            GraphicsPathIterator myPathIterator = new
-(myPath);
+            GraphicsPathIterator myPathIterator = new(myPath);
 
             // Rewind the iterator.
             myPathIterator.Rewind();
@@ -322,13 +319,12 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             // Create a GraphicsPath to receive a section of myPath.
             GraphicsPath myPathSection = new();
 
-            // Retrieve and list the number of points contained in.
-
+            // Retrieve and list the number of points contained in
             // the first marker to the right side of the screen.
             int markerPoints;
             markerPoints = myPathIterator.NextMarker(myPathSection);
             e.Graphics.DrawString("Marker: 1" + "  Num Points: " +
-                markerPoints.ToString(),  myFont, myBrush, 200, 20);
+                markerPoints.ToString(), myFont, myBrush, 200, 20);
         }
         // </snippet4>
 
@@ -336,7 +332,6 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
         // <snippet5>
         private void NextMarkerExample(PaintEventArgs e)
         {
-
             // Create the GraphicsPath.
             GraphicsPath myPath = new();
             Point[] myPoints = [new(20, 20), new(120, 120),
@@ -358,8 +353,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             PointF[] myPathPoints = myPath.PathPoints;
             byte[] myPathTypes = myPath.PathTypes;
 
-            // Set up variables for drawing the array.
-
+            // Set up variables for drawing the array
             // of points to the screen.
             int i;
             float j = 20;
@@ -367,36 +361,34 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             SolidBrush myBrush = new(Color.Black);
 
             // Draw the set of path points and types to the screen.
-            for(i=0; i<myPathPointCount; i++)
+            for (i = 0; i < myPathPointCount; i++)
             {
-                e.Graphics.DrawString(myPathPoints[i].X.ToString()+
+                e.Graphics.DrawString(myPathPoints[i].X.ToString() +
                     ", " + myPathPoints[i].Y.ToString() + ", " +
                     myPathTypes[i].ToString(),
                     myFont,
                     myBrush,
                     20,
                     j);
-                j+=20;
+                j += 20;
             }
 
             // Create a GraphicsPathIterator.
-            GraphicsPathIterator myPathIterator = new
-(myPath);
+            GraphicsPathIterator myPathIterator = new(myPath);
             int myStartIndex;
             int myEndIndex;
 
             // Rewind the Iterator.
             myPathIterator.Rewind();
 
-            // Draw the Markers and their start and end points.
-
+            // Draw the Markers and their start and end points
             // to the screen.
-            j=20;
-            for(i=0;i<3;i++)
+            j = 20;
+            for (i = 0; i < 3; i++)
             {
                 myPathIterator.NextMarker(out myStartIndex, out myEndIndex);
                 e.Graphics.DrawString("Marker " + i.ToString() +
-                    ":  Start: " + myStartIndex.ToString()+
+                    ":  Start: " + myStartIndex.ToString() +
                     "  End: " + myEndIndex.ToString(),
                     myFont,
                     myBrush,
@@ -421,7 +413,6 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
         // <snippet6>
         public void NextPathTypeExample(PaintEventArgs e)
         {
-
             // Create the GraphicsPath.
             GraphicsPath myPath = new();
 
@@ -438,24 +429,23 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             ListPathPoints(e, myPath, null, 20, 1);
 
             // Create a GraphicsPathIterator.
-            GraphicsPathIterator myPathIterator = new
-(myPath);
+            GraphicsPathIterator myPathIterator = new(myPath);
 
             // Rewind the Iterator.
             myPathIterator.Rewind();
 
-            // Iterate the subpaths and types, and list the results to.
-
-            // the screen.
+            // Iterate the subpaths and types,
+            // and list the results.
             int i, j = 20;
             int mySubPaths, subPathStartIndex, subPathEndIndex;
             bool isClosed;
             byte subPathPointType;
-            int pointTypeStartIndex,  pointTypeEndIndex, numPointsFound;
+            int pointTypeStartIndex, pointTypeEndIndex, numPointsFound;
             Font myFont = new("Arial", 8);
             SolidBrush myBrush = new(Color.Black);
             j = 20;
-            for(i = 0;i < 3; i++)
+
+            for (i = 0; i < 3; i++)
             {
                 mySubPaths = myPathIterator.NextSubpath(
                     out subPathStartIndex,
@@ -473,7 +463,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
                     myBrush,
                     200,
                     j);
-                j+=20;
+                j += 20;
             }
 
             // List the total number of path points to the screen.
@@ -483,7 +473,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
         //-------------------------------------------------------
         //This function is a helper function used by
         // NextPathTypeExample.
-        //-------------------------------------------------------.
+        //-------------------------------------------------------
         public void ListPathPoints(
             PaintEventArgs e,
             GraphicsPath myPath,
@@ -491,7 +481,6 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             int xOffset,
             int listType)
         {
-
             // Get the total number of points for the path,
             // and the arrays of the points and types.
             int myPathPointCount = myPath.PointCount;
@@ -504,26 +493,24 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             Font myFont = new("Arial", 8);
             SolidBrush myBrush = new(Color.Black);
             if (listType == 1)
-                // List all the path points to the screen.
+            // List all the path points to the screen.
             {
-
                 // Draw the set of path points and types to the screen.
-                for(i=0; i<myPathPointCount; i++)
+                for (i = 0; i < myPathPointCount; i++)
                 {
-                    e.Graphics.DrawString(myPathPoints[i].X.ToString()+
+                    e.Graphics.DrawString(myPathPoints[i].X.ToString() +
                         ", " + myPathPoints[i].Y.ToString() + ", " +
                         myPathTypes[i].ToString(),
                         myFont,
                         myBrush,
                         xOffset,
                         j);
-                    j+=20;
+                    j += 20;
                 }
             }
             else if (listType == 2)
-                // Display the total number of path points.
+            // Display the total number of path points.
             {
-
                 // Draw the total number of points to the screen.
                 int myPathTotalPoints = myPathIterator.Count;
                 e.Graphics.DrawString("Total Points = " +
@@ -539,96 +526,91 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
                     myFont, myBrush, xOffset, 200);
             }
         }
-            // </snippet6>
+        // </snippet6>
 
-            // Snippet for: M:System.Drawing.Drawing2D.GraphicsPathIterator.NextSubpath(System.Drawing.Drawing2D.GraphicsPath,System.Boolean@)
-            // <snippet7>
-            public void NextSubpathExample2(PaintEventArgs e)
-            {
+        // Snippet for: M:System.Drawing.Drawing2D.GraphicsPathIterator.NextSubpath(System.Drawing.Drawing2D.GraphicsPath,System.Boolean@)
+        // <snippet7>
+        public void NextSubpathExample2(PaintEventArgs e)
+        {
+            // Create a graphics path.
+            GraphicsPath myPath = new();
 
-                // Create a graphics path.
-                GraphicsPath myPath = new();
-
-                // Set up primitives to add to myPath.
-                Point[] myPoints = [new(20, 20), new(120, 120),
+            // Set up primitives to add to myPath.
+            Point[] myPoints = [new(20, 20), new(120, 120),
                     new(20, 120),new(20, 20) ];
-                Rectangle myRect = new(120, 120, 100, 100);
+            Rectangle myRect = new(120, 120, 100, 100);
 
-                // Add 3 lines, a rectangle, an ellipse, and 2 markers.
-                myPath.AddLines(myPoints);
-                myPath.SetMarkers();
-                myPath.AddRectangle(myRect);
-                myPath.SetMarkers();
-                myPath.AddEllipse(220, 220, 100, 100);
+            // Add 3 lines, a rectangle, an ellipse, and 2 markers.
+            myPath.AddLines(myPoints);
+            myPath.SetMarkers();
+            myPath.AddRectangle(myRect);
+            myPath.SetMarkers();
+            myPath.AddEllipse(220, 220, 100, 100);
 
-                // Get the total number of points for the path,
+            // Get the total number of points for the path,
 
-                // and the arrays of the points and types.
-                int myPathPointCount = myPath.PointCount;
-                PointF[] myPathPoints = myPath.PathPoints;
-                byte[] myPathTypes = myPath.PathTypes;
+            // and the arrays of the points and types.
+            int myPathPointCount = myPath.PointCount;
+            PointF[] myPathPoints = myPath.PathPoints;
+            byte[] myPathTypes = myPath.PathTypes;
 
-                // Set up variables for listing all of the path's.
+            // Set up variables for listing all of the path's
+            // points to the screen.
+            int i;
+            float j = 20;
+            Font myFont = new("Arial", 8);
+            SolidBrush myBrush = new(Color.Black);
 
-                // points to the screen.
-                int i;
-                float j = 20;
-                Font myFont = new("Arial", 8);
-                SolidBrush myBrush = new(Color.Black);
-
-                // List the values of all the path points and types to the screen.
-                for(i=0; i<myPathPointCount; i++)
-                {
-                    e.Graphics.DrawString(myPathPoints[i].X.ToString()+
-                        ", " + myPathPoints[i].Y.ToString() + ", " +
-                        myPathTypes[i].ToString(),
-                        myFont,
-                        myBrush,
-                        20,
-                        j);
-                    j+=20;
-                }
-
-                // Create a GraphicsPathIterator for myPath.
-                GraphicsPathIterator myPathIterator = new
-(myPath);
-
-                // Rewind the iterator.
-                myPathIterator.Rewind();
-
-                // Create the GraphicsPath section.
-                GraphicsPath myPathSection = new();
-
-                // Iterate to the 3rd subpath and list the number of points therein.
-
-                // to the screen.
-                int subpathPoints;
-                bool IsClosed2;
-
-                // Iterate to the third subpath.
-                subpathPoints = myPathIterator.NextSubpath(
-                    myPathSection, out IsClosed2);
-                subpathPoints = myPathIterator.NextSubpath(
-                    myPathSection, out IsClosed2);
-                subpathPoints = myPathIterator.NextSubpath(
-                    myPathSection, out IsClosed2);
-
-                // Write the number of subpath points to the screen.
-                e.Graphics.DrawString("Subpath: 3"  +
-                    "   Num Points: " +
-                    subpathPoints.ToString(),
+            // List the values of all the path points and types to the screen.
+            for (i = 0; i < myPathPointCount; i++)
+            {
+                e.Graphics.DrawString(myPathPoints[i].X.ToString() +
+                    ", " + myPathPoints[i].Y.ToString() + ", " +
+                    myPathTypes[i].ToString(),
                     myFont,
                     myBrush,
-                    200,
-                    20);
+                    20,
+                    j);
+                j += 20;
             }
+
+            // Create a GraphicsPathIterator for myPath.
+            GraphicsPathIterator myPathIterator = new(myPath);
+
+            // Rewind the iterator.
+            myPathIterator.Rewind();
+
+            // Create the GraphicsPath section.
+            GraphicsPath myPathSection = new();
+
+            // Iterate to the 3rd subpath and list the number of points therein
+            // to the screen.
+            int subpathPoints;
+            bool IsClosed2;
+
+            // Iterate to the third subpath.
+            subpathPoints = myPathIterator.NextSubpath(
+                myPathSection, out IsClosed2);
+            subpathPoints = myPathIterator.NextSubpath(
+                myPathSection, out IsClosed2);
+            subpathPoints = myPathIterator.NextSubpath(
+                myPathSection, out IsClosed2);
+
+            // Write the number of subpath points to the screen.
+            e.Graphics.DrawString("Subpath: 3" +
+                "   Num Points: " +
+                subpathPoints.ToString(),
+                myFont,
+                myBrush,
+                200,
+                20);
+        }
         // </snippet7>
 
         // Snippet for: M:System.Drawing.Drawing2D.GraphicsPathIterator.NextSubpath(System.Int32@,System.Int32@,System.Boolean@)
         // <snippet8>
         private void NextSubpathExample(PaintEventArgs e)
         {
-
             // Create the GraphicsPath.
             GraphicsPath myPath = new();
             Point[] myPoints = [new(20, 20), new(120, 120),
@@ -641,14 +623,12 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             myPath.AddEllipse(220, 220, 100, 100);
 
             // Get the total number of points for the path,
-
             // and the arrays of the points and types.
             int myPathPointCount = myPath.PointCount;
             PointF[] myPathPoints = myPath.PathPoints;
             byte[] myPathTypes = myPath.PathTypes;
 
-            // Set up variables for drawing the array of.
-
+            // Set up variables for drawing the array of
             // points to the screen.
             int i;
             float j = 20;
@@ -656,21 +636,20 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             SolidBrush myBrush = new(Color.Black);
 
             // Draw the set of path points and types to the screen.
-            for(i=0; i < myPathPointCount; i++)
+            for (i = 0; i < myPathPointCount; i++)
             {
-                e.Graphics.DrawString(myPathPoints[i].X.ToString()+
+                e.Graphics.DrawString(myPathPoints[i].X.ToString() +
                     ", " + myPathPoints[i].Y.ToString() + ", " +
                     myPathTypes[i].ToString(),
                     myFont,
                     myBrush,
                     20,
                     j);
-                j+=20;
+                j += 20;
             }
 
             // Create a GraphicsPathIterator.
-            GraphicsPathIterator myPathIterator = new
-(myPath);
+            GraphicsPathIterator myPathIterator = new(myPath);
             int myStartIndex;
             int myEndIndex;
             bool myIsClosed;
@@ -684,14 +663,14 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
             myPathIterator.Rewind();
 
             // List the Subpaths to the screen.
-            j=20;
-            for(i=0;i<numSubpaths;i++)
+            j = 20;
+            for (i = 0; i < numSubpaths; i++)
             {
                 myPathIterator.NextSubpath(out myStartIndex,
                     out myEndIndex,
                     out myIsClosed);
                 e.Graphics.DrawString("Subpath " + i.ToString() +
-                    ":  Start: " + myStartIndex.ToString()+
+                    ":  Start: " + myStartIndex.ToString() +
                     "  End: " + myEndIndex.ToString() +
                     "  IsClosed: " + myIsClosed.ToString(),
                     myFont,
@@ -712,10 +691,10 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathIteratorCS
         }
         // </snippet8>
 
-		[STAThread]
-		static void Main()
-		{
-			Application.Run(new Form1());
-		}
-	}
+        [STAThread]
+        static void Main()
+        {
+            Application.Run(new Form1());
+        }
+    }
 }

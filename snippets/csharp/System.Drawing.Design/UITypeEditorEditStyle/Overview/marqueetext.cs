@@ -194,7 +194,7 @@ namespace MarqueeControlLibrary
             }
         }
 
-        // The ProgressChanged event is raised by the DoWork method
+        // The ProgressChanged event is raised by the DoWork method.
         // This event handler does work that is internal to the
         // control. In this case, the text is toggled between its
         // light and dark state, and the control is told to

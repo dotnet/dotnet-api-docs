@@ -74,10 +74,9 @@ namespace System.Drawing.Imaging.ClassicImageCodecInfoCS
             // Check to determine whether any codecs were found.
             if(numCodecs > 0)
             {
-
-                // Set up an array to hold codec information. There are 9.
-
-                // information elements plus 1 space for each codec, so 10 times.
+                // Set up an array to hold codec information.
+                // There are 9 information elements plus 1 space
+                // for each codec, so 10 times.
 
                 // the number of codecs found is allocated.
                 string[] myCodecInfo = new string[numCodecs*10];

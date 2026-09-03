@@ -7,10 +7,6 @@ using System.Xml;
 
 public class class1
 {
-
-    // 1948e834-e104-481c-b71d-d8aa9e4d106e
-    // How to: Create a Path Gradient.
-
     // <snippet11>
     public void FillEllipseWithPathGradient(PaintEventArgs e)
     {
@@ -94,8 +90,8 @@ public class class1
 
         PathGradientBrush pBrush = new(ptsF);
 
-        // An array of five points was used to construct the path gradient.
-        // brush. Set the color of each point in that array.
+        // An array of five points was used to construct the path gradient brush.
+        // Set the color of each point in that array.
         Color[] colors = [
            Color.FromArgb(255, 255, 0, 0),  // (0, 0) red.
            Color.FromArgb(255, 0, 255, 0),  // (160, 0) green.
@@ -163,8 +159,7 @@ public class class1
 
         float[] relativePositions = [
            0f,       // Dark green is at the boundary of the triangle.
-           0.4f,     // Aqua is 40 percent of the way from the boundary.
-                     // to the center point.
+           0.4f,     // Aqua is 40 percent of the way from the boundary to the center point.
            1.0f];    // Blue is at the center point.
 
         ColorBlend colorBlend = new()

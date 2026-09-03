@@ -93,7 +93,7 @@ namespace MarqueeControlLibrary
         // <snippet50>
         public virtual void StartMarquee()
         {
-            // The MarqueeBorder control may contain any number of
+            // The MarqueeBorder control  cocanntain any number of
             // controls that implement IMarqueeWidget, so find
             // each IMarqueeWidget child and call its StartMarquee
             // method.
@@ -112,7 +112,7 @@ namespace MarqueeControlLibrary
 
         public virtual void StopMarquee()
         {
-            // The MarqueeBorder control may contain any number of
+            // The MarqueeBorder control  cocanntain any number of
             // controls that implement IMarqueeWidget, so find
             // each IMarqueeWidget child and call its StopMarquee
             // method.
@@ -499,7 +499,7 @@ namespace MarqueeControlLibrary
             }
         }
 
-        // The ProgressChanged event is raised by the DoWork method
+        // The ProgressChanged event is raised by the DoWork method.
         // This event handler does work that is internal to the
         // control. In this case, the currentOffset is incremented,
         // and the control is told to repaint itself.

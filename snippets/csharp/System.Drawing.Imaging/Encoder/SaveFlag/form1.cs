@@ -22,7 +22,7 @@ class Example_MultiFrame
 
         // Create an EncoderParameters object.
         // An EncoderParameters object has an array of EncoderParameter
-        // objects. In this case, there is only one.
+        // objects. In this case, there is only one
         // EncoderParameter object in the array.
         using EncoderParameters myEncoderParameters = new(1);
 
@@ -34,6 +34,7 @@ class Example_MultiFrame
         multi.Save("Multiframe.tiff", myImageCodecInfo, myEncoderParameters);
 
         // Save the second page (frame).
+        myEncoderParameter.Dispose();
         myEncoderParameter = new EncoderParameter(
             myEncoder,
             (long)EncoderValue.FrameDimensionPage);

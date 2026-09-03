@@ -51,9 +51,7 @@ namespace System.Drawing.Imaging.ClassicImageAttributesCS
             myColorMap[0].OldColor = Color.Red;
             myColorMap[0].NewColor = Color.Green;
 
-            // Create an ImageAttributes object, passing it to the myColorMap.
-
-            // array.
+            // Create an ImageAttributes object, passing it to the myColorMap array.
             ImageAttributes imageAttr = new();
             imageAttr.SetBrushRemapTable(myColorMap);
         }
@@ -88,9 +86,7 @@ namespace System.Drawing.Imaging.ClassicImageAttributesCS
         private void SetColorMatrixExample(PaintEventArgs e)
         {
 
-            // Create a rectangle image with all colors set to 128 (medium.
-
-            // gray).
+            // Create a rectangle image with all colors set to 128 (medium gray).
             Bitmap myBitmap = new(50, 50, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(myBitmap);
             g.FillRectangle(new SolidBrush(Color.FromArgb(255, 128, 128, 128)),
@@ -194,9 +190,8 @@ namespace System.Drawing.Imaging.ClassicImageAttributesCS
                 new Rectangle(0, 0, 50, 50));
             myBitmap.Save("Circle2.jpg");
 
-            // Create an Image object from the Circle2.jpg file, and draw it to.
-
-            // the screen.
+            // Create an Image object from the Circle2.jpg file,
+            // and draw it to the screen.
             Image myImage = Image.FromFile("Circle2.jpg");
             e.Graphics.DrawImage(myImage, 20, 20);
 

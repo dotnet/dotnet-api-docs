@@ -68,8 +68,7 @@ namespace System.Drawing.Drawing2D.ClassicPathGradientBrushCS
             PointF[] myPathPointArray = myPath.PathPoints;
 
             // Create a path gradient brush.
-            PathGradientBrush myPGBrush = new
-(myPathPointArray)
+            PathGradientBrush myPGBrush = new(myPathPointArray)
             {
                 // Set the color span.
                 CenterColor = Color.Red
@@ -107,8 +106,7 @@ namespace System.Drawing.Drawing2D.ClassicPathGradientBrushCS
             PointF[] myPathPointArray = myPath.PathPoints;
 
             // Create a path gradient brush.
-            PathGradientBrush myPGBrush = new
-(myPathPointArray)
+            PathGradientBrush myPGBrush = new(myPathPointArray)
             {
                 // Set the color span.
                 CenterColor = Color.Red
@@ -142,8 +140,7 @@ namespace System.Drawing.Drawing2D.ClassicPathGradientBrushCS
             PointF[] myPathPointArray = myPath.PathPoints;
 
             // Create a path gradient brush.
-            PathGradientBrush myPGBrush = new
-(myPathPointArray)
+            PathGradientBrush myPGBrush = new(myPathPointArray)
             {
                 // Set the color span.
                 CenterColor = Color.Red
@@ -182,8 +179,7 @@ namespace System.Drawing.Drawing2D.ClassicPathGradientBrushCS
             PointF[] myPathPointArray = myPath.PathPoints;
 
             // Create a path gradient brush.
-            PathGradientBrush myPGBrush = new
-(myPathPointArray)
+            PathGradientBrush myPGBrush = new(myPathPointArray)
             {
                 // Set the color span.
                 CenterColor = Color.Red
@@ -221,8 +217,7 @@ namespace System.Drawing.Drawing2D.ClassicPathGradientBrushCS
             PointF[] myPathPointArray = myPath.PathPoints;
 
             // Create a path gradient brush.
-            PathGradientBrush myPGBrush = new
-(myPathPointArray)
+            PathGradientBrush myPGBrush = new(myPathPointArray)
             {
                 // Set the color span.
                 CenterColor = Color.Red

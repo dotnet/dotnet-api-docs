@@ -44,12 +44,12 @@ namespace IToolboxServiceExample
 
                 // If the component was sited, attempt to obtain
                 // an IToolboxService instance.
-                if( base.Site != null )
+                if (base.Site != null)
                 {
                     toolboxService = (IToolboxService)this.GetService(typeof(IToolboxService));
                     // If an IToolboxService was located, update the
                     // category list.
-                    if( toolboxService != null )
+                    if (toolboxService != null)
                         UpdateLists();
                 }
                 else
@@ -63,21 +63,21 @@ namespace IToolboxServiceExample
         // selected category.
         private void UpdateLists()
         {
-            if( toolboxService != null )
+            if (toolboxService != null)
             {
                 this.listBox1.SelectedIndexChanged -= new System.EventHandler(this.UpdateSelectedCategory);
                 this.listBox2.SelectedIndexChanged -= new System.EventHandler(this.UpdateSelectedItem);
                 listBox1.Items.Clear();
-                for( int i=0; i<toolboxService.CategoryNames.Count; i++ )
+                for (int i = 0; i < toolboxService.CategoryNames.Count; i++)
                 {
-                    listBox1.Items.Add( toolboxService.CategoryNames[i] );
-                    if( toolboxService.CategoryNames[i] == toolboxService.SelectedCategory )
+                    listBox1.Items.Add(toolboxService.CategoryNames[i]);
+                    if (toolboxService.CategoryNames[i] == toolboxService.SelectedCategory)
                     {
                         listBox1.SelectedIndex = i;
-                        tools = toolboxService.GetToolboxItems( toolboxService.SelectedCategory );
+                        tools = toolboxService.GetToolboxItems(toolboxService.SelectedCategory);
                         listBox2.Items.Clear();
-                        for( int j=0; j<tools.Count; j++ )
-                            listBox2.Items.Add( tools[j].DisplayName );
+                        for (int j = 0; j < tools.Count; j++)
+                            listBox2.Items.Add(tools[j].DisplayName);
                     }
                 }
                 this.listBox1.SelectedIndexChanged += new System.EventHandler(this.UpdateSelectedCategory);
@@ -89,7 +89,7 @@ namespace IToolboxServiceExample
         // category list.
         private void UpdateSelectedCategory(object sender, System.EventArgs e)
         {
-            if( toolboxService != null )
+            if (toolboxService != null)
             {
                 toolboxService.SelectedCategory = (string)listBox1.SelectedItem;
                 UpdateLists();
@@ -99,11 +99,11 @@ namespace IToolboxServiceExample
         // Sets the selected item when an item is clicked in the item list.
         private void UpdateSelectedItem(object sender, System.EventArgs e)
         {
-            if( toolboxService != null )
+            if (toolboxService != null)
             {
-                if( listBox1.SelectedIndex != -1 )
+                if (listBox1.SelectedIndex != -1)
                 {
-                    if( (string)listBox1.SelectedItem == toolboxService.SelectedCategory )
+                    if ((string)listBox1.SelectedItem == toolboxService.SelectedCategory)
                         toolboxService.SetSelectedToolboxItem(tools[listBox2.SelectedIndex]);
                     else
                         UpdateLists();
@@ -132,30 +132,30 @@ namespace IToolboxServiceExample
             IComponent[] comps = null;
             try
             {
-                 comps = toolboxService.GetSelectedToolboxItem().CreateComponents(parentHost);
+                comps = toolboxService.GetSelectedToolboxItem().CreateComponents(parentHost);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // Catch and show any exceptions to prevent disabling
                 // the control's UI.
                 MessageBox.Show(ex.ToString(), "Exception message");
             }
-            if( comps == null )
+            if (comps == null)
                 return;
 
-            // Add any created controls to the parent form's controls.
-            // collection. Note: components are added from the
+            // Add any created controls to the parent form's controls collection.
+            // Components are added by the
             // ToolboxItem.CreateComponents(IDesignerHost) method.
-            for( int i=0; i<comps.Length; i++ )
+            for (int i = 0; i < comps.Length; i++)
             {
-                if( parentForm!= null && comps[i].GetType().IsSubclassOf(typeof(System.Windows.Forms.Control)) )
+                if (parentForm != null && comps[i].GetType().IsSubclassOf(typeof(System.Windows.Forms.Control)))
                 {
-                    ((System.Windows.Forms.Control)comps[i]).Location = new Point(20*controlSpacingMultiplier, 20*controlSpacingMultiplier);
-                    if( controlSpacingMultiplier > 10 )
+                    ((System.Windows.Forms.Control)comps[i]).Location = new Point(20 * controlSpacingMultiplier, 20 * controlSpacingMultiplier);
+                    if (controlSpacingMultiplier > 10)
                         controlSpacingMultiplier = 0;
                     else
                         controlSpacingMultiplier++;
-                    parentForm.Controls.Add( (System.Windows.Forms.Control)comps[i] );
+                    parentForm.Controls.Add((System.Windows.Forms.Control)comps[i]);
                 }
             }
         }
@@ -209,7 +209,7 @@ namespace IToolboxServiceExample
         // Window procedure override passes events to control.
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {
-            if( m.HWnd == this.Control.Handle )
+            if (m.HWnd == this.Control.Handle)
                 base.WndProc(ref m);
             else
                 this.DefWndProc(ref m);

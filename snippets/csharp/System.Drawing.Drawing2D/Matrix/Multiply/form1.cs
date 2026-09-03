@@ -77,8 +77,7 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
             // Multiply Matrix1 by Matrix 2.
             myMatrix1.Multiply(myMatrix2, MatrixOrder.Append);
 
-            // Display the result of the multiplication of Matrix1 and.
-
+            // Display the result of the multiplication of Matrix1 and
             // Matrix2.
             ListMatrixElements(e,
                 myMatrix1,
@@ -183,8 +182,7 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
             // Apply the matrix transform to the Graphics.
             e.Graphics.Transform = myMatrix;
 
-            // Draw another rectangle to the screen that has the transform.
-            // applied.
+            // Draw another rectangle to the screen that has the transform applied.
             e.Graphics.DrawRectangle(myPen2, 0, 0, 100, 100);
         }
 
@@ -243,9 +241,7 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
             Matrix myMatrix = new();
             myMatrix.Rotate(45, MatrixOrder.Append);
 
-            // Draw the rectangle to the screen again after applying the.
-
-            // transform.
+            // Draw the rectangle to the screen again after applying the transform.
             e.Graphics.Transform = myMatrix;
             e.Graphics.DrawRectangle(myPen2, 150, 50, 200, 100);
         }
