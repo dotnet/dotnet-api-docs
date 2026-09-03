@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
-public class BitmapConstructorForm12 :
-    System.Windows.Forms.Form
-
+public class BitmapConstructorForm12 : Form
 {
-    #region " Windows Form Designer generated code "
-
     public BitmapConstructorForm12() : base()
     {
-
-        //This call is required by the Windows Form Designer.
+        // This call is required by the Windows Form Designer.
         InitializeComponent();
         PopulateListBoxWithFonts();
         PopulateListBoxWithGraphicsResolution();
         Paint += new PaintEventHandler(Form1_Paint);
         Button1.Click += new EventHandler(Button1_Click);
 
-        //Add any initialization after the InitializeComponent() call
+        // Add any initialization after the InitializeComponent() call.
     }
 
-    //Form overrides dispose to clean up the component list.
+    // Form overrides Dispose to clean up the component list.
     protected override void Dispose(bool disposing)
     {
         if (disposing)
@@ -33,46 +27,44 @@ public class BitmapConstructorForm12 :
         base.Dispose(disposing);
     }
 
-    //Required by the Windows Form Designer
+    // Required by the Windows Form Designer.
     private System.ComponentModel.IContainer components = null;
 
-    //NOTE: The following procedure is required by the Windows Form Designer
-    //It can be modified using the Windows Form Designer.  
-    //Do not modify it using the code editor.
-    internal System.Windows.Forms.ListBox listBox1;
-    internal System.Windows.Forms.Button Button1;
+    // NOTE: The following procedure is required by the Windows Form Designer.
+    // It can be modified using the Windows Form Designer.  
+    // Do not modify it using the code editor.
+    internal ListBox listBox1;
+    internal Button Button1;
     [System.Diagnostics.DebuggerStepThrough]
     private void InitializeComponent()
     {
-        listBox1 = new System.Windows.Forms.ListBox();
-        Button1 = new System.Windows.Forms.Button();
+        listBox1 = new ListBox();
+        Button1 = new Button();
         SuspendLayout();
         //
         //listBox1
         //
-        listBox1.Location = new System.Drawing.Point(88, 112);
+        listBox1.Location = new Point(88, 112);
         listBox1.Name = "listBox1";
-        listBox1.Size = new System.Drawing.Size(120, 95);
+        listBox1.Size = new Size(120, 95);
         listBox1.TabIndex = 0;
         //
         //Button1
         //
-        Button1.Location = new System.Drawing.Point(120, 24);
+        Button1.Location = new Point(120, 24);
         Button1.Name = "Button1";
         Button1.TabIndex = 1;
         Button1.Text = "Button1";
         //
         //Form1
         //
-        ClientSize = new System.Drawing.Size(292, 266);
+        ClientSize = new Size(292, 266);
         Controls.Add(Button1);
         Controls.Add(listBox1);
         Name = "Form1";
         Text = "Form1";
         ResumeLayout(false);
     }
-
-    #endregion
 
     // The following code example shows all the font families in the
     // Families property of the FontFamily class. This example is 
@@ -154,23 +146,21 @@ public class BitmapConstructorForm12 :
     //<snippet3>
     private void AddShadow(PaintEventArgs e)
     {
-
         // Create two SizeF objects.
         SizeF shadowSize = listBox1.Size;
-        SizeF addSize = new SizeF(10.5F, 20.8F);
+        SizeF addSize = new(10.5F, 20.8F);
 
         // Add them together and save the result in shadowSize.
-        shadowSize = shadowSize + addSize;
+        shadowSize += addSize;
 
         // Get the location of the ListBox and convert it to a PointF.
         PointF shadowLocation = listBox1.Location;
 
         // Add two points to get a new location.
-        shadowLocation = shadowLocation + new Size(5, 5);
+        shadowLocation += new Size(5, 5);
 
         // Create a rectangleF. 
-        RectangleF rectFToFill =
-            new RectangleF(shadowLocation, shadowSize);
+        RectangleF rectFToFill = new(shadowLocation, shadowSize);
 
         // Create a custom brush using a semi-transparent color, and 
         // then fill in the rectangle.
@@ -189,16 +179,15 @@ public class BitmapConstructorForm12 :
     // Create a form and paste the following code into it. Call the
     // DrawVerticalStringFromBottomUp method in the form's Paint 
     // event-handling method, passing e as PaintEventArgs.
+
     //<snippet5>
     public void DrawVerticalStringFromBottomUp(PaintEventArgs e)
     {
-
         // Create the string to draw on the form.
         string text = "Can you read this?";
 
         // Create a GraphicsPath.
-        System.Drawing.Drawing2D.GraphicsPath path =
-            new System.Drawing.Drawing2D.GraphicsPath();
+        System.Drawing.Drawing2D.GraphicsPath path = new();
 
         // Add the string to the path; declare the font, font style, size, and
         // vertical format for the string.
@@ -207,8 +196,7 @@ public class BitmapConstructorForm12 :
             new StringFormat(StringFormatFlags.DirectionVertical));
 
         // Declare a matrix that will be used to rotate the text.
-        System.Drawing.Drawing2D.Matrix rotateMatrix =
-            new System.Drawing.Drawing2D.Matrix();
+        System.Drawing.Drawing2D.Matrix rotateMatrix = new();
 
         // Set the rotation angle and starting point for the text.
         rotateMatrix.RotateAt(180.0F, new PointF(10.0F, 100.0F));
@@ -233,13 +221,14 @@ public class BitmapConstructorForm12 :
     // designed to be used with Windows Forms. Create a form and paste
     // the following code into it.  Call the DisplayKnownColors method in the
     // form's Paint event-handling method, passing e as PaintEventArgs.
+
     //<snippet6>
     private void DisplayKnownColors(PaintEventArgs e)
     {
         Size = new Size(650, 550);
 
         // Get all the values from the KnownColor enumeration.
-        System.Array colorsArray = Enum.GetValues(typeof(KnownColor));
+        Array colorsArray = Enum.GetValues<KnownColor>();
         KnownColor[] allColors = new KnownColor[colorsArray.Length];
 
         Array.Copy(colorsArray, allColors, colorsArray.Length);
@@ -251,7 +240,6 @@ public class BitmapConstructorForm12 :
 
         for (int i = 0; i < allColors.Length; i++)
         {
-
             // If x is a multiple of 30, start a new column.
             if (i > 0 && i % 30 == 0)
             {
@@ -266,8 +254,7 @@ public class BitmapConstructorForm12 :
 
             // Create a custom brush from the color and use it to draw
             // the brush's name.
-            SolidBrush aBrush =
-                new SolidBrush(Color.FromName(allColors[i].ToString()));
+            SolidBrush aBrush = new(Color.FromName(allColors[i].ToString()));
             e.Graphics.DrawString(allColors[i].ToString(),
                 Font, aBrush, x, y);
 
@@ -282,13 +269,13 @@ public class BitmapConstructorForm12 :
     // Create a form and paste the following code into it. Call the 
     // FillEmptyRegion method in the form's Paint event-handling method,
     // passing e as PaintEventArgs.
-    //<snippet7>
-    private void FillEmptyRegion(PaintEventArgs e)
-    {
 
+    //<snippet7>
+    private static void FillEmptyRegion(PaintEventArgs e)
+    {
         // Create a region from a rectangle.
-        Rectangle originalRectangle = new Rectangle(40, 40, 40, 50);
-        Region smallRegion = new Region(originalRectangle);
+        Rectangle originalRectangle = new(40, 40, 40, 50);
+        Region smallRegion = new(originalRectangle);
 
         // Call MakeEmpty.
         smallRegion.MakeEmpty();
@@ -305,12 +292,13 @@ public class BitmapConstructorForm12 :
     // Create a form and paste the following code into it. Call the
     // FillInfiniteRegion method in the form's Paint event-handling method, 
     // passing e as PaintEventArgs.
+
     //<snippet8>
-    private void FillInfiniteRegion(PaintEventArgs e)
+    private static void FillInfiniteRegion(PaintEventArgs e)
     {
         // Create a region from a rectangle.
-        Rectangle originalRectangle = new Rectangle(40, 40, 40, 50);
-        Region smallRegion = new Region(originalRectangle);
+        Rectangle originalRectangle = new(40, 40, 40, 50);
+        Region smallRegion = new(originalRectangle);
 
         // Call MakeInfinite.
         smallRegion.MakeInfinite();
@@ -327,11 +315,12 @@ public class BitmapConstructorForm12 :
     // Create a form and paste the following code into it. Call the 
     // IconToBitmap method in the form's Paint event-handling method, 
     // passing e as PaintEventArgs.
+
     //<snippet9>
-    private void IconToBitmap(PaintEventArgs e)
+    private static void IconToBitmap(PaintEventArgs e)
     {
         // Construct an Icon.
-        Icon icon1 = new Icon(SystemIcons.Exclamation, 40, 40);
+        Icon icon1 = new(SystemIcons.Exclamation, 40, 40);
 
         // Call ToBitmap to convert it.
         Bitmap bmp = icon1.ToBitmap();
@@ -346,17 +335,15 @@ public class BitmapConstructorForm12 :
     // with Windows Forms.  Create a form and paste the following code 
     // into it. Call the TranslateAndTransform method in the form's 
     // Paint event-handling method, passing e as PaintEventArgs.
+
     //<snippet10>
     private void TranslateAndTransform(PaintEventArgs e)
     {
-
         // Create a GraphicsPath.
-        System.Drawing.Drawing2D.GraphicsPath myPath =
-            new System.Drawing.Drawing2D.GraphicsPath();
+        System.Drawing.Drawing2D.GraphicsPath myPath = new();
 
         // Create a rectangle.
-        RectangleF layoutRectangle =
-            new RectangleF(20.0F, 20.0F, 40.0F, 50.0F);
+        RectangleF layoutRectangle = new(20.0F, 20.0F, 40.0F, 50.0F);
 
         // Add the rectangle to the path.
         myPath.AddRectangle(layoutRectangle);
@@ -398,8 +385,9 @@ public class BitmapConstructorForm12 :
     // used with Windows Forms. Create a form containing a button named 
     // Button1 and paste the following code into it. Associate the 
     // Button1_Click method with the button's Click event.
+
     //<snippet11>
-    private void Button1_Click(object sender, System.EventArgs e)
+    private void Button1_Click(object sender, EventArgs e)
     {
         if (Button1.Font.Style != FontStyle.Bold)
             Button1.Font = new Font(FontFamily.GenericSansSerif,
@@ -411,19 +399,19 @@ public class BitmapConstructorForm12 :
     // using the RegionData class. This example is designed to be used with Windows
     // Forms. To run this example paste it into a form and handle the form's Paint event
     // by calling the DemonstrateRegionData method, passing e as PaintEventArgs.
+
     // <snippet12>
     private void DemonstrateRegionData(PaintEventArgs e)
     {
-
         //Create a simple region.
-        Region region1 = new Region(new Rectangle(10, 10, 100, 100));
+        Region region1 = new(new Rectangle(10, 10, 100, 100));
 
         // Extract the region data.
         System.Drawing.Drawing2D.RegionData region1Data =
             region1.GetRegionData();
 
         // Create a new region using the region data.
-        Region region2 = new Region(region1Data);
+        Region region2 = new(region1Data);
 
         // Dispose of the first region.
         region1.Dispose();
@@ -443,12 +431,12 @@ public class BitmapConstructorForm12 :
     // to be used with Windows Forms. To run this example paste
     // it into a form and handle the form's Paint event
     // by calling the DemonstrateRegionData2 method, passing e as PaintEventArgs.
+
     // <snippet13>
     private void DemonstrateRegionData2(PaintEventArgs e)
     {
-
         //Create a simple region.
-        Region region1 = new Region(new Rectangle(10, 10, 100, 100));
+        Region region1 = new(new Rectangle(10, 10, 100, 100));
 
         // Extract the region data.
         System.Drawing.Drawing2D.RegionData region1Data = region1.GetRegionData();
@@ -456,7 +444,7 @@ public class BitmapConstructorForm12 :
         data1 = region1Data.Data;
 
         // Create a second region.
-        Region region2 = new Region();
+        Region region2 = new();
 
         // Get the region data for the second region.
         System.Drawing.Drawing2D.RegionData region2Data = region2.GetRegionData();
@@ -465,7 +453,7 @@ public class BitmapConstructorForm12 :
         region2Data.Data = data1;
 
         // Construct a third region using the modified RegionData of the second region.
-        Region region3 = new Region(region2Data);
+        Region region3 = new(region2Data);
 
         // Dispose of the first and second regions.
         region1.Dispose();
@@ -482,18 +470,17 @@ public class BitmapConstructorForm12 :
     // </snippet13>
 
     //<snippetConstructor>
-    private void BitmapConstructorEx(PaintEventArgs e)
+    private static void BitmapConstructorEx(PaintEventArgs e)
     {
-
         // Create a bitmap.
-        Bitmap bmp = new Bitmap("c:\\fakePhoto.jpg");
+        Bitmap bmp = new("c:\\fakePhoto.jpg");
 
         // Retrieve the bitmap data from the bitmap.
-        System.Drawing.Imaging.BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
+        BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
             ImageLockMode.ReadOnly, bmp.PixelFormat);
 
         //Create a new bitmap.
-        Bitmap newBitmap = new Bitmap(200, 200, bmpData.Stride, bmp.PixelFormat, bmpData.Scan0);
+        Bitmap newBitmap = new(200, 200, bmpData.Stride, bmp.PixelFormat, bmpData.Scan0);
 
         bmp.UnlockBits(bmpData);
 
