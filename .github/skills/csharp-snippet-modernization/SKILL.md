@@ -51,6 +51,7 @@ Apply these changes when they preserve behavior and sample clarity:
 - Remove `this.` where it's unnecessary.
 - Add `using` statements for disposable types, and remove redundant calls to `Close()` or `Dispose()`.
 - Prune unnecessary package references from project files.
+- Use compound assignment.
 - Replace calls to obsolete APIs with their replacement. For example, replace `WebRequest` with `HttpClient`.
 
 Don't introduce `var`; this repository prefers explicit types.
