@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Forms;
 using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace System.Drawing.Drawing2D.ClassicMiscCS
 {
@@ -20,12 +20,12 @@ namespace System.Drawing.Drawing2D.ClassicMiscCS
 		public Form1()
 		{
 			//
-			// Required for Windows Form Designer support
+			// Required for Windows Form Designer support.
 			//
 			InitializeComponent();
 
 			//
-			// TODO: Add any constructor code after InitializeComponent call
+			// TODO: Add any constructor code after InitializeComponent call.
 			//
 		}
 
@@ -36,10 +36,7 @@ namespace System.Drawing.Drawing2D.ClassicMiscCS
 		{
 			if( disposing )
 			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
+				components?.Dispose();
 			}
 			base.Dispose( disposing );
 		}
@@ -59,11 +56,13 @@ namespace System.Drawing.Drawing2D.ClassicMiscCS
         // Snippet for: M:System.Drawing.Drawing2D.AdjustableArrowCap.#ctor(System.Single,System.Single)
         // <snippet1>
         public void ConstructAdjArrowCap1(PaintEventArgs e)
-        {     
+        {
             AdjustableArrowCap myArrow = new AdjustableArrowCap(6, 6);
-            Pen capPen = new Pen(Color.Black);
-            capPen.CustomStartCap = myArrow;
-            capPen.CustomEndCap = myArrow;
+            Pen capPen = new(Color.Black)
+            {
+                CustomStartCap = myArrow,
+                CustomEndCap = myArrow
+            };
             e.Graphics.DrawLine(capPen, 50, 50, 200, 50);
         }
         // </snippet1>
@@ -71,11 +70,13 @@ namespace System.Drawing.Drawing2D.ClassicMiscCS
         // Snippet for: M:System.Drawing.Drawing2D.AdjustableArrowCap.#ctor(System.Single,System.Single,System.Boolean)
         // <snippet2>
         public void ConstructAdjArrowCap2(PaintEventArgs e)
-        {     
+        {
             AdjustableArrowCap myArrow = new AdjustableArrowCap(6, 6, false);
-            Pen capPen = new Pen(Color.Black);
-            capPen.CustomStartCap = myArrow;
-            capPen.CustomEndCap = myArrow;
+            Pen capPen = new(Color.Black)
+            {
+                CustomStartCap = myArrow,
+                CustomEndCap = myArrow
+            };
             e.Graphics.DrawLine(capPen, 50, 50, 200, 50);
         }
         // </snippet2>
@@ -84,24 +85,28 @@ namespace System.Drawing.Drawing2D.ClassicMiscCS
         // <snippet3>
         public void BlendConstExample(PaintEventArgs e)
         {
-                     
+
             //Draw ellipse using Blend.
-            Point startPoint2 = new Point(20, 110);
-            Point endPoint2 = new Point(140, 110);
-            float[] myFactors = {.2f,.4f,.8f,.8f,.4f,.2f};
-            float[] myPositions = {0.0f,.2f,.4f,.6f,.8f,1.0f};
-            Blend myBlend = new Blend();
-            myBlend.Factors = myFactors;
-            myBlend.Positions = myPositions;
-            LinearGradientBrush lgBrush2 = new LinearGradientBrush(
+            Point startPoint2 = new(20, 110);
+            Point endPoint2 = new(140, 110);
+            float[] myFactors = [.2f,.4f,.8f,.8f,.4f,.2f];
+            float[] myPositions = [0.0f,.2f,.4f,.6f,.8f,1.0f];
+            Blend myBlend = new Blend()
+            {
+                Factors = myFactors,
+                Positions = myPositions
+            };
+            LinearGradientBrush lgBrush2 = new(
                 startPoint2,
                 endPoint2,
                 Color.Blue,
-                Color.Red);
-            lgBrush2.Blend = myBlend;
-            Rectangle ellipseRect2 = new Rectangle(20, 110, 120, 80);
+                Color.Red)
+            {
+                Blend = myBlend
+            };
+            Rectangle ellipseRect2 = new(20, 110, 120, 80);
             e.Graphics.FillEllipse(lgBrush2, ellipseRect2);
-                     
+
             // End example.
         }
         // </snippet3>
@@ -110,26 +115,30 @@ namespace System.Drawing.Drawing2D.ClassicMiscCS
         // <snippet4>
         protected override void OnPaint(PaintEventArgs e)
         {
-                     
+
             //Draw ellipse using ColorBlend.
-            Point startPoint2 = new Point(20, 110);
-            Point endPoint2 = new Point(140, 110);
-            Color[] myColors = {Color.Green,
+            Point startPoint2 = new(20, 110);
+            Point endPoint2 = new(140, 110);
+            Color[] myColors = [Color.Green,
                                    Color.Yellow,
                                    Color.Yellow,
                                    Color.Blue,
                                    Color.Red,
-                                   Color.Red};
-            float[] myPositions = {0.0f,.20f,.40f,.60f,.80f,1.0f};
-            ColorBlend myBlend = new ColorBlend();
-            myBlend.Colors = myColors;
-            myBlend.Positions = myPositions;
-            LinearGradientBrush lgBrush2 = new LinearGradientBrush(startPoint2,
+                                   Color.Red];
+            float[] myPositions = [0.0f,.20f,.40f,.60f,.80f,1.0f];
+            ColorBlend myBlend = new ColorBlend()
+            {
+                Colors = myColors,
+                Positions = myPositions
+            };
+            LinearGradientBrush lgBrush2 = new(startPoint2,
                 endPoint2,
                 Color.Green,
-                Color.Red);
-            lgBrush2.InterpolationColors = myBlend;
-            Rectangle ellipseRect2 = new Rectangle(20, 110, 120, 80);
+                Color.Red)
+            {
+                InterpolationColors = myBlend
+            };
+            Rectangle ellipseRect2 = new(20, 110, 120, 80);
             e.Graphics.FillEllipse(lgBrush2, ellipseRect2);
         }
         // </snippet4>
@@ -138,7 +147,7 @@ namespace System.Drawing.Drawing2D.ClassicMiscCS
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main() 
+		static void Main()
 		{
 			Application.Run(new Form1());
 		}

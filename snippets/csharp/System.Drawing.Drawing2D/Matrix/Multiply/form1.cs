@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Forms;
 using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
 {
@@ -20,12 +20,12 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
 		public Form1()
 		{
 			//
-			// Required for Windows Form Designer support
+			// Required for Windows Form Designer support.
 			//
 			InitializeComponent();
 
 			//
-			// TODO: Add any constructor code after InitializeComponent call
+			// TODO: Add any constructor code after InitializeComponent call.
 			//
 		}
 
@@ -36,10 +36,7 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
 		{
 			if( disposing )
 			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
+				components?.Dispose();
 			}
 			base.Dispose( disposing );
 		}
@@ -61,38 +58,38 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
         // <snippet1>
         public void MultiplyExample(PaintEventArgs e)
         {
-            Pen myPen = new Pen(Color.Blue, 1);
-            Pen myPen2 = new Pen(Color.Red, 1);
-                     
+            Pen myPen = new(Color.Blue, 1);
+            Pen myPen2 = new(Color.Red, 1);
+
             // Set up the matrices.
-            Matrix myMatrix1 = new Matrix(
-                2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);  
-            
-            Matrix myMatrix2 = new Matrix(
-                0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f); 
-          
-            Matrix myMatrix3 = new Matrix(
-                1.0f, 0.0f, 0.0f, 1.0f, 250.0f, 50.0f);  
+            Matrix myMatrix1 = new(
+                2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
+
+            Matrix myMatrix2 = new(
+                0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f);
+
+            Matrix myMatrix3 = new(
+                1.0f, 0.0f, 0.0f, 1.0f, 250.0f, 50.0f);
 
             // Display the elements of the starting matrix.
             ListMatrixElements(e, myMatrix1, "Beginning Matrix", 6, 40);
-                     
+
             // Multiply Matrix1 by Matrix 2.
             myMatrix1.Multiply(myMatrix2, MatrixOrder.Append);
-                     
-            // Display the result of the multiplication of Matrix1 and
-                     
+
+            // Display the result of the multiplication of Matrix1 and.
+
             // Matrix2.
             ListMatrixElements(e,
                 myMatrix1,
                 "Matrix After 1st Multiplication",
                 6,
                 60);
-                     
+
             // Multiply the result from the pervious multiplication by
             // Matrix3.
             myMatrix1.Multiply(myMatrix3, MatrixOrder.Append);
-                     
+
             // Display the result of the previous multiplication
             // multiplied by Matrix3.
             ListMatrixElements1(e,
@@ -100,21 +97,21 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
                 "Matrix After 2nd Multiplication",
                 6,
                 80);
-                     
+
             // Draw the rectangle prior to transformation.
             e.Graphics.DrawRectangle(myPen, 0, 0, 100, 100);
-                     
+
             // Make the transformation.
             e.Graphics.Transform = myMatrix1;
-                     
+
             // Draw the rectangle after transformation.
             e.Graphics.DrawRectangle(myPen2, 0, 0, 100, 100);
         }
-                     
+
         //-------------------------------------------------------
         // The following function is a helper function to
         // list the contents of a matrix.
-        //-------------------------------------------------------
+        //-------------------------------------------------------.
         public void ListMatrixElements1(
             PaintEventArgs e,
             Matrix matrix,
@@ -122,14 +119,14 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
             int numElements,
             int y)
         {
-                     
+
             // Set up variables for drawing the array
             // of points to the screen.
             int i;
             float x = 20, X = 200;
-            Font myFont = new Font("Arial", 8);
-            SolidBrush myBrush = new SolidBrush(Color.Black);
-                     
+            Font myFont = new("Arial", 8);
+            SolidBrush myBrush = new(Color.Black);
+
             // Draw the matrix name to the screen.
             e.Graphics.DrawString(
                 matrixName + ":  ",
@@ -137,7 +134,7 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
                 myBrush,
                 x,
                 y);
-                     
+
             // Draw the set of path points and types to the screen.
             for(i=0; i<numElements; i++)
             {
@@ -156,45 +153,45 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
         // <snippet2>
         public void ResetExample(PaintEventArgs e)
         {
-            Pen myPen = new Pen(Color.Blue, 1);
-            Pen myPen2 = new Pen(Color.Red, 1);
-                     
+            Pen myPen = new(Color.Blue, 1);
+            Pen myPen2 = new(Color.Red, 1);
+
             // Create a matrix that scales by 5 in the x direction and
             // by 3 in the y direction.
-            Matrix myMatrix = new Matrix(
-                5.0f, 0.0f, 0.0f, 3.0f, 0.0f, 0.0f); 
-                     
+            Matrix myMatrix = new(
+                5.0f, 0.0f, 0.0f, 3.0f, 0.0f, 0.0f);
+
             // List the matrix elements to the screen.
             ListMatrixElements(e, myMatrix, "Beginning Matrix", 6, 20);
-                     
+
             // Reset the matrix to identity.
             myMatrix.Reset();
-                     
+
             // Again list the matrix elements to the screen.
             ListMatrixElements2(e, myMatrix, "Matrix After Reset", 6, 40);
-                     
+
             // Translate the matrix by 50 points in the x-axis and 40 points
             // in the y-axis.
-            myMatrix.Translate(50.0f, 40.0f); 
-          
+            myMatrix.Translate(50.0f, 40.0f);
+
             // List the matrix elements to the screen.
             ListMatrixElements1(e, myMatrix, "Matrix After Translation", 6, 60);
-                     
+
             // Draw a rectangle to the screen.
             e.Graphics.DrawRectangle(myPen, 0, 0, 100, 100);
-                     
+
             // Apply the matrix transform to the Graphics.
             e.Graphics.Transform = myMatrix;
-                     
-            // Draw another rectangle to the screen that has the transform
+
+            // Draw another rectangle to the screen that has the transform.
             // applied.
             e.Graphics.DrawRectangle(myPen2, 0, 0, 100, 100);
         }
-                     
+
         //-------------------------------------------------------
         // This function is a helper function to
         // list the contents of a matrix.
-        //-------------------------------------------------------
+        //-------------------------------------------------------.
         public void ListMatrixElements2(
             PaintEventArgs e,
             Matrix matrix,
@@ -202,14 +199,14 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
             int numElements,
             int y)
         {
-                     
+
             // Set up variables for drawing the array
             // of points to the screen.
             int i;
             float x = 20, X = 200;
-            Font myFont = new Font("Arial", 8);
-            SolidBrush myBrush = new SolidBrush(Color.Black);
-                     
+            Font myFont = new("Arial", 8);
+            SolidBrush myBrush = new(Color.Black);
+
             // Draw the matrix name to the screen.
             e.Graphics.DrawString(
                 matrixName + ":  ",
@@ -217,7 +214,7 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
                 myBrush,
                 x,
                 y);
-                     
+
             // Draw the set of path points and types to the screen.
             for(i=0; i < numElements; i++)
             {
@@ -236,18 +233,18 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
         // <snippet3>
         public void RotateExample(PaintEventArgs e)
         {
-            Pen myPen = new Pen(Color.Blue, 1);
-            Pen myPen2 = new Pen(Color.Red, 1);
-                     
+            Pen myPen = new(Color.Blue, 1);
+            Pen myPen2 = new(Color.Red, 1);
+
             // Draw the rectangle to the screen before applying the transform.
             e.Graphics.DrawRectangle(myPen, 150, 50, 200, 100);
-                     
+
             // Create a matrix and rotate it 45 degrees.
-            Matrix myMatrix = new Matrix();
+            Matrix myMatrix = new();
             myMatrix.Rotate(45, MatrixOrder.Append);
-                     
-            // Draw the rectangle to the screen again after applying the
-                     
+
+            // Draw the rectangle to the screen again after applying the.
+
             // transform.
             e.Graphics.Transform = myMatrix;
             e.Graphics.DrawRectangle(myPen2, 150, 50, 200, 100);
@@ -258,18 +255,18 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
         // <snippet4>
         public void RotateAtExample(PaintEventArgs e)
         {
-            Pen myPen = new Pen(Color.Blue, 1);
-            Pen myPen2 = new Pen(Color.Red, 1);
-            PointF rotatePoint = new PointF(150.0f, 50.0f);
-                     
+            Pen myPen = new(Color.Blue, 1);
+            Pen myPen2 = new(Color.Red, 1);
+            PointF rotatePoint = new(150.0f, 50.0f);
+
             // Draw the rectangle to the screen before applying the
             // transform.
             e.Graphics.DrawRectangle(myPen, 150, 50, 200, 100);
-                     
+
             // Create a matrix and rotate it 45 degrees.
-            Matrix myMatrix = new Matrix();
+            Matrix myMatrix = new();
             myMatrix.RotateAt(45, rotatePoint, MatrixOrder.Append);
-                     
+
             // Draw the rectangle to the screen again after applying the
             // transform.
             e.Graphics.Transform = myMatrix;
@@ -281,17 +278,17 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
         // <snippet5>
         public void ScaleExample(PaintEventArgs e)
         {
-            Pen myPen = new Pen(Color.Blue, 1);
-            Pen myPen2 = new Pen(Color.Red, 1);
-                     
+            Pen myPen = new(Color.Blue, 1);
+            Pen myPen2 = new(Color.Red, 1);
+
             // Draw the rectangle to the screen before applying the
             // transform.
             e.Graphics.DrawRectangle(myPen, 50, 50, 100, 100);
-                     
+
             // Create a matrix and scale it.
-            Matrix myMatrix = new Matrix();
+            Matrix myMatrix = new();
             myMatrix.Scale(3, 2, MatrixOrder.Append);
-                     
+
             // Draw the rectangle to the screen again after applying the
             // transform.
             e.Graphics.Transform = myMatrix;
@@ -303,7 +300,7 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
         // <snippet6>
         public void MatrixShearExample(PaintEventArgs e)
         {
-            Matrix myMatrix = new Matrix();
+            Matrix myMatrix = new();
             myMatrix.Shear(2, 0);
             e.Graphics.DrawRectangle(new Pen(Color.Green), 0, 0, 100, 50);
             e.Graphics.MultiplyTransform(myMatrix);
@@ -316,28 +313,28 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
         // <snippet7>
         public void TransformPointsExample(PaintEventArgs e)
         {
-            Pen myPen = new Pen(Color.Blue, 1);
-            Pen myPen2 = new Pen(Color.Red, 1);
-                     
+            Pen myPen = new(Color.Blue, 1);
+            Pen myPen2 = new(Color.Red, 1);
+
             // Create an array of points.
             Point[] myArray =
-                     {
-                         new Point(20, 20),
-                         new Point(120, 20),
-                         new Point(120, 120),
-                         new Point(20, 120),
-                         new Point(20,20)
-                     };
-                     
+                     [
+                         new(20, 20),
+                         new(120, 20),
+                         new(120, 120),
+                         new(20, 120),
+                         new(20,20)
+                     ];
+
             // Draw the Points to the screen before applying the
             // transform.
             e.Graphics.DrawLines(myPen, myArray);
-                     
+
             // Create a matrix and scale it.
-            Matrix myMatrix = new Matrix();
+            Matrix myMatrix = new();
             myMatrix.Scale(3, 2, MatrixOrder.Append);
             myMatrix.TransformPoints(myArray);
-                     
+
             // Draw the Points to the screen again after applying the
             // transform.
             e.Graphics.DrawLines(myPen2, myArray);
@@ -348,47 +345,47 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
         // <snippet8>
         public void TransformVectorsExample(PaintEventArgs e)
         {
-            Pen myPen = new Pen(Color.Blue, 1);
-            Pen myPen2 = new Pen(Color.Red, 1);
-                     
+            Pen myPen = new(Color.Blue, 1);
+            Pen myPen2 = new(Color.Red, 1);
+
             // Create an array of points.
             Point[] myArray =
-                     {
-                         new Point(20, 20),
-                         new Point(120, 20),
-                         new Point(120, 120),
-                         new Point(20, 120),
-                         new Point(20,20)
-                     };
-                     
+                     [
+                         new(20, 20),
+                         new(120, 20),
+                         new(120, 120),
+                         new(20, 120),
+                         new(20,20)
+                     ];
+
             // Draw the Points to the screen before applying the
             // transform.
             e.Graphics.DrawLines(myPen, myArray);
-                     
+
             // Create a matrix, scale it, and translate it.
-            Matrix myMatrix = new Matrix();
+            Matrix myMatrix = new();
             myMatrix.Scale(3, 2, MatrixOrder.Append);
             myMatrix.Translate(100, 100, MatrixOrder.Append);
-                     
+
             // List the matrix elements to the screen.
             ListMatrixElements(e,
                 myMatrix,
                 "Scaled and Translated Matrix",
                 6,
                 20);
-                     
+
             // Apply the transform to the array.
             myMatrix.TransformVectors(myArray);
-                     
+
             // Draw the Points to the screen again after applying the
             // transform.
             e.Graphics.DrawLines(myPen2, myArray);
         }
-                     
+
         //-------------------------------------------------------
         // This function is a helper function to
         // list the contents of a matrix.
-        //-------------------------------------------------------
+        //-------------------------------------------------------.
         public void ListMatrixElements(
             PaintEventArgs e,
             Matrix matrix,
@@ -396,14 +393,14 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
             int numElements,
             int y)
         {
-                     
+
             // Set up variables for drawing the array
             // of points to the screen.
             int i;
             float x = 20, X = 200;
-            Font myFont = new Font("Arial", 8);
-            SolidBrush myBrush = new SolidBrush(Color.Black);
-                     
+            Font myFont = new("Arial", 8);
+            SolidBrush myBrush = new(Color.Black);
+
             // Draw the matrix name to the screen.
             e.Graphics.DrawString(
                 matrixName + ":  ",
@@ -411,7 +408,7 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
                 myBrush,
                 x,
                 y);
-                     
+
             // Draw the set of path points and types to the screen.
             for(i=0; i<numElements; i++)
             {
@@ -430,17 +427,17 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
         // <snippet9>
         public void TranslateExample(PaintEventArgs e)
         {
-            Pen myPen = new Pen(Color.Blue, 1);
-            Pen myPen2 = new Pen(Color.Red, 1);
-                     
+            Pen myPen = new(Color.Blue, 1);
+            Pen myPen2 = new(Color.Red, 1);
+
             // Draw a rectangle to the screen before applying the
             // transform.
             e.Graphics.DrawRectangle(myPen, 20, 20, 100, 50);
-                     
+
             // Create a matrix and translate it.
-            Matrix myMatrix = new Matrix();
+            Matrix myMatrix = new();
             myMatrix.Translate(100, 100, MatrixOrder.Append);
-                     
+
             // Draw the Points to the screen again after applying the
             // transform.
             e.Graphics.Transform = myMatrix;
@@ -452,7 +449,7 @@ namespace System.Drawing.Drawing2D.ClassicMatrixExamplesCS
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main() 
+		static void Main()
 		{
 			Application.Run(new Form1());
 		}

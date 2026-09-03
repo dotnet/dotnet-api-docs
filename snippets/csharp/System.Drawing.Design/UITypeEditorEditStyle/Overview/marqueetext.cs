@@ -43,7 +43,7 @@ namespace MarqueeControlLibrary
             // This call is required by the Windows.Forms Form Designer.
             InitializeComponent();
 
-            // Initialize light and dark colors 
+            // Initialize light and dark colors
             // to the control's default values.
             this.lightColorValue = this.ForeColor;
             this.darkColorValue = this.BackColor;
@@ -109,8 +109,8 @@ namespace MarqueeControlLibrary
             }
             set
             {
-                // The LightColor property is only changed if the 
-                // client provides a different value. Comparing values 
+                // The LightColor property is only changed if the
+                // client provides a different value. Comparing values
                 // from the ToArgb method is the recommended test for
                 // equality between Color structs.
                 if (this.lightColorValue.ToArgb() != value.ToArgb())
@@ -132,8 +132,8 @@ namespace MarqueeControlLibrary
             }
             set
             {
-                // The DarkColor property is only changed if the 
-                // client provides a different value. Comparing values 
+                // The DarkColor property is only changed if the
+                // client provides a different value. Comparing values
                 // from the ToArgb method is the recommended test for
                 // equality between Color structs.
                 if (this.darkColorValue.ToArgb() != value.ToArgb())
@@ -163,13 +163,13 @@ namespace MarqueeControlLibrary
         // </snippet170>
 
         // <snippet180>
-        // This method is called in the worker thread's context, 
+        // This method is called in the worker thread's context,
         // so it must not make any calls into the MarqueeText control.
-        // Instead, it communicates to the control using the 
+        // Instead, it communicates to the control using the
         // ProgressChanged event.
         //
         // The only work done in this event handler is
-        // to sleep for the number of milliseconds specified 
+        // to sleep for the number of milliseconds specified
         // by UpdatePeriod, then raise the ProgressChanged event.
         private void backgroundWorker1_DoWork(
             object sender,
@@ -182,22 +182,22 @@ namespace MarqueeControlLibrary
             while (!worker.CancellationPending)
             {
                 // The Argument property of the DoWorkEventArgs
-                // object holds the value of UpdatePeriod, which 
+                // object holds the value of UpdatePeriod, which
                 // was passed as the argument to the RunWorkerAsync
-                // method. 
+                // method.
                 Thread.Sleep((int)e.Argument);
 
                 // The DoWork eventhandler does not actually report
-                // progress; the ReportProgress event is used to 
+                // progress; the ReportProgress event is used to
                 // periodically alert the control to update its state.
                 worker.ReportProgress(0);
             }
         }
 
-        // The ProgressChanged event is raised by the DoWork method.
+        // The ProgressChanged event is raised by the DoWork method
         // This event handler does work that is internal to the
         // control. In this case, the text is toggled between its
-        // light and dark state, and the control is told to 
+        // light and dark state, and the control is told to
         // repaint itself.
         private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
@@ -209,13 +209,14 @@ namespace MarqueeControlLibrary
 
         private void InitializeComponent()
         {
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-
-// 
-// backgroundWorker1
-// 
-            this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker
+            {
+                //
+                // backgroundWorker1.
+                //
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
         }

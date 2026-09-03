@@ -3,21 +3,21 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Drawing;
-using System.Drawing.Design;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Design;
 using System.Windows.Forms;
 
 namespace IToolboxServiceExample
-{	
-    // Provides an example control that functions in design mode to 
-    // demonstrate use of the IToolboxService to list and select toolbox 
-    // categories and items, and to add components or controls 
+{
+    // Provides an example control that functions in design mode to
+    // demonstrate use of the IToolboxService to list and select toolbox
+    // categories and items, and to add components or controls
     // to the parent form using code.
     [DesignerAttribute(typeof(WindowMessageDesigner), typeof(IDesigner))]
     public class IToolboxServiceControl : System.Windows.Forms.UserControl
-    {		
+    {
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ListBox listBox2;
         private IToolboxService toolboxService = null;
@@ -30,7 +30,7 @@ namespace IToolboxServiceExample
             listBox2.DoubleClick += new EventHandler(this.CreateComponent);
             controlSpacingMultiplier = 0;
         }
-        
+
         // Obtain or reset IToolboxService reference on each siting of control.
         public override System.ComponentModel.ISite Site
         {
@@ -39,18 +39,18 @@ namespace IToolboxServiceExample
                 return base.Site;
             }
             set
-            {     
+            {
                 base.Site = value;
 
-                // If the component was sited, attempt to obtain 
+                // If the component was sited, attempt to obtain
                 // an IToolboxService instance.
                 if( base.Site != null )
                 {
                     toolboxService = (IToolboxService)this.GetService(typeof(IToolboxService));
-                    // If an IToolboxService was located, update the 
+                    // If an IToolboxService was located, update the
                     // category list.
                     if( toolboxService != null )
-                        UpdateLists();                    
+                        UpdateLists();
                 }
                 else
                 {
@@ -59,7 +59,7 @@ namespace IToolboxServiceExample
             }
         }
 
-        // Updates the list of categories and the list of items in the 
+        // Updates the list of categories and the list of items in the
         // selected category.
         private void UpdateLists()
         {
@@ -73,7 +73,7 @@ namespace IToolboxServiceExample
                     listBox1.Items.Add( toolboxService.CategoryNames[i] );
                     if( toolboxService.CategoryNames[i] == toolboxService.SelectedCategory )
                     {
-                        listBox1.SelectedIndex = i;                        
+                        listBox1.SelectedIndex = i;
                         tools = toolboxService.GetToolboxItems( toolboxService.SelectedCategory );
                         listBox2.Items.Clear();
                         for( int j=0; j<tools.Count; j++ )
@@ -85,7 +85,7 @@ namespace IToolboxServiceExample
             }
         }
 
-        // Sets the selected category when a category is clicked in the 
+        // Sets the selected category when a category is clicked in the
         // category list.
         private void UpdateSelectedCategory(object sender, System.EventArgs e)
         {
@@ -99,29 +99,29 @@ namespace IToolboxServiceExample
         // Sets the selected item when an item is clicked in the item list.
         private void UpdateSelectedItem(object sender, System.EventArgs e)
         {
-            if( toolboxService != null )      
+            if( toolboxService != null )
             {
                 if( listBox1.SelectedIndex != -1 )
                 {
                     if( (string)listBox1.SelectedItem == toolboxService.SelectedCategory )
-                        toolboxService.SetSelectedToolboxItem(tools[listBox2.SelectedIndex]);  
+                        toolboxService.SetSelectedToolboxItem(tools[listBox2.SelectedIndex]);
                     else
                         UpdateLists();
                 }
-            }            
-        }   
+            }
+        }
 
-        // Creates a control from a double-clicked toolbox item and adds 
+        // Creates a control from a double-clicked toolbox item and adds
         // it to the parent form.
         private void CreateComponent(object sender, EventArgs e)
         {
             // Obtains an IDesignerHost service from design environment.
             IDesignerHost host = (IDesignerHost)this.GetService(typeof(IDesignerHost));
 
-            // Get the project components container (Windows Forms control 
+            // Get the project components container (Windows Forms control
             // containment depends on controls collections).
             IContainer container = host.Container;
-                        
+
             // Identifies the parent Form.
             System.Windows.Forms.Form parentForm = this.FindForm();
 
@@ -136,20 +136,20 @@ namespace IToolboxServiceExample
             }
             catch(Exception ex)
             {
-                // Catch and show any exceptions to prevent disabling 
+                // Catch and show any exceptions to prevent disabling
                 // the control's UI.
                 MessageBox.Show(ex.ToString(), "Exception message");
             }
             if( comps == null )
                 return;
 
-            // Add any created controls to the parent form's controls 
-            // collection. Note: components are added from the 
+            // Add any created controls to the parent form's controls.
+            // collection. Note: components are added from the
             // ToolboxItem.CreateComponents(IDesignerHost) method.
-            for( int i=0; i<comps.Length; i++ )            
+            for( int i=0; i<comps.Length; i++ )
             {
                 if( parentForm!= null && comps[i].GetType().IsSubclassOf(typeof(System.Windows.Forms.Control)) )
-                {                    
+                {
                     ((System.Windows.Forms.Control)comps[i]).Location = new Point(20*controlSpacingMultiplier, 20*controlSpacingMultiplier);
                     if( controlSpacingMultiplier > 10 )
                         controlSpacingMultiplier = 0;
@@ -167,53 +167,53 @@ namespace IToolboxServiceExample
             e.Graphics.DrawString("Category List", new Font("Arial", 8), new SolidBrush(Color.Black), 8, 26);
             e.Graphics.DrawString("Items in Category", new Font("Arial", 8), new SolidBrush(Color.Black), 208, 26);
             e.Graphics.DrawString("(Double-click item to add to parent form)", new Font("Arial", 7), new SolidBrush(Color.Black), 232, 12);
-        }  
+        }
 
         private void InitializeComponent()
         {
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
-            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                 | System.Windows.Forms.AnchorStyles.Left);
             this.listBox1.Location = new System.Drawing.Point(8, 41);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(192, 368);
             this.listBox1.TabIndex = 0;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.UpdateSelectedCategory);
-            this.listBox2.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-                | System.Windows.Forms.AnchorStyles.Left) 
+            this.listBox2.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                | System.Windows.Forms.AnchorStyles.Left)
                 | System.Windows.Forms.AnchorStyles.Right);
             this.listBox2.Location = new System.Drawing.Point(208, 41);
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(228, 368);
             this.listBox2.TabIndex = 3;
             this.BackColor = System.Drawing.Color.Beige;
-            this.Controls.AddRange(new System.Windows.Forms.Control[] {
+            this.Controls.AddRange([
                                                                           this.listBox2,
-                                                                          this.listBox1});
+                                                                          this.listBox1]);
             this.Location = new System.Drawing.Point(500, 400);
             this.Name = "IToolboxServiceControl";
             this.Size = new System.Drawing.Size(442, 422);
             this.ResumeLayout(false);
-        }		
+        }
     }
-    
-    // This designer passes window messages to the controls at design time.    
+
+    // This designer passes window messages to the controls at design time.
     public class WindowMessageDesigner : System.Windows.Forms.Design.ControlDesigner
     {
         public WindowMessageDesigner()
         {
         }
-        
+
         // Window procedure override passes events to control.
         protected override void WndProc(ref System.Windows.Forms.Message m)
-        {   
+        {
             if( m.HWnd == this.Control.Handle )
-                base.WndProc(ref m);            
-            else            
-                this.DefWndProc(ref m);            
-        }        
+                base.WndProc(ref m);
+            else
+                this.DefWndProc(ref m);
+        }
     }
 }
 //</Snippet1>

@@ -1,32 +1,33 @@
 ﻿using System;
-using System.Windows.Forms;
-using System.Drawing;
 using System.Collections;
-using System.Xml;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using System.Xml;
 
 public class class1
 {
 
     // 1948e834-e104-481c-b71d-d8aa9e4d106e
-    // How to: Create a Path Gradient
+    // How to: Create a Path Gradient.
 
     // <snippet11>
     public void FillEllipseWithPathGradient(PaintEventArgs e)
     {
         // Create a path that consists of a single ellipse.
-        GraphicsPath path = new GraphicsPath();
+        GraphicsPath path = new();
         path.AddEllipse(0, 0, 140, 70);
 
         // Use the path to construct a brush.
-        PathGradientBrush pthGrBrush = new PathGradientBrush(path);
+        PathGradientBrush pthGrBrush = new(path)
+        {
+            // Set the color at the center of the path to blue.
+            CenterColor = Color.FromArgb(255, 0, 0, 255)
+        };
 
-        // Set the color at the center of the path to blue.
-        pthGrBrush.CenterColor = Color.FromArgb(255, 0, 0, 255);
-
-        // Set the color along the entire boundary 
+        // Set the color along the entire boundary
         // of the path to aqua.
-        Color[] colors = { Color.FromArgb(255, 0, 255, 255) };
+        Color[] colors = [Color.FromArgb(255, 0, 255, 255)];
         pthGrBrush.SurroundColors = colors;
 
         e.Graphics.FillEllipse(pthGrBrush, 0, 0, 140, 70);
@@ -37,40 +38,41 @@ public class class1
     public void ConstructBrushFromStarShapedPath(PaintEventArgs e)
     {
         // Put the points of a polygon in an array.
-        Point[] points = {
-           new Point(75, 0),
-           new Point(100, 50),
-           new Point(150, 50),
-           new Point(112, 75),
-           new Point(150, 150),
-           new Point(75, 100),
-           new Point(0, 150),
-           new Point(37, 75),
-           new Point(0, 50),
-           new Point(50, 50)};
+        Point[] points = [
+           new(75, 0),
+           new(100, 50),
+           new(150, 50),
+           new(112, 75),
+           new(150, 150),
+           new(75, 100),
+           new(0, 150),
+           new(37, 75),
+           new(0, 50),
+           new(50, 50)];
 
         // Use the array of points to construct a path.
-        GraphicsPath path = new GraphicsPath();
+        GraphicsPath path = new();
         path.AddLines(points);
 
         // Use the path to construct a path gradient brush.
-        PathGradientBrush pthGrBrush = new PathGradientBrush(path);
-
-        // Set the color at the center of the path to red.
-        pthGrBrush.CenterColor = Color.FromArgb(255, 255, 0, 0);
+        PathGradientBrush pthGrBrush = new(path)
+        {
+            // Set the color at the center of the path to red.
+            CenterColor = Color.FromArgb(255, 255, 0, 0)
+        };
 
         // Set the colors of the points in the array.
-        Color[] colors = {
+        Color[] colors = [
            Color.FromArgb(255, 0, 0, 0),
            Color.FromArgb(255, 0, 255, 0),
-           Color.FromArgb(255, 0, 0, 255), 
+           Color.FromArgb(255, 0, 0, 255),
            Color.FromArgb(255, 255, 255, 255),
            Color.FromArgb(255, 0, 0, 0),
            Color.FromArgb(255, 0, 255, 0),
            Color.FromArgb(255, 0, 0, 255),
            Color.FromArgb(255, 255, 255, 255),
-           Color.FromArgb(255, 0, 0, 0),  
-           Color.FromArgb(255, 0, 255, 0)};
+           Color.FromArgb(255, 0, 0, 0),
+           Color.FromArgb(255, 0, 255, 0)];
 
         pthGrBrush.SurroundColors = colors;
 
@@ -83,23 +85,23 @@ public class class1
     public void DrawPathGradentWthoutGraphicsPath(PaintEventArgs e)
     {
         // Construct a path gradient brush based on an array of points.
-        PointF[] ptsF = {
-           new PointF(0, 0), 
-           new PointF(160, 0), 
-           new PointF(160, 200),
-           new PointF(80, 150),
-           new PointF(0, 200)};
+        PointF[] ptsF = [
+           new(0, 0),
+           new(160, 0),
+           new(160, 200),
+           new(80, 150),
+           new(0, 200)];
 
-        PathGradientBrush pBrush = new PathGradientBrush(ptsF);
+        PathGradientBrush pBrush = new(ptsF);
 
-        // An array of five points was used to construct the path gradient
+        // An array of five points was used to construct the path gradient.
         // brush. Set the color of each point in that array.
-        Color[] colors = {
-           Color.FromArgb(255, 255, 0, 0),  // (0, 0) red
-           Color.FromArgb(255, 0, 255, 0),  // (160, 0) green
-           Color.FromArgb(255, 0, 255, 0),  // (160, 200) green
-           Color.FromArgb(255, 0, 0, 255),  // (80, 150) blue
-           Color.FromArgb(255, 255, 0, 0)}; // (0, 200) red
+        Color[] colors = [
+           Color.FromArgb(255, 255, 0, 0),  // (0, 0) red.
+           Color.FromArgb(255, 0, 255, 0),  // (160, 0) green.
+           Color.FromArgb(255, 0, 255, 0),  // (160, 200) green.
+           Color.FromArgb(255, 0, 0, 255),  // (80, 150) blue.
+           Color.FromArgb(255, 255, 0, 0)]; // (0, 200) red.
 
         pBrush.SurroundColors = colors;
 
@@ -115,20 +117,20 @@ public class class1
     public void CustomizePathGradientBrush(PaintEventArgs e)
     {
         // Create a path that consists of a single ellipse.
-        GraphicsPath path = new GraphicsPath();
+        GraphicsPath path = new();
         path.AddEllipse(0, 0, 200, 100);
 
         // Create a path gradient brush based on the elliptical path.
-        PathGradientBrush pthGrBrush = new PathGradientBrush(path);
+        PathGradientBrush pthGrBrush = new(path);
 
         // Set the color along the entire boundary to blue.
-        Color[] color = { Color.Blue };
+        Color[] color = [Color.Blue];
         pthGrBrush.SurroundColors = color;
 
         // Set the center color to aqua.
         pthGrBrush.CenterColor = Color.Aqua;
 
-        // Use the path gradient brush to fill the ellipse. 
+        // Use the path gradient brush to fill the ellipse.
         e.Graphics.FillPath(pthGrBrush, path);
 
         // Set the focus scales for the path gradient brush.
@@ -144,30 +146,32 @@ public class class1
     // <snippet15>
     public void CustomizeWithInterpolation(PaintEventArgs e)
     {
-        // Vertices of the outer triangle
-        Point[] points = {
-           new Point(100, 0),
-           new Point(200, 200),
-           new Point(0, 200)};
+        // Vertices of the outer triangle.
+        Point[] points = [
+           new(100, 0),
+           new(200, 200),
+           new(0, 200)];
 
         // No GraphicsPath object is created. The PathGradientBrush
         // object is constructed directly from the array of points.
-        PathGradientBrush pthGrBrush = new PathGradientBrush(points);
+        PathGradientBrush pthGrBrush = new(points);
 
-        Color[] colors = {
-           Color.FromArgb(255, 0, 128, 0),    // dark green
-           Color.FromArgb(255, 0, 255, 255),  // aqua
-           Color.FromArgb(255, 0, 0, 255)};   // blue
+        Color[] colors = [
+           Color.FromArgb(255, 0, 128, 0),    // dark green.
+           Color.FromArgb(255, 0, 255, 255),  // aqua.
+           Color.FromArgb(255, 0, 0, 255)];   // blue.
 
-        float[] relativePositions = {
+        float[] relativePositions = [
            0f,       // Dark green is at the boundary of the triangle.
-           0.4f,     // Aqua is 40 percent of the way from the boundary
+           0.4f,     // Aqua is 40 percent of the way from the boundary.
                      // to the center point.
-           1.0f};    // Blue is at the center point.
+           1.0f];    // Blue is at the center point.
 
-        ColorBlend colorBlend = new ColorBlend();
-        colorBlend.Colors = colors;
-        colorBlend.Positions = relativePositions;
+        ColorBlend colorBlend = new()
+        {
+            Colors = colors,
+            Positions = relativePositions
+        };
         pthGrBrush.InterpolationColors = colorBlend;
 
         // Fill a rectangle that is larger than the triangle
@@ -181,48 +185,50 @@ public class class1
     public void SetCenterPoint(PaintEventArgs e)
     {
         // Create a path that consists of a single ellipse.
-        GraphicsPath path = new GraphicsPath();
+        GraphicsPath path = new();
         path.AddEllipse(0, 0, 140, 70);
 
         // Use the path to construct a brush.
-        PathGradientBrush pthGrBrush = new PathGradientBrush(path);
+        PathGradientBrush pthGrBrush = new(path)
+        {
+            // Set the center point to a location that is not
+            // the centroid of the path.
+            CenterPoint = new PointF(120, 40),
 
-        // Set the center point to a location that is not
-        // the centroid of the path.
-        pthGrBrush.CenterPoint = new PointF(120, 40);
+            // Set the color at the center of the path to blue.
+            CenterColor = Color.FromArgb(255, 0, 0, 255)
+        };
 
-        // Set the color at the center of the path to blue.
-        pthGrBrush.CenterColor = Color.FromArgb(255, 0, 0, 255);
-
-        // Set the color along the entire boundary 
+        // Set the color along the entire boundary
         // of the path to aqua.
-        Color[] colors = { Color.FromArgb(255, 0, 255, 255) };
+        Color[] colors = [Color.FromArgb(255, 0, 255, 255)];
         pthGrBrush.SurroundColors = colors;
 
         e.Graphics.FillEllipse(pthGrBrush, 0, 0, 140, 70);
     }
     // </snippet16>
-        
+
     // <snippet17>
     public void SetCenterPointOutsidePath(PaintEventArgs e)
     {
         // Create a path that consists of a single ellipse.
-        GraphicsPath path = new GraphicsPath();
+        GraphicsPath path = new();
         path.AddEllipse(0, 0, 140, 70);
 
         // Use the path to construct a brush.
-        PathGradientBrush pthGrBrush = new PathGradientBrush(path);
+        PathGradientBrush pthGrBrush = new(path)
+        {
+            // Set the center point to a location that is not
+            // the centroid of the path.
+            CenterPoint = new PointF(145, 35),
 
-        // Set the center point to a location that is not
-        // the centroid of the path.
-        pthGrBrush.CenterPoint = new PointF(145, 35);
+            // Set the color at the center of the path to blue.
+            CenterColor = Color.FromArgb(255, 0, 0, 255)
+        };
 
-        // Set the color at the center of the path to blue.
-        pthGrBrush.CenterColor = Color.FromArgb(255, 0, 0, 255);
-
-        // Set the color along the entire boundary 
+        // Set the color along the entire boundary
         // of the path to aqua.
-        Color[] colors = { Color.FromArgb(255, 0, 255, 255) };
+        Color[] colors = [Color.FromArgb(255, 0, 255, 255)];
         pthGrBrush.SurroundColors = colors;
 
         e.Graphics.FillEllipse(pthGrBrush, 0, 0, 140, 70);
@@ -230,18 +236,18 @@ public class class1
     // </snippet17>
 
     // 6c88e1cc-1217-4399-ac12-cb37592b9f01
-    // How to: Create a Linear Gradient
+    // How to: Create a Linear Gradient.
 
     // <snippet21>
     public void UseHorizontalLinearGradients(PaintEventArgs e)
     {
-        LinearGradientBrush linGrBrush = new LinearGradientBrush(
+        LinearGradientBrush linGrBrush = new(
            new Point(0, 10),
            new Point(200, 10),
-           Color.FromArgb(255, 255, 0, 0),   // Opaque red
-           Color.FromArgb(255, 0, 0, 255));  // Opaque blue
+           Color.FromArgb(255, 255, 0, 0),   // Opaque red.
+           Color.FromArgb(255, 0, 0, 255));  // Opaque blue.
 
-        Pen pen = new Pen(linGrBrush);
+        Pen pen = new(linGrBrush);
 
         e.Graphics.DrawLine(pen, 0, 10, 200, 10);
         e.Graphics.FillEllipse(linGrBrush, 0, 30, 200, 100);
@@ -252,19 +258,21 @@ public class class1
     // <snippet22>
     public void CustomizeLinearGradients(PaintEventArgs e)
     {
-        LinearGradientBrush linGrBrush = new LinearGradientBrush(
+        LinearGradientBrush linGrBrush = new(
            new Point(0, 10),
            new Point(200, 10),
-           Color.FromArgb(255, 0, 0, 0),     // Opaque black 
-           Color.FromArgb(255, 255, 0, 0));  // Opaque red
+           Color.FromArgb(255, 0, 0, 0),     // Opaque black.
+           Color.FromArgb(255, 255, 0, 0));  // Opaque red.
 
-        float[] relativeIntensities = { 0.0f, 0.5f, 1.0f };
-        float[] relativePositions = { 0.0f, 0.2f, 1.0f };
+        float[] relativeIntensities = [0.0f, 0.5f, 1.0f];
+        float[] relativePositions = [0.0f, 0.2f, 1.0f];
 
         //Create a Blend object and assign it to linGrBrush.
-        Blend blend = new Blend();
-        blend.Factors = relativeIntensities;
-        blend.Positions = relativePositions;
+        Blend blend = new()
+        {
+            Factors = relativeIntensities,
+            Positions = relativePositions
+        };
         linGrBrush.Blend = blend;
 
         e.Graphics.FillEllipse(linGrBrush, 0, 30, 200, 100);
@@ -275,13 +283,13 @@ public class class1
     // <snippet23>
     public void CreateDiagonalLinearGradients(PaintEventArgs e)
     {
-        LinearGradientBrush linGrBrush = new LinearGradientBrush(
+        LinearGradientBrush linGrBrush = new(
            new Point(0, 0),
            new Point(200, 100),
-           Color.FromArgb(255, 0, 0, 255),   // opaque blue
-           Color.FromArgb(255, 0, 255, 0));  // opaque green
+           Color.FromArgb(255, 0, 0, 255),   // opaque blue.
+           Color.FromArgb(255, 0, 255, 0));  // opaque green.
 
-        Pen pen = new Pen(linGrBrush, 10);
+        Pen pen = new(linGrBrush, 10);
 
         e.Graphics.DrawLine(pen, 0, 0, 600, 300);
         e.Graphics.FillEllipse(linGrBrush, 10, 100, 200, 100);
@@ -289,12 +297,12 @@ public class class1
     // </snippet23>
 
     // da4690e7-5fac-4fd2-b3f0-5cb35c165b92
-    // How to: Apply Gamma Correction to a Gradient
+    // How to: Apply Gamma Correction to a Gradient.
 
     // <snippet31>
     public void FillTwoRectangles(PaintEventArgs e)
     {
-       LinearGradientBrush linGrBrush = new LinearGradientBrush(
+       LinearGradientBrush linGrBrush = new(
            new Point(0, 10),
            new Point(200, 10),
            Color.Red,
