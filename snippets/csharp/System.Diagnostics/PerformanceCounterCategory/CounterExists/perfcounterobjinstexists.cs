@@ -1,68 +1,55 @@
-﻿//<snippet1>
+﻿// <snippet1>
 using System;
 using System.Diagnostics;
-using Microsoft.VisualBasic;
 
 class PerfCounterCatObjInstExistsMod
 {
-
-    //<snippet2>
-    public static void Main(string[] args)
+    // <snippet2>
+    public static void Run(string[] args)
     {
         string categoryName = "";
         string instanceName = "";
         string machineName = "";
-        bool objectExists = false;
-        PerformanceCounterCategory pcc;
-        const string SINGLE_INSTANCE_NAME = "systemdiagnosticsperfcounterlibsingleinstance";
+        const string SingleInstanceName = "systemdiagnosticsperfcounterlibsingleinstance";
 
         // Copy the supplied arguments into the local variables.
         try
         {
             categoryName = args[0];
             instanceName = args[1];
-            machineName = (args[2]=="."? "": args[2]);
+            machineName = args[2] == "." ? "" : args[2];
         }
-        catch(Exception ex)
+        catch (Exception)
         {
             // Ignore the exception from non-supplied arguments.
         }
 
-        // Use the given instance name or use the default single-instance name.
-        if (instanceName.Length==0)
+        // Use the given instance name or the default single-instance name.
+        if (instanceName.Length == 0)
         {
-            instanceName = SINGLE_INSTANCE_NAME;
+            instanceName = SingleInstanceName;
         }
 
         try
         {
-            if (machineName.Length==0)
-            {
-                pcc = new PerformanceCounterCategory(categoryName);
-            }
-            else
-            {
-                pcc = new PerformanceCounterCategory(categoryName, machineName);
-            }
+            PerformanceCounterCategory pcc = machineName.Length == 0
+                ? new(categoryName)
+                : new(categoryName, machineName);
 
             // Check whether the instance exists.
             // Use the per-instance overload of InstanceExists.
-            objectExists = pcc.InstanceExists(instanceName);
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine("Unable to check for the existence of " +
-                "instance \"{0}\" in category \"{1}\" on " +
-                (machineName.Length>0? "computer \"{2}\":": "this computer:") +
-                "\n" + ex.Message, instanceName, categoryName, machineName);
-            return;
-        }
+            bool objectExists = pcc.InstanceExists(instanceName);
 
-        // Tell the user whether the instance exists.
-        Console.WriteLine("Instance \"{0}\" " + (objectExists? "exists": "does not exist") +
-            " in category \"{1}\" on " + (machineName.Length>0? "computer \"{2}\".": "this computer."),
-            instanceName, pcc.CategoryName, pcc.MachineName);
+            // Tell the user whether the instance exists.
+            string location = machineName.Length > 0 ? $"computer \"{pcc.MachineName}\"." : "this computer.";
+            Console.WriteLine($"Instance \"{instanceName}\" {(objectExists ? "exists" : "does not exist")} in category \"{pcc.CategoryName}\" on {location}");
+        }
+        catch (Exception ex)
+        {
+            string location = machineName.Length > 0 ? $"computer \"{machineName}\":" : "this computer:";
+            Console.WriteLine($"Unable to check for the existence of instance \"{instanceName}\" in category \"{categoryName}\" on {location}\n{ex.Message}");
+        }
     }
-    //</snippet2>
+    // </snippet2>
 }
-//</snippet1>
+// </snippet1>

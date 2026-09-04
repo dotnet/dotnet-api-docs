@@ -2,7 +2,7 @@
 
 // <Snippet1>
 // Create a trace listener for the event log.
-EventLogTraceListener myTraceListener = new EventLogTraceListener("myEventLogSource");
+using EventLogTraceListener myTraceListener = new("myEventLogSource");
 
 // Add the event log trace listener to the collection.
 Trace.Listeners.Add(myTraceListener);

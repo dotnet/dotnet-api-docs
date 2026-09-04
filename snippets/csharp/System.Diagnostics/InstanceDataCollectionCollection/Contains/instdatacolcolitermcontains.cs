@@ -1,20 +1,16 @@
-﻿//<snippet1>
+﻿// <snippet1>
 using System;
-using System.Diagnostics;
 using System.Collections;
-using Microsoft.VisualBasic;
+using System.Diagnostics;
 
 class InstDataColColItemContainsMod
 {
-
-    //<snippet2>
+    // <snippet2>
     public static void Main(string[] args)
     {
         // The following values can be used as arguments.
         string categoryName = "Process";
         string counterName = "Private Bytes";
-
-        InstanceDataCollectionCollection idColCol;
 
         // Copy the supplied arguments into the local variables.
         try
@@ -27,51 +23,45 @@ class InstDataColColItemContainsMod
             // Ignore the exception from non-supplied arguments.
         }
 
+        InstanceDataCollectionCollection idColCol;
         try
         {
             // Get the InstanceDataCollectionCollection for this category.
-            PerformanceCounterCategory pcc = new PerformanceCounterCategory(categoryName);
+            PerformanceCounterCategory pcc = new(categoryName);
             idColCol = pcc.ReadCategory();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            Console.WriteLine("An error occurred getting the InstanceDataCollection for " +
-                "category \"{0}\"."+ "\n" +ex.Message, categoryName);
+            Console.WriteLine($"An error occurred getting the InstanceDataCollection for category \"{categoryName}\".\n{ex.Message}");
             return;
         }
 
-        //<snippet3>
-        // Check if this counter name exists using the Contains
-        // method of the InstanceDataCollectionCollection.
+        // <snippet3>
+        // Check whether this counter name exists by using the Contains method.
         if (!idColCol.Contains(counterName))
-            //</snippet3>
+        // </snippet3>
         {
-            Console.WriteLine("Counter \"{0}\" does not exist in category \"{1}\".", counterName, categoryName);
+            Console.WriteLine($"Counter \"{counterName}\" does not exist in category \"{categoryName}\".");
             return;
         }
-        else
+
+        // <snippet4>
+        // Get the counter's InstanceDataCollection by using the indexer (Item property).
+        InstanceDataCollection countData = idColCol[counterName];
+        // </snippet4>
+
+        ICollection idColKeys = countData.Keys;
+        string[] idColKeysArray = new string[idColKeys.Count];
+        idColKeys.CopyTo(idColKeysArray, 0);
+
+        Console.WriteLine($"Counter \"{counterName}\" of category \"{categoryName}\" has {idColKeys.Count} instances.");
+
+        // Display the instance names for this counter.
+        for (int i = 0; i < idColKeysArray.Length; i++)
         {
-            //<snippet4>
-            // Now get the counter's InstanceDataCollection object using the
-            // indexer (Item property) for the InstanceDataCollectionCollection.
-            InstanceDataCollection countData = idColCol[counterName];
-            //</snippet4>
-
-            ICollection idColKeys = countData.Keys;
-            string[] idColKeysArray = new string[idColKeys.Count];
-            idColKeys.CopyTo(idColKeysArray, 0);
-
-            Console.WriteLine("Counter \"{0}\" of category \"{1}\" " +
-                "has {2} instances.", counterName, categoryName, idColKeys.Count);
-
-            // Display the instance names for this counter.
-            int index;
-            for(index=0; index<idColKeysArray.Length; index++)
-            {
-                Console.WriteLine("{0,4} -- {1}", index+1, idColKeysArray[index]);
-            }
+            Console.WriteLine($"{i + 1,4} -- {idColKeysArray[i]}");
         }
     }
-    //</snippet2>
+    // </snippet2>
 }
-//</snippet1>
+// </snippet1>

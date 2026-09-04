@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
-public class Form1: Form
-{
- protected TextBox textBox1;
 // <Snippet1>
-private void GetFileMajorPart() {
-    // Get the file version for the notepad.
-    FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo("%systemroot%\\Notepad.exe");
+// Get the file version for Notepad.
+FileVersionInfo fileVersionInfo =
+    FileVersionInfo.GetVersionInfo(Path.Combine(Environment.SystemDirectory, "Notepad.exe"));
 
-    // Print the file major part number.
-    textBox1.Text = "File major part number: " + myFileVersionInfo.FileMajorPart;
- }
-
+// Display the FileMajorPart property.
+Console.WriteLine($"File major part number: {fileVersionInfo.FileMajorPart}");
 // </Snippet1>
-}

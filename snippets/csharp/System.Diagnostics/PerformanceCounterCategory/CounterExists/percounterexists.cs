@@ -1,13 +1,11 @@
-﻿//<snippet5>
+﻿// <snippet5>
 using System;
 using System.Diagnostics;
-using Microsoft.VisualBasic;
 
 class PerfCounterCatDeleteMod
 {
-
-    //<snippet6>
-    public static void Main(string[] args)
+    // <snippet6>
+    public static void Run(string[] args)
     {
         string categoryName = "";
 
@@ -16,7 +14,7 @@ class PerfCounterCatDeleteMod
         {
             categoryName = args[0];
         }
-        catch(Exception ex)
+        catch (Exception)
         {
         }
 
@@ -24,14 +22,13 @@ class PerfCounterCatDeleteMod
         try
         {
             PerformanceCounterCategory.Delete(categoryName);
-            Console.WriteLine("Category \"{0}\" deleted from this computer.", categoryName);
+            Console.WriteLine($"Category \"{categoryName}\" deleted from this computer.");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            Console.WriteLine("Unable to delete " +
-                "category \"{0}\" from this computer:"+ "\n" + ex.Message, categoryName);
+            Console.WriteLine($"Unable to delete category \"{categoryName}\" from this computer:\n{ex.Message}");
         }
     }
-    //</snippet6>
+    // </snippet6>
 }
-//</snippet5>
+// </snippet5>
