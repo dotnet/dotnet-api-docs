@@ -2,16 +2,14 @@
 using System;
 using System.Diagnostics;
 
-class MySample{
+using EventLog myLog = new()
+{
+    Log = "MyNewLog"
+};
 
-    public static void Main(){
-
-        EventLog myLog = new EventLog();
-        myLog.Log = "MyNewLog";
-        foreach(EventLogEntry entry in myLog.Entries){
-            Console.WriteLine("\tEntry: " + entry.Message);
-        }
-    }
+foreach (EventLogEntry entry in myLog.Entries)
+{
+    Console.WriteLine($"\tEntry: {entry.Message}");
 }
 
 // </Snippet1>

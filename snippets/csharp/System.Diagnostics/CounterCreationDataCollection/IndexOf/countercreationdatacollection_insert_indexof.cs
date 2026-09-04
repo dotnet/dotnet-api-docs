@@ -35,19 +35,21 @@ public class CounterCreationDataCollectionExample
 
                 for (int i = 0; i < numberOfCounters; i++)
                 {
-                    Console.Write("Enter the counter name for {0} counter ", i);
-                    myCounterCreationData[i] = new CounterCreationData();
-                    myCounterCreationData[i].CounterName = Console.ReadLine();
+                    Console.Write($"Enter the counter name for {i} counter ");
+                    myCounterCreationData[i] = new CounterCreationData
+                    {
+                        CounterName = Console.ReadLine()
+                    };
                 }
                 CounterCreationDataCollection myCounterCollection =
                    new CounterCreationDataCollection(myCounterCreationData);
-                CounterCreationData myInsertCounterCreationData = new CounterCreationData(
+                CounterCreationData myInsertCounterCreationData = new(
                    "CounterInsert", "", PerformanceCounterType.NumberOfItems32);
                 // Insert an instance of 'CounterCreationData' in the 'CounterCreationDataCollection'.
                 myCounterCollection.Insert(myCounterCollection.Count - 1,
                    myInsertCounterCreationData);
-                Console.WriteLine("'{0}' counter is inserted into 'CounterCreationDataCollection'",
-                   myInsertCounterCreationData.CounterName);
+                Console.WriteLine(
+                    $"'{myInsertCounterCreationData.CounterName}' counter is inserted into 'CounterCreationDataCollection'");
                 // Create the category.
                 PerformanceCounterCategory.Create(myCategoryName, "Sample Category",
                 PerformanceCounterCategoryType.SingleInstance, myCounterCollection);
@@ -57,8 +59,8 @@ public class CounterCreationDataCollectionExample
                     myCounter = new PerformanceCounter(myCategoryName,
                        myCounterCreationData[i].CounterName, "", false);
                 }
-                Console.WriteLine("The index of '{0}' counter is {1}",
-                   myInsertCounterCreationData.CounterName, myCounterCollection.IndexOf(myInsertCounterCreationData));
+                Console.WriteLine(
+                    $"The index of '{myInsertCounterCreationData.CounterName}' counter is {myCounterCollection.IndexOf(myInsertCounterCreationData)}");
             }
             else
             {
@@ -69,7 +71,7 @@ public class CounterCreationDataCollectionExample
         }
         catch (Exception e)
         {
-            Console.WriteLine("Exception: {0}.", e.Message);
+            Console.WriteLine($"Exception: {e.Message}.");
             return;
         }
     }

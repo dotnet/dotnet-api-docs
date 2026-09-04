@@ -17,28 +17,28 @@ public class ConsoleTraceSample
         string methodName = "WriteEnvironmentInfoToTrace";
 
         Trace.Indent();
-        Trace.WriteLine(DateTime.Now.ToString() + " - Start of " + methodName);
+        Trace.WriteLine($"{DateTime.Now} - Start of {methodName}");
         Trace.Indent();
 
         // Write details on the executing environment to the trace output.
-        Trace.WriteLine("Operating system: " + System.Environment.OSVersion.ToString());
-        Trace.WriteLine("Computer name: " + System.Environment.MachineName);
-        Trace.WriteLine("User name: " + System.Environment.UserName);
-        Trace.WriteLine("CLR runtime version: " + System.Environment.Version.ToString());
-        Trace.WriteLine("Command line: " + System.Environment.CommandLine);
+        Trace.WriteLine($"Operating system: {Environment.OSVersion}");
+        Trace.WriteLine($"Computer name: {Environment.MachineName}");
+        Trace.WriteLine($"User name: {Environment.UserName}");
+        Trace.WriteLine($"CLR runtime version: {Environment.Version}");
+        Trace.WriteLine($"Command line: {Environment.CommandLine}");
 
         // Enumerate the trace listener collection and
         // display details about each configured trace listener.
-        Trace.WriteLine("Number of configured trace listeners = " + Trace.Listeners.Count.ToString());
+        Trace.WriteLine($"Number of configured trace listeners = {Trace.Listeners.Count}");
 
         foreach (TraceListener tl in Trace.Listeners)
         {
-            Trace.WriteLine("Trace listener name = " + tl.Name);
-            Trace.WriteLine("               type = " + tl.GetType().ToString());
+            Trace.WriteLine($"Trace listener name = {tl.Name}");
+            Trace.WriteLine($"               type = {tl.GetType()}");
         }
 
         Trace.Unindent();
-        Trace.WriteLine(DateTime.Now.ToString() + " - End of " + methodName);
+        Trace.WriteLine($"{DateTime.Now} - End of {methodName}");
         Trace.Unindent();
     }
 
@@ -50,7 +50,7 @@ public class ConsoleTraceSample
     {
 
         // Write a trace message to all configured trace listeners.
-        Trace.WriteLine(DateTime.Now.ToString()+" - Start of Main");
+        Trace.WriteLine($"{DateTime.Now} - Start of Main");
 
         // <Snippet2>
         // Define a trace listener to direct trace output from this method
@@ -59,9 +59,9 @@ public class ConsoleTraceSample
 
         // Check the command line arguments to determine which
         // console stream should be used for trace output.
-        if ((CmdArgs.Length>0)&&(CmdArgs[0].ToString().ToLower().Equals("/stderr")))
-            // Initialize the console trace listener to write
-            // trace output to the standard error stream.
+        if (CmdArgs.Length > 0 && CmdArgs[0].ToLower().Equals("/stderr"))
+        // Initialize the console trace listener to write
+        // trace output to the standard error stream.
         {
             consoleTracer = new ConsoleTraceListener(true);
         }
@@ -76,7 +76,7 @@ public class ConsoleTraceSample
         consoleTracer.Name = "mainConsoleTracer";
 
         // Write the initial trace message to the console trace listener.
-        consoleTracer.WriteLine(DateTime.Now.ToString()+" ["+consoleTracer.Name+"] - Starting output to trace listener.");
+        consoleTracer.WriteLine($"{DateTime.Now} [{consoleTracer.Name}] - Starting output to trace listener.");
 
         // Add the new console trace listener to
         // the collection of trace listeners.
@@ -88,7 +88,7 @@ public class ConsoleTraceSample
         WriteEnvironmentInfoToTrace();
 
         // Write the final trace message to the console trace listener.
-        consoleTracer.WriteLine(DateTime.Now.ToString()+" ["+consoleTracer.Name+"] - Ending output to trace listener.");
+        consoleTracer.WriteLine($"{DateTime.Now} [{consoleTracer.Name}] - Ending output to trace listener.");
 
         // Flush any pending trace messages, remove the
         // console trace listener from the collection,
@@ -98,7 +98,7 @@ public class ConsoleTraceSample
         consoleTracer.Close();
 
         // Write a final trace message to all trace listeners.
-        Trace.WriteLine(DateTime.Now.ToString()+" - End of Main");
+        Trace.WriteLine($"{DateTime.Now} - End of Main");
 
         // Close all other configured trace listeners.
         Trace.Close();
