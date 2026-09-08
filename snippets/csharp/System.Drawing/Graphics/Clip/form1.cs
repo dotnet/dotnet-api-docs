@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
-public class Form1:
+public class Form1 :
     System.Windows.Forms.Form
 
 {
     #region " Windows Form Designer generated code "
 
     public Form1() : base()
-    {        
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
-        this.Paint += new PaintEventHandler(Form1_Paint);
+        Paint += new PaintEventHandler(Form1_Paint);
 
         //Add any initialization after the InitializeComponent() call
     }
@@ -24,10 +24,7 @@ public class Form1:
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -44,9 +41,9 @@ public class Form1:
         //
         //Form1
         //
-        this.ClientSize = new System.Drawing.Size(292, 266);
-        this.Name = "Form1";
-        this.Text = "Form1";
+        ClientSize = new System.Drawing.Size(292, 266);
+        Name = "Form1";
+        Text = "Form1";
     }
 
     #endregion
@@ -66,7 +63,7 @@ public class Form1:
         Region myRegion = new Region(new Rectangle(20, 20, 100, 100));
 
         // Create the GraphicsPath.
-        System.Drawing.Drawing2D.GraphicsPath path = 
+        System.Drawing.Drawing2D.GraphicsPath path =
             new System.Drawing.Drawing2D.GraphicsPath();
 
         // Add a circle to the graphics path.
@@ -177,7 +174,7 @@ public class Form1:
 
         // Demonstrate the clip region by drawing a string
         // at the outer edge of the region.
-        e.Graphics.DrawString("Outside of Clip", new Font("Arial", 
+        e.Graphics.DrawString("Outside of Clip", new Font("Arial",
             12.0F, FontStyle.Regular), Brushes.Black, 0.0F, 0.0F);
     }
     //</snippet4>
@@ -197,37 +194,37 @@ public class Form1:
         Graphics formGraphics = e.Graphics;
 
         // Declare a new font.
-        Font myFont = new Font(FontFamily.GenericSansSerif, 20, 
+        Font myFont = new Font(FontFamily.GenericSansSerif, 20,
             FontStyle.Regular);
 
         // Set the TextRenderingHint property.
-        formGraphics.TextRenderingHint = 
+        formGraphics.TextRenderingHint =
             System.Drawing.Text.TextRenderingHint.SingleBitPerPixel;
 
         // Draw the string.
-        formGraphics.DrawString("Hello World", myFont, 
+        formGraphics.DrawString("Hello World", myFont,
             Brushes.Firebrick, 20.0F, 20.0F);
 
         // Change the TextRenderingHint property.
-        formGraphics.TextRenderingHint = 
+        formGraphics.TextRenderingHint =
             System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 
         // Draw the string again.
-        formGraphics.DrawString("Hello World", myFont, 
+        formGraphics.DrawString("Hello World", myFont,
             Brushes.Firebrick, 20.0F, 60.0F);
 
         // Set the text contrast to a high-contrast setting.
         formGraphics.TextContrast = 0;
 
         // Draw the string.
-        formGraphics.DrawString("Hello World", myFont, 
+        formGraphics.DrawString("Hello World", myFont,
             Brushes.DodgerBlue, 20.0F, 100.0F);
 
         // Set the text contrast to a low-contrast setting.
         formGraphics.TextContrast = 12;
 
         // Draw the string again.
-        formGraphics.DrawString("Hello World", myFont, 
+        formGraphics.DrawString("Hello World", myFont,
             Brushes.DodgerBlue, 20.0F, 140.0F);
 
         // Dispose of the font object.
