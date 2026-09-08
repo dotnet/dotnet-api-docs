@@ -6,11 +6,11 @@ using System.Diagnostics;
 
 public class NumberOfItems32
 {
-	private static PerformanceCounter PC;
+    private static PerformanceCounter PC;
 
-	public static void Main()
-	{
-		ArrayList samplesList = [];
+    public static void Run()
+    {
+        ArrayList samplesList = [];
 
         // If the category does not exist, create the category and exit.
         // Performance counters should not be created and immediately used.
@@ -21,19 +21,19 @@ public class NumberOfItems32
             return;
 
         CreateCounters();
-		CollectSamples(samplesList);
-		CalculateResults(samplesList);
-	}
+        CollectSamples(samplesList);
+        CalculateResults(samplesList);
+    }
 
     private static bool SetupCategory()
     {
-        if ( !PerformanceCounterCategory.Exists("NumberOfItems32SampleCategory") )
+        if (!PerformanceCounterCategory.Exists("NumberOfItems32SampleCategory"))
         {
 
-            CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
+            CounterCreationDataCollection CCDC = [];
 
             // Add the counter.
-            CounterCreationData NOI32 = new CounterCreationData
+            CounterCreationData NOI32 = new()
             {
                 CounterType = PerformanceCounterType.NumberOfItems32,
                 CounterName = "NumberOfItems32Sample"
@@ -45,12 +45,12 @@ public class NumberOfItems32
                 "Demonstrates usage of the NumberOfItems32 performance counter type.",
                 PerformanceCounterCategoryType.SingleInstance, CCDC);
 
-            return(true);
+            return (true);
         }
         else
         {
             Console.WriteLine("Category exists - NumberOfItems32SampleCategory");
-            return(false);
+            return (false);
         }
     }
 
@@ -66,76 +66,76 @@ public class NumberOfItems32
         };
     }
 
-	private static void CollectSamples(ArrayList samplesList)
-	{
+    private static void CollectSamples(ArrayList samplesList)
+    {
 
-		Random r = new( DateTime.Now.Millisecond );
+        Random r = new(DateTime.Now.Millisecond);
 
-		// Loop for the samples.
-		for (int j = 0; j < 100; j++)
-		{
+        // Loop for the samples.
+        for (int j = 0; j < 100; j++)
+        {
 
-			int value = r.Next(1, 10);
-			Console.Write(j + " = " + value);
+            int value = r.Next(1, 10);
+            Console.Write(j + " = " + value);
 
-			PC.IncrementBy(value);
+            PC.IncrementBy(value);
 
-			if ((j % 10) == 9)
-			{
-				OutputSample(PC.NextSample());
-				samplesList.Add( PC.NextSample() );
-			}
-			else
+            if ((j % 10) == 9)
+            {
+                OutputSample(PC.NextSample());
+                samplesList.Add(PC.NextSample());
+            }
+            else
             {
                 Console.WriteLine();
             }
 
             System.Threading.Thread.Sleep(50);
-		}
-	}
-
-    private static void CalculateResults(ArrayList samplesList)
-    {
-        for(int i = 0; i < (samplesList.Count - 1); i++)
-        {
-            // Output the sample.
-            OutputSample( (CounterSample)samplesList[i] );
-            OutputSample( (CounterSample)samplesList[i+1] );
-
-			// Use .NET to calculate the counter value.
-            Console.WriteLine(".NET computed counter value = " +
-                CounterSampleCalculator.ComputeCounterValue((CounterSample)samplesList[i],
-                (CounterSample)samplesList[i+1]) );
-
-			// Calculate the counter value manually.
-            Console.WriteLine("My computed counter value = " +
-                MyComputeCounterValue((CounterSample)samplesList[i],
-                (CounterSample)samplesList[i+1]) );
         }
     }
 
-	//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
-	//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
-	private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
-	{
-		Single counterValue = s1.RawValue;
-		return(counterValue);
-	}
+    private static void CalculateResults(ArrayList samplesList)
+    {
+        for (int i = 0; i < (samplesList.Count - 1); i++)
+        {
+            // Output the sample.
+            OutputSample((CounterSample)samplesList[i]);
+            OutputSample((CounterSample)samplesList[i + 1]);
 
-	// Output information about the counter sample.
-	private static void OutputSample(CounterSample s)
-	{
-		Console.WriteLine("\r\n+++++++++++");
-		Console.WriteLine("Sample values - \r\n");
-		Console.WriteLine("   BaseValue        = " + s.BaseValue);
-		Console.WriteLine("   CounterFrequency = " + s.CounterFrequency);
-		Console.WriteLine("   CounterTimeStamp = " + s.CounterTimeStamp);
-		Console.WriteLine("   CounterType      = " + s.CounterType);
-		Console.WriteLine("   RawValue         = " + s.RawValue);
-		Console.WriteLine("   SystemFrequency  = " + s.SystemFrequency);
-		Console.WriteLine("   TimeStamp        = " + s.TimeStamp);
-		Console.WriteLine("   TimeStamp100nSec = " + s.TimeStamp100nSec);
-		Console.WriteLine("++++++++++++++++++++++");
-	}
+            // Use .NET to calculate the counter value.
+            Console.WriteLine(".NET computed counter value = " +
+                CounterSampleCalculator.ComputeCounterValue((CounterSample)samplesList[i],
+                (CounterSample)samplesList[i + 1]));
+
+            // Calculate the counter value manually.
+            Console.WriteLine("My computed counter value = " +
+                MyComputeCounterValue((CounterSample)samplesList[i],
+                (CounterSample)samplesList[i + 1]));
+        }
+    }
+
+    //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
+    //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
+    private static float MyComputeCounterValue(CounterSample s0, CounterSample s1)
+    {
+        float counterValue = s1.RawValue;
+        return (counterValue);
+    }
+
+    // Output information about the counter sample.
+    private static void OutputSample(CounterSample s)
+    {
+        Console.WriteLine("\r\n+++++++++++");
+        Console.WriteLine("Sample values - \r\n");
+        Console.WriteLine("   BaseValue        = " + s.BaseValue);
+        Console.WriteLine("   CounterFrequency = " + s.CounterFrequency);
+        Console.WriteLine("   CounterTimeStamp = " + s.CounterTimeStamp);
+        Console.WriteLine("   CounterType      = " + s.CounterType);
+        Console.WriteLine("   RawValue         = " + s.RawValue);
+        Console.WriteLine("   SystemFrequency  = " + s.SystemFrequency);
+        Console.WriteLine("   TimeStamp        = " + s.TimeStamp);
+        Console.WriteLine("   TimeStamp100nSec = " + s.TimeStamp100nSec);
+        Console.WriteLine("++++++++++++++++++++++");
+    }
 }
 //</snippet1>

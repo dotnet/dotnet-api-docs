@@ -68,7 +68,7 @@ namespace SynchronizingObjectTest
         #endregion
 
         [STAThread]
-        static void Main()
+        public static void Run()
         {
             Application.Run(new SyncForm());
         }
@@ -81,9 +81,9 @@ namespace SynchronizingObjectTest
             this.button1.Hide();
             this.label1.Show();
 
-            using (Process process1 = new Process())
             {
-                ProcessStartInfo process1StartInfo = new ProcessStartInfo("notepad");
+                using Process process1 = new();
+                ProcessStartInfo process1StartInfo = new("notepad");
 
                 // <Snippet2>
                 process1.StartInfo.Domain = "";
@@ -108,7 +108,7 @@ namespace SynchronizingObjectTest
             }
         }
 
-        private void TheProcessExited(Object source, EventArgs e)
+        private void TheProcessExited(object source, EventArgs e)
         {
             this.label1.Hide();
             this.button1.Show();

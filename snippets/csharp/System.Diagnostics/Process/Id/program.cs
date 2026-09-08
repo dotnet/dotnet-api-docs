@@ -1,9 +1,7 @@
 ﻿//<Snippet1>
 using System;
-using System.Threading;
-using System.Security.Permissions;
-using System.Security.Principal;
 using System.Diagnostics;
+using System.Threading;
 
 class ProcessDemo
 {
@@ -19,7 +17,7 @@ class ProcessDemo
         {
             // You can use the process Id to pass to other applications or to
             // reference that particular instance of the application.
-            Console.WriteLine(localByName[i - 1].Id.ToString());
+            Console.WriteLine(localByName[i - 1].Id);
             i -= 1;
         }
 
@@ -33,8 +31,8 @@ class ProcessDemo
 
             try
             {
-                using (Process chosen = Process.GetProcessById(Int32.Parse(id)))
                 {
+                    using Process chosen = Process.GetProcessById(int.Parse(id));
                     if (chosen.ProcessName == "notepad")
                     {
                         chosen.Kill();
@@ -42,7 +40,7 @@ class ProcessDemo
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("Incorrect entry.");
                 continue;

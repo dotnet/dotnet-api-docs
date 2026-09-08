@@ -34,7 +34,7 @@ Apply these changes when they preserve behavior and sample clarity:
       timeZoneTime.DateTime);
   ```
 - Use raw string literals (or interpolated raw string literals) for paragraph-style output.
-- Use target-typed `new` when the target type is evident.
+- Use `new` to construct objects. Omit the type name when the target type is evident.
 - Use collection expressions to initialize collections and arrays wherever possible.
 - Convert eligible value-producing `switch` statements to switch expressions.
 - Use auto-implemented properties instead of defining a separate field.
@@ -51,6 +51,8 @@ Apply these changes when they preserve behavior and sample clarity:
 - Remove `this.` where it's unnecessary.
 - Add `using` statements for disposable types, and remove redundant calls to `Close()` or `Dispose()`.
 - Prune unnecessary package references from project files.
+- Use compound assignment.
+- Replace calls to obsolete APIs with their recommended replacements (per the `ObsoleteAttribute` message and official docs). For example, replace `WebRequest` with `HttpClient`.
 
 Don't introduce `var`; this repository prefers explicit types.
 

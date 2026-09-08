@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Forms;
 using System.Data;
+using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace System.Drawing.ClassicBitmapExamplesCS
 {
-	/// <summary>
-	/// Summary description for Form1.
-	/// </summary>
+    /// <summary>
+    /// Summary description for Form1.
+    /// </summary>
 
     internal class Form1 : System.Windows.Forms.Form
     {
@@ -38,10 +38,7 @@ namespace System.Drawing.ClassicBitmapExamplesCS
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -56,10 +53,10 @@ namespace System.Drawing.ClassicBitmapExamplesCS
             // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(292, 266);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
+            ClientSize = new System.Drawing.Size(292, 266);
+            Name = "Form1";
+            Text = "Form1";
+            Paint += new System.Windows.Forms.PaintEventHandler(Form1_Paint);
         }
         #endregion
         // <snippet1>
@@ -163,7 +160,7 @@ namespace System.Drawing.ClassicBitmapExamplesCS
             Icon newIcon = Icon.FromHandle(Hicon);
 
             // Set the form Icon attribute to the new icon.
-            this.Icon = newIcon;
+            Icon = newIcon;
 
             // You can now destroy the icon, since the form creates
             // its own copy of the icon accessible through the Form.Icon property.

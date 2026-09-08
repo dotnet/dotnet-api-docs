@@ -1,8 +1,8 @@
 ﻿//<snippet1>
 using System;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Windows.Forms;
 
 public class Form1 :
     Form
@@ -15,7 +15,7 @@ public class Form1 :
         printButton.Text = "Print Form";
         printButton.Click += new EventHandler(printButton_Click);
         printDocument1.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage);
-        this.Controls.Add(printButton);
+        Controls.Add(printButton);
     }
 
     void printButton_Click(object sender, EventArgs e)
@@ -28,14 +28,14 @@ public class Form1 :
 
     private void CaptureScreen()
     {
-        Graphics myGraphics = this.CreateGraphics();
-        Size s = this.Size;
+        Graphics myGraphics = CreateGraphics();
+        Size s = Size;
         memoryImage = new Bitmap(s.Width, s.Height, myGraphics);
         Graphics memoryGraphics = Graphics.FromImage(memoryImage);
-        memoryGraphics.CopyFromScreen(this.Location.X, this.Location.Y, 0, 0, s);
+        memoryGraphics.CopyFromScreen(Location.X, Location.Y, 0, 0, s);
     }
 
-    private void printDocument1_PrintPage(System.Object sender,  
+    private void printDocument1_PrintPage(object sender,
            System.Drawing.Printing.PrintPageEventArgs e)
     {
         e.Graphics.DrawImage(memoryImage, 0, 0);

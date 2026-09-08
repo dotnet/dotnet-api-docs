@@ -1,9 +1,9 @@
 ﻿//<Snippet1>
 // NOTE: This example requires a text.txt file file in your Documents folder
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Security;
-using System.ComponentModel;
 
 class Example
 {
@@ -14,7 +14,7 @@ class Example
         Console.Write("Enter you user name: ");
         string uname = Console.ReadLine();
         Console.Write("Enter your password: ");
-        SecureString password = new SecureString();
+        SecureString password = new();
         ConsoleKeyInfo key;
         do
         {

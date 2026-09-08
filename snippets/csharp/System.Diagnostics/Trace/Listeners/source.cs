@@ -1,10 +1,8 @@
-﻿using System;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 // <Snippet1>
 /* Create a ConsoleTraceListener and add it to the trace listeners. */
-var myWriter = new ConsoleTraceListener();
+ConsoleTraceListener myWriter = new();
 Trace.Listeners.Add(myWriter);
 
 // </Snippet1>

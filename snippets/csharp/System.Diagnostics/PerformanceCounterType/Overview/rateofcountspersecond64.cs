@@ -9,9 +9,9 @@ public class App4
 {
     private static PerformanceCounter PC;
 
-    public static void Main()
+    public static void Run()
     {
-        ArrayList samplesList = new ArrayList();
+        ArrayList samplesList = [];
 
         // If the category does not exist, create the category and exit.
         // Perfomance counters should not be created and immediately used.
@@ -31,12 +31,14 @@ public class App4
         if (!PerformanceCounterCategory.Exists("RateOfCountsPerSecond64SampleCategory"))
         {
 
-            CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
+            CounterCreationDataCollection CCDC = [];
 
             // Add the counter.
-            CounterCreationData rateOfCounts64 = new CounterCreationData();
-            rateOfCounts64.CounterType = PerformanceCounterType.RateOfCountsPerSecond64;
-            rateOfCounts64.CounterName = "RateOfCountsPerSecond64Sample";
+            CounterCreationData rateOfCounts64 = new()
+            {
+                CounterType = PerformanceCounterType.RateOfCountsPerSecond64,
+                CounterName = "RateOfCountsPerSecond64Sample"
+            };
             CCDC.Add(rateOfCounts64);
 
             // Create the category.
@@ -57,15 +59,16 @@ public class App4
         // Create the counter.
         PC = new PerformanceCounter("RateOfCountsPerSecond64SampleCategory",
             "RateOfCountsPerSecond64Sample",
-            false);
-
-        PC.RawValue = 0;
+            false)
+        {
+            RawValue = 0
+        };
     }
 
     private static void CollectSamples(ArrayList samplesList)
     {
 
-        Random r = new Random(DateTime.Now.Millisecond);
+        Random r = new(DateTime.Now.Millisecond);
 
         // Initialize the performance counter.
         PC.NextSample();
@@ -80,7 +83,7 @@ public class App4
 
             if ((j % 10) == 9)
             {
-                Console.WriteLine(";       NextValue() = " + PC.NextValue().ToString());
+                Console.WriteLine($";       NextValue() = {PC.NextValue()}");
                 OutputSample(PC.NextSample());
                 samplesList.Add(PC.NextSample());
             }
@@ -132,11 +135,11 @@ public class App4
     //
     //  Example - System\ File Read Operations/sec
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
-    private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
+    private static float MyComputeCounterValue(CounterSample s0, CounterSample s1)
     {
-        Single numerator = (Single)(s1.RawValue - s0.RawValue);
-        Single denomenator = (Single)(s1.TimeStamp - s0.TimeStamp) / (Single)s1.SystemFrequency;
-        Single counterValue = numerator / denomenator;
+        float numerator = (float)(s1.RawValue - s0.RawValue);
+        float denomenator = (float)(s1.TimeStamp - s0.TimeStamp) / (float)s1.SystemFrequency;
+        float counterValue = numerator / denomenator;
         return (counterValue);
     }
 

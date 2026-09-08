@@ -1,61 +1,58 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Forms;
 using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace System.Drawing.ClassicFontFamilyCS
 {
-	/// <summary>
-	/// Summary description for Form1.
-	/// </summary>
-	public class Form1 : System.Windows.Forms.Form
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+    /// <summary>
+    /// Summary description for Form1.
+    /// </summary>
+    public class Form1 : System.Windows.Forms.Form
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
 
-		public Form1()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
+        public Form1()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
 
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
-		}
+            //
+            // TODO: Add any constructor code after InitializeComponent call
+            //
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                components?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.components = new System.ComponentModel.Container();
-			this.Size = new System.Drawing.Size(300,300);
-			this.Text = "Form1";
-		}
-		#endregion
+        #region Windows Form Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            Size = new System.Drawing.Size(300, 300);
+            Text = "Form1";
+        }
+        #endregion
 
         // Snippet for: M:System.Drawing.FontFamily.Equals(System.Object)
         // <snippet1>
@@ -64,10 +61,10 @@ namespace System.Drawing.ClassicFontFamilyCS
             // Create two FontFamily objects.
             FontFamily firstFontFamily = new FontFamily("Arial");
             FontFamily secondFontFamily = new FontFamily("Times New Roman");
-                     
+
             // Check to see if the two font families are equivalent.
             bool equalFonts = firstFontFamily.Equals(secondFontFamily);
-                     
+
             // Display the result of the test in a message box.
             MessageBox.Show(equalFonts.ToString());
         }
@@ -79,10 +76,10 @@ namespace System.Drawing.ClassicFontFamilyCS
         {
             // Create a FontFamily object.
             FontFamily ascentFontFamily = new FontFamily("arial");
-                     
+
             // Get the cell ascent of the font family in design units.
             int cellAscent = ascentFontFamily.GetCellAscent(FontStyle.Regular);
-                     
+
             // Draw the result as a string to the screen.
             e.Graphics.DrawString(
                 "ascentFontFamily.GetCellAscent() returns " + cellAscent.ToString() + ".",
@@ -98,10 +95,10 @@ namespace System.Drawing.ClassicFontFamilyCS
         {
             // Create a FontFamily object.
             FontFamily descentFontFamily = new FontFamily("arial");
-                     
+
             // Get the cell descent of the font family in design units.
             int cellDescent = descentFontFamily.GetCellDescent(FontStyle.Regular);
-                     
+
             // Draw the result as a string to the screen.
             e.Graphics.DrawString(
                 "descentFontFamily.GetCellDescent() returns " + cellDescent.ToString() + ".",
@@ -117,10 +114,10 @@ namespace System.Drawing.ClassicFontFamilyCS
         {
             // Create a FontFamily object.
             FontFamily emFontFamily = new FontFamily("arial");
-                     
+
             // Get the em height of the font family in design units.
             int emHeight = emFontFamily.GetEmHeight(FontStyle.Regular);
-                     
+
             // Draw the result as a string to the screen.
             e.Graphics.DrawString(
                 "emFontFamily.GetEmHeight() returns " + emHeight.ToString() + ".",
@@ -128,35 +125,35 @@ namespace System.Drawing.ClassicFontFamilyCS
                 Brushes.Black,
                 new PointF(0, 0));
         }
-            // </snippet4>
+        // </snippet4>
 
-// Snippet for: M:System.Drawing.FontFamily.GetFamilies(System.Drawing.Graphics)
-            // <snippet5>
-            public void GetFamilies_Example(PaintEventArgs e)
+        // Snippet for: M:System.Drawing.FontFamily.GetFamilies(System.Drawing.Graphics)
+        // <snippet5>
+        public void GetFamilies_Example(PaintEventArgs e)
+        {
+            // Get an array of the available font families.
+            FontFamily[] families = FontFamily.GetFamilies(e.Graphics);
+
+            // Draw text using each of the font families.
+            Font familiesFont;
+            string familyString;
+            float spacing = 0;
+
+            foreach (FontFamily family in families)
             {
-                // Get an array of the available font families.
-                FontFamily[] families = FontFamily.GetFamilies(e.Graphics);
-                     
-                // Draw text using each of the font families.
-                Font familiesFont;
-                string familyString;
-                float spacing = 0;
-                
-                foreach (FontFamily family in families)
+                if (family.IsStyleAvailable(FontStyle.Regular))
                 {
-                   if (family.IsStyleAvailable(FontStyle.Regular)) 
-                    {
-                        familiesFont = new Font(family, 16);
-                        familyString = "This is the " + family.Name + " family.";
-                        e.Graphics.DrawString(
-                            familyString,
-                            familiesFont,
-                            Brushes.Black,
-                            new PointF(0, spacing));
-                        spacing += familiesFont.Height;
-                    }
+                    familiesFont = new Font(family, 16);
+                    familyString = "This is the " + family.Name + " family.";
+                    e.Graphics.DrawString(
+                        familyString,
+                        familiesFont,
+                        Brushes.Black,
+                        new PointF(0, spacing));
+                    spacing += familiesFont.Height;
                 }
             }
+        }
         // </snippet5>
 
         // Snippet for: M:System.Drawing.FontFamily.GetHashCode
@@ -165,10 +162,10 @@ namespace System.Drawing.ClassicFontFamilyCS
         {
             // Create a FontFamily object.
             FontFamily myFontFamily = new FontFamily("Arial");
-                     
+
             // Get the hash code for myFontFamily.
             int hashCode = myFontFamily.GetHashCode();
-                     
+
             // Draw the value of hashCode to the screen as a string.
             e.Graphics.DrawString(
                 "hashCode = " + hashCode.ToString(),
@@ -184,10 +181,10 @@ namespace System.Drawing.ClassicFontFamilyCS
         {
             // Create a FontFamily object.
             FontFamily myFontFamily = new FontFamily("Arial");
-                     
+
             // Get the line spacing for myFontFamily.
             int lineSpacing = myFontFamily.GetLineSpacing(FontStyle.Regular);
-                     
+
             // Draw the value of lineSpacing to the screen as a string.
             e.Graphics.DrawString(
                 "lineSpacing = " + lineSpacing.ToString(),
@@ -203,10 +200,10 @@ namespace System.Drawing.ClassicFontFamilyCS
         {
             // Create a FontFamily object.
             FontFamily myFontFamily = new FontFamily("Arial");
-                     
+
             // Get the name of myFontFamily.
             string familyName = myFontFamily.GetName(0);
-                     
+
             // Draw the name of the myFontFamily to the screen as a string.
             e.Graphics.DrawString(
                 "The family name is " + familyName,
@@ -222,14 +219,14 @@ namespace System.Drawing.ClassicFontFamilyCS
         {
             // Create a FontFamily object.
             FontFamily myFontFamily = new FontFamily("Arial");
-                     
+
             // Test whether myFontFamily is available in Italic.
-            if(myFontFamily.IsStyleAvailable(FontStyle.Italic))
+            if (myFontFamily.IsStyleAvailable(FontStyle.Italic))
             {
-                     
+
                 // Create a Font object using myFontFamily.
                 Font familyFont = new Font(myFontFamily, 16, FontStyle.Italic);
-                     
+
                 // Use familyFont to draw text to the screen.
                 e.Graphics.DrawString(
                     myFontFamily.Name + " is available in Italic",
@@ -246,7 +243,7 @@ namespace System.Drawing.ClassicFontFamilyCS
         {
             // Create a FontFamily object.
             FontFamily myFontFamily = new FontFamily("Arial");
-                     
+
             // Draw a string representation of myFontFamily to the screen.
             e.Graphics.DrawString(
                 myFontFamily.ToString(),
@@ -256,13 +253,13 @@ namespace System.Drawing.ClassicFontFamilyCS
         }
         // </snippet10>
 
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		static void Main() 
-		{
-			Application.Run(new Form1());
-		}
-	}
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.Run(new Form1());
+        }
+    }
 }

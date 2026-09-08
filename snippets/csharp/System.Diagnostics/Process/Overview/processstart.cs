@@ -1,18 +1,17 @@
 ﻿// <Snippet1>
 using System;
 using System.Diagnostics;
-using System.ComponentModel;
 
 namespace MyProcessSample
 {
-    class MyProcess
+    class MyProcessInstanceSample
     {
-        public static void Main()
+        public static void Run()
         {
             try
             {
-                using (Process myProcess = new Process())
                 {
+                    using Process myProcess = new();
                     myProcess.StartInfo.UseShellExecute = false;
                     // You can start any process, HelloWorld is a do-nothing example.
                     myProcess.StartInfo.FileName = "C:\\HelloWorld.exe";

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Xml;
-using System.Data;
 using System.Collections;
+using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using System.Xml;
 
 public class Form1 : Form
 {
@@ -61,8 +61,10 @@ public class Form1 : Form
     {
         // <snippet41>
         Pen blackPen = new Pen(Color.FromArgb(255, 0, 0, 0), 1);
-        Pen greenPen = new Pen(Color.FromArgb(255, 0, 255, 0), 10);
-        greenPen.Alignment = PenAlignment.Center;
+        Pen greenPen = new Pen(Color.FromArgb(255, 0, 255, 0), 10)
+        {
+            Alignment = PenAlignment.Center
+        };
 
         // Draw the line with the wide green pen.
         e.Graphics.DrawLine(greenPen, 10, 100, 100, 50);
@@ -75,8 +77,10 @@ public class Form1 : Form
     {
         // <snippet42>
         Pen blackPen = new Pen(Color.FromArgb(255, 0, 0, 0), 1);
-        Pen greenPen = new Pen(Color.FromArgb(255, 0, 255, 0), 10);
-        greenPen.Alignment = PenAlignment.Center;
+        Pen greenPen = new Pen(Color.FromArgb(255, 0, 255, 0), 10)
+        {
+            Alignment = PenAlignment.Center
+        };
 
         // Draw the rectangle with the wide green pen.
         e.Graphics.DrawRectangle(greenPen, 10, 100, 50, 50);
@@ -98,9 +102,11 @@ public class Form1 : Form
     public void Method51(PaintEventArgs e)
     {
         // <snippet51>
-        float[] dashValues = { 5, 2, 15, 4 };
-        Pen blackPen = new Pen(Color.Black, 5);
-        blackPen.DashPattern = dashValues;
+        float[] dashValues = [5, 2, 15, 4];
+        Pen blackPen = new Pen(Color.Black, 5)
+        {
+            DashPattern = dashValues
+        };
         e.Graphics.DrawLine(blackPen, new Point(5, 5), new Point(405, 5));
         // </snippet51>
     }
@@ -124,9 +130,11 @@ public class Form1 : Form
     public void Method71(PaintEventArgs e)
     {
         // <snippet71>
-        Pen pen = new Pen(Color.FromArgb(255, 0, 0, 255), 8);
-        pen.StartCap = LineCap.ArrowAnchor;
-        pen.EndCap = LineCap.RoundAnchor;
+        Pen pen = new Pen(Color.FromArgb(255, 0, 0, 255), 8)
+        {
+            StartCap = LineCap.ArrowAnchor,
+            EndCap = LineCap.RoundAnchor
+        };
         e.Graphics.DrawLine(pen, 20, 175, 300, 175);
         // </snippet71>
     }

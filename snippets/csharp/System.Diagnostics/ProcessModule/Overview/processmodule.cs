@@ -14,10 +14,10 @@ class MyProcessModuleClass
         try
         {
             // <Snippet1>
-            using (Process myProcess = new Process())
             {
+                using Process myProcess = new();
                 // Get the process start information of notepad.
-                ProcessStartInfo myProcessStartInfo = new ProcessStartInfo("notepad.exe");
+                ProcessStartInfo myProcessStartInfo = new("notepad.exe");
                 // Assign 'StartInfo' of notepad to 'StartInfo' of 'myProcess' object.
                 myProcess.StartInfo = myProcessStartInfo;
                 // Create a notepad.

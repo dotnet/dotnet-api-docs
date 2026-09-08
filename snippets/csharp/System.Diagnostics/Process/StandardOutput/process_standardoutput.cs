@@ -1,13 +1,13 @@
-using System;
-using System.IO;
+﻿using System;
 using System.Diagnostics;
+using System.IO;
 
 class StandardOutputExample
 {
-    public static void Main()
+    public static void Run()
     {
-        using (Process process = new Process())
         {
+            using Process process = new();
             process.StartInfo.FileName = "ipconfig.exe";
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;

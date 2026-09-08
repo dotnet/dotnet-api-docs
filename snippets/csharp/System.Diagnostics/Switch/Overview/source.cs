@@ -87,9 +87,9 @@ public class Class1
 {
     /* Create an instance of MyMethodTracingSwitch.*/
     static MyMethodTracingSwitch mySwitch =
-        new MyMethodTracingSwitch("Methods", "Trace entering and exiting method");
+        new("Methods", "Trace entering and exiting method");
 
-    public static void Main()
+    public static void Run()
     {
         // Add the console listener to see trace messages as console output
         Trace.Listeners.Add(new ConsoleTraceListener(true));

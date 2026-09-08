@@ -1,16 +1,16 @@
-﻿using System;
+﻿// This project creates the Write500Lines.exe target used by the other examples in this section.
 
-public class Example3
+using System;
+
+for (int ctr = 0; ctr < 500; ctr++)
 {
-    public static void Main()
-    {
-        for (int ctr = 0; ctr < 500; ctr++)
-            Console.WriteLine($"Line {ctr + 1} of 500 written: {(ctr + 1) / 500.0:P2}");
-
-        Console.Error.WriteLine("\nSuccessfully wrote 500 lines.\n");
-    }
+    Console.WriteLine($"Line {ctr + 1} of 500 written: {(ctr + 1) / 500.0:P2}");
 }
+
+Console.Error.WriteLine("\nSuccessfully wrote 500 lines.\n");
+
 // The example displays the following output:
+
 //      Line 1 of 500 written: 0,20%
 //      Line 2 of 500 written: 0,40%
 //      Line 3 of 500 written: 0,60%
