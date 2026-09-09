@@ -12,9 +12,13 @@
   <Interfaces />
   <Docs>
     <summary>
-            Used by hosts to asynchronously validate options during startup.
+            Provides asynchronous options validation during host startup.
             </summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+            New implementations should be registered only as <see cref="T:Microsoft.Extensions.Options.IAsyncStartupValidator" />. Do not additionally
+            register a custom implementation as <see cref="T:Microsoft.Extensions.Options.IStartupValidator" />; that interface is retained for
+            compatibility with existing synchronous startup validators.
+            </remarks>
   </Docs>
   <Members>
     <Member MemberName="ValidateAsync">
@@ -37,16 +41,21 @@
       <Docs>
         <param name="cancellationToken">The token to monitor for cancellation requests.</param>
         <summary>
-            Calls all registered <see cref="T:Microsoft.Extensions.Options.IAsyncValidateOptions`1" /> validators.
+            Validates options asynchronously during host startup.
             </summary>
-        <returns>To be added.</returns>
+        <returns>A task that represents the asynchronous validation operation.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:Microsoft.Extensions.Options.OptionsValidationException">
             A single validator returns a failed <see cref="T:Microsoft.Extensions.Options.ValidateOptionsResult" /> when validating.
             </exception>
         <exception cref="T:System.AggregateException">
-            Multiple option instances fail async validation, each producing an
-            <see cref="T:Microsoft.Extensions.Options.OptionsValidationException" />.
+            Multiple failures occur during startup validation.
+            </exception>
+        <exception cref="T:System.InvalidOperationException">
+            The registered options services do not support asynchronous startup validation.
+            </exception>
+        <exception cref="T:System.OperationCanceledException">
+            The operation was canceled through <paramref name="cancellationToken" />.
             </exception>
       </Docs>
     </Member>
