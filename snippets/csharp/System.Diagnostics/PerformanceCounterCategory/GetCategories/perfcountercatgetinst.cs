@@ -1,25 +1,22 @@
-﻿//<snippet5>
+﻿// <snippet5>
 using System;
 using System.Diagnostics;
 
 class PerfCounterCatGetInstMod
 {
-
-    //<snippet6>
-    public static void Main(string[] args)
+    // <snippet6>
+    public static void Run(string[] args)
     {
         string categoryName = "";
         string machineName = "";
-        PerformanceCounterCategory pcc;
-        string[] instances;
 
         // Copy the supplied arguments into the local variables.
         try
         {
             categoryName = args[0];
-            machineName = args[1]=="."? "": args[1];
+            machineName = args[1] == "." ? "" : args[1];
         }
-        catch
+        catch (Exception)
         {
             // Ignore the exception from non-supplied arguments.
         }
@@ -27,50 +24,38 @@ class PerfCounterCatGetInstMod
         try
         {
             // Create the appropriate PerformanceCounterCategory object.
-            if (machineName.Length>0)
-            {
-                pcc = new PerformanceCounterCategory(categoryName, machineName);
-            }
-            else
-            {
-                pcc = new PerformanceCounterCategory(categoryName);
-            }
+            PerformanceCounterCategory pcc = machineName.Length > 0
+                ? new(categoryName, machineName)
+                : new(categoryName);
 
             // Get the instances associated with this category.
-            instances = pcc.GetInstanceNames();
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine("Unable to get instance information for " +
-                "category \"{0}\" on " +
-                (machineName.Length>0? "computer \"{1}\":": "this computer:"),
-                categoryName, machineName);
-            Console.WriteLine(ex.Message);
-            return;
-        }
+            string[] instances = pcc.GetInstanceNames();
 
-        //If an empty array is returned, the category has a single instance.
-        if (instances.Length==0)
-        {
-            Console.WriteLine("Category \"{0}\" on " +
-                (machineName.Length>0? "computer \"{1}\"": "this computer") +
-                " is single-instance.", pcc.CategoryName, pcc.MachineName);
-        }
-        else
-        {
+            // If an empty array is returned, the category has a single instance.
+            if (instances.Length == 0)
+            {
+                string location = machineName.Length > 0 ? $"computer \"{pcc.MachineName}\"" : "this computer";
+                Console.WriteLine($"Category \"{pcc.CategoryName}\" on {location} is single-instance.");
+                return;
+            }
+
             // Otherwise, display the instances.
-            Console.WriteLine("These instances exist in category \"{0}\" on " +
-                (machineName.Length>0? "computer \"{1}\".": "this computer:"),
-                pcc.CategoryName, pcc.MachineName);
+            string registeredLocation = machineName.Length > 0 ? $"computer \"{pcc.MachineName}\"." : "this computer:";
+            Console.WriteLine($"These instances exist in category \"{pcc.CategoryName}\" on {registeredLocation}");
 
             Array.Sort(instances);
-            int objX;
-            for(objX=0; objX<instances.Length; objX++)
+            for (int i = 0; i < instances.Length; i++)
             {
-                Console.WriteLine("{0,4} - {1}", objX+1, instances[objX]);
+                Console.WriteLine($"{i + 1,4} - {instances[i]}");
             }
         }
+        catch (Exception ex)
+        {
+            string location = machineName.Length > 0 ? $"computer \"{machineName}\":" : "this computer:";
+            Console.WriteLine($"Unable to get instance information for category \"{categoryName}\" on {location}");
+            Console.WriteLine(ex.Message);
+        }
     }
-    //</snippet6>
+    // </snippet6>
 }
-//</snippet5>
+// </snippet5>

@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
-public class Form1: Form
-{
-    protected TextBox textBox1;
+// <Snippet1>
+// Get the file version for Notepad.
+FileVersionInfo fileVersionInfo =
+    FileVersionInfo.GetVersionInfo(Path.Combine(Environment.SystemDirectory, "Notepad.exe"));
 
-    // <Snippet1>
-    void GetComments()
-    {
-        // Get the file version for the notepad.
-        FileVersionInfo myFileVersionInfo =
-            FileVersionInfo.GetVersionInfo(Environment.SystemDirectory + "\\Notepad.exe");
-        // Print the comments in a text box.
-        textBox1.Text = "Comments: " + myFileVersionInfo.Comments;
-    }
+// Display the Comments property.
+Console.WriteLine($"Comments: {fileVersionInfo.Comments}");
 // </Snippet1>
-}
