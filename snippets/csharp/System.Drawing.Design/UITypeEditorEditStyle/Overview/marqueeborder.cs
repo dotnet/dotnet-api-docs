@@ -93,7 +93,7 @@ namespace MarqueeControlLibrary
         // <snippet50>
         public virtual void StartMarquee()
         {
-            // The MarqueeBorder control  cocanntain any number of
+            // The MarqueeBorder control can contain any number of
             // controls that implement IMarqueeWidget, so find
             // each IMarqueeWidget child and call its StartMarquee
             // method.
@@ -112,7 +112,7 @@ namespace MarqueeControlLibrary
 
         public virtual void StopMarquee()
         {
-            // The MarqueeBorder control  cocanntain any number of
+            // The MarqueeBorder control can contain any number of
             // controls that implement IMarqueeWidget, so find
             // each IMarqueeWidget child and call its StopMarquee
             // method.
