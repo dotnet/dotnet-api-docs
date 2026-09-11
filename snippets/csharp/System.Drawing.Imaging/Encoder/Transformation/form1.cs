@@ -1,52 +1,49 @@
-﻿ // Snippet for: F:System.Drawing.Imaging.Encoder.Transformation
-        // <snippet5>
+﻿// Snippet for: F:System.Drawing.Imaging.Encoder.Transformation
+// <snippet5>
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+
 class Example_RotateJPEG
 {
     public static void Main()
     {
-        Bitmap myBitmap;
-        ImageCodecInfo myImageCodecInfo;
-        Encoder myEncoder;
-        EncoderParameter myEncoderParameter;
-        EncoderParameters myEncoderParameters;
-                     
         // Create a Bitmap object based on a JPEG file.
-        myBitmap = new Bitmap("Shapes.jpg");
-                     
+        using Bitmap myBitmap = new("Shapes.jpg");
+
         // Get an ImageCodecInfo object that represents the JPEG codec.
-        myImageCodecInfo = GetEncoderInfo("image/jpeg");
-                     
+        ImageCodecInfo myImageCodecInfo = GetEncoderInfo("image/jpeg");
+
         // Create an Encoder object based on the GUID
         // for the Transformation parameter category.
-        myEncoder = Encoder.Transformation;
-                     
+        Encoder myEncoder = Encoder.Transformation;
+
         // Create an EncoderParameters object.
         // An EncoderParameters object has an array of EncoderParameter
-        // objects. In this case, there is only one
+        // objects. In this case, there is only one.
         // EncoderParameter object in the array.
-        myEncoderParameters = new EncoderParameters(1);
-                     
+        using EncoderParameters myEncoderParameters = new(1);
+
         // Rotate the image 90 degrees, and save it as a separate JPEG file.
-        myEncoderParameter = new EncoderParameter(
+        using EncoderParameter myEncoderParameter = new(
             myEncoder,
             (long)EncoderValue.TransformRotate90);
         myEncoderParameters.Param[0] = myEncoderParameter;
         myBitmap.Save("ShapesR90.jpg", myImageCodecInfo, myEncoderParameters);
     }
-    private static ImageCodecInfo GetEncoderInfo(String mimeType)
+
+    private static ImageCodecInfo GetEncoderInfo(string mimeType)
     {
-        int j;
-        ImageCodecInfo[] encoders;
-        encoders = ImageCodecInfo.GetImageEncoders();
-        for(j = 0; j < encoders.Length; ++j)
+        ImageCodecInfo[] encoders = ImageCodecInfo.GetImageEncoders();
+        for (int j = 0; j < encoders.Length; ++j)
         {
-            if(encoders[j].MimeType == mimeType)
+            if (encoders[j].MimeType == mimeType)
+            {
                 return encoders[j];
+            }
         }
+
         return null;
     }
 }
-        // </snippet5>
+// </snippet5>

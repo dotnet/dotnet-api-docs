@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Text;
 using System.Windows.Forms;
-using System.Drawing.Imaging;
 
 namespace GDIPlusPort
 {
@@ -34,7 +34,7 @@ namespace GDIPlusPort
 
             // Set up display variables.
             Color foreColor = Color.Black;
-            Font font = new Font("Arial", 8);
+            Font font = new("Arial", 8);
             int i = 0;
 
             // Check to determine whether any codecs were found.
@@ -99,7 +99,7 @@ namespace GDIPlusPort
 
             // Set up display variables.
             Color foreColor = Color.Black;
-            Font font = new Font("Arial", 8);
+            Font font = new("Arial", 8);
             int i = 0;
 
             // Check to determine whether any codecs were found.
@@ -156,11 +156,11 @@ namespace GDIPlusPort
         //<snippet3>
         private void GetSupportedParameters(PaintEventArgs e)
         {
-            Bitmap bitmap1 = new Bitmap(1, 1);
+            Bitmap bitmap1 = new(1, 1);
             ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
             EncoderParameters paramList = bitmap1.GetEncoderParameterList(jpgEncoder.Clsid);
             EncoderParameter[] encParams = paramList.Param;
-            StringBuilder paramInfo = new StringBuilder();
+            StringBuilder paramInfo = new();
 
             for (int i = 0; i < encParams.Length; i++)
             {
@@ -170,7 +170,7 @@ namespace GDIPlusPort
             }
             e.Graphics.DrawString(paramInfo.ToString(), this.Font, Brushes.Red, 10.0F, 10.0F);
         }
-        
+
         //<snippet6>
         private ImageCodecInfo GetEncoder(ImageFormat format)
         {
@@ -183,7 +183,7 @@ namespace GDIPlusPort
                     return codec;
                 }
             }
-            
+
             return null;
         }
         //</snippet6>
@@ -192,7 +192,7 @@ namespace GDIPlusPort
         //<snippet4>
         private void SaveBmpAsPNG()
         {
-            Bitmap bmp1 = new Bitmap(typeof(Button), "Button.bmp");
+            Bitmap bmp1 = new(typeof(Button), "Button.bmp");
             bmp1.Save(@"c:\button.png", ImageFormat.Png);
         }
         //</snippet4>
@@ -201,7 +201,7 @@ namespace GDIPlusPort
         private void VaryQualityLevel()
         {
             // Get a bitmap.
-            Bitmap bmp1 = new Bitmap(@"c:\TestPhoto.jpg");
+            Bitmap bmp1 = new(@"c:\TestPhoto.jpg");
             ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
 
             // Create an Encoder object based on the GUID
@@ -213,9 +213,9 @@ namespace GDIPlusPort
             // An EncoderParameters object has an array of EncoderParameter
             // objects. In this case, there is only one
             // EncoderParameter object in the array.
-            EncoderParameters myEncoderParameters = new EncoderParameters(1);
+            EncoderParameters myEncoderParameters = new(1);
 
-            EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 50L);
+            EncoderParameter myEncoderParameter = new(myEncoder, 50L);
             myEncoderParameters.Param[0] = myEncoderParameter;
             bmp1.Save(@"c:\TestPhotoQualityFifty.jpg", jpgEncoder, myEncoderParameters);
 
@@ -229,13 +229,13 @@ namespace GDIPlusPort
             bmp1.Save(@"c:\TestPhotoQualityZero.jpg", jpgEncoder, myEncoderParameters);
         }
         //</snippet8>
-       
+
         private void Form1_Load(object sender, EventArgs e)
         {
             //SaveBmpAsPng();
         }
 
-        private void Form1_Paint(object sender, PaintEventArgs e) 
+        private void Form1_Paint(object sender, PaintEventArgs e)
         {
             GetSupportedParameters(e);
             SaveBmpAsPNG();

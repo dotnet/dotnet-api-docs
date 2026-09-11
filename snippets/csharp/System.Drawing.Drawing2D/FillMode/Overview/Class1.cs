@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Windows.Forms;
-using System.Drawing;
 using System.Collections;
-using System.Xml;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using System.Xml;
 
 public class SystemDrawingConstructingDrawingPaths
 {
 
     // 5a36b0e4-f1f4-46c0-a85a-22ae98491950
-    // How to: Fill Open Figures
+    // How to: Fill Open Figures.
 
     private void Method11(PaintEventArgs e)
     {
         // <snippet11>
-        GraphicsPath path = new GraphicsPath();
+        GraphicsPath path = new();
 
         // Add an open figure.
         path.AddArc(0, 0, 150, 120, 30, 120);
@@ -22,8 +22,8 @@ public class SystemDrawingConstructingDrawingPaths
         // Add an intrinsically closed figure.
         path.AddEllipse(50, 50, 50, 100);
 
-        Pen pen = new Pen(Color.FromArgb(128, 0, 0, 255), 5);
-        SolidBrush brush = new SolidBrush(Color.Red);
+        Pen pen = new(Color.FromArgb(128, 0, 0, 255), 5);
+        SolidBrush brush = new(Color.Red);
 
         // The fill mode is FillMode.Alternate by default.
         e.Graphics.FillPath(brush, path);
@@ -31,12 +31,12 @@ public class SystemDrawingConstructingDrawingPaths
         // </snippet11>
     }
     // 82fd56c7-b443-4765-9b7c-62ce030656ec
-    // How to: Create Figures from Lines, Curves, and Shapes
+    // How to: Create Figures from Lines, Curves, and Shapes.
 
     private void Method21(PaintEventArgs e)
     {
         // <snippet21>
-        GraphicsPath path = new GraphicsPath();
+        GraphicsPath path = new();
         path.AddArc(175, 50, 50, 50, 0, -180);
         e.Graphics.DrawPath(new Pen(Color.FromArgb(128, 255, 0, 0), 4), path);
         // </snippet21>
@@ -45,12 +45,12 @@ public class SystemDrawingConstructingDrawingPaths
     {
         // <snippet22>
         // Create an array of points for the curve in the second figure.
-        Point[] points = {
+        Point[] points = [
    new Point(40, 60),
    new Point(50, 70),
-   new Point(30, 90)};
+   new Point(30, 90)];
 
-        GraphicsPath path = new GraphicsPath();
+        GraphicsPath path = new();
 
         path.StartFigure(); // Start the first figure.
         path.AddArc(175, 50, 50, 50, 0, -180);
