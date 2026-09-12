@@ -1,21 +1,19 @@
-﻿using System;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 public class Form3
 {
     // <Snippet1>
     // Class-level declaration.
     // Create a TraceSwitch.
-    static TraceSwitch generalSwitch = new TraceSwitch("General", "Entire Application");
+    private static readonly TraceSwitch s_generalSwitch = new("General", "Entire Application");
 
-    static public void MyErrorMethod(string category)
+    public static void MyErrorMethod(string category)
     {
         // Write the message if the TraceSwitch level is set to Error or higher.
-        Debug.WriteIf(generalSwitch.TraceError, "My error message. ");
+        Debug.WriteIf(s_generalSwitch.TraceError, "My error message. ");
 
         // Write a second message if the TraceSwitch level is set to Verbose.
-        Debug.WriteLineIf(generalSwitch.TraceVerbose, "My second error message.", category);
+        Debug.WriteLineIf(s_generalSwitch.TraceVerbose, "My second error message.", category);
     }
     // </Snippet1>
 }

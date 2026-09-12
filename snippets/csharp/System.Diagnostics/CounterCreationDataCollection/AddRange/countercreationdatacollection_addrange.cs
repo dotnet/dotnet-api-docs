@@ -26,7 +26,7 @@ public class CounterDataCollectionExample
                new CounterCreationData[numberOfCounters];
             for (int i = 0; i < numberOfCounters; i++)
             {
-                Console.Write("Enter the counter name for {0} counter : ", i);
+                Console.Write($"Enter the counter name for {i} counter : ");
                 myCounterCreationData[i] = new CounterCreationData();
                 myCounterCreationData[i].CounterName = Console.ReadLine();
             }
@@ -47,7 +47,7 @@ public class CounterDataCollectionExample
 
                 Console.WriteLine("The list of counters in CounterCollection are: ");
                 for (int i = 0; i < myNewCounterCollection.Count; i++)
-                    Console.WriteLine("Counter {0} is '{1}'", i + 1, myNewCounterCollection[i].CounterName);
+                    Console.WriteLine($"Counter {i + 1} is '{myNewCounterCollection[i].CounterName}'");
             }
             else
             {
@@ -56,7 +56,7 @@ public class CounterDataCollectionExample
         }
         catch (Exception e)
         {
-            Console.WriteLine("Exception: {0}.", e.Message);
+            Console.WriteLine($"Exception: {e.Message}.");
             return;
         }
     }
