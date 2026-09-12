@@ -80,9 +80,9 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
-A <xref:System.Threading.Tasks.ValueTask`1> instance may either be awaited or converted to a <xref:System.Threading.Tasks.Task`1> using <xref:System.Threading.Tasks.ValueTask`1.AsTask*>. A <xref:System.Threading.Tasks.ValueTask`1> instance may only be awaited once, and consumers may not read <xref:System.Threading.Tasks.ValueTask`1.Result> until the instance has completed. If these limitations are unacceptable, convert the <xref:System.Threading.Tasks.ValueTask`1> to a <xref:System.Threading.Tasks.Task`1> by calling <xref:System.Threading.Tasks.ValueTask`1.AsTask*>.
+A <xref:System.Threading.Tasks.ValueTask`1> instance may either be awaited or converted to a <xref:System.Threading.Tasks.Task`1> using <xref:System.Threading.Tasks.ValueTask`1.AsTask*>. If the instance wraps a <xref:System.Threading.Tasks.Task`1> or a synchronous result, multiple awaits might succeed. However, a <xref:System.Threading.Tasks.ValueTask`1> instance can also be backed by a pooled <xref:System.Threading.Tasks.Sources.IValueTaskSource`1>, so consumers should treat an arbitrary <xref:System.Threading.Tasks.ValueTask`1> as single-consumption unless the provider explicitly documents support for multiple consumption. Consumers may not read <xref:System.Threading.Tasks.ValueTask`1.Result> until the instance has completed. If these limitations are unacceptable, convert the <xref:System.Threading.Tasks.ValueTask`1> to a <xref:System.Threading.Tasks.Task`1> by calling <xref:System.Threading.Tasks.ValueTask`1.AsTask*>.
 
-The following operations should never be performed on a <xref:System.Threading.Tasks.ValueTask`1> instance:
+The following operations should not be performed on a <xref:System.Threading.Tasks.ValueTask`1> instance unless the provider explicitly documents that they are supported:
 
   - Awaiting the instance multiple times.
   - Calling <xref:System.Threading.Tasks.ValueTask`1.AsTask*> multiple times.
