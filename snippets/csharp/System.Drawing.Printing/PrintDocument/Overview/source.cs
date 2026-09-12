@@ -1,8 +1,8 @@
 ﻿// <Snippet1>
 using System;
-using System.IO;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.IO;
 using System.Windows.Forms;
 
 public partial class Form1 : System.Windows.Forms.Form
@@ -28,7 +28,7 @@ public partial class Form1 : System.Windows.Forms.Form
             try
             {
                 printFont = new Font("Arial", 10);
-                PrintDocument pd = new PrintDocument();
+                PrintDocument pd = new();
                 pd.PrintPage += new PrintPageEventHandler
                    (this.pd_PrintPage);
                 pd.Print();

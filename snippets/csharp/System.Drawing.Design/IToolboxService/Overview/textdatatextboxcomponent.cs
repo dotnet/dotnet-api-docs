@@ -9,8 +9,8 @@ using System.Windows.Forms;
 
 namespace TextDataTextBoxComponent
 {
-    // Component that adds a "Text" data format ToolboxItemCreatorCallback 
-    // to the Toolbox. This component uses a custom ToolboxItem that 
+    // Component that adds a "Text" data format ToolboxItemCreatorCallback
+    // to the Toolbox. This component uses a custom ToolboxItem that
     // creates a TextBox containing the text data.
     public class TextDataTextBoxComponent : Component
     {
@@ -18,10 +18,10 @@ namespace TextDataTextBoxComponent
         private IToolboxService ts;
 
         public TextDataTextBoxComponent()
-        {                     
+        {
         }
 
-        // ISite override to register TextBox creator
+        // ISite override to register TextBox creator.
         public override System.ComponentModel.ISite Site
         {
             get
@@ -31,7 +31,7 @@ namespace TextDataTextBoxComponent
             set
             {
                 if( value != null )
-                {                    
+                {
                     base.Site = value;
 
                     if (!creatorAdded)
@@ -46,27 +46,27 @@ namespace TextDataTextBoxComponent
                         RemoveTextTextBoxCreator();
                     }
 
-                    base.Site = value;             
+                    base.Site = value;
                 }
             }
         }
 
-        // Adds a "Text" data format creator to the toolbox that creates 
+        // Adds a "Text" data format creator to the toolbox that creates
         // a textbox from a text fragment pasted to the toolbox.
         private void AddTextTextBoxCreator()
         {
             ts = (IToolboxService)GetService(typeof(IToolboxService));
 
-            if (ts != null) 
+            if (ts != null)
             {
-                ToolboxItemCreatorCallback textCreator = 
-                    new ToolboxItemCreatorCallback(this.CreateTextBoxForText);
+                ToolboxItemCreatorCallback textCreator =
+                    new(this.CreateTextBoxForText);
 
                 try
                 {
                     ts.AddCreator(
-                        textCreator, 
-                        "Text", 
+                        textCreator,
+                        "Text",
                         (IDesignerHost)GetService(typeof(IDesignerHost)));
 
                     creatorAdded = true;
@@ -74,32 +74,32 @@ namespace TextDataTextBoxComponent
                 catch(Exception ex)
                 {
                     MessageBox.Show(
-                        ex.ToString(), 
+                        ex.ToString(),
                         "Exception Information");
-                }                
+                }
             }
         }
 
         // Removes any "Text" data format creator from the toolbox.
         private void RemoveTextTextBoxCreator()
         {
-            if (ts != null)             
+            if (ts != null)
             {
                 ts.RemoveCreator(
-                    "Text", 
-                    (IDesignerHost)GetService(typeof(IDesignerHost)));            
+                    "Text",
+                    (IDesignerHost)GetService(typeof(IDesignerHost)));
 
                 creatorAdded = false;
             }
         }
 
-        // ToolboxItemCreatorCallback delegate format method to create 
+        // ToolboxItemCreatorCallback delegate format method to create
         // the toolbox item.
         private ToolboxItem CreateTextBoxForText(
-            object serializedObject, 
+            object serializedObject,
             string format)
         {
-            DataObject o = new DataObject((IDataObject)serializedObject);
+            DataObject o = new((IDataObject)serializedObject);
 
             string[] formats = o.GetFormats();
 
@@ -118,7 +118,7 @@ namespace TextDataTextBoxComponent
             {
                 RemoveTextTextBoxCreator();
             }
-        }        
+        }
     }
 
     // Custom toolbox item creates a TextBox and sets its Text property
@@ -133,26 +133,26 @@ namespace TextDataTextBoxComponent
             this.text = text;
         }
 
-        // ToolboxItem.CreateComponentsCore override to create the TextBox 
+        // ToolboxItem.CreateComponentsCore override to create the TextBox
         // and link a method to set its Text property.
         protected override IComponent[] CreateComponentsCore(IDesignerHost host)
         {
-            System.Windows.Forms.TextBox textbox = 
+            System.Windows.Forms.TextBox textbox =
                 (TextBox)host.CreateComponent(typeof(TextBox));
-                
-            // Because the designer resets the text of the textbox, use 
-            // a SetTextMethodHandler to set the text to the value of 
+
+            // Because the designer resets the text of the textbox, use
+            // a SetTextMethodHandler to set the text to the value of
             // the text data.
             Control c = host.RootComponent as Control;
             c.BeginInvoke(
-                new SetTextMethodHandler(OnSetText), 
-                new object[] {textbox, text});
-           
-            return new System.ComponentModel.IComponent[] { textbox };
-        }        
+                new SetTextMethodHandler(OnSetText),
+                [textbox, text]);
+
+            return [textbox];
+        }
 
         // Method to set the text property of a TextBox after it is initialized.
-        private void OnSetText(Control c, string text) 
+        private void OnSetText(Control c, string text)
         {
             c.Text = text;
         }

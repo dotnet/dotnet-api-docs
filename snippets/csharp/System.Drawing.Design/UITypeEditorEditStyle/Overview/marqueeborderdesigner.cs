@@ -51,7 +51,7 @@ namespace MarqueeControlLibrary.Design
         protected override void PreFilterProperties(IDictionary properties)
         {
             base.PreFilterProperties(properties);
-            
+
             if (properties.Contains("Padding"))
             {
                 properties.Remove("Padding");
@@ -60,12 +60,12 @@ namespace MarqueeControlLibrary.Design
             properties["Visible"] = TypeDescriptor.CreateProperty(
                 typeof(MarqueeBorderDesigner),
                 (PropertyDescriptor)properties["Visible"],
-                new Attribute[0]);
+                []);
 
             properties["Enabled"] = TypeDescriptor.CreateProperty(
                 typeof(MarqueeBorderDesigner),
                 (PropertyDescriptor)properties["Enabled"],
-                new Attribute[0]);
+                []);
         }
         // </snippet450>
 

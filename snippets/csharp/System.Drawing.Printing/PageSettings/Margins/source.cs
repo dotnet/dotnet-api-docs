@@ -17,26 +17,26 @@ public void Printing(){
      streamToPrint = new StreamReader (filePath);
      try{
        printFont = new Font("Arial", 10);
-       PrintDocument pd = new PrintDocument(); 
+       PrintDocument pd = new();
        pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
        pd.PrinterSettings.PrinterName = printer;
        // Create a new instance of Margins with 1-inch margins.
-       Margins margins = new Margins(100,100,100,100);
+       Margins margins = new(100,100,100,100);
        pd.DefaultPageSettings.Margins = margins;
        pd.Print();
-     } 
+     }
      finally{
        streamToPrint.Close() ;
      }
-   } 
-   catch(Exception ex){ 
+   }
+   catch(Exception ex){
      MessageBox.Show(ex.Message);
    }
  }
- 
+
 // </Snippet1>
 
- // Method added so sample will compile
+ // Method added so sample will compile.
  private void pd_PrintPage(object sender,
    PrintPageEventArgs e) {
  }
