@@ -1,28 +1,25 @@
 ﻿// <Snippet1>
 using System;
 using System.Diagnostics;
-using System.Threading;
 
-class MySample{
+using EventLog myNewLog = new()
+{
+    Log = "MyCustomLog"
+};
 
-    public static void Main(){
+myNewLog.EntryWritten += MyOnEntryWritten;
+myNewLog.EnableRaisingEvents = true;
 
-        EventLog myNewLog = new EventLog();
-        myNewLog.Log = "MyCustomLog";
+Console.WriteLine("Press 'q' to quit.");
+// Wait for the EntryWrittenEvent or a quit command.
+while (Console.Read() != 'q')
+{
+    // Wait.
+}
 
-        myNewLog.EntryWritten += new EntryWrittenEventHandler(MyOnEntryWritten);
-        myNewLog.EnableRaisingEvents = true;
-
-        Console.WriteLine("Press \'q\' to quit.");
-        // Wait for the EntryWrittenEvent or a quit command.
-        while(Console.Read() != 'q'){
-            // Wait.
-        }
-    }
-
-    public static void MyOnEntryWritten(Object source, EntryWrittenEventArgs e){
-        Console.WriteLine("Written: " + e.Entry.Message);
-    }
+void MyOnEntryWritten(object source, EntryWrittenEventArgs e)
+{
+    Console.WriteLine($"Written: {e.Entry.Message}");
 }
 
 // </Snippet1>

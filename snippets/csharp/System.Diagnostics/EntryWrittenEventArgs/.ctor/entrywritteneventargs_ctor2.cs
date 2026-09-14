@@ -18,9 +18,11 @@ class MySample
     {
         try
         {
-            EventLog myNewLog = new EventLog();
-            myNewLog.Log = "MyNewLog";
-            myNewLog.Source = "MySource";
+            using EventLog myNewLog = new()
+            {
+                Log = "MyNewLog",
+                Source = "MySource"
+            };
             // Create the source if it does not exist already.
             if (!EventLog.SourceExists("MySource"))
             {
@@ -38,23 +40,21 @@ class MySample
             myNewLog.WriteEntry("The Latest entry in the Event Log");
             int myEntries = myNewLog.Entries.Count;
             EventLogEntry entry = myNewLog.Entries[myEntries - 1];
-            EntryWrittenEventArgs myEntryEventArgs =
-                                 new EntryWrittenEventArgs(entry);
+            EntryWrittenEventArgs myEntryEventArgs = new(entry);
             MyOnEntry(myNewLog, myEntryEventArgs);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Exception Raised" + e.Message);
+            Console.WriteLine($"Exception Raised{e.Message}");
         }
     }
     // <Snippet2>
-    protected static void MyOnEntry(Object source, EntryWrittenEventArgs e)
+    protected static void MyOnEntry(object source, EntryWrittenEventArgs e)
     {
         EventLogEntry myEventLogEntry = e.Entry;
         if (myEventLogEntry != null)
         {
-            Console.WriteLine("Current message entry is: '"
-                              + myEventLogEntry.Message + "'");
+            Console.WriteLine($"Current message entry is: '{myEventLogEntry.Message}'");
         }
         else
         {

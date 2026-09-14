@@ -98,7 +98,7 @@ namespace ProcessAsyncStreamSamples
                 s_numOutputLines++;
 
                 // Add the text to the collected output.
-                s_sortOutput.Append($"{Environment.NewLine}[{s_numOutputLines}] - {outLine.Data}");
+                s_sortOutput!.Append($"{Environment.NewLine}[{s_numOutputLines}] - {outLine.Data}");
             }
         }
     }
@@ -108,7 +108,7 @@ namespace ProcessAsyncStreamSamples
 {
     class ProcessSortSample
     {
-        static void Run()
+        public static void Run()
         {
             try
             {

@@ -5,7 +5,7 @@ using System.Threading;
 
 class MySample1
 {
-    public static void Main()
+    public static void Run()
     {
         // Create the source, if it does not already exist.
         if (!EventLog.SourceExists("MySource"))
@@ -26,7 +26,7 @@ class MySample1
         // Read the event log entries.
         foreach (EventLogEntry entry in myLog.Entries)
         {
-            Console.WriteLine("\tEntry: " + entry.Message);
+            Console.WriteLine($"\tEntry: {entry.Message}");
         }
     }
 }
