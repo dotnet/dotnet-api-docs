@@ -12,7 +12,7 @@ public class Form3
     {
         // Write the message if the TraceSwitch level is set to Verbose.
         Debug.WriteIf(s_generalSwitch.TraceVerbose,
-            $"{myObject.ToString()} is not a valid object for category: ", category);
+            $"{myObject} is not a valid object for category: ", category);
 
         // Write a second message if the TraceSwitch level is set to Error or higher.
         Debug.WriteLineIf(s_generalSwitch.TraceError, " Please use a different category.");
