@@ -12,11 +12,11 @@ namespace ImageListCollectionEx
         private Button button1;
         private ImageList imageList1;
         private IContainer components;
-    
+
         public Form1()
         {
             InitializeComponent();
-            
+
             button1.Click += new EventHandler(button1_Click);
 
             InitializeRadioButtons();
@@ -37,10 +37,12 @@ namespace ImageListCollectionEx
         private NumericUpDown numericUpDown1;
         private void InitializeAcceleratedUpDown()
         {
-            numericUpDown1 = new NumericUpDown();
-            numericUpDown1.Location = new Point(40, 40);
-            numericUpDown1.Maximum = 40000;
-            numericUpDown1.Minimum = -40000;
+            numericUpDown1 = new NumericUpDown
+            {
+                Location = new Point(40, 40),
+                Maximum = 40000,
+                Minimum = -40000
+            };
 
             // Add some accelerations to the control.
             numericUpDown1.Accelerations.Add(new NumericUpDownAcceleration(2,100));
@@ -116,28 +118,30 @@ namespace ImageListCollectionEx
         {
             MessageBox.Show(selectedrb.Text);
         }
-        
+
         //</snippet2>
-        private System.Drawing.Printing.PrintDocument printDocument1;
-  //<snippet3>
+        private readonly System.Drawing.Printing.PrintDocument _printDocument = new();
+        //<snippet3>
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            if (e.PageSettings.Color && !printDocument1.PrinterSettings.SupportsColor)
+            if (e.PageSettings.Color && !_printDocument.PrinterSettings.SupportsColor)
+            {
                 MessageBox.Show("Color printing not supported on selected printer.", "Printer Warning", MessageBoxButtons.OKCancel);
+            }
         }
         //</snippet3>
 
-        //Per VSWhidbey 370432 Demonstrates the ImageListCollection.AddStrip method.
-//<snippet1>
+        // Per VSWhidbey 370432, demonstrates the ImageListCollection.AddStrip method.
+        //<snippet1>
         public void AddStripToCollection()
         {
             // Add the image strip.
-            Bitmap bitmaps = new Bitmap(typeof(PrintPreviewDialog), "PrintPreviewStrip.bmp");
+            Bitmap bitmaps = new(typeof(PrintPreviewDialog), "PrintPreviewStrip.bmp");
             imageList1.Images.AddStrip(bitmaps);
-            
+
             // Iterate through the images and display them on the form.
             for (int i = 0; i < imageList1.Images.Count; i++) {
-            
+
                 imageList1.Draw(this.CreateGraphics(), new Point(10,10), i);
                 Application.DoEvents();
                 System.Threading.Thread.Sleep(1000);
@@ -151,16 +155,16 @@ namespace ImageListCollectionEx
             this.button1 = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.SuspendLayout();
-            // 
-            // button1
-            // 
+            //
+            // button1.
+            //
             this.button1.Location = new System.Drawing.Point(148, 25);
             this.button1.Name = "button1";
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
-            // 
-            // Form1
-            // 
+            //
+            // Form1.
+            //
             this.ClientSize = new System.Drawing.Size(292, 273);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
