@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
-using System.Reflection;
 
 class DebugViewTest
 {
@@ -17,10 +16,10 @@ class DebugViewTest
 
     static void Main()
     {
-        MyHashtable myHashTable = new MyHashtable();
+        MyHashtable myHashTable = new();
         myHashTable.Add("one", 1);
         myHashTable.Add("two", 2);
-        Console.WriteLine(myHashTable.ToString());
+        Console.WriteLine(myHashTable);
         Console.WriteLine("In Main.");
     }
 }
@@ -28,9 +27,9 @@ class DebugViewTest
 [DebuggerDisplay("{value}", Name = "{key}")]
 internal class KeyValuePairs
 {
-    private IDictionary dictionary;
-    private object key;
-    private object value;
+    private readonly IDictionary dictionary;
+    private readonly object key;
+    private readonly object value;
 
     public KeyValuePairs(IDictionary dictionary, object key, object value)
     {
@@ -51,7 +50,7 @@ class MyHashtable : Hashtable
 
     internal class HashtableDebugView
     {
-        private Hashtable hashtable;
+        private readonly Hashtable hashtable;
         public const string TestString = "This should appear in the debug window.";
         public HashtableDebugView(Hashtable hashtable)
         {
@@ -67,15 +66,15 @@ class MyHashtable : Hashtable
                 KeyValuePairs[] keys = new KeyValuePairs[hashtable.Count];
 
                 int i = 0;
-                foreach(object key in hashtable.Keys)
+                foreach (object key in hashtable.Keys)
                 {
-                    keys[i] = new KeyValuePairs(hashtable, key, hashtable[key]);
+                    keys[i] = new(hashtable, key, hashtable[key]);
                     i++;
                 }
                 return keys;
             }
         }
-      //</Snippet6>
+        //</Snippet6>
     }
 }
 //</Snippet5>

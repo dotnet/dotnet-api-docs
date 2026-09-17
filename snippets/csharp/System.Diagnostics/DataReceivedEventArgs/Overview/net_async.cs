@@ -121,7 +121,7 @@ namespace ProcessAsyncStreamSamples
             {
                 // Signal that the error file had something
                 // written to it.
-                string[] errorOutput = File.ReadAllLines(s_netErrorFile);
+                string[] errorOutput = File.ReadAllLines(s_netErrorFile!);
                 if (errorOutput.Length > 0)
                 {
                     Console.WriteLine($"\nThe following error output was appended to {s_netErrorFile}:");
@@ -143,7 +143,7 @@ namespace ProcessAsyncStreamSamples
             if (!string.IsNullOrEmpty(outLine.Data))
             {
                 // Add the text to the collected output.
-                s_netOutput.Append(Environment.NewLine + "  " + outLine.Data);
+                s_netOutput!.Append($"{Environment.NewLine}  {outLine.Data}");
             }
         }
 
@@ -162,12 +162,12 @@ namespace ProcessAsyncStreamSamples
                         // Open the file.
                         try
                         {
-                            s_streamError = new StreamWriter(s_netErrorFile, true);
+                            s_streamError = new StreamWriter(s_netErrorFile!, true);
                         }
                         catch (Exception e)
                         {
                             Console.WriteLine("Could not open error file!");
-                            Console.WriteLine(e.Message.ToString());
+                            Console.WriteLine(e.Message);
                         }
                     }
 
@@ -176,7 +176,7 @@ namespace ProcessAsyncStreamSamples
                         // Write a header to the file if this is the first
                         // call to the error output handler.
                         s_streamError.WriteLine();
-                        s_streamError.WriteLine(DateTime.Now.ToString());
+                        s_streamError.WriteLine(DateTime.Now);
                         s_streamError.WriteLine("Net View error output:");
                     }
                     s_errorsWritten = true;
@@ -199,7 +199,7 @@ namespace ProcessAsyncStreamSamples
     class ProcessAsyncSample
     {
         /// The main entry point for the application.
-        static void Run()
+        public static void Run()
         {
             try
             {
@@ -208,7 +208,7 @@ namespace ProcessAsyncStreamSamples
             catch (InvalidOperationException e)
             {
                 Console.WriteLine("Exception:");
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
             }
         }
     }

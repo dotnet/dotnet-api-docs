@@ -5,7 +5,7 @@ using System.Threading;
 
 class MySample
 {
-    public static void Main()
+    public static void Run()
     {
         string logName;
 
@@ -20,7 +20,7 @@ class MySample
             EventLog.DeleteEventSource("MySource", "MyMachine");
             EventLog.Delete(logName, "MyMachine");
 
-            Console.WriteLine(logName + " deleted.");
+            Console.WriteLine($"{logName} deleted.");
         }
         else
         {

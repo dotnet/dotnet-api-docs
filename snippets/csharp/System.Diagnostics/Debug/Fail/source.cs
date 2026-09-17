@@ -1,38 +1,42 @@
 ﻿using System;
-using System.Data;
 using System.Diagnostics;
 
 public class Form1
 {
-    protected enum Option { First, Second };
+    protected enum Option
+    {
+        First,
+        Second
+    }
 
-    protected Option option;
+    private static Option SelectedOption { get; set; }
 
-    protected double result;
+    private static double Result { get; set; }
 
     public static void Main()
     {
         try
-        { }
+        {
+        }
         // <Snippet1>
         catch (Exception)
         {
-            Debug.Fail("Unknown Option " + option + ", using the default.");
+            Debug.Fail($"Unknown Option {SelectedOption}, using the default.");
         }
         // </Snippet1>
 
         // <Snippet2>
-        switch (option)
+        switch (SelectedOption)
         {
             case Option.First:
-                result = 1.0;
+                Result = 1.0;
                 break;
 
             // Insert additional cases.
 
             default:
-                Debug.Fail("Unknown Option " + option);
-                result = 1.0;
+                Debug.Fail($"Unknown Option {SelectedOption}");
+                Result = 1.0;
                 break;
         }
         // </Snippet2>
