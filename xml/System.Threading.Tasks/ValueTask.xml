@@ -66,9 +66,9 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
-A `ValueTask` instance may either be awaited or converted to a <xref:System.Threading.Tasks.Task> using <xref:System.Threading.Tasks.ValueTask.AsTask*>. A `ValueTask` instance may only be awaited once, and consumers may not call <xref:System.Threading.Tasks.ValueTask.GetAwaiter> until the instance has completed. If these limitations are unacceptable, convert the `ValueTask` to a <xref:System.Threading.Tasks.Task> by calling <xref:System.Threading.Tasks.ValueTask.AsTask*>.
+A `ValueTask` instance may either be awaited or converted to a <xref:System.Threading.Tasks.Task> using <xref:System.Threading.Tasks.ValueTask.AsTask*>. If the instance wraps a <xref:System.Threading.Tasks.Task> or a synchronous result, multiple awaits might succeed. However, a `ValueTask` instance can also be backed by a pooled <xref:System.Threading.Tasks.Sources.IValueTaskSource>, so consumers should treat an arbitrary `ValueTask` as single-consumption unless the provider explicitly documents support for multiple consumption. Consumers may not call <xref:System.Threading.Tasks.ValueTask.GetAwaiter> until the instance has completed. If these limitations are unacceptable, convert the `ValueTask` to a <xref:System.Threading.Tasks.Task> by calling <xref:System.Threading.Tasks.ValueTask.AsTask*>.
 
-The following operations should never be performed on a `ValueTask` instance:
+The following operations should not be performed on a `ValueTask` instance unless the provider explicitly documents that they are supported:
 
 - Awaiting the instance multiple times.
 - Calling <xref:System.Threading.Tasks.ValueTask.AsTask*> multiple times.
