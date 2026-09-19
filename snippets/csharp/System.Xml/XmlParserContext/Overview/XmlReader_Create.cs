@@ -39,6 +39,8 @@ XmlReader reader = XmlReader.Create(new StringReader(xmlFrag), settings, context
     static void Settings_Resolver()
     {
 	string UserName = "username";
+	// In production code, do not hardcode credentials in source code.
+	// Instead, retrieve them from a secure store such as Azure Key Vault.
 	string SecurelyStoredPassword = "psswd";
 	string Domain= "domain";
 

@@ -32,7 +32,7 @@ public class PasswordDerivedBytesExample
             // Create the key and set it to the Key property
             // of the TripleDESCryptoServiceProvider object.
             // This example uses the SHA1 algorithm.
-            // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+            // Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
             tdes.Key = pdb.CryptDeriveKey("TripleDES", "SHA1", 192, tdes.IV);
 
             //</Snippet2>
