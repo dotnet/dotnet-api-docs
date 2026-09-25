@@ -6,7 +6,7 @@ using microsoft.wcf.documentation;
 
 public class Client
 {
-  public static void Main()
+  public static void Run()
   {
     // Picks up configuration from the config file.
     SampleServiceClient wcfClient = new SampleServiceClient();

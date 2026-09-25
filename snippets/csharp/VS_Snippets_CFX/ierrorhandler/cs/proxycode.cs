@@ -15,7 +15,7 @@ namespace Microsoft.WCF.Documentation
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "3.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute()]
-    public partial class GreetingFault : object, System.Runtime.Serialization.IExtensibleDataObject
+    public partial class ClientGreetingFault : object, System.Runtime.Serialization.IExtensibleDataObject
     {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -56,7 +56,7 @@ public interface ISampleService
 {
 
     [System.ServiceModel.OperationContractAttribute(Action="http://microsoft.wcf.documentation/ISampleService/SampleMethod", ReplyAction="http://microsoft.wcf.documentation/ISampleService/SampleMethodResponse")]
-    [System.ServiceModel.FaultContractAttribute(typeof(Microsoft.WCF.Documentation.GreetingFault), Action="http://microsoft.wcf.documentation/ISampleService/SampleMethodGreetingFaultFault")]
+    [System.ServiceModel.FaultContractAttribute(typeof(Microsoft.WCF.Documentation.ClientGreetingFault), Action="http://microsoft.wcf.documentation/ISampleService/SampleMethodGreetingFaultFault")]
     string SampleMethod(string msg);
 }
 

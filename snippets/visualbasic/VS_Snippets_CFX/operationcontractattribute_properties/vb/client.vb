@@ -2,7 +2,7 @@
 Imports System.ServiceModel.Channels
 
 Public Class Client
-  Public Shared Sub Main()
+  Public Shared Sub Run()
 	' Picks up configuration from the config file.
 	Dim wcfClient As New SampleServiceClient()
 	Try
