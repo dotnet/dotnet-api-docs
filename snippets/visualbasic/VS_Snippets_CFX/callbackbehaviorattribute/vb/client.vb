@@ -14,7 +14,7 @@ Namespace Microsoft.WCF.Documentation
 	  waitHandle = New AutoResetEvent(False)
 	End Sub
 
-	Public Sub Run()
+	Public Sub Start()
 	  ' Picks up configuration from the configuration file.
 	  Dim wcfClient As New SampleDuplexHelloClient(New InstanceContext(Me), "WSDualHttpBinding_SampleDuplexHello")
 	  Try
@@ -44,9 +44,9 @@ Namespace Microsoft.WCF.Documentation
 		Console.ReadLine()
 	  End Try
 	End Sub
-	Public Shared Sub Main()
+	Public Shared Sub Run()
 	  Dim client As New Client()
-	  client.Run()
+	  client.Start()
 	End Sub
 
 	Public Sub Reply(ByVal response As String) Implements SampleDuplexHelloCallback.Reply

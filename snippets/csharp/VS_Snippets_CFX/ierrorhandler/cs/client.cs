@@ -6,7 +6,7 @@ using Microsoft.WCF.Documentation;
 
 public class Client
 {
-  public static void Main()
+  public static void Run()
   {
     // Picks up configuration from the configuration file.
     SampleServiceClient wcfClient = new SampleServiceClient();
@@ -26,7 +26,7 @@ public class Client
       Console.ReadLine();
     }
     // Catch the contractually specified SOAP fault raised here as an exception.
-    catch (FaultException<GreetingFault> greetingFault)
+    catch (FaultException<Microsoft.WCF.Documentation.ClientGreetingFault> greetingFault)
     {
       Console.WriteLine(greetingFault.Detail.Message);
       Console.Read();

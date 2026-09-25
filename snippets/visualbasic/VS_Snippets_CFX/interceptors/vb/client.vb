@@ -4,7 +4,7 @@ Imports System.ServiceModel.Channels
 Imports microsoft.wcf.documentation
 
 Public Class Client
-  Public Shared Sub Main()
+  Public Shared Sub Run()
 	' Picks up configuration from the config file.
 	Dim wcfClient As New SampleServiceClient()
 	Try
@@ -23,7 +23,7 @@ Public Class Client
 	  Console.WriteLine("The service operation timed out. " & timeProblem.Message)
 	  Console.Read()
 	  wcfClient.Abort()
-	Catch fault As FaultException(Of SampleFault)
+	Catch fault As FaultException(Of ClientSampleFault)
 	  Console.WriteLine("SampleFault fault occurred: {0}", fault.Detail.FaultMessage)
 	  Console.Read()
 	  wcfClient.Abort()
