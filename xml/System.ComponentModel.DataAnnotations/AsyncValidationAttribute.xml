@@ -20,7 +20,10 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>
+      <para>Base class for validation attributes that require asynchronous operations, such as database lookups or API calls.</para>
+      <para>Derived implementations must be thread-safe, as instances of this attribute may be invoked concurrently from multiple threads.</para>
+    </summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -37,7 +40,7 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Default constructor for any async validation attribute.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -57,8 +60,10 @@
         <Parameter Name="errorMessageAccessor" Type="System.Func&lt;System.String&gt;" />
       </Parameters>
       <Docs>
-        <param name="errorMessageAccessor">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="errorMessageAccessor">The <see cref="T:System.Func`1" /> that will return an error message.</param>
+        <summary>
+          <para>Allows for providing a resource accessor function that will be used by the <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString" /> property to retrieve the error message.</para>
+        </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -78,8 +83,8 @@
         <Parameter Name="errorMessage" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="errorMessage">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="errorMessage">A non-localized error message to use in <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString" />.</param>
+        <summary>Constructor that accepts a fixed validation error message.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -116,12 +121,34 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The value to validate.</param>
+        <param name="validationContext">
+          <para>A <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> instance that provides context about the validation operation, such as the object and member being validated. Provides access to services required to perform validation using <see cref="T:System.IServiceProvider" />.</para>
+        </param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>
+          <para>Tests whether the given <paramref name="value" /> is valid asynchronously with respect to the current validation attribute without throwing a <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" />.</para>
+        </summary>
+        <returns>
+          <para>A <see cref="T:System.Threading.Tasks.Task`1" /> representing the asynchronous validation operation.</para>
+          <para>When validation is valid, the result is <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" />.</para>
+          <para>When validation is invalid, the result is an instance of <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />.</para>
+        </returns>
+        <remarks>
+          <para>
+            The underlying <see cref="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValidAsync(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Threading.CancellationToken)" /> implementation
+            must observe the supplied <paramref name="cancellationToken" /> and stop work promptly when cancellation
+            is requested. The validation infrastructure awaits all started validation tasks before returning, so an
+            implementation that ignores cancellation can delay failure and short-circuiting.
+          </para>
+          <para>
+            Callers that need to bound validation time should pass a token configured to cancel after a timeout,
+            such as one from a <see cref="T:System.Threading.CancellationTokenSource" /> configured with
+            <see cref="M:System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)" />.
+          </para>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">is thrown if the current attribute is malformed.</exception>
+        <exception cref="T:System.ArgumentNullException">When <paramref name="validationContext" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsValid">
@@ -143,9 +170,12 @@
         <Parameter Name="value" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The value to validate.</param>
+        <summary>
+          <para>Sealed override of <see cref="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object)" /> that delegates to the <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> overload so that <see cref="T:System.ComponentModel.DataAnnotations.AsyncValidationAttribute" /> implementations only need to provide a single synchronous fallback via <see cref="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)" />.</para>
+        </summary>
+        <returns>
+          <see langword="true" /> if the value is valid; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -176,11 +206,37 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The value to validate.</param>
+        <param name="validationContext">
+          <para>A <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> instance that provides context about the validation operation, such as the object and member being validated. Provides access to services required to perform validation using <see cref="T:System.IServiceProvider" />.</para>
+        </param>
+        <summary>Defines the synchronous validation behavior for this attribute.</summary>
+        <returns>
+          <para>
+            <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" /> when validation is valid.</para>
+          <para>An instance of <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> when validation is invalid.</para>
+        </returns>
+        <remarks>
+          <para>
+            Synchronous validation consumers invoke this method. Provide a synchronous implementation when
+            it can evaluate the applicable rule. Return a validation error when the rule rejects the value.
+            If an applicable, required rule cannot be evaluated synchronously, throw
+            <see cref="T:System.InvalidOperationException" /> with a message directing callers to an asynchronous
+            validation entry point. An unsupported invocation does not establish that the value is invalid.
+          </para>
+          <para>
+            Return <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" /> without evaluating the rule only when the rule
+            does not apply, or when the synchronous pass is explicitly advisory and a separate, required
+            asynchronous validation step governs acceptance. Success does not indicate pending validation
+            or arrange a later asynchronous invocation. Do not return success merely because a required
+            asynchronous check cannot run.
+          </para>
+          <para>
+            Do not implement this method by blocking on asynchronous work, such as by using
+            <c>Task&lt;TResult&gt;.Result</c>, <c>Task.Wait()</c>, or <c>GetAwaiter().GetResult()</c>.
+            Wrapping the operation in <c>Task.Run</c> does not make a blocking wait appropriate.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsValidAsync">
@@ -217,12 +273,30 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The value to validate.</param>
+        <param name="validationContext">
+          <para>A <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> instance that provides context about the validation operation, such as the object and member being validated. Provides access to services required to perform validation using <see cref="T:System.IServiceProvider" />.</para>
+        </param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>Override this method in subclasses to implement asynchronous validation logic.</summary>
+        <returns>
+          <para>A <see cref="T:System.Threading.Tasks.Task`1" /> representing the asynchronous validation operation.</para>
+          <para>When validation is valid, the result is <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" />.</para>
+          <para>When validation is invalid, the result is an instance of <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />.</para>
+        </returns>
+        <remarks>
+          <para>
+            This method must perform all applicable checks, including checks that can run synchronously.
+            The synchronous <see cref="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)" /> implementation is not
+            automatically invoked before this method. Share common checks through a helper when needed.
+          </para>
+          <para>
+            Implementations must observe the supplied <paramref name="cancellationToken" /> and stop work promptly
+            when cancellation is requested. The validation infrastructure may cancel this token after a validation
+            failure to stop sibling validators and awaits all started validation tasks before returning. An
+            implementation that ignores cancellation can delay failure and short-circuiting.
+          </para>
+        </remarks>
       </Docs>
     </Member>
   </Members>

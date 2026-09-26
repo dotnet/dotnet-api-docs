@@ -215,13 +215,19 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="instance">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <param name="validationResults">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="instance">The object instance to test.  It cannot be <see langword="null" />.</param>
+        <param name="validationContext">Describes the object to validate and provides services and context for the validators.</param>
+        <param name="validationResults">Optional collection to receive <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />s for the failures.</param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>Asynchronously tests whether the given object instance is valid.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task`1" /> that is <see langword="true" /> if the object is valid, <see langword="false" /> if any validation errors are encountered.</returns>
+        <remarks>
+          <para>This method evaluates all <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s attached to the object instance's type.  It also checks to ensure all properties marked with <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute" /> are set.  It does not validate the <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s on individual properties of the object unless <see cref="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObjectAsync(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Boolean,System.Threading.CancellationToken)" /> is called with <c>validateAllProperties</c> set to <see langword="true" />.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">When <paramref name="instance" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <para>When <paramref name="instance" /> doesn't match the <see cref="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectInstance" /> on <paramref name="validationContext" />.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="TryValidateObjectAsync">
@@ -259,14 +265,40 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="4" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="instance">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <param name="validationResults">To be added.</param>
-        <param name="validateAllProperties">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="instance">The object instance to test.  It cannot be <see langword="null" />.</param>
+        <param name="validationContext">Describes the object to validate and provides services and context for the validators.</param>
+        <param name="validationResults">Optional collection to receive <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />s for the failures.</param>
+        <param name="validateAllProperties">If <see langword="true" />, also evaluates all properties of the object (this process is not recursive over properties of the properties).</param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>Asynchronously tests whether the given object instance is valid.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task`1" /> that is <see langword="true" /> if the object is valid, <see langword="false" /> if any validation errors are encountered.</returns>
+        <remarks>
+          <para>
+            This method evaluates all <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s attached to the object instance's type. It also
+            checks to ensure all properties marked with <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute" /> are set. If
+            <paramref name="validateAllProperties" /> is <see langword="true" />, this method will also evaluate the <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s for all the immediate
+            properties of this object. This process is not recursive.
+          </para>
+          <para>
+            When <paramref name="validateAllProperties" /> is <see langword="true" />, properties are validated
+            in parallel. Within each property, synchronous attributes run first; asynchronous
+            attributes run only if all synchronous attributes pass.
+          </para>
+          <para>
+            When <paramref name="validationResults" /> is <see langword="null" />, validation stops after the
+            first property error (cross-property short-circuit). Any in-flight async validators on
+            other properties are cancelled cooperatively. When <paramref name="validationResults" />
+            is non-null, all properties complete and all errors are collected.
+          </para>
+          <para>
+            Returns <see cref="T:System.Threading.Tasks.Task`1" /> for interoperability with standard async
+            composition patterns such as <c>Task.WhenAll</c> and <c>Task.WhenAny</c>.
+          </para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">When <paramref name="instance" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <para>When <paramref name="instance" /> doesn't match the <see cref="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectInstance" /> on <paramref name="validationContext" />.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="TryValidateProperty">
@@ -382,13 +414,29 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <param name="validationResults">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The value to test.</param>
+        <param name="validationContext">Describes the property member to validate and provides services and context for the validators.</param>
+        <param name="validationResults">Optional collection to receive <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />s for the failures.</param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>Asynchronously tests whether the given property value is valid.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task`1" /> that is <see langword="true" /> if the value is valid, <see langword="false" /> if any validation errors are encountered.</returns>
+        <remarks>
+          <para>
+            This method will test each <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> associated with the property
+            identified by <paramref name="validationContext" />. If <paramref name="validationResults" /> is non-null,
+            this method will add a <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> to it for each validation failure.
+          </para>
+          <para>
+            If there is a <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute" /> found on the property, it will be evaluated before all other
+            validation attributes. If the required validator fails then validation will abort, adding that single
+            failure into the <paramref name="validationResults" /> when applicable, returning a value of <see langword="false" />.
+          </para>
+          <para>
+            Any <see cref="T:System.ComponentModel.DataAnnotations.AsyncValidationAttribute" /> instances will be evaluated asynchronously after all synchronous
+            validation attributes have passed.
+          </para>
+        </remarks>
+        <exception cref="T:System.ArgumentException">When the <see cref="P:System.ComponentModel.DataAnnotations.ValidationContext.MemberName" /> of <paramref name="validationContext" /> is not a valid property.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryValidateValue">
@@ -488,14 +536,24 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="4" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <param name="validationResults">To be added.</param>
-        <param name="validationAttributes">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">The value to test.</param>
+        <param name="validationContext">Describes the object being validated and provides services and context for the validators.</param>
+        <param name="validationResults">Optional collection to receive <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />s for the failures.</param>
+        <param name="validationAttributes">The list of <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s to validate this <paramref name="value" /> against.</param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>Asynchronously tests whether the given value is valid against a specified list of <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task`1" /> that is <see langword="true" /> if the object is valid, <see langword="false" /> if any validation errors are encountered.</returns>
+        <remarks>
+          <para>
+            This method will test each <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s specified. If
+            <paramref name="validationResults" /> is non-null, this method will add a <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />
+            to it for each validation failure.
+          </para>
+          <para>
+            Any <see cref="T:System.ComponentModel.DataAnnotations.AsyncValidationAttribute" /> instances will be evaluated asynchronously after all synchronous
+            validation attributes have passed.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="ValidateObject">
@@ -645,12 +703,18 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="instance">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="instance">The object instance to test.  It cannot be <see langword="null" />.</param>
+        <param name="validationContext">Describes the object being validated and provides services and context for the validators.</param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>Asynchronously throws a <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> if the given <paramref name="instance" /> is not valid.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing the asynchronous validation operation.</returns>
+        <remarks>This method evaluates all <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s attached to the object's type.</remarks>
+        <exception cref="T:System.ArgumentNullException">When <paramref name="instance" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">When <paramref name="validationContext" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <para>When <paramref name="instance" /> doesn't match the <see cref="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectInstance" /> on <paramref name="validationContext" />.</para>
+        </exception>
+        <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">When <paramref name="instance" /> is found to be invalid.</exception>
       </Docs>
     </Member>
     <Member MemberName="ValidateObjectAsync">
@@ -680,13 +744,22 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="instance">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <param name="validateAllProperties">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="instance">The object instance to test.  It cannot be <see langword="null" />.</param>
+        <param name="validationContext">Describes the object being validated and provides services and context for the validators.</param>
+        <param name="validateAllProperties">If <see langword="true" />, also validates all the <paramref name="instance" />'s properties.</param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>Asynchronously throws a <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> if the given object instance is not valid.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing the asynchronous validation operation.</returns>
+        <remarks>
+          <para>This method evaluates all <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s attached to the object's type.</para>
+          <para>If <paramref name="validateAllProperties" /> is <see langword="true" /> it also validates all the object's properties.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">When <paramref name="instance" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">When <paramref name="validationContext" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <para>When <paramref name="instance" /> doesn't match the <see cref="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectInstance" /> on <paramref name="validationContext" />.</para>
+        </exception>
+        <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">When <paramref name="instance" /> is found to be invalid.</exception>
       </Docs>
     </Member>
     <Member MemberName="ValidateProperty">
@@ -779,12 +852,14 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The value to test.</param>
+        <param name="validationContext">Describes the object being validated and provides services and context for the validators.</param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>Asynchronously throws a <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> if the given property <paramref name="value" /> is not valid.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing the asynchronous validation operation.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">When <paramref name="validationContext" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">When <paramref name="value" /> is invalid for this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="ValidateValue">
@@ -867,13 +942,17 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="validationContext">To be added.</param>
-        <param name="validationAttributes">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The value to test.</param>
+        <param name="validationContext">Describes the object being tested.</param>
+        <param name="validationAttributes">The list of <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s to validate against this instance.</param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>
+          <para>Asynchronously throws a <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> if the given value is not valid for the <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />s.</para>
+        </summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing the asynchronous validation operation.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">When <paramref name="validationContext" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">When <paramref name="value" /> is found to be invalid.</exception>
       </Docs>
     </Member>
   </Members>
