@@ -134,7 +134,19 @@
           <para>When validation is valid, the result is <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" />.</para>
           <para>When validation is invalid, the result is an instance of <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />.</para>
         </returns>
-        <remarks>&lt;para&gt;&lt;para&gt; The underlying &lt;see cref="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValidAsync(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Threading.CancellationToken)" /&gt; implementation must observe the supplied &lt;paramref name="cancellationToken" /&gt; and stop work promptly when cancellation is requested. The validation infrastructure awaits all started validation tasks before returning, so an implementation that ignores cancellation can delay failure and short-circuiting.&lt;/para&gt;&lt;para&gt;&lt;/para&gt;&lt;para&gt; Callers that need to bound validation time should pass a token configured to cancel after a timeout, such as one from a &lt;see cref="T:System.Threading.CancellationTokenSource" /&gt; configured with &lt;see cref="M:System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)" /&gt;.&lt;/para&gt;&lt;para&gt;&lt;/para&gt;</remarks>
+        <remarks>
+          <para>
+            The underlying <see cref="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValidAsync(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Threading.CancellationToken)" /> implementation
+            must observe the supplied <paramref name="cancellationToken" /> and stop work promptly when cancellation
+            is requested. The validation infrastructure awaits all started validation tasks before returning, so an
+            implementation that ignores cancellation can delay failure and short-circuiting.
+          </para>
+          <para>
+            Callers that need to bound validation time should pass a token configured to cancel after a timeout,
+            such as one from a <see cref="T:System.Threading.CancellationTokenSource" /> configured with
+            <see cref="M:System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)" />.
+          </para>
+        </remarks>
         <exception cref="T:System.InvalidOperationException">is thrown if the current attribute is malformed.</exception>
         <exception cref="T:System.ArgumentNullException">When <paramref name="validationContext" /> is <see langword="null" />.</exception>
       </Docs>
@@ -204,7 +216,27 @@
             <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" /> when validation is valid.</para>
           <para>An instance of <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> when validation is invalid.</para>
         </returns>
-        <remarks>&lt;para&gt;&lt;para&gt; Synchronous validation consumers invoke this method. Provide a synchronous implementation when it can evaluate the applicable rule. Return a validation error when the rule rejects the value.&lt;/para&gt;&lt;para&gt;If an applicable, required rule cannot be evaluated synchronously, throw &lt;see cref="T:System.InvalidOperationException" /&gt; with a message directing callers to an asynchronous validation entry point. An unsupported invocation does not establish that the value is invalid.&lt;/para&gt;&lt;para&gt;&lt;/para&gt;&lt;para&gt; Return &lt;see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" /&gt; without evaluating the rule only when the rule does not apply, or when the synchronous pass is explicitly advisory and a separate, required asynchronous validation step governs acceptance. Success does not indicate pending validation or arrange a later asynchronous invocation. Do not return success merely because a required asynchronous check cannot run.&lt;/para&gt;&lt;para&gt;&lt;/para&gt;&lt;para&gt; Do not implement this method by blocking on asynchronous work, such as by using &lt;c&gt;Task&lt;TResult&gt;.Result&lt;/c&gt;, &lt;c&gt;Task.Wait()&lt;/c&gt;, or &lt;c&gt;GetAwaiter().GetResult()&lt;/c&gt;.&lt;/para&gt;&lt;para&gt;Wrapping the operation in &lt;c&gt;Task.Run&lt;/c&gt; does not make a blocking wait appropriate.&lt;/para&gt;&lt;para&gt;&lt;/para&gt;</remarks>
+        <remarks>
+          <para>
+            Synchronous validation consumers invoke this method. Provide a synchronous implementation when
+            it can evaluate the applicable rule. Return a validation error when the rule rejects the value.
+            If an applicable, required rule cannot be evaluated synchronously, throw
+            <see cref="T:System.InvalidOperationException" /> with a message directing callers to an asynchronous
+            validation entry point. An unsupported invocation does not establish that the value is invalid.
+          </para>
+          <para>
+            Return <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" /> without evaluating the rule only when the rule
+            does not apply, or when the synchronous pass is explicitly advisory and a separate, required
+            asynchronous validation step governs acceptance. Success does not indicate pending validation
+            or arrange a later asynchronous invocation. Do not return success merely because a required
+            asynchronous check cannot run.
+          </para>
+          <para>
+            Do not implement this method by blocking on asynchronous work, such as by using
+            <c>Task&lt;TResult&gt;.Result</c>, <c>Task.Wait()</c>, or <c>GetAwaiter().GetResult()</c>.
+            Wrapping the operation in <c>Task.Run</c> does not make a blocking wait appropriate.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsValidAsync">
@@ -252,7 +284,19 @@
           <para>When validation is valid, the result is <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" />.</para>
           <para>When validation is invalid, the result is an instance of <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />.</para>
         </returns>
-        <remarks>&lt;para&gt;&lt;para&gt; This method must perform all applicable checks, including checks that can run synchronously.&lt;/para&gt;&lt;para&gt;The synchronous &lt;see cref="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)" /&gt; implementation is not automatically invoked before this method. Share common checks through a helper when needed.&lt;/para&gt;&lt;para&gt;&lt;/para&gt;&lt;para&gt; Implementations must observe the supplied &lt;paramref name="cancellationToken" /&gt; and stop work promptly when cancellation is requested. The validation infrastructure may cancel this token after a validation failure to stop sibling validators and awaits all started validation tasks before returning. An implementation that ignores cancellation can delay failure and short-circuiting.&lt;/para&gt;&lt;para&gt;&lt;/para&gt;</remarks>
+        <remarks>
+          <para>
+            This method must perform all applicable checks, including checks that can run synchronously.
+            The synchronous <see cref="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)" /> implementation is not
+            automatically invoked before this method. Share common checks through a helper when needed.
+          </para>
+          <para>
+            Implementations must observe the supplied <paramref name="cancellationToken" /> and stop work promptly
+            when cancellation is requested. The validation infrastructure may cancel this token after a validation
+            failure to stop sibling validators and awaits all started validation tasks before returning. An
+            implementation that ignores cancellation can delay failure and short-circuiting.
+          </para>
+        </remarks>
       </Docs>
     </Member>
   </Members>

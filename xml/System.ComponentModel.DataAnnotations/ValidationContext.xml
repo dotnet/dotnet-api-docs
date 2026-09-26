@@ -436,12 +436,21 @@
         <summary>Gets the dictionary of key/value pairs that is associated with this context.</summary>
         <value>The dictionary of the key/value pairs for this context.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- This property is never `null`, but the dictionary can be empty. Changes made to items in this dictionary are reflected in the original dictionary that is specified in the constructor.
-
- ]]></format>
+          <para>
+            This property is never <see langword="null" />, but the dictionary can be empty.
+            Changes made to entries in this dictionary do not affect the original dictionary
+            specified in the constructor.
+          </para>
+          <para>
+            <see cref="P:System.ComponentModel.DataAnnotations.ValidationContext.Items" />
+            is designed as a read-only input channel populated before validation begins.
+            The validation pipeline does not guarantee attribute execution order beyond
+            <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute" /> priority,
+            and no built-in attribute mutates this dictionary during validation.
+            Custom validators should treat it as read-only during validation execution.
+            Mutating it from within a validator is unsupported and can produce race
+            conditions under parallel asynchronous validation.
+          </para>
         </remarks>
       </Docs>
     </Member>
