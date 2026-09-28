@@ -15,7 +15,7 @@ namespace Microsoft.WCF.Documentation
       waitHandle = new AutoResetEvent(false);
     }
 
-    public void Run()
+    public void Start()
     {
       // Picks up configuration from the config file.
       SampleDuplexHelloClient wcfClient
@@ -56,10 +56,10 @@ namespace Microsoft.WCF.Documentation
       }
     }
 
-    public static void Main()
+    public static void Run()
     {
       Client client = new Client();
-      client.Run();
+      client.Start();
     }
 
     public void Reply(string response)

@@ -6,12 +6,12 @@ Imports System.Text
 Namespace Microsoft.WCF.Documentation
   Friend Class HostApplication
 
-	Shared Sub Main()
+	Public Shared Sub Run()
 	  Dim app As New HostApplication()
-	  app.Run()
+	  app.Start()
 	End Sub
 
-	Private Sub Run()
+	Private Sub Start()
 	  ' Create a ServiceHost for the service type and use the base address from configuration.
 	  Using serviceHost As New ServiceHost(GetType(SampleService))
 		Try

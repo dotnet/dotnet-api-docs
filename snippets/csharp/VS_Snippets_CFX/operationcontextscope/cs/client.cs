@@ -13,13 +13,13 @@ public class Client : ISampleServiceCallback
     this.wait = new ManualResetEvent(false);
   }
 
-  public static void Main()
+  public static void Run()
   {
     Client client = new Client();
-    client.Run();
+    client.Start();
   }
 
-  void Run()
+  void Start()
   {
     // Picks up configuration from the config file.
     // <snippet4>
