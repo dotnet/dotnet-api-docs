@@ -60,6 +60,8 @@ xslt.Load(reader, settings, resolver);
 static void XslCompiledTransform_Load4() {
 
 	string UserName = "username";
+	// In production code, do not hardcode credentials in source code.
+	// Instead, retrieve them from a secure store such as Azure Key Vault.
 	string SecurelyStoredPassword = "psswd";
 	string Domain= "domain";
 
@@ -118,6 +120,8 @@ xslt.Load("sort.xsl", XsltSettings.Default, new XmlUrlResolver());
 static void XslCompiledTransform_Load8() {
 
 	string UserName = "username";
+	// In production code, do not hardcode credentials in source code.
+	// Instead, retrieve them from a secure store such as Azure Key Vault.
 	string SecurelyStoredPassword = "psswd";
 	string Domain= "domain";
 
@@ -176,6 +180,8 @@ writer.Close();
 static void Cache() {
 
 	string UserName = "username";
+	// In production code, do not hardcode credentials in source code.
+	// Instead, retrieve them from a secure store such as Azure Key Vault.
 	string SecurelyStoredPassword = "psswd";
 	string Domain= "domain";
 
