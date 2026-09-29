@@ -15,7 +15,7 @@ Namespace Microsoft.WCF.Documentation
 
 
 	<System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "3.0.0.0"), System.Runtime.Serialization.DataContractAttribute()> _
-	Partial Public Class GreetingFault
+	Partial Public Class ClientGreetingFault
 		Inherits Object
 		Implements System.Runtime.Serialization.IExtensibleDataObject
 
@@ -48,7 +48,7 @@ End Namespace
 <System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0"), System.ServiceModel.ServiceContractAttribute(Namespace:="http://microsoft.wcf.documentation", ConfigurationName:="ISampleService")> _
 Public Interface ISampleService
 
-	<System.ServiceModel.OperationContractAttribute(Action:="http://microsoft.wcf.documentation/ISampleService/SampleMethod", ReplyAction:="http://microsoft.wcf.documentation/ISampleService/SampleMethodResponse"), System.ServiceModel.FaultContractAttribute(GetType(Microsoft.WCF.Documentation.GreetingFault), Action:="http://www.contoso.com/GreetingFault", Name:="GreetingFault", Namespace:="http://schemas.datacontract.org/2004/07/Microsoft.WCF.Documentation")> _
+	<System.ServiceModel.OperationContractAttribute(Action:="http://microsoft.wcf.documentation/ISampleService/SampleMethod", ReplyAction:="http://microsoft.wcf.documentation/ISampleService/SampleMethodResponse"), System.ServiceModel.FaultContractAttribute(GetType(Microsoft.WCF.Documentation.ClientGreetingFault), Action:="http://www.contoso.com/GreetingFault", Name:="GreetingFault", Namespace:="http://schemas.datacontract.org/2004/07/Microsoft.WCF.Documentation")> _
 	Function SampleMethod(ByVal msg As String) As String
 End Interface
 

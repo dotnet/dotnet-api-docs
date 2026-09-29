@@ -9,13 +9,13 @@ namespace Microsoft.WCF.Documentation
   class HostApplication
   {
 
-    static void Main()
+    public static void Run()
     {
       HostApplication app = new HostApplication();
-      app.Run();
+      app.Start();
     }
 
-    private void Run()
+    private void Start()
     {
       // Create a ServiceHost for the service type and use the base address from configuration.
       using (ServiceHost serviceHost = new ServiceHost(typeof(SampleService)))

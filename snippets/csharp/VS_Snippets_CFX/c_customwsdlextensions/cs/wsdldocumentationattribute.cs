@@ -20,8 +20,6 @@ namespace Microsoft.WCF.Documentation
       IContractBehavior,
           IWsdlExportExtension
     {
-        ContractDescription contractDescription;
-        OperationDescription operationDescription;
         string text;
         XmlElement customWsdlDocElement = null;
 
