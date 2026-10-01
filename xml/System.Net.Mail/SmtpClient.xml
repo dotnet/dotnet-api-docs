@@ -92,6 +92,9 @@ To specify host, port, and credentials values for all <xref:System.Net.Mail.Smtp
 
  The <xref:System.Net.Mail.SmtpClient> class implementation pools SMTP connections so that it can avoid the overhead of re-establishing a connection for every message to the same server. An application may re-use the same <xref:System.Net.Mail.SmtpClient> object to send many different emails to the same SMTP server and to many different SMTP servers. As a result, there is no way to determine when an application is finished using the <xref:System.Net.Mail.SmtpClient> object and it should be cleaned up.
 
+> [!IMPORTANT]
+> Modifying the <xref:System.Net.Mail.SmtpClient.ClientCertificates> collection doesn't invalidate an existing cached SMTP connection or trigger a new TLS handshake. Before using an <xref:System.Net.Mail.SmtpClient> across distinct security or identity contexts, you must dispose of it and create a new instance, or change a property that invalidates the cached connection, to force a new connection and handshake. Don't rely on changes to the certificate collection alone to switch the identity used by an existing connection.
+
  When an SMTP session is finished and the client wishes to terminate the connection, it must send a QUIT message to the server to indicate that it has no more messages to send. This allows the server to free up resources associated with the connection from the client and process the messages which were sent by the client.
 
  The <xref:System.Net.Mail.SmtpClient> class has no `Finalize` method, so an application must call <xref:System.Net.Mail.SmtpClient.Dispose*> to explicitly free up resources. The <xref:System.Net.Mail.SmtpClient.Dispose*> method iterates through all established connections to the SMTP server specified in the <xref:System.Net.Mail.SmtpClient.Host> property and sends a QUIT message followed by gracefully ending the TCP connection. The <xref:System.Net.Mail.SmtpClient.Dispose*> method also releases the unmanaged resources used by the <xref:System.Net.Sockets.Socket> and optionally disposes of the managed resources.
@@ -263,6 +266,8 @@ The following code example demonstrates sending an email message asynchronously.
 
 ## Remarks
  Client certificates are, by default, optional; however, the server configuration might require that the client present a valid certificate as part of the initial connection negotiation.
+
+ Modifying this collection doesn't invalidate an existing cached SMTP connection or trigger a new TLS handshake. If a connection is reused, it continues to use the security context established when it was created. To use a different security or identity context, dispose of the <xref:System.Net.Mail.SmtpClient> and create a new instance, or change a property that invalidates the cached connection, to force a new connection and handshake.
 
 > [!NOTE]
 > .NET caches SSL sessions as they are created and attempts to reuse a cached session for a new request, if possible. When attempting to reuse an SSL session, .NET uses the first element of <xref:System.Net.Mail.SmtpClient.ClientCertificates*> (if there is one), or tries to reuse an anonymous sessions if <xref:System.Net.Mail.SmtpClient.ClientCertificates*> is empty.
