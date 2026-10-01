@@ -1150,13 +1150,13 @@ This method obtains the extension of `path` by searching `path` for a period (.)
       <Docs>
         <param name="path">A read-only span that contains the path from which to obtain the file name and extension.</param>
         <summary>Returns the file name and extension of a file path that is represented by a read-only character span.</summary>
-        <returns>The characters after either the last directory separator character or the end of the root of <paramref name="path" />, whichever comes later. If <paramref name="path" /> ends with a directory separator character or consists only of a root, such as "/" or, on Windows, "C:" or the UNC root "\\\\server\\share", this method returns <see cref="P:System.ReadOnlySpan`1.Empty" />.</returns>
+        <returns>The characters that follow the last directory separator character or the root of <paramref name="path" />, whichever comes later.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 The returned read-only span contains the characters of `path` that follow either the last directory separator character or the end of the root of `path` (as returned by <xref:System.IO.Path.GetPathRoot*>), whichever comes later. If `path` ends with a directory separator character or consists only of a root, the method returns <xref:System.ReadOnlySpan`1.Empty?displayProperty=nameWithType>. If `path` contains neither a directory separator character nor a root, the method returns `path`.
 
-On Windows, the root can be a drive or a UNC share. For example, in `C:file.txt` the root is `C:`, so the file name is `file.txt`. A UNC root such as `\\server\share` contains directory separators, but they're part of the root and don't mark the start of the file name. So the file name in `\\server\share\file.txt` is `file.txt`, and the file name in `\\server\share` is empty, because the whole path is the root.
+On Windows, the root can be, for example, a drive or a UNC share. For other root formats, such as DOS device paths, see [File path formats on Windows systems](/dotnet/standard/io/file-path-formats). In `C:file.txt`, the root is `C:`, so the file name is `file.txt`. A UNC root such as `\\server\share` contains directory separators, but they're part of the root and don't mark the start of the file name. So the file name in `\\server\share\file.txt` is `file.txt`, and the file name in `\\server\share` is empty, because the whole path is the root.
 
          ]]></format>
         </remarks>
@@ -1214,7 +1214,7 @@ On Windows, the root can be a drive or a UNC share. For example, in `C:file.txt`
       <Docs>
         <param name="path">The path string from which to obtain the file name and extension.</param>
         <summary>Returns the file name and extension of the specified path string.</summary>
-        <returns>The characters after either the last directory separator character or the end of the root of <paramref name="path" />, whichever comes later. If <paramref name="path" /> ends with a directory separator character or consists only of a root, such as "/" or, on Windows, "C:" or the UNC root "\\\\server\\share", this method returns <see cref="F:System.String.Empty" />. If <paramref name="path" /> is <see langword="null" />, this method returns <see langword="null" />.</returns>
+        <returns>The characters that follow the last directory separator character or the root of <paramref name="path" />, whichever comes later, or <see langword="null" /> if <paramref name="path" /> is <see langword="null" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -1222,7 +1222,9 @@ On Windows, the root can be a drive or a UNC share. For example, in `C:file.txt`
 
 The returned value is `null` if the file path is `null`.
 
-The separator characters used to determine the start of the file name are <xref:System.IO.Path.DirectorySeparatorChar> and <xref:System.IO.Path.AltDirectorySeparatorChar>. On Windows, the end of the root of `path` (as returned by <xref:System.IO.Path.GetPathRoot*>) also marks the start of the file name. For example, `Path.GetFileName("C:file.txt")` returns `file.txt`. A UNC root such as `\\server\share` contains directory separators, but they're part of the root and don't mark the start of the file name: `Path.GetFileName(@"\\server\share\file.txt")` returns `file.txt`, and `Path.GetFileName(@"\\server\share")` returns an empty string.
+The returned string contains the characters of `path` that follow either the last <xref:System.IO.Path.DirectorySeparatorChar> or <xref:System.IO.Path.AltDirectorySeparatorChar> character or the end of the root of `path` (as returned by <xref:System.IO.Path.GetPathRoot*>), whichever comes later. If `path` ends with a directory separator character or consists only of a root, the method returns <xref:System.String.Empty?displayProperty=nameWithType>. If `path` contains neither a directory separator character nor a root, the method returns `path`.
+
+On Windows, the root can be, for example, a drive or a UNC share. For other root formats, such as DOS device paths, see [File path formats on Windows systems](/dotnet/standard/io/file-path-formats). In `C:file.txt`, the root is `C:`, so the file name is `file.txt`. A UNC root such as `\\server\share` contains directory separators, but they're part of the root and don't mark the start of the file name. So the file name in `\\server\share\file.txt` is `file.txt`, and the file name in `\\server\share` is empty, because the whole path is the root.
 
 Because *\\* is a legal file name on Unix, `GetFileName` running under Unix-based platforms cannot correctly return the file name from a Windows-based path like *C:\\mydir\\myfile.ext*, but `GetFileName` running under Windows-based platforms can correctly return the file name from a Unix-based path like */tmp/myfile.ext*, so the behavior of the `GetFileName` method is not strictly the same on Unix-based and Windows-based platforms.
 
@@ -2132,11 +2134,11 @@ C:\Users\UserName\AppData\Local\Temp\
         <param name="path">The path to search for an extension.</param>
         <summary>Determines whether the path represented by the specified character span includes a file name extension.</summary>
         <returns>
-          <see langword="true" /> if the characters that follow the last directory separator character in the path include a period (".") followed by one or more characters; otherwise, <see langword="false" />.</returns>
+          <see langword="true" /> if the characters that follow the last directory separator character in the path include a period ("."), and the last such period is followed by one or more characters; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-A trailing period in `path` is not considered an extension.
+A trailing period in `path` is not considered an extension, even if an earlier period is followed by characters. For example, `file.tar.` has no extension.
 
          ]]></format>
         </remarks>
@@ -2196,12 +2198,12 @@ A trailing period in `path` is not considered an extension.
         <param name="path">The path to search for an extension.</param>
         <summary>Determines whether a path includes a file name extension.</summary>
         <returns>
-          <see langword="true" /> if the characters that follow the last <see cref="F:System.IO.Path.DirectorySeparatorChar" /> or <see cref="F:System.IO.Path.AltDirectorySeparatorChar" /> character in the path include a period (.) followed by one or more characters; otherwise, <see langword="false" />.</returns>
+          <see langword="true" /> if the characters that follow the last <see cref="F:System.IO.Path.DirectorySeparatorChar" /> or <see cref="F:System.IO.Path.AltDirectorySeparatorChar" /> character in the path include a period (.), and the last such period is followed by one or more characters; otherwise, <see langword="false" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Starting from the end of `path`, this method searches for a period (.) followed by at least one character. If this pattern is found before a <xref:System.IO.Path.DirectorySeparatorChar> or <xref:System.IO.Path.AltDirectorySeparatorChar> character is encountered, this method returns `true`.
+ Starting from the end of `path`, this method searches for a period (.), and stops at the first period it finds or at a <xref:System.IO.Path.DirectorySeparatorChar> or <xref:System.IO.Path.AltDirectorySeparatorChar> character. It returns `true` if it finds a period and that period isn't the last character of `path`. For example, `Path.HasExtension("file.tar.")` returns `false`.
 
  For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).
 
