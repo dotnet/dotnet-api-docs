@@ -614,7 +614,7 @@ The following example shows how to iterate through the contents of a zip archive
       </Parameters>
       <Docs>
         <param name="source">The zip archive to extract files from.</param>
-        <param name="destinationDirectoryName">The path to the directory to place the extracted files in. You can specify either a relative or an absolute path. A relative path is interpreted as relative to the current working directory.</param>
+        <param name="destinationDirectoryName">The path to the directory to place the extracted files in. You can specify either a relative or an absolute path. A relative path is interpreted as relative to the current working directory. The directory can already exist. Missing directories are created as needed when extracting entries.</param>
         <summary>Extracts all the files in the zip archive to a directory on the file system.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -623,7 +623,9 @@ The following example shows how to iterate through the contents of a zip archive
 
 [!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
 
-This method creates the directory specified by `destinationDirectoryName`. The method also creates subdirectories that reflect the hierarchy in the zip archive. If an error occurs during extraction, the archive remains partially extracted. Each extracted file has the same relative path to the directory specified by `destinationDirectoryName` as its source entry has to the root of the archive.
+The directory specified by `destinationDirectoryName` can already exist. This method creates the destination directory, its missing parent directories, and subdirectories as needed when extracting entries. If the archive is empty, this method doesn't create the destination directory.
+
+If an error occurs during extraction, the archive remains partially extracted. Each extracted file has the same relative path to the directory specified by `destinationDirectoryName` as its source entry has to the root of the archive.
 
 ## Examples
  The following example shows how to create a new entry in a zip archive from an existing file, and extract the archive to a new directory.
@@ -687,7 +689,7 @@ This method creates the directory specified by `destinationDirectoryName`. The m
       </Parameters>
       <Docs>
         <param name="source">The <see cref="T:System.IO.Compression.ZipArchive" /> to extract.</param>
-        <param name="destinationDirectoryName">The path to the destination directory on the file system. The path can be relative or absolute. A relative path is interpreted as relative to the current working directory.</param>
+        <param name="destinationDirectoryName">The path to the destination directory on the file system. The path can be relative or absolute. A relative path is interpreted as relative to the current working directory. The directory can already exist. Missing directories are created as needed when extracting entries.</param>
         <param name="overwriteFiles">
           <see langword="true" /> to overwrite existing files; <see langword="false" /> otherwise.</param>
         <summary>Extracts all of the files in the archive to a directory on the file system. </summary>
@@ -697,7 +699,7 @@ This method creates the directory specified by `destinationDirectoryName`. The m
 
 [!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
 
- The specified directory may already exist. This method creates the specified directory and all subdirectories if necessary.
+The directory specified by `destinationDirectoryName` can already exist. This method creates the destination directory, its missing parent directories, and subdirectories as needed when extracting entries. If the archive is empty, this method doesn't create the destination directory.
 
  If there is an error while extracting the archive, the archive will remain partially extracted.
 
@@ -758,7 +760,7 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
       </Parameters>
       <Docs>
         <param name="source">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
+        <param name="destinationDirectoryName">The path to the directory in which to place the extracted files. The directory can already exist. Missing directories are created as needed when extracting entries.</param>
         <param name="options">To be added.</param>
         <summary>To be added.</summary>
         <remarks>
@@ -766,7 +768,9 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
 
 [!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
 
-The directory specified by `destinationDirectoryName` can already exist. This method creates the destination directory and subdirectories as needed when extracting entries. Each extracted file has the same relative path to `destinationDirectoryName` as its source entry has to the root of the archive.
+The directory specified by `destinationDirectoryName` can already exist. This method creates the destination directory, its missing parent directories, and subdirectories as needed when extracting entries. If the archive is empty, this method doesn't create the destination directory.
+
+Each extracted file has the same relative path to `destinationDirectoryName` as its source entry has to the root of the archive.
 
 The `destinationDirectoryName` parameter accepts relative and absolute paths. A relative path is interpreted as relative to the current working directory.
 
@@ -814,7 +818,7 @@ Symbolic links in the archive aren't recreated as symbolic links. If `destinatio
       </Parameters>
       <Docs>
         <param name="source">The zip archive to extract files from.</param>
-        <param name="destinationDirectoryName">The path to the directory on the file system.</param>
+        <param name="destinationDirectoryName">The path to the directory on the file system. The directory can already exist. Missing directories are created as needed when extracting entries.</param>
         <param name="cancellationToken">The cancellation token to monitor for cancellation requests.</param>
         <summary>
           <para>Asynchronously extracts all of the files in the archive to a directory on the file system. The specified directory can already exist.</para>
@@ -825,9 +829,9 @@ Symbolic links in the archive aren't recreated as symbolic links. If `destinatio
 
 [!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
 
-The directory specified must not exist. The path is permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory.
+The directory specified by `destinationDirectoryName` can already exist. This method creates the destination directory, its missing parent directories, and subdirectories as needed when extracting entries. If the archive is empty, this method doesn't create the destination directory.
 
-This method creates all subdirectories and the specified directory if necessary.
+The path is permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory.
 
 If there is an error while extracting the archive, the archive remains partially extracted.
 
@@ -889,25 +893,27 @@ Each entry is extracted such that the extracted file has the same relative path 
       </Parameters>
       <Docs>
         <param name="source">The zip archive to extract files from.</param>
-        <param name="destinationDirectoryName">The path to the directory on the file system.</param>
+        <param name="destinationDirectoryName">The path to the directory on the file system. The directory can already exist. Missing directories are created as needed when extracting entries.</param>
         <param name="overwriteFiles">
           <see langword="true" /> to overwrite files; <see langword="false" /> otherwise.</param>
         <param name="cancellationToken">The cancellation token to monitor for cancellation requests.</param>
-        <summary>Extracts all of the files in the archive to a directory on the file system. The specified directory may already exist.</summary>
+        <summary>Extracts all of the files in the archive to a directory on the file system. The specified directory can already exist.</summary>
         <returns>To be added.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 [!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
 
-The directory specified must not exist. The path is permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory.
+The directory specified by `destinationDirectoryName` can already exist. This method creates the destination directory, its missing parent directories, and subdirectories as needed when extracting entries. If the archive is empty, this method doesn't create the destination directory.
+
+The path is permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
           <para>
             <paramref name="destinationDirectoryName" /> is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
-          <para>This method will create all subdirectories and the specified directory if necessary.</para>
+          <para>This method creates missing directories as needed when extracting entries.</para>
           <para>If there is an error while extracting the archive, the archive will remain partially extracted.</para>
           <para>Each entry is extracted such that the extracted file has the same relative path to <paramref name="destinationDirectoryName" /> as the entry has to the root of the archive. If a file to be archived has an invalid last modified time, the first datetime representable in the Zip timestamp format (midnight on January 1, 1980) will be used.</para>
         </exception>
@@ -960,7 +966,7 @@ The directory specified must not exist. The path is permitted to specify relativ
       </Parameters>
       <Docs>
         <param name="source">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
+        <param name="destinationDirectoryName">The path to the directory in which to place the extracted files. The directory can already exist. Missing directories are created as needed when extracting entries.</param>
         <param name="options">To be added.</param>
         <param name="cancellationToken">To be added.</param>
         <summary>To be added.</summary>
@@ -970,7 +976,9 @@ The directory specified must not exist. The path is permitted to specify relativ
 
 [!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
 
-The directory specified by `destinationDirectoryName` can already exist. This method creates the destination directory and subdirectories as needed when extracting entries. Each extracted file has the same relative path to `destinationDirectoryName` as its source entry has to the root of the archive.
+The directory specified by `destinationDirectoryName` can already exist. This method creates the destination directory, its missing parent directories, and subdirectories as needed when extracting entries. If the archive is empty, this method doesn't create the destination directory.
+
+Each extracted file has the same relative path to `destinationDirectoryName` as its source entry has to the root of the archive.
 
 The `destinationDirectoryName` parameter accepts relative and absolute paths. A relative path is interpreted as relative to the current working directory.
 
