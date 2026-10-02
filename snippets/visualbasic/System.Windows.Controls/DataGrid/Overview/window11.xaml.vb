@@ -1,4 +1,5 @@
-﻿'<SnippetUsing>
+﻿'<SnippetAll>
+'<SnippetUsing>
 'Additional using statements
 Imports System.Data
 Imports System.Collections.ObjectModel
@@ -110,3 +111,4 @@ Public Class EmailConverter
     End Function
 End Class
 '</SnippetHyperlink3>
+'</SnippetAll>
