@@ -6,6 +6,8 @@ Imports System.Collections.ObjectModel
 Imports System.Diagnostics
 '</SnippetUsing>
 
+Namespace DataGrid_CustomColumns_VB
+
 '<SnippetTop>
 Class Window1
     '</SnippetTop>
@@ -91,7 +93,7 @@ End Enum
 '<SnippetHyperlink3>
 'Converts the mailto uri to a string with just the customer alias
 Public Class EmailConverter
-    Implements IValueConverter
+    Implements System.Windows.Data.IValueConverter
 
     Public Function Convert(value As Object, targetType As System.Type, parameter As Object, culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.Convert
         If value IsNot Nothing Then
@@ -112,3 +114,5 @@ Public Class EmailConverter
 End Class
 '</SnippetHyperlink3>
 '</SnippetAll>
+
+End Namespace
