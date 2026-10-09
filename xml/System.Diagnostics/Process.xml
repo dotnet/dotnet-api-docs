@@ -4134,12 +4134,16 @@ A redirected stream has already been used for synchronous or asynchronous readin
         <param name="startInfo">The <see cref="T:System.Diagnostics.ProcessStartInfo" /> that contains the information used to start the process.</param>
         <param name="timeout">The maximum amount of time to wait for the process to exit. When <see langword="null" />, waits indefinitely. If the process does not exit within the specified timeout, it is killed.</param>
         <summary>Starts the process described by <paramref name="startInfo" />, waits for it to exit, and returns its exit status.</summary>
-        <returns>The exit status of the process.</returns>
+        <returns>The exit status of the process. If the process is killed due to timeout, <see cref="P:System.Diagnostics.ProcessExitStatus.Canceled" /> is <see langword="true" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="startInfo" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">
-          <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> is set to <see langword="true" />.</exception>
+          <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> is set to <see langword="true" />.
+
+-or-
+
+<see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardInput" />, <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput" />, or <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardError" /> is set to <see langword="true" />. Use the corresponding standard handle properties to supply handles instead.</exception>
       </Docs>
     </Member>
     <Member MemberName="Run">
@@ -4187,12 +4191,12 @@ A redirected stream has already been used for synchronous or asynchronous readin
         <Parameter Name="timeout" Type="System.Nullable&lt;System.TimeSpan&gt;" Index="3" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="fileName">The name of the application or document to start.</param>
-        <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty list to start the process without additional arguments.</param>
+        <param name="fileName">The name of the executable to start.</param>
+        <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty sequence to start the process without additional arguments.</param>
         <param name="silent">When <see langword="true" />, redirects standard input, output, and error to the null device, ensuring the process produces no visible console output. When <see langword="false" />, the process inherits standard handles from the parent.</param>
         <param name="timeout">The maximum amount of time to wait for the process to exit. When <see langword="null" />, waits indefinitely. If the process does not exit within the specified timeout, it is killed.</param>
         <summary>Starts a process with the specified file name and optional arguments, waits for it to exit, and returns its exit status.</summary>
-        <returns>The exit status of the process.</returns>
+        <returns>The exit status of the process. If the process is killed due to timeout, <see cref="P:System.Diagnostics.ProcessExitStatus.Canceled" /> is <see langword="true" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="fileName" /> is <see langword="null" />.</exception>
@@ -4240,7 +4244,11 @@ A redirected stream has already been used for synchronous or asynchronous readin
         <param name="timeout">The maximum amount of time to wait for the process to exit. When <see langword="null" />, waits indefinitely. If the process does not exit within the specified timeout, it is killed.</param>
         <summary>Starts the process described by <paramref name="startInfo" />, captures its standard output and error, waits for it to exit, and returns the captured text and exit status.</summary>
         <returns>The captured text output and exit status of the process.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+If the timeout expires while reading the redirected streams, the method attempts to kill the process and throws <xref:System.TimeoutException>. If the streams have been fully read but the process doesn't exit within the remaining timeout, the process is killed and the returned <xref:System.Diagnostics.ProcessTextOutput.ExitStatus> has <xref:System.Diagnostics.ProcessExitStatus.Canceled> set to `true`.
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="startInfo" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">
@@ -4249,6 +4257,7 @@ A redirected stream has already been used for synchronous or asynchronous readin
 -or-
 
 <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput" /> or <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardError" /> is not set to <see langword="true" />.</exception>
+        <exception cref="T:System.TimeoutException">The redirected streams were not fully read within the specified <paramref name="timeout" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="RunAndCaptureText">
@@ -4295,16 +4304,21 @@ A redirected stream has already been used for synchronous or asynchronous readin
         <Parameter Name="timeout" Type="System.Nullable&lt;System.TimeSpan&gt;" Index="2" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="fileName">The name of the application or document to start.</param>
-        <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty list to start the process without additional arguments.</param>
+        <param name="fileName">The name of the executable to start.</param>
+        <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty sequence to start the process without additional arguments.</param>
         <param name="timeout">The maximum amount of time to wait for the process to exit. When <see langword="null" />, waits indefinitely. If the process does not exit within the specified timeout, it is killed.</param>
         <summary>Starts a process with the specified file name and optional arguments, captures its standard output and error, waits for it to exit, and returns the captured text and exit status.</summary>
         <returns>The captured text output and exit status of the process.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+If the timeout expires while reading the redirected streams, the method attempts to kill the process and throws <xref:System.TimeoutException>. If the streams have been fully read but the process doesn't exit within the remaining timeout, the process is killed and the returned <xref:System.Diagnostics.ProcessTextOutput.ExitStatus> has <xref:System.Diagnostics.ProcessExitStatus.Canceled> set to `true`.
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="fileName" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
           <paramref name="fileName" /> is empty.</exception>
+        <exception cref="T:System.TimeoutException">The redirected streams were not fully read within the specified <paramref name="timeout" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="RunAndCaptureTextAsync">
@@ -4347,7 +4361,11 @@ A redirected stream has already been used for synchronous or asynchronous readin
         <param name="cancellationToken">A token to cancel the asynchronous operation. If the token is canceled, the process is killed.</param>
         <summary>Asynchronously starts the process described by <paramref name="startInfo" />, captures its standard output and error, waits for it to exit, and returns the captured text and exit status.</summary>
         <returns>A task that represents the asynchronous operation. The value of the task contains the captured text output and exit status of the process.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+If cancellation occurs while reading the redirected streams, the method attempts to kill the process and throws <xref:System.OperationCanceledException>. If cancellation occurs after the streams have been fully read but while waiting for the process to exit, the process is killed and the returned <xref:System.Diagnostics.ProcessTextOutput.ExitStatus> has <xref:System.Diagnostics.ProcessExitStatus.Canceled> set to `true`.
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="startInfo" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">
@@ -4356,6 +4374,7 @@ A redirected stream has already been used for synchronous or asynchronous readin
 -or-
 
 <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput" /> or <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardError" /> is not set to <see langword="true" />.</exception>
+        <exception cref="T:System.OperationCanceledException">The <paramref name="cancellationToken" /> was canceled while reading the redirected streams.</exception>
       </Docs>
     </Member>
     <Member MemberName="RunAndCaptureTextAsync">
@@ -4402,16 +4421,21 @@ A redirected stream has already been used for synchronous or asynchronous readin
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="fileName">The name of the application or document to start.</param>
-        <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty list to start the process without additional arguments.</param>
+        <param name="fileName">The name of the executable to start.</param>
+        <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty sequence to start the process without additional arguments.</param>
         <param name="cancellationToken">A token to cancel the asynchronous operation. If the token is canceled, the process is killed.</param>
         <summary>Asynchronously starts a process with the specified file name and optional arguments, captures its standard output and error, waits for it to exit, and returns the captured text and exit status.</summary>
         <returns>A task that represents the asynchronous operation. The value of the task contains the captured text output and exit status of the process.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+If cancellation occurs while reading the redirected streams, the method attempts to kill the process and throws <xref:System.OperationCanceledException>. If cancellation occurs after the streams have been fully read but while waiting for the process to exit, the process is killed and the returned <xref:System.Diagnostics.ProcessTextOutput.ExitStatus> has <xref:System.Diagnostics.ProcessExitStatus.Canceled> set to `true`.
+          ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="fileName" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
           <paramref name="fileName" /> is empty.</exception>
+        <exception cref="T:System.OperationCanceledException">The <paramref name="cancellationToken" /> was canceled while reading the redirected streams.</exception>
       </Docs>
     </Member>
     <Member MemberName="RunAsync">
@@ -4453,12 +4477,16 @@ A redirected stream has already been used for synchronous or asynchronous readin
         <param name="startInfo">The <see cref="T:System.Diagnostics.ProcessStartInfo" /> that contains the information used to start the process.</param>
         <param name="cancellationToken">A token to cancel the asynchronous operation. If the token is canceled, the process is killed.</param>
         <summary>Asynchronously starts the process described by <paramref name="startInfo" />, waits for it to exit, and returns its exit status.</summary>
-        <returns>A task that represents the asynchronous operation. The value of the task contains the exit status of the process.</returns>
+        <returns>A task that represents the asynchronous operation. The value of the task contains the exit status of the process. If the process is killed due to cancellation, <see cref="P:System.Diagnostics.ProcessExitStatus.Canceled" /> is <see langword="true" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="startInfo" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">
-          <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> is set to <see langword="true" />.</exception>
+          <see cref="P:System.Diagnostics.ProcessStartInfo.UseShellExecute" /> is set to <see langword="true" />.
+
+-or-
+
+<see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardInput" />, <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput" />, or <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardError" /> is set to <see langword="true" />. Use the corresponding standard handle properties to supply handles instead.</exception>
       </Docs>
     </Member>
     <Member MemberName="RunAsync">
@@ -4506,12 +4534,12 @@ A redirected stream has already been used for synchronous or asynchronous readin
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="fileName">The name of the application or document to start.</param>
-        <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty list to start the process without additional arguments.</param>
+        <param name="fileName">The name of the executable to start.</param>
+        <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty sequence to start the process without additional arguments.</param>
         <param name="silent">When <see langword="true" />, redirects standard input, output, and error to the null device, ensuring the process produces no visible console output. When <see langword="false" />, the process inherits standard handles from the parent.</param>
         <param name="cancellationToken">A token to cancel the asynchronous operation. If the token is canceled, the process is killed.</param>
         <summary>Asynchronously starts a process with the specified file name and optional arguments, waits for it to exit, and returns its exit status.</summary>
-        <returns>A task that represents the asynchronous operation. The value of the task contains the exit status of the process.</returns>
+        <returns>A task that represents the asynchronous operation. The value of the task contains the exit status of the process. If the process is killed due to cancellation, <see cref="P:System.Diagnostics.ProcessExitStatus.Canceled" /> is <see langword="true" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="fileName" /> is <see langword="null" />.</exception>
@@ -5706,8 +5734,8 @@ This method is designed for fire-and-forget scenarios where the caller wants to 
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="fileName">The name of the application or document to start.</param>
-        <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty list to start the process without additional arguments.</param>
+        <param name="fileName">The name of the executable to start.</param>
+        <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty sequence to start the process without additional arguments.</param>
         <summary>Starts a process with the specified file name and optional arguments, releases all associated resources, and returns the process ID.</summary>
         <returns>The process ID of the started process.</returns>
         <remarks>
@@ -5719,6 +5747,8 @@ Standard handles are redirected to the null file by default.
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="fileName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="fileName" /> is empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="StartInfo">
