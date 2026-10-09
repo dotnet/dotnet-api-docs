@@ -15,8 +15,34 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides a way for an object to be validated asynchronously.</summary>
+    <remarks>
+      <para>
+        When an object implements <see cref="T:System.ComponentModel.DataAnnotations.IAsyncValidatableObject" />, the asynchronous
+        <see cref="T:System.ComponentModel.DataAnnotations.Validator" /> APIs (such as
+        <see cref="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObjectAsync(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Threading.CancellationToken)" />)
+        invoke only <see cref="M:System.ComponentModel.DataAnnotations.IAsyncValidatableObject.ValidateAsync(System.ComponentModel.DataAnnotations.ValidationContext,System.Threading.CancellationToken)" />; <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.ComponentModel.DataAnnotations.ValidationContext)" />
+        is not called on the async path. The synchronous <see cref="T:System.ComponentModel.DataAnnotations.Validator" />
+        APIs continue to invoke <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.ComponentModel.DataAnnotations.ValidationContext)" />.
+      </para>
+      <para>
+        Provide a synchronous implementation of <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.ComponentModel.DataAnnotations.ValidationContext)" /> when it can
+        evaluate the applicable rules, returning validation errors for rules that reject the object.
+        If an applicable, required rule cannot be evaluated synchronously, throw
+        <see cref="T:System.InvalidOperationException" /> with a message directing callers to an asynchronous
+        validation entry point.
+      </para>
+      <para>
+        Returning no validation errors without evaluating a rule is appropriate only when the rule
+        does not apply, or when the synchronous pass is explicitly advisory and a separate, required
+        asynchronous validation step governs acceptance. An empty result sequence does not indicate
+        pending validation or arrange a later asynchronous invocation.
+      </para>
+      <para>
+        Do not implement <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.ComponentModel.DataAnnotations.ValidationContext)" /> by blocking on asynchronous work
+        or asynchronously enumerated results.
+      </para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="ValidateAsync">
@@ -38,11 +64,20 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="validationContext">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="validationContext">
+          <para>A <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> instance that provides context about the validation operation, such as the object and member being validated.</para>
+        </param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>
+          <para>Determines whether the specified object is valid asynchronously, yielding validation results as each check completes.</para>
+        </summary>
+        <returns>
+          <para>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> that yields <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> instances as each validation check completes.</para>
+        </returns>
+        <remarks>
+          <para>This method must perform all applicable checks, including checks that can run synchronously.</para>
+          <para>The asynchronous <see cref="T:System.ComponentModel.DataAnnotations.Validator" /> APIs do not automatically invoke <see cref="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.ComponentModel.DataAnnotations.ValidationContext)" /> first. Share common checks through a helper when needed.</para>
+        </remarks>
       </Docs>
     </Member>
   </Members>
