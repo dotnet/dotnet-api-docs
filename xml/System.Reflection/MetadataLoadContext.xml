@@ -43,7 +43,7 @@
 
 ## Remarks
 
-A `MetadataLoadContext` serves as a dictionary that binds assembly names to <xref:System.Reflection.Assembly> instances that were previously loaded into the context or need to be loaded.
+A `MetadataLoadContext` maintains bindings between assembly names and the <xref:System.Reflection.Assembly> instances returned by its <xref:System.Reflection.MetadataAssemblyResolver>. Explicitly loading an assembly into the context does not establish such a binding.
 
 Assemblies are treated strictly as metadata. There are no restrictions on loading assemblies based on target platform, CPU architecture, or pointer size. There are no restrictions on the assembly designated as the core assembly (**mscorlib**).
 
@@ -240,7 +240,7 @@ Some APIs may return fixed or previously cached data. Accessing objects *during*
           <format type="text/markdown"><![CDATA[
 ## Remarks
 
-Note that the behavior of this method matches the behavior of the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName*?displayProperty=nameWithType> resolve event, but does not match the behavior of <xref:System.Reflection.Assembly.ReflectionOnlyLoad*?displayProperty=nameWithType>. (The latter gives up without raising its resolve event.)
+If the resolver returns `null`, that failure is remembered: later requests for the same name throw <xref:System.IO.FileNotFoundException> without calling the resolver again.
           ]]></format>
         </remarks>
         <exception cref="T:System.IO.FileNotFoundException">The resolver returns <see langword="null" />.</exception>
@@ -272,7 +272,7 @@ Note that the behavior of this method matches the behavior of the <xref:System.R
           <format type="text/markdown"><![CDATA[
 ## Remarks
 
-Note that the behavior of this method matches the behavior of the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName*?displayProperty=nameWithType> resolve event but does not match the behavior of <xref:System.Reflection.Assembly.ReflectionOnlyLoad*?displayProperty=nameWithType>. (The latter gives up without raising its resolve event.)
+If the resolver returns `null`, that failure is remembered: later requests for the same name throw <xref:System.IO.FileNotFoundException> without calling the resolver again.
 
 ]]></format>
         </remarks>
@@ -299,9 +299,17 @@ Note that the behavior of this method matches the behavior of the <xref:System.R
       </Parameters>
       <Docs>
         <param name="assemblyPath">A <see cref="T:System.String" /> representing the path to the assembly.</param>
-        <summary>Loads an assembly from a specific path on the disk and binds its assembly name to it in the <see cref="T:System.Reflection.MetadataLoadContext" />. If a prior assembly with the same name was already loaded into the <see cref="T:System.Reflection.MetadataLoadContext" />, the prior assembly will be returned.</summary>
+        <summary>Loads an assembly from a specific path on the disk into the <see cref="T:System.Reflection.MetadataLoadContext" />. If a prior assembly with the same name was already loaded into the <see cref="T:System.Reflection.MetadataLoadContext" />, the prior assembly is returned.</summary>
         <returns>An <see cref="T:System.Reflection.Assembly" /> instance.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Loading an assembly does not automatically make it available for resolution by name. References to the assembly and calls to <xref:System.Reflection.MetadataLoadContext.LoadFromAssemblyName*> are resolved through the <xref:System.Reflection.MetadataAssemblyResolver>, which may return the loaded assembly.
+
+]]></format>
+        </remarks>
         <exception cref="T:System.IO.FileLoadException">The two assemblies do not have the same Mvid.</exception>
       </Docs>
     </Member>
@@ -325,9 +333,17 @@ Note that the behavior of this method matches the behavior of the <xref:System.R
       </Parameters>
       <Docs>
         <param name="assembly">A byte array holding an assembly.</param>
-        <summary>Loads an assembly from a byte array and binds its assembly name to it in the <see cref="T:System.Reflection.MetadataLoadContext" />. If a prior assembly with the same name was already loaded into the <see cref="T:System.Reflection.MetadataLoadContext" />, the prior assembly will be returned.</summary>
+        <summary>Loads an assembly from a byte array into the <see cref="T:System.Reflection.MetadataLoadContext" />. If a prior assembly with the same name was already loaded into the <see cref="T:System.Reflection.MetadataLoadContext" />, the prior assembly is returned.</summary>
         <returns>An <see cref="T:System.Reflection.Assembly" /> instance.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Loading an assembly does not automatically make it available for resolution by name. References to the assembly and calls to <xref:System.Reflection.MetadataLoadContext.LoadFromAssemblyName*> are resolved through the <xref:System.Reflection.MetadataAssemblyResolver>, which may return the loaded assembly.
+
+]]></format>
+        </remarks>
         <exception cref="T:System.IO.FileLoadException">The two assemblies do not have the same Mvid.</exception>
       </Docs>
     </Member>
@@ -351,12 +367,14 @@ Note that the behavior of this method matches the behavior of the <xref:System.R
       </Parameters>
       <Docs>
         <param name="assembly">A <see cref="T:System.IO.Stream" /> holding an assembly.</param>
-        <summary>Loads an assembly from a stream and binds its assembly name to it in the <see cref="T:System.Reflection.MetadataLoadContext" />. If a prior assembly with the same name was already loaded into the <see cref="T:System.Reflection.MetadataLoadContext" />, the prior assembly will be returned.</summary>
+        <summary>Loads an assembly from a stream into the <see cref="T:System.Reflection.MetadataLoadContext" />. If a prior assembly with the same name was already loaded into the <see cref="T:System.Reflection.MetadataLoadContext" />, the prior assembly is returned.</summary>
         <returns>The loaded assembly.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
+Loading an assembly does not automatically make it available for resolution by name. References to the assembly and calls to <xref:System.Reflection.MetadataLoadContext.LoadFromAssemblyName*> are resolved through the <xref:System.Reflection.MetadataAssemblyResolver>, which may return the loaded assembly.
 
 > [!IMPORTANT]
 > The <xref:System.Reflection.MetadataLoadContext> takes ownership of the <xref:System.IO.Stream> passed into this method. The original owner must not mutate its position, dispose the <xref:System.IO.Stream>, or assume that its position will stay unchanged.
