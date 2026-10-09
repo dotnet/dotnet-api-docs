@@ -1,14 +1,12 @@
-﻿using System;
-using System.CodeDom;
-using System.CodeDom.Compiler;
+﻿using System.CodeDom;
 
 namespace CodeCatchClauseCollectionExample
 {
-	public class Class1
-	{
-		public Class1()
-		{
-		}
+    public class Class1
+    {
+        public Class1()
+        {
+        }
 
         // CodeCatchClauseCollection
         public void CodeCatchClauseCollectionExample()
@@ -21,19 +19,19 @@ namespace CodeCatchClauseCollectionExample
 
             //<Snippet3>
             // Adds a CodeCatchClause to the collection.
-            collection.Add( new CodeCatchClause("e") );
+            collection.Add(new CodeCatchClause("e"));
             //</Snippet3>
 
             //<Snippet4>
             // Adds an array of CodeCatchClause objects to the collection.
-            CodeCatchClause[] clauses = { new CodeCatchClause(), new CodeCatchClause() };
-            collection.AddRange( clauses );
+            CodeCatchClause[] clauses = [new CodeCatchClause(), new CodeCatchClause()];
+            collection.AddRange(clauses);
 
             // Adds a collection of CodeCatchClause objects to the collection.
             CodeCatchClauseCollection clausesCollection = new CodeCatchClauseCollection();
-            clausesCollection.Add( new CodeCatchClause("e", new CodeTypeReference(typeof(System.ArgumentOutOfRangeException))) );
-            clausesCollection.Add( new CodeCatchClause("e") );
-            collection.AddRange( clausesCollection );
+            clausesCollection.Add(new CodeCatchClause("e", new CodeTypeReference(typeof(System.ArgumentOutOfRangeException))));
+            clausesCollection.Add(new CodeCatchClause("e"));
+            collection.AddRange(clausesCollection);
             //</Snippet4>
 
             //<Snippet5>
@@ -41,14 +39,14 @@ namespace CodeCatchClauseCollectionExample
             // collection, and retrieves its index if it is found.
             CodeCatchClause testClause = new CodeCatchClause("e");
             int itemIndex = -1;
-            if( collection.Contains( testClause ) )
-                itemIndex = collection.IndexOf( testClause );
+            if (collection.Contains(testClause))
+                itemIndex = collection.IndexOf(testClause);
             //</Snippet5>
 
             //<Snippet6>
             // Copies the contents of the collection beginning at index 0 to the specified CodeCatchClause array.
             // 'clauses' is a CodeCatchClause array.
-            collection.CopyTo( clauses, 0 );
+            collection.CopyTo(clauses, 0);
             //</Snippet6>
 
             //<Snippet7>
@@ -58,13 +56,13 @@ namespace CodeCatchClauseCollectionExample
 
             //<Snippet8>
             // Inserts a CodeCatchClause at index 0 of the collection.
-            collection.Insert( 0, new CodeCatchClause("e") );
+            collection.Insert(0, new CodeCatchClause("e"));
             //</Snippet8>
 
             //<Snippet9>
             // Removes the specified CodeCatchClause from the collection.
             CodeCatchClause clause = new CodeCatchClause("e");
-            collection.Remove( clause );
+            collection.Remove(clause);
             //</Snippet9>
 
             //<Snippet10>
@@ -73,5 +71,5 @@ namespace CodeCatchClauseCollectionExample
             //</Snippet10>
             //</Snippet1>
         }
-	}
+    }
 }

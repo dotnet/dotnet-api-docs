@@ -1,5 +1,4 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
 
 namespace CodeDomSamples
@@ -14,7 +13,7 @@ namespace CodeDomSamples
                 // targetType parameter indicating the target type of the cast.
                 "System.Int64",
                 // The CodeExpression to cast, here an Int32 value of 1000.
-                new CodePrimitiveExpression(1000) );
+                new CodePrimitiveExpression(1000));
 
             // A C# code generator produces the following source code for the preceeding example code:
 

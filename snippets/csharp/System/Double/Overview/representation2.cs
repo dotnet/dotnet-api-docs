@@ -1,12 +1,12 @@
-// <Snippet4>
+﻿// <Snippet4>
 using System;
 
 public class Example14
 {
     public static void Main()
     {
-        Double value = 123456789012.34567;
-        Double additional = Double.Epsilon * 1e15;
+        double value = 123456789012.34567;
+        double additional = double.Epsilon * 1e15;
         Console.WriteLine($"{value} + {additional} = {value + additional}");
     }
 }

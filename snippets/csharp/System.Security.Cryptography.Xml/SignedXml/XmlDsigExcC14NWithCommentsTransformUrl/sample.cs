@@ -32,7 +32,7 @@ public class SignVerifyEnvelope
 
             // Verify the signature of the signed XML.
             Console.WriteLine("Verifying signature...");
-            bool result = VerifyXmlFile("SignedExample.xml");
+            bool result = VerifyXmlFile("SignedExample.xml", Key);
 
             // Display the results of the signature verification to
             // the console.
@@ -61,7 +61,10 @@ public class SignVerifyEnvelope
         doc.PreserveWhitespace = false;
 
         // Load the passed XML file using it's name.
-        doc.Load(new XmlTextReader(FileName));
+        using (XmlReader reader = XmlReader.Create(FileName))
+        {
+            doc.Load(reader);
+        }
 
         // Create a SignedXml object.
         SignedXml signedXml = new SignedXml(doc);
@@ -114,7 +117,7 @@ public class SignVerifyEnvelope
         xmltw.Close();
     }
     // Verify the signature of an XML file and return the result.
-    public static Boolean VerifyXmlFile(String Name)
+    public static Boolean VerifyXmlFile(String Name, RSA Key)
     {
         // Create a new XML document.
         XmlDocument xmlDocument = new XmlDocument();
@@ -123,7 +126,10 @@ public class SignVerifyEnvelope
         xmlDocument.PreserveWhitespace = true;
 
         // Load the passed XML file into the document.
-        xmlDocument.Load(Name);
+        using (XmlReader reader = XmlReader.Create(Name))
+        {
+            xmlDocument.Load(reader);
+        }
 
         // Create a new SignedXml object and pass it
         // the XML document class.
@@ -137,7 +143,7 @@ public class SignVerifyEnvelope
         signedXml.LoadXml((XmlElement)nodeList[0]);
 
         // Check the signature and return the result.
-        return signedXml.CheckSignature();
+        return signedXml.CheckSignature(Key);
     }
 
     // Create example data to sign.

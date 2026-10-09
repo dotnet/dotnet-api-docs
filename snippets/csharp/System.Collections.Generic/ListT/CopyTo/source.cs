@@ -6,16 +6,17 @@ public class Example
 {
     public static void Main()
     {
-        List<string> dinosaurs = new List<string>();
-
-        dinosaurs.Add("Tyrannosaurus");
-        dinosaurs.Add("Amargasaurus");
-        dinosaurs.Add("Mamenchisaurus");
-        dinosaurs.Add("Brachiosaurus");
-        dinosaurs.Add("Compsognathus");
+        List<string> dinosaurs =
+        [
+            "Tyrannosaurus",
+            "Amargasaurus",
+            "Mamenchisaurus",
+            "Brachiosaurus",
+            "Compsognathus",
+        ];
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -28,7 +29,7 @@ public class Example
         dinosaurs.CopyTo(2, array, 12, 3);
 
         Console.WriteLine("\nContents of the array:");
-        foreach(string dinosaur in array)
+        foreach (string dinosaur in array)
         {
             Console.WriteLine(dinosaur);
         }

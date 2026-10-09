@@ -4,10 +4,10 @@ using System.Collections;
 
 public class ScrambleList : ArrayList
 {
-    public static void Main()
+    public static void Run()
     {
         // Create an empty ArrayList, and add some elements.
-        ScrambleList integerList = new ScrambleList();
+        ScrambleList integerList = [];
 
         for (int i = 0; i < 10; i++)
         {
@@ -17,7 +17,7 @@ public class ScrambleList : ArrayList
         Console.WriteLine("Ordered:\n");
         foreach (int value in integerList)
         {
-            Console.Write("{0}, ", value);
+            Console.Write($"{value}, ");
         }
         Console.WriteLine("<end>\n\nScrambled:\n");
 
@@ -26,7 +26,7 @@ public class ScrambleList : ArrayList
 
         foreach (int value in integerList)
         {
-            Console.Write("{0}, ", value);
+            Console.Write($"{value}, ");
         }
         Console.WriteLine("<end>\n");
     }
@@ -36,7 +36,7 @@ public class ScrambleList : ArrayList
         int limit = this.Count;
         int temp;
         int swapindex;
-        Random rnd = new Random();
+        Random rnd = new();
         for (int i = 0; i < limit; i++)
         {
             // The Item property of ArrayList is the default indexer. Thus,

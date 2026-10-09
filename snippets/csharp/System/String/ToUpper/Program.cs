@@ -1,0 +1,2 @@
+﻿ToUpperCultureExample.Run();
+ToUpperRangeExample.Run();

@@ -10,13 +10,15 @@ namespace TestingTracing
     {
         static void Main()
         {
-            TraceSource ts = new TraceSource("TraceTest");
-            SourceSwitch sourceSwitch = new SourceSwitch("SourceSwitch", "Verbose");
+            TraceSource ts = new("TraceTest");
+            SourceSwitch sourceSwitch = new("SourceSwitch", "Verbose");
             ts.Switch = sourceSwitch;
-            ConsoleTraceListener ctl = new ConsoleTraceListener();
-            ctl.Name = "console";
-            ctl.TraceOutputOptions = TraceOptions.DateTime;
-            ctl.Filter = new ErrorFilter();
+            ConsoleTraceListener ctl = new()
+            {
+                Name = "console",
+                TraceOutputOptions = TraceOptions.DateTime,
+                Filter = new ErrorFilter()
+            };
             ts.Listeners.Add(ctl);
 
             ts.TraceEvent(TraceEventType.Warning, 1, "*** This event will be filtered out ***");

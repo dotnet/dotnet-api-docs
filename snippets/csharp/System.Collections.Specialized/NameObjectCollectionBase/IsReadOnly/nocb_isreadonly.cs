@@ -6,62 +6,76 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class MyCollection : NameObjectCollectionBase  {
+public class MyCollection : NameObjectCollectionBase
+{
 
-   private DictionaryEntry _de = new DictionaryEntry();
+    private DictionaryEntry _de = new();
 
-   // Gets a key-and-value pair (DictionaryEntry) using an index.
-   public DictionaryEntry this[ int index ]  {
-      get  {
-         _de.Key = this.BaseGetKey( index );
-         _de.Value = this.BaseGet( index );
-         return( _de );
-      }
-   }
+    // Gets a key-and-value pair (DictionaryEntry) using an index.
+    public DictionaryEntry this[int index]
+    {
+        get
+        {
+            _de.Key = this.BaseGetKey(index);
+            _de.Value = this.BaseGet(index);
+            return (_de);
+        }
+    }
 
-   // Adds elements from an IDictionary into the new collection.
-   public MyCollection( IDictionary d, Boolean bReadOnly )  {
-      foreach ( DictionaryEntry de in d )  {
-         this.BaseAdd( (String) de.Key, de.Value );
-      }
-      this.IsReadOnly = bReadOnly;
-   }
+    // Adds elements from an IDictionary into the new collection.
+    public MyCollection(IDictionary d, bool bReadOnly)
+    {
+        foreach (DictionaryEntry de in d)
+        {
+            this.BaseAdd((string)de.Key, de.Value);
+        }
+        this.IsReadOnly = bReadOnly;
+    }
 
-   // Adds an entry to the collection.
-   public void Add( String key, Object value )  {
-      this.BaseAdd( key, value );
-   }
+    // Adds an entry to the collection.
+    public void Add(string key, object value)
+    {
+        this.BaseAdd(key, value);
+    }
 }
 
-public class SamplesNameObjectCollectionBase  {
+public class SamplesNameObjectCollectionBase
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new MyCollection that is read-only.
-      IDictionary d = new ListDictionary();
-      d.Add( "red", "apple" );
-      d.Add( "yellow", "banana" );
-      d.Add( "green", "pear" );
-      MyCollection myROCol = new MyCollection( d, true );
+        // Creates and initializes a new MyCollection that is read-only.
+        IDictionary d = new ListDictionary
+      {
+          { "red", "apple" },
+          { "yellow", "banana" },
+          { "green", "pear" }
+      };
+        MyCollection myROCol = new(d, true);
 
-      // Tries to add a new item.
-      try  {
-         myROCol.Add( "blue", "sky" );
-      }
-      catch ( NotSupportedException e )  {
-         Console.WriteLine( e.ToString() );
-      }
+        // Tries to add a new item.
+        try
+        {
+            myROCol.Add("blue", "sky");
+        }
+        catch (NotSupportedException e)
+        {
+            Console.WriteLine(e);
+        }
 
-      // Displays the keys and values of the MyCollection.
-      Console.WriteLine( "Read-Only Collection:" );
-      PrintKeysAndValues( myROCol );
-   }
+        // Displays the keys and values of the MyCollection.
+        Console.WriteLine("Read-Only Collection:");
+        PrintKeysAndValues(myROCol);
+    }
 
-   public static void PrintKeysAndValues( MyCollection myCol )  {
-      for ( int i = 0; i < myCol.Count; i++ )  {
-         Console.WriteLine( "[{0}] : {1}, {2}", i, myCol[i].Key, myCol[i].Value );
-      }
-   }
+    public static void PrintKeysAndValues(MyCollection myCol)
+    {
+        for (int i = 0; i < myCol.Count; i++)
+        {
+            Console.WriteLine($"[{i}] : {myCol[i].Key}, {myCol[i].Value}");
+        }
+    }
 }
 
 

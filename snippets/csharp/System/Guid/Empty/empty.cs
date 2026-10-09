@@ -11,7 +11,7 @@ public class Example
         Console.WriteLine($"Empty: {guid1 == Guid.Empty}\n");
 
         // Create a GUID with all zeros and compare it to Empty.
-        var bytes = new Byte[16];
+        var bytes = new byte[16];
         var guid2 = new Guid(bytes);
         Console.WriteLine(guid2);
         Console.WriteLine($"Empty: {guid2 == Guid.Empty}");

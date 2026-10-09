@@ -2,23 +2,23 @@
 // This example demonstrates the Console.Beep() method.
 using System;
 
-class Sample
+class BeepExample
 {
-    public static void Main(String[] args)
+    public static void Run(string[] args)
     {
-    int x = 0;
-//
-    if ((args.Length == 1) &&
-        (Int32.TryParse(args[0], out x)) &&
-        ((x >= 1) && (x <= 9)))
+        int x = 0;
+        //
+        if ((args.Length == 1) &&
+            (int.TryParse(args[0], out x)) &&
+            ((x >= 1) && (x <= 9)))
         {
-        for (int i = 1; i <= x; i++)
+            for (int i = 1; i <= x; i++)
             {
-            Console.WriteLine("Beep number {0}.", i);
-            Console.Beep();
+                Console.WriteLine($"Beep number {i}.");
+                Console.Beep();
             }
         }
-    else
+        else
         {
             Console.WriteLine("Usage: Enter the number of times (between 1 and 9) to beep.");
         }

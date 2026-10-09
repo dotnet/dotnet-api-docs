@@ -6,28 +6,27 @@ using System.Collections;
 
 public class SamplesArrayList2
 {
-    public class myReverserClass : IComparer
+    public class ReverseComparer : IComparer
     {
         // Calls CaseInsensitiveComparer.Compare with the parameters reversed.
-        int IComparer.Compare(Object x, Object y)
-        {
-            return ((new CaseInsensitiveComparer()).Compare(y, x));
-        }
+        int IComparer.Compare(object x, object y) => ((new CaseInsensitiveComparer()).Compare(y, x));
     }
 
-    public static void Main()
+    public static void Run()
     {
         // Creates and initializes a new ArrayList.
-        ArrayList myAL = new ArrayList();
-        myAL.Add("The");
-        myAL.Add("quick");
-        myAL.Add("brown");
-        myAL.Add("fox");
-        myAL.Add("jumps");
-        myAL.Add("over");
-        myAL.Add("the");
-        myAL.Add("lazy");
-        myAL.Add("dog");
+        ArrayList myAL =
+        [
+            "The",
+            "quick",
+            "brown",
+            "fox",
+            "jumps",
+            "over",
+            "the",
+            "lazy",
+            "dog",
+        ];
 
         // Displays the values of the ArrayList.
         Console.WriteLine("The ArrayList initially contains the following values:");
@@ -39,7 +38,7 @@ public class SamplesArrayList2
         PrintIndexAndValues(myAL);
 
         // Sorts the values of the ArrayList using the reverse case-insensitive comparer.
-        IComparer myComparer = new myReverserClass();
+        IComparer myComparer = new ReverseComparer();
         myAL.Sort(myComparer);
         Console.WriteLine("After sorting with the reverse case-insensitive comparer:");
         PrintIndexAndValues(myAL);
@@ -48,8 +47,11 @@ public class SamplesArrayList2
     public static void PrintIndexAndValues(IEnumerable myList)
     {
         int i = 0;
-        foreach (Object obj in myList)
-            Console.WriteLine("\t[{0}]:\t{1}", i++, obj);
+        foreach (object obj in myList)
+        {
+            Console.WriteLine($"\t[{i++}]:\t{obj}");
+        }
+
         Console.WriteLine();
     }
 }

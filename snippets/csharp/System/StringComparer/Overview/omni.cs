@@ -1,28 +1,28 @@
 ﻿//<snippet1>
-// This example demonstrates members of the 
+// This example demonstrates members of the
 // System.StringComparer class.
 
 using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         // Create a list of string.
-        List<string> list = new List<string>();
+        List<string> list = new();
 
         // Get the tr-TR (Turkish-Turkey) culture.
-        CultureInfo turkish = new CultureInfo("tr-TR");
+        CultureInfo turkish = new("tr-TR");
 
         // Get the culture that is associated with the current thread.
         CultureInfo thisCulture = Thread.CurrentThread.CurrentCulture;
 
         // Get the standard StringComparers.
-        StringComparer invCmp =   StringComparer.InvariantCulture;
+        StringComparer invCmp = StringComparer.InvariantCulture;
         StringComparer invICCmp = StringComparer.InvariantCultureIgnoreCase;
         StringComparer currCmp = StringComparer.CurrentCulture;
         StringComparer currICCmp = StringComparer.CurrentCultureIgnoreCase;
@@ -34,10 +34,10 @@ class Sample
 
         // Define three strings consisting of different versions of the letter I.
         // LATIN CAPITAL LETTER I (U+0049)
-        string capitalLetterI = "I";  
+        string capitalLetterI = "I";
 
         // LATIN SMALL LETTER I (U+0069)
-        string smallLetterI   = "i";
+        string smallLetterI = "i";
 
         // LATIN SMALL LETTER DOTLESS I (U+0131)
         string smallLetterDotlessI = "\u0131";
@@ -57,7 +57,7 @@ class Sample
         Display(list, "Invariant culture, ignore case...");
 
         // Sort the list using the current culture.
-        Console.WriteLine("The current culture is \"{0}\".", thisCulture.Name);
+        Console.WriteLine($"The current culture is \"{thisCulture.Name}\".");
         list.Sort(currCmp);
         Display(list, "Current culture...");
         list.Sort(currICCmp);
@@ -69,7 +69,7 @@ class Sample
         list.Sort(ordICCmp);
         Display(list, "Ordinal, ignore case...");
 
-        // Sort the list using the Turkish culture, which treats LATIN SMALL LETTER 
+        // Sort the list using the Turkish culture, which treats LATIN SMALL LETTER
         // DOTLESS I differently than LATIN SMALL LETTER I.
         list.Sort(turkICComp);
         Display(list, "Turkish culture, ignore case...");
@@ -77,14 +77,14 @@ class Sample
 
     public static void Display(List<string> lst, string title)
     {
-        Char c;
-        int  codePoint;
+        char c;
+        int codePoint;
         Console.WriteLine(title);
         foreach (string s in lst)
         {
             c = s[0];
             codePoint = Convert.ToInt32(c);
-            Console.WriteLine("0x{0:x}", codePoint); 
+            Console.WriteLine($"0x{codePoint:x}");
         }
         Console.WriteLine();
     }

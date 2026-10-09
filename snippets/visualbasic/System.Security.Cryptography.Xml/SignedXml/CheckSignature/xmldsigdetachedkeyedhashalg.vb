@@ -87,7 +87,9 @@ Class XMLDSIGDetached
       Dim xmlDocument As New XmlDocument()
       
       ' Load the passedXML file into the document.
-      xmlDocument.Load(XmlSigFileName)
+      Using reader As XmlReader = XmlReader.Create(XmlSigFileName)
+         xmlDocument.Load(reader)
+      End Using
       
       ' Create a new SignedXml object and pass it
       ' the XML document class.

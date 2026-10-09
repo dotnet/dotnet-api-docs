@@ -1,18 +1,14 @@
-﻿//<Snippet1>
+﻿// <Snippet1>
 using System;
-using System.Text;
-using System.Timers;
-using System.Threading;
-using Microsoft.Win32;
-using System.Reflection;
 using System.Diagnostics;
-using System.Globalization;
+using System.Threading;
+using System.Timers;
 
 public class PerfCounter1
 {
 
     [STAThread]
-    public static void Main(string[] args)
+    public static void Run(string[] args)
     {
         try
         {
@@ -20,17 +16,17 @@ public class PerfCounter1
             {
                 // If the category does not exist, create the category and exit.
                 // Performance counters should not be created and immediately used.
-                // There is a latency time to enable the counters, they should be created
-                // prior to executing the application that uses the counters.
+                // The counters take time to become enabled.
+                // Create them before executing the application that uses them.
 
                 // Create custom counters.
                 Writer.CreateCounters();
                 return;
             }
-            Writer server = new Writer();
+            Writer server = new();
             // Start the counters.
             server.StartCounters();
-            Reader client = new Reader();
+            Reader client = new();
             // Read the counters from the client.
             client.StartCounters();
             server.CloseTimer();
@@ -41,13 +37,13 @@ public class PerfCounter1
         }
         catch (Exception e)
         {
-            Console.WriteLine("Sample failed with exception: " + e.ToString());
+            Console.WriteLine($"Sample failed with exception: {e}");
         }
     }
 
     public class Writer
     {
-        private System.Timers.Timer timer1;
+        private readonly System.Timers.Timer timer1;
         private PerformanceCounter counter1;
         private PerformanceCounter counter2;
         private PerformanceCounter counter3;
@@ -56,70 +52,70 @@ public class PerfCounter1
 
         public Writer()
         {
-            this.timer1 = new System.Timers.Timer(100);
-            this.finalCount = 0;
-            timer1.Elapsed += new ElapsedEventHandler(this.OnTimer1);
+            timer1 = new(100);
+            finalCount = 0;
+            timer1.Elapsed += OnTimer1;
         }
 
-        //<Snippet4>
+        // <Snippet4>
         public static void CreateCounters()
         {
-            //<Snippet2>
-            CounterCreationData data1 = new CounterCreationData("Trucks",
+            // <Snippet2>
+            CounterCreationData data1 = new("Trucks",
                 "Number of orders", PerformanceCounterType.NumberOfItems32);
-            CounterCreationData data2 = new CounterCreationData("Rate of sales",
+            CounterCreationData data2 = new("Rate of sales",
                 "Orders/second", PerformanceCounterType.RateOfCountsPerSecond32);
-            CounterCreationDataCollection ccds = new CounterCreationDataCollection();
+            CounterCreationDataCollection ccds = new();
             ccds.Add(data1);
             ccds.Add(data2);
             Console.WriteLine("Creating Orders custom counter.");
             if (!PerformanceCounterCategory.Exists("Orders"))
+            {
                 PerformanceCounterCategory.Create("Orders",
                     "Processed orders",
                     PerformanceCounterCategoryType.MultiInstance,
                     ccds);
-            //</Snippet2>
+            }
+            // </Snippet2>
 
-            //<Snippet3>
+            // <Snippet3>
             Console.WriteLine("Creating Inventory custom counter");
             if (!PerformanceCounterCategory.Exists("Inventory"))
+            {
                 PerformanceCounterCategory.Create("Inventory",
                     "Truck inventory",
                     PerformanceCounterCategoryType.SingleInstance,
                     "Trucks", "Number of trucks on hand");
-            //</Snippet3>
+            }
+            // </Snippet3>
         }
-        //</Snippet4>
+        // </Snippet4>
 
         public void StartCounters()
         {
             Console.WriteLine(
                 "Instantiating Custom Counter Orders, Trucks, United States");
-            this.counter1 = new PerformanceCounter(
-                "Orders", "Trucks", "United States", false);
-            this.counter1.RawValue = 5;
+            counter1 = new("Orders", "Trucks", "United States", false);
+            counter1.RawValue = 5;
             Console.WriteLine(
                 "Instantiating Custom Counter Orders, Trucks, Europe");
-            this.counter2 = new PerformanceCounter(
-                "Orders", "Trucks", "Europe", false);
-            this.counter2.RawValue = 10;
+            counter2 = new("Orders", "Trucks", "Europe", false);
+            counter2.RawValue = 10;
             Console.WriteLine(
                 "Instantiating Custom Counter Orders, Rate of Sales, Total");
-            this.counter3 = new PerformanceCounter(
-                "Orders", "Rate of Sales", "Total", false);
-            this.counter3.RawValue = 10;
+            counter3 = new("Orders", "Rate of Sales", "Total", false);
+            counter3.RawValue = 10;
             Console.WriteLine(
                 "Instantiating Custom Counter Inventory, Trucks");
-            this.counter4 = new PerformanceCounter(
-                "Inventory", "Trucks", false);
-            this.counter4.RawValue = 15;
+            counter4 = new("Inventory", "Trucks", false);
+            counter4.RawValue = 15;
 
-            this.timer1.Start();
+            timer1.Start();
         }
 
         public void CloseTimer()
         {
-            this.timer1.Close();
+            timer1.Close();
         }
 
         public static void DeleteCounters()
@@ -131,7 +127,7 @@ public class PerfCounter1
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
             }
         }
 
@@ -139,25 +135,25 @@ public class PerfCounter1
         {
             try
             {
-                this.counter1.IncrementBy(100);
-                this.counter1.Increment();
-                this.counter2.IncrementBy(50);
-                this.counter2.Decrement();
-                this.counter3.IncrementBy(1);
-                this.counter4.IncrementBy(150);
-                ++this.finalCount;
+                counter1.IncrementBy(100);
+                counter1.Increment();
+                counter2.IncrementBy(50);
+                counter2.Decrement();
+                counter3.IncrementBy(1);
+                counter4.IncrementBy(150);
+                finalCount++;
             }
             catch (Exception e)
             {
-                Console.WriteLine("Unexpected exception thrown :" + e.ToString());
+                Console.WriteLine($"Unexpected exception thrown :{e}");
             }
         }
     }
 
     public class Reader
     {
-        private ManualResetEvent signal;
-        private System.Timers.Timer timer1;
+        private readonly ManualResetEvent signal;
+        private readonly System.Timers.Timer timer1;
         private PerformanceCounter counter1;
         private PerformanceCounter counter2;
         private PerformanceCounter counter3;
@@ -166,16 +162,16 @@ public class PerfCounter1
 
         public Reader()
         {
-            signal = new ManualResetEvent(false);
-            this.timer1 = new System.Timers.Timer(500);
-            this.finalCount = 0;
-            timer1.Elapsed += new ElapsedEventHandler(this.OnTimer1);
+            signal = new(false);
+            timer1 = new(500);
+            finalCount = 0;
+            timer1.Elapsed += OnTimer1;
         }
 
         public void Finish()
         {
-            this.signal.WaitOne();
-            this.timer1.Close();
+            signal.WaitOne();
+            timer1.Close();
             PerformanceCounter.CloseSharedResources();
         }
 
@@ -185,40 +181,36 @@ public class PerfCounter1
             {
                 lock (this)
                 {
-                    if (this.finalCount >= 10)
+                    if (finalCount >= 10)
                         return;
 
-                    float value1 = this.counter1.NextValue();
-                    Console.WriteLine(
-                                "Custom Counter Orders, Trucks, United States: {0}", value1.ToString());
+                    float value1 = counter1.NextValue();
+                    Console.WriteLine($"Custom Counter Orders, Trucks, United States: {value1}");
 
-                    float value2 = this.counter2.NextValue();
-                    Console.WriteLine(
-                        "Custom Counter Orders, Trucks, Europe: {0}", value2.ToString());
+                    float value2 = counter2.NextValue();
+                    Console.WriteLine($"Custom Counter Orders, Trucks, Europe: {value2}");
 
-                    float value3 = this.counter3.NextValue();
-                    Console.WriteLine(
-                        "Custom Counter Orders, Rate of sales, United Total: {0}", value3.ToString());
+                    float value3 = counter3.NextValue();
+                    Console.WriteLine($"Custom Counter Orders, Rate of sales, United Total: {value3}");
 
-                    float value4 = this.counter4.NextValue();
-                    Console.WriteLine(
-                        "Custom Counter Inventory, Trucks, United States: {0}", value4.ToString());
+                    float value4 = counter4.NextValue();
+                    Console.WriteLine($"Custom Counter Inventory, Trucks, United States: {value4}");
 
-                    if (this.finalCount < 5)
+                    if (finalCount < 5)
                     {
-                        ++this.finalCount;
+                        finalCount++;
                     }
                     else
                     {
-                        ++this.finalCount;
-                        this.signal.Set();
+                        finalCount++;
+                        signal.Set();
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Sample failure :" + e.ToString());
-                this.signal.Set();
+                Console.WriteLine($"Sample failure :{e}");
+                signal.Set();
             }
         }
 
@@ -226,24 +218,27 @@ public class PerfCounter1
         {
             Console.WriteLine(
                 "Instantiating Custom Counter Orders, Trucks, United States");
-            // Instantiate a counter, category "Orders, counter name "Trucks", instance "United States"
-            this.counter1 = new PerformanceCounter(
-                "Orders", "Trucks", "United States");
+            // Instantiate a counter with category "Orders", counter name "Trucks", and instance "United States".
+            counter1 = new("Orders", "Trucks", "United States");
             Console.WriteLine("Instantiating Custom Counter Orders, Trucks, Europe");
-            // Instantiate a counter, category "Orders, counter name "Trucks", instance "Europe"
-            this.counter2 = new PerformanceCounter(
-                "Orders", "Trucks", "Europe");
+            // Instantiate a counter with category "Orders", counter name "Trucks", and instance "Europe".
+            counter2 = new("Orders", "Trucks", "Europe");
             Console.WriteLine("Instantiating Custom Counter Orders, Rate of Sales.");
-            // Instantiate a counter, category "Orders", counter name "Rate of Sales", single instance.
-            this.counter3 = new PerformanceCounter(
-                "Orders", "Rate of Sales", "Total");
+            // Instantiate a counter with category "Orders", counter name "Rate of Sales", and a single instance.
+            counter3 = new("Orders", "Rate of Sales", "Total");
             Console.WriteLine("Instantiating Custom Counter Inventory, Trucks, Only instance.");
             // Instantiate a single instance counter, category "Inventory", counter name "Trucks".
-            this.counter4 = new PerformanceCounter(
-                "Inventory", "Trucks", false);
+            counter4 = new("Inventory", "Trucks", false);
 
-            this.timer1.Start();
+            timer1.Start();
         }
     }
 }
-//</Snippet1>
+// </Snippet1>
+public static class Program
+{
+    public static void Main(string[] args)
+    {
+        PerfCounter1.Run(args);
+    }
+}

@@ -87,14 +87,14 @@ private:
    {
       IDesignerHost^ host = static_cast<IDesignerHost^>(GetService( IDesignerHost::typeid ));
       DesignerTransaction^ t = host->CreateTransaction( "Change Text and Size" );
-      
+
       /* The code within the using statement is considered to be a single transaction.
               When the user selects Undo, the system will undo everything executed in this code block.
               */
       if ( notification_mode )
             MessageBox::Show( "Entering a Designer-Initiated Designer Transaction" );
 
-      // The .NET Framework automatically associates the TypeDescriptor with the correct component
+      // .NET automatically associates the TypeDescriptor with the correct component.
       PropertyDescriptor^ someText = TypeDescriptor::GetProperties( Component )[ "StringProperty" ];
       someText->SetValue( Component, "This text was set by the designer for this component." );
       PropertyDescriptor^ anInteger = TypeDescriptor::GetProperties( Component )[ "CountProperty" ];
@@ -108,7 +108,7 @@ private:
    }
 
 public:
-   property DesignerVerbCollection^ Verbs 
+   property DesignerVerbCollection^ Verbs
    {
       // The Verbs property is overridden from ComponentDesigner
       virtual DesignerVerbCollection^ get() override
@@ -167,7 +167,7 @@ private:
    }
 
 public:
-   property String^ StringProperty 
+   property String^ StringProperty
    {
       String^ get()
       {
@@ -180,7 +180,7 @@ public:
       }
    }
 
-   property int CountProperty 
+   property int CountProperty
    {
       int get()
       {

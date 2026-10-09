@@ -30,7 +30,7 @@ Public Class SignVerifyEnvelope
          
          ' Verify the signature of the signed XML.
          Console.WriteLine("Verifying signature...")
-         Dim result As Boolean = VerifyXmlFile("SignedExample.xml")
+         Dim result As Boolean = VerifyXmlFile("SignedExample.xml", Key)
          
          ' Display the results of the signature verification to \
          ' the console.
@@ -55,7 +55,9 @@ Public Class SignVerifyEnvelope
       doc.PreserveWhitespace = False
       
       ' Load the passed XML file using it's name.
-      doc.Load(New XmlTextReader(FileName))
+      Using reader As XmlReader = XmlReader.Create(FileName)
+         doc.Load(reader)
+      End Using
       
       ' Create a SignedXml object.
       Dim signedXml As New SignedXml(doc)
@@ -104,7 +106,7 @@ Public Class SignVerifyEnvelope
 ' </Snippet2>   
 ' <Snippet3> 
    ' Verify the signature of an XML file and return the result.
-   Public Shared Function VerifyXmlFile(Name As [String]) As [Boolean]
+   Public Shared Function VerifyXmlFile(Name As [String], Key As RSA) As [Boolean]
       ' Create a new XML document.
       Dim xmlDocument As New XmlDocument()
       
@@ -112,7 +114,9 @@ Public Class SignVerifyEnvelope
       xmlDocument.PreserveWhitespace = True
       
       ' Load the passed XML file into the document. 
-      xmlDocument.Load(Name)
+      Using reader As XmlReader = XmlReader.Create(Name)
+         xmlDocument.Load(reader)
+      End Using
       
       ' Create a new SignedXml object and pass it
       ' the XML document class.
@@ -126,7 +130,7 @@ Public Class SignVerifyEnvelope
       signedXml.LoadXml(CType(nodeList(0), XmlElement))
       
       ' Check the signature and return the result.
-      Return signedXml.CheckSignature()
+      Return signedXml.CheckSignature(Key)
    End Function 
 ' </Snippet3>  
    

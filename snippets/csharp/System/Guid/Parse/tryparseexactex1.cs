@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class GuidTryParseExactExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet5>
         // Define an array of all format specifiers.
@@ -14,7 +14,7 @@ public class Example
             stringGuids[ctr] = guid.ToString(formats[ctr]);
 
         // Parse the strings in the array using the "B" format specifier.
-        foreach (var stringGuid in stringGuids)
+        foreach (string stringGuid in stringGuids)
         {
             if (Guid.TryParseExact(stringGuid, "B", out var newGuid))
                 Console.WriteLine($"Successfully parsed {stringGuid}");

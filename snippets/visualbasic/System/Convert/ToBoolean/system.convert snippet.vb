@@ -51,7 +51,7 @@
              boolVal = System.Convert.ToBoolean(dateTime)
          Catch exception As System.InvalidCastException
              System.Console.WriteLine("Conversion from DateTime to " + _
-                     "Boolean is not supported by the .NET Framework.")
+                     "Boolean is not supported by .NET.")
          End Try
      End Sub
      '</Snippet20>
@@ -118,7 +118,7 @@
          Catch exception As System.InvalidCastException
              System.Console.WriteLine( _
                   "Char-to-Decimal conversion is not supported " + _
-                  "by the .NET Framework.")
+                  "by .NET.")
          End Try
 
          'Decimal to char conversion is also not supported.
@@ -127,7 +127,7 @@
          Catch exception As System.InvalidCastException
              System.Console.WriteLine( _
                  "Decimal-to-Char conversion is not supported " + _
-                 "by the .NET Framework.")
+                 "by .NET.")
          End Try
      End Sub
      '</Snippet17>
@@ -139,7 +139,7 @@
          ConvertDoubleDecimal(CDec(doubleVal))
          CovertDoubleFloat(doubleVal)
          ConvertDoubleString(doubleVal)
-     End Sub 
+     End Sub
 
       '<Snippet1>
      Public Sub ConvertDoubleBool(ByVal doubleVal As Double)
@@ -187,7 +187,7 @@
          doubleVal = System.Convert.ToDouble(decimalVal)
          System.Console.WriteLine("{0} as a Double is: {1}", _
                                   decimalVal, doubleVal)
-         
+
          ' Conversion from Double to Decimal can overflow.
          Try
             decimalVal = System.Convert.ToDecimal(doubleVal)
@@ -243,7 +243,7 @@
 
          Dim stringVal As String
 
-         ' A conversion from Double to String cannot overflow.       
+         ' A conversion from Double to String cannot overflow.
          stringVal = System.Convert.ToString(doubleVal)
          System.Console.WriteLine("{0} as a String is: {1}", _
                                    doubleVal, stringVal)

@@ -8,27 +8,29 @@ class Program
     static void Main(string[] args)
     {
         // <Snippet2>
-        List<Box> Boxes = new List<Box>();
-        Boxes.Add(new Box(4, 20, 14));
-        Boxes.Add(new Box(12, 12, 12));
-        Boxes.Add(new Box(8, 20, 10));
-        Boxes.Add(new Box(6, 10, 2));
-        Boxes.Add(new Box(2, 8, 4));
-        Boxes.Add(new Box(2, 6, 8));
-        Boxes.Add(new Box(4, 12, 20));
-        Boxes.Add(new Box(18, 10, 4));
-        Boxes.Add(new Box(24, 4, 18));
-        Boxes.Add(new Box(10, 4, 16));
-        Boxes.Add(new Box(10, 2, 10));
-        Boxes.Add(new Box(6, 18, 2));
-        Boxes.Add(new Box(8, 12, 4));
-        Boxes.Add(new Box(12, 10, 8));
-        Boxes.Add(new Box(14, 6, 6));
-        Boxes.Add(new Box(16, 6, 16));
-        Boxes.Add(new Box(2, 8, 12));
-        Boxes.Add(new Box(4, 24, 8));
-        Boxes.Add(new Box(8, 6, 20));
-        Boxes.Add(new Box(18, 18, 12));
+        List<Box> Boxes =
+        [
+            new Box(4, 20, 14),
+            new Box(12, 12, 12),
+            new Box(8, 20, 10),
+            new Box(6, 10, 2),
+            new Box(2, 8, 4),
+            new Box(2, 6, 8),
+            new Box(4, 12, 20),
+            new Box(18, 10, 4),
+            new Box(24, 4, 18),
+            new Box(10, 4, 16),
+            new Box(10, 2, 10),
+            new Box(6, 18, 2),
+            new Box(8, 12, 4),
+            new Box(12, 10, 8),
+            new Box(14, 6, 6),
+            new Box(16, 6, 16),
+            new Box(2, 8, 12),
+            new Box(4, 24, 8),
+            new Box(8, 6, 20),
+            new Box(18, 18, 12),
+        ];
 
         // Sort by an Comparer<T> implementation that sorts
         // first by the length.
@@ -72,12 +74,12 @@ class Program
         // compares first by the length.
         // Returns -1 because the length of BoxA
         // is less than the length of BoxB.
-        BoxLengthFirst LengthFirst = new BoxLengthFirst();
+        BoxLengthFirst LengthFirst = new();
 
-        Comparer<Box> bc = (Comparer<Box>) LengthFirst;
+        Comparer<Box> bc = (Comparer<Box>)LengthFirst;
 
-        Box BoxA = new Box(2, 6, 8);
-        Box BoxB = new Box(10, 12, 14);
+        Box BoxA = new(2, 6, 8);
+        Box BoxB = new(10, 12, 14);
         int x = LengthFirst.Compare(BoxA, BoxB);
         Console.WriteLine();
         Console.WriteLine(x.ToString());

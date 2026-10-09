@@ -6,45 +6,37 @@ class Example
     static void Main()
     {
         // Create and display a TimeSpan value of 1 tick.
-        Console.Write("\n{0,-45}", "TimeSpan( 1 )");
+        Console.Write($"\n{"TimeSpan( 1 )",-45}");
         ShowTimeSpanProperties(new TimeSpan(1));
 
         // Create a TimeSpan value with a large number of ticks.
-        Console.Write("\n{0,-45}", "TimeSpan( 111222333444555 )");
+        Console.Write($"\n{"TimeSpan( 111222333444555 )",-45}");
         ShowTimeSpanProperties(new TimeSpan(111222333444555));
 
         // This TimeSpan has all fields specified.
-        Console.Write("\n{0,-45}", "TimeSpan( 10, 20, 30, 40, 50 )");
+        Console.Write($"\n{"TimeSpan( 10, 20, 30, 40, 50 )",-45}");
         ShowTimeSpanProperties(new TimeSpan(10, 20, 30, 40, 50));
 
         // This TimeSpan has all fields overflowing.
-        Console.Write("\n{0,-45}",
-                      "TimeSpan( 1111, 2222, 3333, 4444, 5555 )");
+        Console.Write($"\n{"TimeSpan( 1111, 2222, 3333, 4444, 5555 )",-45}");
         ShowTimeSpanProperties(
            new TimeSpan(1111, 2222, 3333, 4444, 5555));
 
         // This TimeSpan is based on a number of days.
-        Console.Write("\n{0,-45}", "FromDays( 20.84745602 )");
-        ShowTimeSpanProperties(TimeSpan.FromDays( 20.84745602));
+        Console.Write($"\n{"FromDays( 20.84745602 )",-45}");
+        ShowTimeSpanProperties(TimeSpan.FromDays(20.84745602));
     }
 
-    static void ShowTimeSpanProperties( TimeSpan interval )
+    static void ShowTimeSpanProperties(TimeSpan interval)
     {
-        Console.WriteLine("{0,21}", interval);
-        Console.WriteLine("{0,-12}{1,8}       {2,-18}{3,21:N3}", "Days",
-                          interval.Days, "TotalDays", interval.TotalDays);
-        Console.WriteLine("{0,-12}{1,8}       {2,-18}{3,21:N3}", "Hours",
-                          interval.Hours, "TotalHours", interval.TotalHours);
-        Console.WriteLine("{0,-12}{1,8}       {2,-18}{3,21:N3}", "Minutes",
-                          interval.Minutes, "TotalMinutes", interval.TotalMinutes);
-        Console.WriteLine("{0,-12}{1,8}       {2,-18}{3,21:N3}", "Seconds",
-                          interval.Seconds, "TotalSeconds", interval.TotalSeconds);
-        Console.WriteLine("{0,-12}{1,8}       {2,-18}{3,21:N3}", "Milliseconds",
-                          interval.Milliseconds, "TotalMilliseconds",
-                          interval.TotalMilliseconds);
-        Console.WriteLine("{0,-12}{1,8}       {2,-18}{3,21:N0}", null, null,
-            "Ticks", interval.Ticks);
-    } 
+        Console.WriteLine($"{interval,21}");
+        Console.WriteLine($"{"Days",-12}{interval.Days,8}       {"TotalDays",-18}{interval.TotalDays,21:N3}");
+        Console.WriteLine($"{"Hours",-12}{interval.Hours,8}       {"TotalHours",-18}{interval.TotalHours,21:N3}");
+        Console.WriteLine($"{"Minutes",-12}{interval.Minutes,8}       {"TotalMinutes",-18}{interval.TotalMinutes,21:N3}");
+        Console.WriteLine($"{"Seconds",-12}{interval.Seconds,8}       {"TotalSeconds",-18}{interval.TotalSeconds,21:N3}");
+        Console.WriteLine($"{"Milliseconds",-12}{interval.Milliseconds,8}       {"TotalMilliseconds",-18}{interval.TotalMilliseconds,21:N3}");
+        Console.WriteLine($"{null,-12}{null,8}       {"Ticks",-18}{interval.Ticks,21:N0}");
+    }
 }
 // The example displays the following output if the current culture is en-US:
 //    TimeSpan( 1 )                                     00:00:00.0000001

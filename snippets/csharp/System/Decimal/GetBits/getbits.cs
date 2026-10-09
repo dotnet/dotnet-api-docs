@@ -3,30 +3,26 @@ using System;
 
 class Example
 {
-   public static void Main()
-   {
-      // Define an array of Decimal values.
-      Decimal[] values = { 1M, 100000000000000M, 10000000000000000000000000000M,
+    public static void Main()
+    {
+        // Define an array of Decimal values.
+        decimal[] values = { 1M, 100000000000000M, 10000000000000000000000000000M,
                            100000000000000.00000000000000M, 1.0000000000000000000000000000M,
                            123456789M, 0.123456789M, 0.000000000123456789M,
                            0.000000000000000000123456789M, 4294967295M,
-                           18446744073709551615M, Decimal.MaxValue,
-                           Decimal.MinValue, -7.9228162514264337593543950335M };
+                           18446744073709551615M, decimal.MaxValue,
+                           decimal.MinValue, -7.9228162514264337593543950335M };
 
-      Console.WriteLine("{0,31}  {1,10:X8}{2,10:X8}{3,10:X8}{4,10:X8}",
-                        "Argument", "Bits[3]", "Bits[2]", "Bits[1]",
-                        "Bits[0]" );
-      Console.WriteLine( "{0,31}  {1,10:X8}{2,10:X8}{3,10:X8}{4,10:X8}",
-                         "--------", "-------", "-------", "-------",
-                         "-------" );
+        Console.WriteLine($"{"Argument",31}  {"Bits[3]",10:X8}{"Bits[2]",10:X8}{"Bits[1]",10:X8}{"Bits[0]",10:X8}");
+        Console.WriteLine($"{"--------",31}  {"-------",10:X8}{"-------",10:X8}{"-------",10:X8}{"-------",10:X8}");
 
-      // Iterate each element and display its binary representation
-      foreach (var value in values) {
-        int[] bits = decimal.GetBits(value);
-        Console.WriteLine("{0,31}  {1,10:X8}{2,10:X8}{3,10:X8}{4,10:X8}",
-                          value, bits[3], bits[2], bits[1], bits[0]);
-      }
-   }
+        // Iterate each element and display its binary representation
+        foreach (decimal value in values)
+        {
+            int[] bits = decimal.GetBits(value);
+            Console.WriteLine($"{value,31}  {bits[3],10:X8}{bits[2],10:X8}{bits[1],10:X8}{bits[0],10:X8}");
+        }
+    }
 }
 // The example displays the following output:
 //                           Argument     Bits[3]   Bits[2]   Bits[1]   Bits[0]

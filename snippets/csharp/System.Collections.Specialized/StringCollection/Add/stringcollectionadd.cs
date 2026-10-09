@@ -5,36 +5,39 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesStringCollection  {
+public class SamplesStringCollection
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new StringCollection.
-      StringCollection myCol = new StringCollection();
+        // Creates and initializes a new StringCollection.
+        StringCollection myCol = [];
 
-      Console.WriteLine( "Initial contents of the StringCollection:" );
-      PrintValues( myCol );
+        Console.WriteLine("Initial contents of the StringCollection:");
+        PrintValues(myCol);
 
-      // Adds a range of elements from an array to the end of the StringCollection.
-      String[] myArr = new String[] { "RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED" };
-      myCol.AddRange( myArr );
+        // Adds a range of elements from an array to the end of the StringCollection.
+        string[] myArr = ["RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED"];
+        myCol.AddRange(myArr);
 
-      Console.WriteLine( "After adding a range of elements:" );
-      PrintValues( myCol );
+        Console.WriteLine("After adding a range of elements:");
+        PrintValues(myCol);
 
-      // Adds one element to the end of the StringCollection and inserts another at index 3.
-      myCol.Add( "* white" );
-      myCol.Insert( 3, "* gray" );
+        // Adds one element to the end of the StringCollection and inserts another at index 3.
+        myCol.Add("* white");
+        myCol.Insert(3, "* gray");
 
-      Console.WriteLine( "After adding \"* white\" to the end and inserting \"* gray\" at index 3:" );
-      PrintValues( myCol );
-   }
+        Console.WriteLine("After adding \"* white\" to the end and inserting \"* gray\" at index 3:");
+        PrintValues(myCol);
+    }
 
-   public static void PrintValues( IEnumerable myCol )  {
-      foreach ( Object obj in myCol )
-         Console.WriteLine( "   {0}", obj );
-      Console.WriteLine();
-   }
+    public static void PrintValues(IEnumerable myCol)
+    {
+        foreach (object obj in myCol)
+            Console.WriteLine($"   {obj}");
+        Console.WriteLine();
+    }
 }
 
 /*

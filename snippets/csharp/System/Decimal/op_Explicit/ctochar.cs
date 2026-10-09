@@ -3,25 +3,26 @@ using System;
 
 class Example
 {
-   public static void Main( )
-   {
-      // Define an array of decimal values.
-      decimal[] values = { 3.33m, 55.5m, 77.7m, 123m, 123.999m, 170m,
+    public static void Main()
+    {
+        // Define an array of decimal values.
+        decimal[] values = { 3.33m, 55.5m, 77.7m, 123m, 123.999m, 170m,
                            188.88m, 222m, 244m, 8217m, 8250m, 65536m,
                            -1m };
-      // Convert each value to a Char.
-      foreach (decimal value in values) {
-         try {
-            char charValue = (char) value;
-            Console.WriteLine("{0} --> {1} ({2:X4})", value,
-                              charValue, (ushort) charValue);
-         }
-         catch (OverflowException) {
-            Console.WriteLine("OverflowException: Cannot convert {0}",
-                              value);
-         }
-      }
-   }
+        // Convert each value to a Char.
+        foreach (decimal value in values)
+        {
+            try
+            {
+                char charValue = (char)value;
+                Console.WriteLine($"{value} --> {charValue} ({(ushort)charValue:X4})");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"OverflowException: Cannot convert {value}");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //       3.33 --> ? (0003)

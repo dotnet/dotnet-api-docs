@@ -7,19 +7,13 @@ using System;
 using System.Collections;
 using System.Globalization;
 
-class myCultureComparer : IEqualityComparer
+class CapacityCultureEqualityComparer : IEqualityComparer
 {
     public CaseInsensitiveComparer myComparer;
 
-    public myCultureComparer()
-    {
-        myComparer = CaseInsensitiveComparer.DefaultInvariant;
-    }
+    public CapacityCultureEqualityComparer() => myComparer = CaseInsensitiveComparer.DefaultInvariant;
 
-    public myCultureComparer(CultureInfo myCulture)
-    {
-        myComparer = new CaseInsensitiveComparer(myCulture);
-    }
+    public CapacityCultureEqualityComparer(CultureInfo myCulture) => myComparer = new(myCulture);
 
     public new bool Equals(object x, object y)
     {
@@ -33,45 +27,49 @@ class myCultureComparer : IEqualityComparer
         }
     }
 
-    public int GetHashCode(object obj)
-    {
+    public int GetHashCode(object obj) =>
         // Compare the hash code for the lowercase versions of the strings.
-        return obj.ToString().ToLower().GetHashCode();
-    }
+        obj.ToString().ToLower().GetHashCode();
 }
 
-public class SamplesHashtable
+public class SamplesHashtableCapacity
 {
 
-    public static void Main()
+    public static void Run()
     {
 
         // Create a hash table using the default comparer.
-        Hashtable myHT1 = new Hashtable(3);
-        myHT1.Add("FIRST", "Hello");
-        myHT1.Add("SECOND", "World");
-        myHT1.Add("THIRD", "!");
+        Hashtable myHT1 = new Hashtable(3)
+        {
+            { "FIRST", "Hello" },
+            { "SECOND", "World" },
+            { "THIRD", "!" }
+        };
 
         // Create a hash table using the specified IEqualityComparer that uses
         // the CaseInsensitiveComparer.DefaultInvariant to determine equality.
-        Hashtable myHT2 = new Hashtable(3, new myCultureComparer());
-        myHT2.Add("FIRST", "Hello");
-        myHT2.Add("SECOND", "World");
-        myHT2.Add("THIRD", "!");
+        Hashtable myHT2 = new Hashtable(3, new CapacityCultureEqualityComparer())
+        {
+            { "FIRST", "Hello" },
+            { "SECOND", "World" },
+            { "THIRD", "!" }
+        };
 
         // Create a hash table using an IEqualityComparer that is based on
         // the Turkish culture (tr-TR) where "I" is not the uppercase
         // version of "i".
-        CultureInfo myCul = new CultureInfo("tr-TR");
-        Hashtable myHT3 = new Hashtable(3, new myCultureComparer(myCul));
-        myHT3.Add("FIRST", "Hello");
-        myHT3.Add("SECOND", "World");
-        myHT3.Add("THIRD", "!");
+        CultureInfo myCul = new("tr-TR");
+        Hashtable myHT3 = new Hashtable(3, new CapacityCultureEqualityComparer(myCul))
+        {
+            { "FIRST", "Hello" },
+            { "SECOND", "World" },
+            { "THIRD", "!" }
+        };
 
         // Search for a key in each hash table.
-        Console.WriteLine("first is in myHT1: {0}", myHT1.ContainsKey("first"));
-        Console.WriteLine("first is in myHT2: {0}", myHT2.ContainsKey("first"));
-        Console.WriteLine("first is in myHT3: {0}", myHT3.ContainsKey("first"));
+        Console.WriteLine($"first is in myHT1: {myHT1.ContainsKey("first")}");
+        Console.WriteLine($"first is in myHT2: {myHT2.ContainsKey("first")}");
+        Console.WriteLine($"first is in myHT3: {myHT3.ContainsKey("first")}");
     }
 }
 

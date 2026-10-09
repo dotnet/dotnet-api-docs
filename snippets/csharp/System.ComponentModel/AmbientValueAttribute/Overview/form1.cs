@@ -51,11 +51,7 @@ public class Form1 : Form
     void attributesDemoControl1_ThresholdExceeded(
         ThresholdExceededEventArgs e)
     {
-        string msg = string.Format(
-            "{0}: Value {1} exceeded threshold {2}",
-            attributesDemoControl1.CurrentLogTime,
-            e.ExceedingValue,
-            e.ThresholdValue);
+        string msg = $"{attributesDemoControl1.CurrentLogTime}: Value {e.ExceedingValue} exceeded threshold {e.ThresholdValue}";
 
         ReportStatus(msg);
     }
@@ -87,9 +83,7 @@ public class Form1 : Form
         attributesDemoControl1.Threshold =
             (float)numericUpDown1.Value;
 
-        string msg = string.Format(
-            "Threshold changed to {0}",
-            attributesDemoControl1.Threshold);
+        string msg = $"Threshold changed to {attributesDemoControl1.Threshold}";
 
         ReportStatus(msg);
     }

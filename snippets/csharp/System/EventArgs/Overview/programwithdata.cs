@@ -20,7 +20,7 @@ namespace ConsoleApplication3
 
         static void c_ThresholdReached(object? sender, ThresholdReachedEventArgs e)
         {
-            Console.WriteLine("The threshold of {0} was reached at {1}.", e.Threshold,  e.TimeReached);
+            Console.WriteLine($"The threshold of {e.Threshold} was reached at {e.TimeReached}.");
             Environment.Exit(0);
         }
     }
@@ -30,10 +30,7 @@ namespace ConsoleApplication3
         private readonly int _threshold;
         private int _total;
 
-        public Counter(int passedThreshold)
-        {
-            _threshold = passedThreshold;
-        }
+        public Counter(int passedThreshold) => _threshold = passedThreshold;
 
         public void Add(int x)
         {
@@ -49,10 +46,7 @@ namespace ConsoleApplication3
             }
         }
 
-        protected virtual void OnThresholdReached(ThresholdReachedEventArgs e)
-        {
-            ThresholdReached?.Invoke(this, e);
-        }
+        protected virtual void OnThresholdReached(ThresholdReachedEventArgs e) => ThresholdReached?.Invoke(this, e);
 
         public event EventHandler<ThresholdReachedEventArgs>? ThresholdReached;
     }

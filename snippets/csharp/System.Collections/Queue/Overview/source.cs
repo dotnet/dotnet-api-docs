@@ -1,34 +1,40 @@
 ﻿// <Snippet1>
- using System;
- using System.Collections;
- public class SamplesQueue  {
+using System;
+using System.Collections;
+public class SamplesQueue
+{
 
-    public static void Main()  {
+    public static void Main()
+    {
 
-       // Creates and initializes a new Queue.
-       Queue myQ = new Queue();
-       myQ.Enqueue("Hello");
-       myQ.Enqueue("World");
-       myQ.Enqueue("!");
+        // Creates and initializes a new Queue.
+        Queue myQ = new();
+        myQ.Enqueue("Hello");
+        myQ.Enqueue("World");
+        myQ.Enqueue("!");
 
-       // Displays the properties and values of the Queue.
-       Console.WriteLine( "myQ" );
-       Console.WriteLine( "\tCount:    {0}", myQ.Count );
-       Console.Write( "\tValues:" );
-       PrintValues( myQ );
+        // Displays the properties and values of the Queue.
+        Console.WriteLine("myQ");
+        Console.WriteLine($"\tCount:    {myQ.Count}");
+        Console.Write("\tValues:");
+        PrintValues(myQ);
     }
 
-    public static void PrintValues( IEnumerable myCollection )  {
-       foreach ( Object obj in myCollection )
-          Console.Write( "    {0}", obj );
-       Console.WriteLine();
-    }
- }
- /*
- This code produces the following output.
+    public static void PrintValues(IEnumerable myCollection)
+    {
+        foreach (object obj in myCollection)
+        {
+            Console.Write($"    {obj}");
+        }
 
- myQ
-     Count:    3
-     Values:    Hello    World    !
+        Console.WriteLine();
+    }
+}
+/*
+This code produces the following output.
+
+myQ
+    Count:    3
+    Values:    Hello    World    !
 */
 // </Snippet1>

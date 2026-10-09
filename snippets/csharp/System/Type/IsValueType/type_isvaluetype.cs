@@ -7,7 +7,7 @@ enum NumEnum { One, Two }
 public class Example
 {
 
-    public static void Main(string []args)
+    public static void Main(string[] args)
     {
         bool flag = false;
         NumEnum testEnum = NumEnum.One;
@@ -15,7 +15,7 @@ public class Example
         Type t = testEnum.GetType();
         // Get the IsValueType property of the testEnum variable.
         flag = t.IsValueType;
-        Console.WriteLine("{0} is a value type: {1}", t.FullName, flag);
+        Console.WriteLine($"{t.FullName} is a value type: {flag}");
     }
 }
 // The example displays the following output:

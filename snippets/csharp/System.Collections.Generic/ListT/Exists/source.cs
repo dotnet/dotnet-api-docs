@@ -6,19 +6,20 @@ public class Example
 {
     public static void Main()
     {
-        List<string> dinosaurs = new List<string>();
-
-        dinosaurs.Add("Compsognathus");
-        dinosaurs.Add("Amargasaurus");
-        dinosaurs.Add("Oviraptor");
-        dinosaurs.Add("Velociraptor");
-        dinosaurs.Add("Deinonychus");
-        dinosaurs.Add("Dilophosaurus");
-        dinosaurs.Add("Gallimimus");
-        dinosaurs.Add("Triceratops");
+        List<string> dinosaurs =
+        [
+            "Compsognathus",
+            "Amargasaurus",
+            "Oviraptor",
+            "Velociraptor",
+            "Deinonychus",
+            "Dilophosaurus",
+            "Gallimimus",
+            "Triceratops",
+        ];
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -35,7 +36,7 @@ public class Example
         Console.WriteLine("\nFindAll(EndsWithSaurus):");
         List<string> sublist = dinosaurs.FindAll(EndsWithSaurus);
 
-        foreach(string dinosaur in sublist)
+        foreach (string dinosaur in sublist)
         {
             Console.WriteLine(dinosaur);
         }
@@ -45,7 +46,7 @@ public class Example
             dinosaurs.RemoveAll(EndsWithSaurus));
 
         Console.WriteLine("\nList now contains:");
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -55,7 +56,7 @@ public class Example
     }
 
     // Search predicate returns true if a string ends in "saurus".
-    private static bool EndsWithSaurus(String s)
+    private static bool EndsWithSaurus(string s)
     {
         return s.ToLower().EndsWith("saurus");
     }

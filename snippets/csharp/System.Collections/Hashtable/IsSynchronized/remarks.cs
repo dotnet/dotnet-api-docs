@@ -3,10 +3,10 @@ using System.Collections;
 
 public class SamplesHashtable
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
-        var myCollection = new Hashtable();
+        Hashtable myCollection = [];
         lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)

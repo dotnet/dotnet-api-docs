@@ -1,15 +1,15 @@
-﻿using System.Drawing;
-using System;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
-public class Form1:
+public class Form1 :
     System.Windows.Forms.Form
 
 {
     #region " Windows Form Designer generated code "
 
     public Form1() : base()
-    {        
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
@@ -22,10 +22,7 @@ public class Form1:
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -42,10 +39,10 @@ public class Form1:
         // 
         // Form1
         // 
-        this.ClientSize = new System.Drawing.Size(292, 266);
-        this.Name = "Form1";
-        this.Text = "Form1";
-        this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
+        ClientSize = new System.Drawing.Size(292, 266);
+        Name = "Form1";
+        Text = "Form1";
+        Paint += new System.Windows.Forms.PaintEventHandler(Form1_Paint);
     }
 
     #endregion
@@ -61,10 +58,10 @@ public class Form1:
     {
 
         // Create the PointConverter.
-        System.ComponentModel.TypeConverter converter = 
+        System.ComponentModel.TypeConverter converter =
             System.ComponentModel.TypeDescriptor.GetConverter(typeof(Point));
 
-        Point point1 = (Point) converter.ConvertFromString("200, 200");
+        Point point1 = (Point)converter.ConvertFromString("200, 200");
 
         // Use the subtraction operator to get a second point.
         Point point2 = point1 - new Size(190, 190);
@@ -80,18 +77,18 @@ public class Form1:
     // into a form and call the ShowColorConverter method when
     // handling the form's Paint event, passing e as PaintEventArgs.
     //<snippet2>
-    
+
     private void ShowColorConverter(PaintEventArgs e)
     {
 
         Color myColor = Color.PaleVioletRed;
 
         // Create the ColorConverter.
-        System.ComponentModel.TypeConverter converter = 
+        System.ComponentModel.TypeConverter converter =
             System.ComponentModel.TypeDescriptor.GetConverter(myColor);
 
         string colorAsString = converter.ConvertToString(Color.PaleVioletRed);
-        e.Graphics.DrawString(colorAsString, this.Font,
+        e.Graphics.DrawString(colorAsString, Font,
             Brushes.PaleVioletRed, 50.0F, 50.0F);
     }
     //</snippet2>
@@ -107,10 +104,10 @@ public class Form1:
     {
 
         // Create the FontConverter.
-        System.ComponentModel.TypeConverter converter = 
+        System.ComponentModel.TypeConverter converter =
             System.ComponentModel.TypeDescriptor.GetConverter(typeof(Font));
 
-        Font font1 = (Font) converter.ConvertFromString("Arial, 12pt");
+        Font font1 = (Font)converter.ConvertFromString("Arial, 12pt");
 
         string fontName1 = converter.ConvertToInvariantString(font1);
         string fontName2 = converter.ConvertToString(font1);

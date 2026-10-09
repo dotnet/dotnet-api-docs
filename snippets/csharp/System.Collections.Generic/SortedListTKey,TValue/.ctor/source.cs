@@ -2,21 +2,22 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class SortedListConstructorExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a new sorted list of strings, with string keys and
         // a case-insensitive comparer for the current culture.
         SortedList<string, string> openWith =
                       new SortedList<string, string>(
-                          StringComparer.CurrentCultureIgnoreCase);
-
-        // Add some elements to the list.
-        openWith.Add("txt", "notepad.exe");
-        openWith.Add("bmp", "paint.exe");
-        openWith.Add("DIB", "paint.exe");
-        openWith.Add("rtf", "wordpad.exe");
+                          StringComparer.CurrentCultureIgnoreCase)
+                      {
+                          // Add some elements to the list.
+                          { "txt", "notepad.exe" },
+                          { "bmp", "paint.exe" },
+                          { "DIB", "paint.exe" },
+                          { "rtf", "wordpad.exe" }
+                      };
 
         // Try to add a fifth element with a key that is the same
         // except for case; this would be allowed with the default
@@ -32,7 +33,7 @@ public class Example
 
         // List the contents of the sorted list.
         Console.WriteLine();
-        foreach( KeyValuePair<string, string> kvp in openWith )
+        foreach (KeyValuePair<string, string> kvp in openWith)
         {
             Console.WriteLine("Key = {0}, Value = {1}", kvp.Key,
                 kvp.Value);

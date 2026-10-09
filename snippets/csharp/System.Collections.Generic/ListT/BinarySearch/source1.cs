@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-public class DinoComparer: IComparer<string>
+namespace BinarySearchSnippet2;
+
+public class DinoComparer : IComparer<string>
 {
     public int Compare(string x, string y)
     {
@@ -26,7 +28,7 @@ public class DinoComparer: IComparer<string>
             // If x is not null...
             //
             if (y == null)
-                // ...and y is null, x is greater.
+            // ...and y is null, x is greater.
             {
                 return 1;
             }
@@ -58,16 +60,18 @@ public class DinoComparer: IComparer<string>
 
 public class Example
 {
-    public static void Main()
+    public static void Run()
     {
-        List<string> dinosaurs = new List<string>();
-        dinosaurs.Add("Pachycephalosaurus");
-        dinosaurs.Add("Amargasaurus");
-        dinosaurs.Add("Mamenchisaurus");
-        dinosaurs.Add("Deinonychus");
+        List<string> dinosaurs =
+        [
+            "Pachycephalosaurus",
+            "Amargasaurus",
+            "Mamenchisaurus",
+            "Deinonychus",
+        ];
         Display(dinosaurs);
 
-        DinoComparer dc = new DinoComparer();
+        DinoComparer dc = new();
 
         Console.WriteLine("\nSort with alternate comparer:");
         dinosaurs.Sort(dc);
@@ -102,7 +106,7 @@ public class Example
     private static void Display(List<string> list)
     {
         Console.WriteLine();
-        foreach( string s in list )
+        foreach (string s in list)
         {
             Console.WriteLine(s);
         }

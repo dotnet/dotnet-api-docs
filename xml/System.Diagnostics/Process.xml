@@ -1105,6 +1105,7 @@ The following code example creates a process that prints a file. It sets the <xr
 
  ]]></format>
         </remarks>
+        <exception cref="T:System.InvalidOperationException">You're attempting to access this property before the process has exited, when no process is associated with this object, or (on Windows) when there is no process handle available.</exception>
         <exception cref="T:System.NotSupportedException">You are trying to access the <see cref="P:System.Diagnostics.Process.ExitTime" /> property for a process that is running on a remote computer. This property is available only for processes that are running on the local computer.</exception>
         <altmember cref="P:System.Diagnostics.Process.Handle" />
         <altmember cref="P:System.Diagnostics.Process.ExitCode" />
@@ -3573,10 +3574,13 @@ If no main module is found, it could be because the process hasn't finished load
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the privileged processor time for this process.</summary>
+        <summary>Gets the amount of time the process has spent running code inside the operating system core.</summary>
         <value>A <see cref="T:System.TimeSpan" /> that indicates the amount of time that the process has spent running code inside the operating system core.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
+
+ On Windows, if a handle to the process is available, the value can be retrieved after the process exits.
+ On Unix, the value is unavailable after the process exits.
 
 ## Examples
  The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.
@@ -3587,9 +3591,11 @@ If no main module is found, it could be because the process hasn't finished load
 
  ]]></format>
         </remarks>
+        <exception cref="T:System.InvalidOperationException">No process is associated with this object. On Windows, there is no process handle available. On Unix, the process has exited.</exception>
+        <exception cref="T:System.ComponentModel.Win32Exception">The operating system could not retrieve process timing information.</exception>
         <exception cref="T:System.NotSupportedException">You are attempting to access the <see cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" /> property for a process that is running on a remote computer. This property is available only for processes that are running on the local computer.</exception>
         <altmember cref="P:System.Diagnostics.Process.UserProcessorTime" />
-        <altmember cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" />
+        <altmember cref="P:System.Diagnostics.Process.TotalProcessorTime" />
       </Docs>
     </Member>
     <Member MemberName="ProcessName">
@@ -4137,11 +4143,11 @@ A redirected stream has already been used for synchronous or asynchronous readin
       </Docs>
     </Member>
     <Member MemberName="Run">
-      <MemberSignature Language="C#" Value="public static System.Diagnostics.ProcessExitStatus Run (string fileName, System.Collections.Generic.IList&lt;string&gt;? arguments = default, TimeSpan? timeout = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Diagnostics.ProcessExitStatus Run(string fileName, class System.Collections.Generic.IList`1&lt;string&gt; arguments, valuetype System.Nullable`1&lt;valuetype System.TimeSpan&gt; timeout) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.Run(System.String,System.Collections.Generic.IList{System.String},System.Nullable{System.TimeSpan})" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Function Run (fileName As String, Optional arguments As IList(Of String) = Nothing, Optional timeout As Nullable(Of TimeSpan) = Nothing) As ProcessExitStatus" />
-      <MemberSignature Language="F#" Value="static member Run : string * System.Collections.Generic.IList&lt;string&gt; * Nullable&lt;TimeSpan&gt; -&gt; System.Diagnostics.ProcessExitStatus" Usage="System.Diagnostics.Process.Run (fileName, arguments, timeout)" />
+      <MemberSignature Language="C#" Value="public static System.Diagnostics.ProcessExitStatus Run (string fileName, System.Collections.Generic.IEnumerable&lt;string&gt;? arguments = default, bool silent = false, TimeSpan? timeout = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Diagnostics.ProcessExitStatus Run(string fileName, class System.Collections.Generic.IEnumerable`1&lt;string&gt; arguments, bool silent, valuetype System.Nullable`1&lt;valuetype System.TimeSpan&gt; timeout) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.Run(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.Nullable{System.TimeSpan})" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Run (fileName As String, Optional arguments As IEnumerable(Of String) = Nothing, Optional silent As Boolean = false, Optional timeout As Nullable(Of TimeSpan) = Nothing) As ProcessExitStatus" />
+      <MemberSignature Language="F#" Value="static member Run : string * seq&lt;string&gt; * bool * Nullable&lt;TimeSpan&gt; -&gt; System.Diagnostics.ProcessExitStatus" Usage="System.Diagnostics.Process.Run (fileName, arguments, silent, timeout)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.Process</AssemblyName>
@@ -4169,7 +4175,7 @@ A redirected stream has already been used for synchronous or asynchronous readin
       </ReturnValue>
       <Parameters>
         <Parameter Name="fileName" Type="System.String" Index="0" FrameworkAlternate="net-11.0" />
-        <Parameter Name="arguments" Type="System.Collections.Generic.IList&lt;System.String&gt;" Index="1" FrameworkAlternate="net-11.0">
+        <Parameter Name="arguments" Type="System.Collections.Generic.IEnumerable&lt;System.String&gt;" Index="1" FrameworkAlternate="net-11.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
@@ -4177,11 +4183,13 @@ A redirected stream has already been used for synchronous or asynchronous readin
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="timeout" Type="System.Nullable&lt;System.TimeSpan&gt;" Index="2" FrameworkAlternate="net-11.0" />
+        <Parameter Name="silent" Type="System.Boolean" Index="2" FrameworkAlternate="net-11.0" />
+        <Parameter Name="timeout" Type="System.Nullable&lt;System.TimeSpan&gt;" Index="3" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
         <param name="fileName">The name of the application or document to start.</param>
         <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty list to start the process without additional arguments.</param>
+        <param name="silent">When <see langword="true" />, redirects standard input, output, and error to the null device, ensuring the process produces no visible console output. When <see langword="false" />, the process inherits standard handles from the parent.</param>
         <param name="timeout">The maximum amount of time to wait for the process to exit. When <see langword="null" />, waits indefinitely. If the process does not exit within the specified timeout, it is killed.</param>
         <summary>Starts a process with the specified file name and optional arguments, waits for it to exit, and returns its exit status.</summary>
         <returns>The exit status of the process.</returns>
@@ -4244,11 +4252,11 @@ A redirected stream has already been used for synchronous or asynchronous readin
       </Docs>
     </Member>
     <Member MemberName="RunAndCaptureText">
-      <MemberSignature Language="C#" Value="public static System.Diagnostics.ProcessTextOutput RunAndCaptureText (string fileName, System.Collections.Generic.IList&lt;string&gt;? arguments = default, TimeSpan? timeout = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Diagnostics.ProcessTextOutput RunAndCaptureText(string fileName, class System.Collections.Generic.IList`1&lt;string&gt; arguments, valuetype System.Nullable`1&lt;valuetype System.TimeSpan&gt; timeout) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.RunAndCaptureText(System.String,System.Collections.Generic.IList{System.String},System.Nullable{System.TimeSpan})" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Function RunAndCaptureText (fileName As String, Optional arguments As IList(Of String) = Nothing, Optional timeout As Nullable(Of TimeSpan) = Nothing) As ProcessTextOutput" />
-      <MemberSignature Language="F#" Value="static member RunAndCaptureText : string * System.Collections.Generic.IList&lt;string&gt; * Nullable&lt;TimeSpan&gt; -&gt; System.Diagnostics.ProcessTextOutput" Usage="System.Diagnostics.Process.RunAndCaptureText (fileName, arguments, timeout)" />
+      <MemberSignature Language="C#" Value="public static System.Diagnostics.ProcessTextOutput RunAndCaptureText (string fileName, System.Collections.Generic.IEnumerable&lt;string&gt;? arguments = default, TimeSpan? timeout = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Diagnostics.ProcessTextOutput RunAndCaptureText(string fileName, class System.Collections.Generic.IEnumerable`1&lt;string&gt; arguments, valuetype System.Nullable`1&lt;valuetype System.TimeSpan&gt; timeout) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.RunAndCaptureText(System.String,System.Collections.Generic.IEnumerable{System.String},System.Nullable{System.TimeSpan})" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function RunAndCaptureText (fileName As String, Optional arguments As IEnumerable(Of String) = Nothing, Optional timeout As Nullable(Of TimeSpan) = Nothing) As ProcessTextOutput" />
+      <MemberSignature Language="F#" Value="static member RunAndCaptureText : string * seq&lt;string&gt; * Nullable&lt;TimeSpan&gt; -&gt; System.Diagnostics.ProcessTextOutput" Usage="System.Diagnostics.Process.RunAndCaptureText (fileName, arguments, timeout)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.Process</AssemblyName>
@@ -4276,7 +4284,7 @@ A redirected stream has already been used for synchronous or asynchronous readin
       </ReturnValue>
       <Parameters>
         <Parameter Name="fileName" Type="System.String" Index="0" FrameworkAlternate="net-11.0" />
-        <Parameter Name="arguments" Type="System.Collections.Generic.IList&lt;System.String&gt;" Index="1" FrameworkAlternate="net-11.0">
+        <Parameter Name="arguments" Type="System.Collections.Generic.IEnumerable&lt;System.String&gt;" Index="1" FrameworkAlternate="net-11.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
@@ -4351,11 +4359,11 @@ A redirected stream has already been used for synchronous or asynchronous readin
       </Docs>
     </Member>
     <Member MemberName="RunAndCaptureTextAsync">
-      <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessTextOutput&gt; RunAndCaptureTextAsync (string fileName, System.Collections.Generic.IList&lt;string&gt;? arguments = default, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class System.Diagnostics.ProcessTextOutput&gt; RunAndCaptureTextAsync(string fileName, class System.Collections.Generic.IList`1&lt;string&gt; arguments, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.RunAndCaptureTextAsync(System.String,System.Collections.Generic.IList{System.String},System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Function RunAndCaptureTextAsync (fileName As String, Optional arguments As IList(Of String) = Nothing, Optional cancellationToken As CancellationToken = Nothing) As Task(Of ProcessTextOutput)" />
-      <MemberSignature Language="F#" Value="static member RunAndCaptureTextAsync : string * System.Collections.Generic.IList&lt;string&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessTextOutput&gt;" Usage="System.Diagnostics.Process.RunAndCaptureTextAsync (fileName, arguments, cancellationToken)" />
+      <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessTextOutput&gt; RunAndCaptureTextAsync (string fileName, System.Collections.Generic.IEnumerable&lt;string&gt;? arguments = default, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class System.Diagnostics.ProcessTextOutput&gt; RunAndCaptureTextAsync(string fileName, class System.Collections.Generic.IEnumerable`1&lt;string&gt; arguments, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.RunAndCaptureTextAsync(System.String,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function RunAndCaptureTextAsync (fileName As String, Optional arguments As IEnumerable(Of String) = Nothing, Optional cancellationToken As CancellationToken = Nothing) As Task(Of ProcessTextOutput)" />
+      <MemberSignature Language="F#" Value="static member RunAndCaptureTextAsync : string * seq&lt;string&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessTextOutput&gt;" Usage="System.Diagnostics.Process.RunAndCaptureTextAsync (fileName, arguments, cancellationToken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.Process</AssemblyName>
@@ -4383,7 +4391,7 @@ A redirected stream has already been used for synchronous or asynchronous readin
       </ReturnValue>
       <Parameters>
         <Parameter Name="fileName" Type="System.String" Index="0" FrameworkAlternate="net-11.0" />
-        <Parameter Name="arguments" Type="System.Collections.Generic.IList&lt;System.String&gt;" Index="1" FrameworkAlternate="net-11.0">
+        <Parameter Name="arguments" Type="System.Collections.Generic.IEnumerable&lt;System.String&gt;" Index="1" FrameworkAlternate="net-11.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
@@ -4454,11 +4462,11 @@ A redirected stream has already been used for synchronous or asynchronous readin
       </Docs>
     </Member>
     <Member MemberName="RunAsync">
-      <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessExitStatus&gt; RunAsync (string fileName, System.Collections.Generic.IList&lt;string&gt;? arguments = default, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class System.Diagnostics.ProcessExitStatus&gt; RunAsync(string fileName, class System.Collections.Generic.IList`1&lt;string&gt; arguments, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.RunAsync(System.String,System.Collections.Generic.IList{System.String},System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Function RunAsync (fileName As String, Optional arguments As IList(Of String) = Nothing, Optional cancellationToken As CancellationToken = Nothing) As Task(Of ProcessExitStatus)" />
-      <MemberSignature Language="F#" Value="static member RunAsync : string * System.Collections.Generic.IList&lt;string&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessExitStatus&gt;" Usage="System.Diagnostics.Process.RunAsync (fileName, arguments, cancellationToken)" />
+      <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessExitStatus&gt; RunAsync (string fileName, System.Collections.Generic.IEnumerable&lt;string&gt;? arguments = default, bool silent = false, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class System.Diagnostics.ProcessExitStatus&gt; RunAsync(string fileName, class System.Collections.Generic.IEnumerable`1&lt;string&gt; arguments, bool silent, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.RunAsync(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function RunAsync (fileName As String, Optional arguments As IEnumerable(Of String) = Nothing, Optional silent As Boolean = false, Optional cancellationToken As CancellationToken = Nothing) As Task(Of ProcessExitStatus)" />
+      <MemberSignature Language="F#" Value="static member RunAsync : string * seq&lt;string&gt; * bool * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessExitStatus&gt;" Usage="System.Diagnostics.Process.RunAsync (fileName, arguments, silent, cancellationToken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.Process</AssemblyName>
@@ -4486,7 +4494,7 @@ A redirected stream has already been used for synchronous or asynchronous readin
       </ReturnValue>
       <Parameters>
         <Parameter Name="fileName" Type="System.String" Index="0" FrameworkAlternate="net-11.0" />
-        <Parameter Name="arguments" Type="System.Collections.Generic.IList&lt;System.String&gt;" Index="1" FrameworkAlternate="net-11.0">
+        <Parameter Name="arguments" Type="System.Collections.Generic.IEnumerable&lt;System.String&gt;" Index="1" FrameworkAlternate="net-11.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
@@ -4494,11 +4502,13 @@ A redirected stream has already been used for synchronous or asynchronous readin
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-11.0" />
+        <Parameter Name="silent" Type="System.Boolean" Index="2" FrameworkAlternate="net-11.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
         <param name="fileName">The name of the application or document to start.</param>
         <param name="arguments">The command-line arguments to pass to the process. Pass <see langword="null" /> or an empty list to start the process without additional arguments.</param>
+        <param name="silent">When <see langword="true" />, redirects standard input, output, and error to the null device, ensuring the process produces no visible console output. When <see langword="false" />, the process inherits standard handles from the parent.</param>
         <param name="cancellationToken">A token to cancel the asynchronous operation. If the token is canceled, the process is killed.</param>
         <summary>Asynchronously starts a process with the specified file name and optional arguments, waits for it to exit, and returns its exit status.</summary>
         <returns>A task that represents the asynchronous operation. The value of the task contains the exit status of the process.</returns>
@@ -4598,6 +4608,48 @@ A redirected stream has already been used for synchronous or asynchronous readin
  The associated process is not on this machine.</exception>
       </Docs>
     </Member>
+    <Member MemberName="Signal">
+      <MemberSignature Language="C#" Value="public bool Signal (System.Runtime.InteropServices.PosixSignal signal);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Signal(valuetype System.Runtime.InteropServices.PosixSignal signal) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.Signal(System.Runtime.InteropServices.PosixSignal)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Signal (signal As PosixSignal) As Boolean" />
+      <MemberSignature Language="F#" Value="member this.Signal : System.Runtime.InteropServices.PosixSignal -&gt; bool" Usage="process.Signal signal" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool Signal(System::Runtime::InteropServices::PosixSignal signal);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.Process</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.SupportedOSPlatform("maccatalyst")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.SupportedOSPlatform("maccatalyst")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("ios")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("ios")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("tvos")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("tvos")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="signal" Type="System.Runtime.InteropServices.PosixSignal" Index="0" FrameworkAlternate="net-11.0" />
+      </Parameters>
+      <Docs>
+        <param name="signal">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="StandardError">
       <MemberSignature Language="C#" Value="public System.IO.StreamReader StandardError { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.IO.StreamReader StandardError" />
@@ -4648,7 +4700,7 @@ A redirected stream has already been used for synchronous or asynchronous readin
 
 The last two examples in this section use the <xref:System.Diagnostics.Process.Start*> method to launch an executable named *Write500Lines.exe*. The following example contains its source code.
 
-:::code language="csharp" source="~/snippets/csharp/System.Diagnostics/Process/StandardOutput/write500lines.cs":::
+:::code language="csharp" source="~/snippets/csharp/System.Diagnostics/Process/Write500Lines/write500lines.cs":::
 :::code language="fsharp" source="~/snippets/fsharp/System.Diagnostics/Process/StandardOutput/write500lines.fs":::
 :::code language="vb" source="~/snippets/visualbasic/api/system.diagnostics/process/standardoutput/write500lines.vb":::
 
@@ -4798,7 +4850,7 @@ You can use asynchronous read operations to avoid these dependencies and their d
 
 The last two examples in this section use the <xref:System.Diagnostics.Process.Start*> method to launch an executable named *Write500Lines.exe*. The following example contains its source code.
 
-:::code language="csharp" source="~/snippets/csharp/System.Diagnostics/Process/StandardOutput/write500lines.cs":::
+:::code language="csharp" source="~/snippets/csharp/System.Diagnostics/Process/Write500Lines/write500lines.cs":::
 :::code language="fsharp" source="~/snippets/fsharp/System.Diagnostics/Process/StandardOutput/write500lines.fs":::
 :::code language="vb" source="~/snippets/visualbasic/api/system.diagnostics/process/standardoutput/write500lines.vb":::
 
@@ -5612,11 +5664,11 @@ This method is designed for fire-and-forget scenarios where the caller wants to 
       </Docs>
     </Member>
     <Member MemberName="StartAndForget">
-      <MemberSignature Language="C#" Value="public static int StartAndForget (string fileName, System.Collections.Generic.IList&lt;string&gt;? arguments = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig int32 StartAndForget(string fileName, class System.Collections.Generic.IList`1&lt;string&gt; arguments) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.StartAndForget(System.String,System.Collections.Generic.IList{System.String})" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Function StartAndForget (fileName As String, Optional arguments As IList(Of String) = Nothing) As Integer" />
-      <MemberSignature Language="F#" Value="static member StartAndForget : string * System.Collections.Generic.IList&lt;string&gt; -&gt; int" Usage="System.Diagnostics.Process.StartAndForget (fileName, arguments)" />
+      <MemberSignature Language="C#" Value="public static int StartAndForget (string fileName, System.Collections.Generic.IEnumerable&lt;string&gt;? arguments = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig int32 StartAndForget(string fileName, class System.Collections.Generic.IEnumerable`1&lt;string&gt; arguments) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.StartAndForget(System.String,System.Collections.Generic.IEnumerable{System.String})" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function StartAndForget (fileName As String, Optional arguments As IEnumerable(Of String) = Nothing) As Integer" />
+      <MemberSignature Language="F#" Value="static member StartAndForget : string * seq&lt;string&gt; -&gt; int" Usage="System.Diagnostics.Process.StartAndForget (fileName, arguments)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Diagnostics.Process</AssemblyName>
@@ -5644,7 +5696,7 @@ This method is designed for fire-and-forget scenarios where the caller wants to 
       </ReturnValue>
       <Parameters>
         <Parameter Name="fileName" Type="System.String" Index="0" FrameworkAlternate="net-11.0" />
-        <Parameter Name="arguments" Type="System.Collections.Generic.IList&lt;System.String&gt;" Index="1" FrameworkAlternate="net-11.0">
+        <Parameter Name="arguments" Type="System.Collections.Generic.IEnumerable&lt;System.String&gt;" Index="1" FrameworkAlternate="net-11.0">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
@@ -5779,14 +5831,17 @@ Standard handles are redirected to the null file by default.
       </ReturnValue>
       <Docs>
         <summary>Gets the time that the associated process was started.</summary>
-        <value>An object  that indicates when the process started. An exception is thrown if the process is not running.</value>
-        <remarks>To be added.</remarks>
+        <value>A <see cref="T:System.DateTime" /> that indicates when the associated process was started.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+ On Windows, if a handle to the process is available, this property can be read after the process has exited.
+ On Unix, this property caches its value on first access. A cached value can be read after the process has exited, but accessing an uncached value after the process has exited can throw <xref:System.InvalidOperationException> when the value is unavailable.
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.NotSupportedException">You are attempting to access the <see cref="P:System.Diagnostics.Process.StartTime" /> property for a process that is running on a remote computer. This property is available only for processes that are running on the local computer.</exception>
-        <exception cref="T:System.InvalidOperationException">The process has exited.
-
- -or-
-
- The process has not been started.</exception>
+        <exception cref="T:System.InvalidOperationException">No process is associated with this object; on Windows, there is no process handle available; or on Unix, the value was not cached and is unavailable after the process exited.</exception>
         <exception cref="T:System.ComponentModel.Win32Exception">An error occurred in the call to the Windows function.</exception>
       </Docs>
     </Member>
@@ -6003,10 +6058,13 @@ Standard handles are redirected to the null file by default.
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the total processor time for this process.</summary>
+        <summary>Gets the amount of time the associated process has spent utilizing the CPU. This value is the sum of <see cref="P:System.Diagnostics.Process.UserProcessorTime" /> and <see cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" />.</summary>
         <value>A <see cref="T:System.TimeSpan" /> that indicates the amount of time that the associated process has spent utilizing the CPU. This value is the sum of the <see cref="P:System.Diagnostics.Process.UserProcessorTime" /> and the <see cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
+
+ On Windows, if a handle to the process is available, the value can be retrieved after the process exits.
+ On Unix, the value is unavailable after the process exits.
 
 ## Examples
  The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.
@@ -6017,9 +6075,113 @@ Standard handles are redirected to the null file by default.
 
  ]]></format>
         </remarks>
+        <exception cref="T:System.InvalidOperationException">No process is associated with this object. On Windows, there is no process handle available. On Unix, the process has exited.</exception>
+        <exception cref="T:System.ComponentModel.Win32Exception">The operating system could not retrieve process timing information.</exception>
         <exception cref="T:System.NotSupportedException">You are attempting to access the <see cref="P:System.Diagnostics.Process.TotalProcessorTime" /> property for a process that is running on a remote computer. This property is available only for processes that are running on the local computer.</exception>
         <altmember cref="P:System.Diagnostics.Process.UserProcessorTime" />
         <altmember cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" />
+      </Docs>
+    </Member>
+    <Member MemberName="TryGetProcessById">
+      <MemberSignature Language="C#" Value="public static bool TryGetProcessById (int processId, out System.Diagnostics.Process? process);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryGetProcessById(int32 processId, [out] class System.Diagnostics.Process&amp; process) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.TryGetProcessById(System.Int32,System.Diagnostics.Process@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function TryGetProcessById (processId As Integer, ByRef process As Process) As Boolean" />
+      <MemberSignature Language="F#" Value="static member TryGetProcessById : int * Process -&gt; bool" Usage="System.Diagnostics.Process.TryGetProcessById (processId, process)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryGetProcessById(int processId, [Runtime::InteropServices::Out] System::Diagnostics::Process ^ % process);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.Process</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.SupportedOSPlatform("maccatalyst")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.SupportedOSPlatform("maccatalyst")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("ios")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("ios")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("tvos")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("tvos")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="processId" Type="System.Int32" Index="0" FrameworkAlternate="net-11.0" />
+        <Parameter Name="process" Type="System.Diagnostics.Process" RefType="out" Index="1" FrameworkAlternate="net-11.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.NotNullWhen(true)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.NotNullWhen(true)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="processId">To be added.</param>
+        <param name="process">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TryWaitForExitStatus">
+      <MemberSignature Language="C#" Value="public bool TryWaitForExitStatus (TimeSpan timeout, out System.Diagnostics.ProcessExitStatus? exitStatus);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryWaitForExitStatus(valuetype System.TimeSpan timeout, [out] class System.Diagnostics.ProcessExitStatus&amp; exitStatus) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.TryWaitForExitStatus(System.TimeSpan,System.Diagnostics.ProcessExitStatus@)" />
+      <MemberSignature Language="VB.NET" Value="Public Function TryWaitForExitStatus (timeout As TimeSpan, ByRef exitStatus As ProcessExitStatus) As Boolean" />
+      <MemberSignature Language="F#" Value="member this.TryWaitForExitStatus : TimeSpan * ProcessExitStatus -&gt; bool" Usage="process.TryWaitForExitStatus (timeout, exitStatus)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryWaitForExitStatus(TimeSpan timeout, [Runtime::InteropServices::Out] System::Diagnostics::ProcessExitStatus ^ % exitStatus);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.Process</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.SupportedOSPlatform("maccatalyst")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.SupportedOSPlatform("maccatalyst")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("ios")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("ios")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("tvos")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("tvos")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="timeout" Type="System.TimeSpan" Index="0" FrameworkAlternate="net-11.0" />
+        <Parameter Name="exitStatus" Type="System.Diagnostics.ProcessExitStatus" RefType="out" Index="1" FrameworkAlternate="net-11.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.NotNullWhen(true)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.NotNullWhen(true)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="timeout">To be added.</param>
+        <param name="exitStatus">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="UserProcessorTime">
@@ -6067,10 +6229,13 @@ Standard handles are redirected to the null file by default.
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the user processor time for this process.</summary>
+        <summary>Gets the amount of time the associated process has spent running code inside the application portion of the process (not the operating system core).</summary>
         <value>A <see cref="T:System.TimeSpan" /> that indicates the amount of time that the associated process has spent running code inside the application portion of the process (not inside the operating system core).</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
+
+ On Windows, if a handle to the process is available, the value can be retrieved after the process exits.
+ On Unix, the value is unavailable after the process exits.
 
 ## Examples
  The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.
@@ -6081,9 +6246,11 @@ Standard handles are redirected to the null file by default.
 
  ]]></format>
         </remarks>
+        <exception cref="T:System.InvalidOperationException">No process is associated with this object. On Windows, there is no process handle available. On Unix, the process has exited.</exception>
+        <exception cref="T:System.ComponentModel.Win32Exception">The operating system could not retrieve process timing information.</exception>
         <exception cref="T:System.NotSupportedException">You are attempting to access the <see cref="P:System.Diagnostics.Process.UserProcessorTime" /> property for a process that is running on a remote computer. This property is available only for processes that are running on the local computer.</exception>
-        <altmember cref="P:System.Diagnostics.Process.UserProcessorTime" />
         <altmember cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" />
+        <altmember cref="P:System.Diagnostics.Process.TotalProcessorTime" />
       </Docs>
     </Member>
     <Member MemberName="VirtualMemorySize">
@@ -6416,6 +6583,86 @@ This method stores in the task it returns all non-usage exceptions that the meth
 ]]></format>
         </remarks>
         <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="WaitForExitStatus">
+      <MemberSignature Language="C#" Value="public System.Diagnostics.ProcessExitStatus WaitForExitStatus ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Diagnostics.ProcessExitStatus WaitForExitStatus() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.WaitForExitStatus" />
+      <MemberSignature Language="VB.NET" Value="Public Function WaitForExitStatus () As ProcessExitStatus" />
+      <MemberSignature Language="F#" Value="member this.WaitForExitStatus : unit -&gt; System.Diagnostics.ProcessExitStatus" Usage="process.WaitForExitStatus " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Diagnostics::ProcessExitStatus ^ WaitForExitStatus();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.Process</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.SupportedOSPlatform("maccatalyst")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.SupportedOSPlatform("maccatalyst")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("ios")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("ios")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("tvos")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("tvos")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Diagnostics.ProcessExitStatus</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="WaitForExitStatusAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessExitStatus&gt; WaitForExitStatusAsync (System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class System.Diagnostics.ProcessExitStatus&gt; WaitForExitStatusAsync(valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.Process.WaitForExitStatusAsync(System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function WaitForExitStatusAsync (Optional cancellationToken As CancellationToken = Nothing) As Task(Of ProcessExitStatus)" />
+      <MemberSignature Language="F#" Value="member this.WaitForExitStatusAsync : System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessExitStatus&gt;" Usage="process.WaitForExitStatusAsync cancellationToken" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.Process</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.SupportedOSPlatform("maccatalyst")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.SupportedOSPlatform("maccatalyst")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("ios")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("ios")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-11.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("tvos")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("tvos")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;System.Diagnostics.ProcessExitStatus&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-11.0" />
+      </Parameters>
+      <Docs>
+        <param name="cancellationToken">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="WaitForInputIdle">

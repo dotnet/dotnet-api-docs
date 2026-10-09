@@ -9,18 +9,18 @@ using System.Windows.Forms.Design;
 
 // This example contains an IRootDesigner that implements the IToolboxUser interface.
 // This example demonstrates how to enable the GetToolSupported method of an IToolboxUser
-// designer in order to disable specific toolbox items, and how to respond to the 
+// designer in order to disable specific toolbox items, and how to respond to the
 // invocation of a ToolboxItem in the ToolPicked method of an IToolboxUser implementation.
 namespace IToolboxUserExample;
 
-// This example component class demonstrates the associated IRootDesigner which 
-// implements the IToolboxUser interface. When designer view is invoked, Visual 
+// This example component class demonstrates the associated IRootDesigner which
+// implements the IToolboxUser interface. When designer view is invoked, Visual
 // Studio .NET attempts to display a design mode view for the class at the top 
-// of a code file. This can sometimes fail when the class is one of multiple types 
-// in a code file, and has a DesignerAttribute associating it with an IRootDesigner. 
-// Placing a derived class at the top of the code file solves this problem. A 
-// derived class is not typically needed for this reason, except that placing the 
-// RootDesignedComponent class in another file is not a simple solution for a code 
+// of a code file. This can sometimes fail when the class is one of multiple types
+// in a code file, and has a DesignerAttribute associating it with an IRootDesigner.
+// Placing a derived class at the top of the code file solves this problem. A
+// derived class is not typically needed for this reason, except that placing the
+// RootDesignedComponent class in another file is not a simple solution for a code
 // example that is packaged in one segment of code.
 public class RootViewSampleComponent : RootDesignedComponent;
 
@@ -28,11 +28,11 @@ public class RootViewSampleComponent : RootDesignedComponent;
 [Designer(typeof(SampleRootDesigner), typeof(IRootDesigner))]
 public class RootDesignedComponent : Control;
 
-// This example IRootDesigner implements the IToolboxUser interface and provides a 
-// Windows Forms view technology view for its associated component using an internal 
-// Control type.     
+// This example IRootDesigner implements the IToolboxUser interface and provides a
+// Windows Forms view technology view for its associated component using an internal
+// Control type.
 // The following ToolboxItemFilterAttribute enables the GetToolSupported method of this
-// IToolboxUser designer to be queried to check for whether to enable or disable all 
+// IToolboxUser designer to be queried to check for whether to enable or disable all
 // ToolboxItems which create any components whose type name begins with "System.Windows.Forms".
 [ToolboxItemFilter("System.Windows.Forms", ToolboxItemFilterType.Custom)]
 public class SampleRootDesigner : ParentControlDesigner, IRootDesigner, IToolboxUser
@@ -41,9 +41,9 @@ public class SampleRootDesigner : ParentControlDesigner, IRootDesigner, IToolbox
     // a control that is shown in the design mode document window.
     RootDesignerView view;
 
-    // This string array contains type names of components that should not be added to 
-    // the component managed by this designer from the Toolbox.  Any ToolboxItems whose 
-    // type name matches a type name in this array will be marked disabled according to  
+    // This string array contains type names of components that should not be added to
+    // the component managed by this designer from the Toolbox. Any ToolboxItems whose
+    // type name matches a type name in this array will be marked disabled according to
     // the signal returned by the IToolboxUser.GetToolSupported method of this designer.
     readonly string[] blockedTypeNames =
     [
@@ -55,19 +55,20 @@ public class SampleRootDesigner : ParentControlDesigner, IRootDesigner, IToolbox
     // This designer provides a display using the Windows Forms view technology.
     ViewTechnology[] IRootDesigner.SupportedTechnologies => [ViewTechnology.Default];
 
-    // This method returns an object that provides the view for this root designer. 
+    // This method returns an object that provides the view for this root designer.
     object IRootDesigner.GetView(ViewTechnology technology)
     {
-        // If the design environment requests a view technology other than Windows 
+        // If the design environment requests a view technology other than Windows
         // Forms, this method throws an Argument Exception.
         if (technology != ViewTechnology.Default)
         {
-            throw new ArgumentException("An unsupported view technology was requested",
-            nameof(technology));
+            throw new ArgumentException(
+                "An unsupported view technology was requested",
+                nameof(technology));
         }
 
         // Creates the view object if it has not yet been initialized.
-        view ??= new RootDesignerView(this);
+        view ??= new(this);
 
         return view;
     }
@@ -96,14 +97,14 @@ public class SampleRootDesigner : ParentControlDesigner, IRootDesigner, IToolbox
 
     //<Snippet3>
     // This method can perform behavior when the specified tool has been invoked.
-    // Invocation of a ToolboxItem typically creates a component or components, 
+    // Invocation of a ToolboxItem typically creates a component or components,
     // and adds any created components to the associated component.
     void IToolboxUser.ToolPicked(ToolboxItem tool)
     {
     }
     //</Snippet3>
 
-    // This control provides a Windows Forms view technology view object that 
+    // This control provides a Windows Forms view technology view object that
     // provides a display for the SampleRootDesigner.
     [Designer(typeof(ParentControlDesigner), typeof(IDesigner))]
     internal class RootDesignerView : Control
@@ -116,7 +117,7 @@ public class SampleRootDesigner : ParentControlDesigner, IRootDesigner, IToolbox
             // Perform basic control initialization.
             m_designer = designer;
             BackColor = Color.Blue;
-            Font = new Font(Font.FontFamily.Name, 24.0f);
+            Font = new(Font.FontFamily.Name, 24.0f);
         }
 
         // This method is called to draw the view for the SampleRootDesigner.

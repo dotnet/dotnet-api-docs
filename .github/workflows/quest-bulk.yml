@@ -33,18 +33,26 @@ jobs:
 
       - name: Azure OpenID Connect
         id: azure-oidc-auth
-        uses: dotnet/docs-tools/.github/actions/oidc-auth-flow@main
+        uses: dotnet/docs-tools/.github/actions/azure-oidc-auth@a92cd3283e8a81d00b7c5daa6cc604dd2f9abc53 # main
         with:
           client-id: ${{ secrets.CLIENT_ID }}
           tenant-id: ${{ secrets.TENANT_ID }}
           audience: ${{ secrets.OSMP_API_AUDIENCE }}
 
+      - name: Azure DevOps OpenID Connect
+        id: azure-devops-oidc-auth
+        uses: dotnet/docs-tools/.github/actions/azure-oidc-auth@a92cd3283e8a81d00b7c5daa6cc604dd2f9abc53 # main
+        with:
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          audience: ${{ secrets.QUEST_AUDIENCE }}
+
       - name: bulk-sequester
         id: bulk-sequester
-        uses: dotnet/docs-tools/actions/sequester@main
+        uses: dotnet/docs-tools/.github/actions/sequester@a92cd3283e8a81d00b7c5daa6cc604dd2f9abc53 # main
         env:
           ImportOptions__ApiKeys__GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          ImportOptions__ApiKeys__QuestKey: ${{ secrets.QUEST_KEY }}
+          ImportOptions__ApiKeys__QuestAccessToken: ${{ steps.azure-devops-oidc-auth.outputs.access-token }}
           ImportOptions__ApiKeys__AzureAccessToken: ${{ steps.azure-oidc-auth.outputs.access-token }}
           ImportOptions__ApiKeys__SequesterPrivateKey: ${{ secrets.SEQUESTER_PRIVATEKEY }}
           ImportOptions__ApiKeys__SequesterAppID: ${{ secrets.SEQUESTER_APPID }}

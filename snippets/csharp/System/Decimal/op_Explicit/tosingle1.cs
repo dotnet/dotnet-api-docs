@@ -3,7 +3,7 @@ using System;
 
 class Example
 {
-    public static void Main( )
+    public static void Main()
     {
         // Define an array of decimal values.
         decimal[] values = { 0.0000000000000000000000000001M,
@@ -13,12 +13,11 @@ class Example
                              123456789123456789123456789M,
                              decimal.MinValue, decimal.MaxValue };
         // Convert each value to a double.
-        foreach (var value in values) {
-            float dblValue = (float) value;
-            Console.WriteLine("{0} ({1}) --> {2} ({3})", value,
-                              value.GetType().Name, dblValue,
-                              dblValue.GetType().Name);
-       }
+        foreach (decimal value in values)
+        {
+            float dblValue = (float)value;
+            Console.WriteLine($"{value} ({value.GetType().Name}) --> {dblValue} ({dblValue.GetType().Name})");
+        }
     }
 }
 // The example displays the following output:

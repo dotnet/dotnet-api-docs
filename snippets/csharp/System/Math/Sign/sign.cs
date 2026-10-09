@@ -8,17 +8,17 @@ class Sample
     {
         string str = "{0}: {1,3} is {2} zero.";
         string nl = Environment.NewLine;
-        byte     xByte1    = 0;
-        short    xShort1   = -2;
-        int      xInt1     = -3;
-        long     xLong1    = -4;
-        float    xSingle1  = 0.0f;
-        double   xDouble1  = 6.0;
-        Decimal  xDecimal1 = -7m;
-        nint     xIntPtr1  = 8;
+        byte xByte1 = 0;
+        short xShort1 = -2;
+        int xInt1 = -3;
+        long xLong1 = -4;
+        float xSingle1 = 0.0f;
+        double xDouble1 = 6.0;
+        decimal xDecimal1 = -7m;
+        nint xIntPtr1 = 8;
 
         // The following type is not CLS-compliant.
-        sbyte    xSbyte1   = -101;
+        sbyte xSbyte1 = -101;
 
         Console.WriteLine($"{nl}Test the sign of the following types of values:");
         Console.WriteLine(str, "Byte   ", xByte1, Test(Math.Sign(xByte1)));

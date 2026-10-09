@@ -5,49 +5,54 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesHybridDictionary  {
+public class SamplesHybridDictionary
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new HybridDictionary.
-      HybridDictionary myCol = new HybridDictionary();
-      myCol.Add( "Braeburn Apples", "1.49" );
-      myCol.Add( "Fuji Apples", "1.29" );
-      myCol.Add( "Gala Apples", "1.49" );
-      myCol.Add( "Golden Delicious Apples", "1.29" );
-      myCol.Add( "Granny Smith Apples", "0.89" );
-      myCol.Add( "Red Delicious Apples", "0.99" );
-      myCol.Add( "Plantain Bananas", "1.49" );
-      myCol.Add( "Yellow Bananas", "0.79" );
-      myCol.Add( "Strawberries", "3.33" );
-      myCol.Add( "Cranberries", "5.98" );
-      myCol.Add( "Navel Oranges", "1.29" );
-      myCol.Add( "Grapes", "1.99" );
-      myCol.Add( "Honeydew Melon", "0.59" );
-      myCol.Add( "Seedless Watermelon", "0.49" );
-      myCol.Add( "Pineapple", "1.49" );
-      myCol.Add( "Nectarine", "1.99" );
-      myCol.Add( "Plums", "1.69" );
-      myCol.Add( "Peaches", "1.99" );
+        // Creates and initializes a new HybridDictionary.
+        HybridDictionary myCol = new()
+      {
+          { "Braeburn Apples", "1.49" },
+          { "Fuji Apples", "1.29" },
+          { "Gala Apples", "1.49" },
+          { "Golden Delicious Apples", "1.29" },
+          { "Granny Smith Apples", "0.89" },
+          { "Red Delicious Apples", "0.99" },
+          { "Plantain Bananas", "1.49" },
+          { "Yellow Bananas", "0.79" },
+          { "Strawberries", "3.33" },
+          { "Cranberries", "5.98" },
+          { "Navel Oranges", "1.29" },
+          { "Grapes", "1.99" },
+          { "Honeydew Melon", "0.59" },
+          { "Seedless Watermelon", "0.49" },
+          { "Pineapple", "1.49" },
+          { "Nectarine", "1.99" },
+          { "Plums", "1.69" },
+          { "Peaches", "1.99" }
+      };
 
-      // Displays the values in the HybridDictionary in three different ways.
-      Console.WriteLine( "Initial contents of the HybridDictionary:" );
-      PrintKeysAndValues( myCol );
+        // Displays the values in the HybridDictionary in three different ways.
+        Console.WriteLine("Initial contents of the HybridDictionary:");
+        PrintKeysAndValues(myCol);
 
-      // Searches for a key.
-      if ( myCol.Contains( "Kiwis" ) )
-         Console.WriteLine( "The collection contains the key \"Kiwis\"." );
-      else
-         Console.WriteLine( "The collection does not contain the key \"Kiwis\"." );
-      Console.WriteLine();
-   }
+        // Searches for a key.
+        if (myCol.Contains("Kiwis"))
+            Console.WriteLine("The collection contains the key \"Kiwis\".");
+        else
+            Console.WriteLine("The collection does not contain the key \"Kiwis\".");
+        Console.WriteLine();
+    }
 
-   public static void PrintKeysAndValues( IDictionary myCol )  {
-      Console.WriteLine( "   KEY                       VALUE" );
-      foreach ( DictionaryEntry de in myCol )
-         Console.WriteLine( "   {0,-25} {1}", de.Key, de.Value );
-      Console.WriteLine();
-   }
+    public static void PrintKeysAndValues(IDictionary myCol)
+    {
+        Console.WriteLine("   KEY                       VALUE");
+        foreach (DictionaryEntry de in myCol)
+            Console.WriteLine($"   {de.Key,-25} {de.Value}");
+        Console.WriteLine();
+    }
 }
 
 /*

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections;
-using Microsoft.Win32;
+
+
 
 class Sample
 {
-    public static void Main()
+    public static void Run()
     {
         // Environment variable names for default, process, user, and machine targets.
         string defaultEnvVar = nameof(defaultEnvVar);
@@ -32,36 +32,36 @@ class Sample
                                            EnvironmentVariableTarget.Machine);
 
         // Define an array of environment variables.
-        string[] envVars = { defaultEnvVar,processEnvVar, userEnvVar, machineEnvVar };
+        string[] envVars = { defaultEnvVar, processEnvVar, userEnvVar, machineEnvVar };
 
         // Try to get the environment variables from each target.
         // The default (no specified target).
         Console.WriteLine("Retrieving environment variables from the default target:");
-        foreach (var envVar in envVars)
+        foreach (string envVar in envVars)
         {
-          var value = Environment.GetEnvironmentVariable(envVar) ?? "(none)";
-          Console.WriteLine($"   {envVar}: {value}");
+            string value = Environment.GetEnvironmentVariable(envVar) ?? "(none)";
+            Console.WriteLine($"   {envVar}: {value}");
         }
         // The process block.
         Console.WriteLine("\nRetrieving environment variables from the Process target:");
-        foreach (var envVar in envVars)
+        foreach (string envVar in envVars)
         {
-          var value = Environment.GetEnvironmentVariable(envVar, EnvironmentVariableTarget.Process) ?? "(none)";
-          Console.WriteLine($"   {envVar}: {value}");
+            string value = Environment.GetEnvironmentVariable(envVar, EnvironmentVariableTarget.Process) ?? "(none)";
+            Console.WriteLine($"   {envVar}: {value}");
         }
         // The user block.
         Console.WriteLine("\nRetrieving environment variables from the User target:");
-        foreach (var envVar in envVars)
+        foreach (string envVar in envVars)
         {
-          var value = Environment.GetEnvironmentVariable(envVar, EnvironmentVariableTarget.User) ?? "(none)";
-          Console.WriteLine($"   {envVar}: {value}");
+            string value = Environment.GetEnvironmentVariable(envVar, EnvironmentVariableTarget.User) ?? "(none)";
+            Console.WriteLine($"   {envVar}: {value}");
         }
         // The machine block.
         Console.WriteLine("\nRetrieving environment variables from the Machine target:");
-        foreach (var envVar in envVars)
+        foreach (string envVar in envVars)
         {
-          var value = Environment.GetEnvironmentVariable(envVar, EnvironmentVariableTarget.Machine) ?? "(none)";
-          Console.WriteLine($"   {envVar}: {value}");
+            string value = Environment.GetEnvironmentVariable(envVar, EnvironmentVariableTarget.Machine) ?? "(none)";
+            Console.WriteLine($"   {envVar}: {value}");
         }
 
         // Delete the environment variable for each target.

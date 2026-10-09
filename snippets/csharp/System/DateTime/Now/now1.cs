@@ -4,18 +4,18 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-      DateTime localDate = DateTime.Now;
-      String[] cultureNames = { "en-US", "en-GB", "fr-FR",
+    public static void Main()
+    {
+        DateTime localDate = DateTime.Now;
+        string[] cultureNames = { "en-US", "en-GB", "fr-FR",
                                 "de-DE", "ru-RU" };
 
-      foreach (var cultureName in cultureNames) {
-         var culture = new CultureInfo(cultureName);
-         Console.WriteLine("{0}: {1}", cultureName,
-                           localDate.ToString(culture));
-      }
-   }
+        foreach (string cultureName in cultureNames)
+        {
+            var culture = new CultureInfo(cultureName);
+            Console.WriteLine($"{cultureName}: {localDate.ToString(culture)}");
+        }
+    }
 }
 // The example displays the following output:
 //       en-US: 6/19/2015 10:03:06 AM

@@ -1,26 +1,23 @@
 ﻿// Place this code into a console project called StartArgsEcho. It depends on the
 // console application named argsecho.exe.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
 
 namespace StartArgsEcho
 {
     class Program
     {
-        static void Main()
+        public static void Run()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo("argsecho.exe");
-            startInfo.WindowStyle = ProcessWindowStyle.Normal;
+            ProcessStartInfo startInfo = new("argsecho.exe")
+            {
+                WindowStyle = ProcessWindowStyle.Normal,
 
-            // Start with one argument.
-            // Output of ArgsEcho:
-            //  [0]=/a
-            startInfo.Arguments = "/a";
+                // Start with one argument.
+                // Output of ArgsEcho:
+                //  [0]=/a
+                Arguments = "/a"
+            };
             Process.Start(startInfo);
 
             // Start with multiple arguments separated by spaces.

@@ -15,7 +15,7 @@ public class Form1 : Form
     // <Snippet2>
     void MyPropertyCollection()
     {
-        // Creates a new collection and assign it the properties for button1.
+        // Creates a new collection and assigns it the properties for button1.
         PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(button1);
 
         // Displays each property in the collection in a text box.

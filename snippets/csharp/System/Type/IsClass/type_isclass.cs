@@ -1,8 +1,8 @@
 ﻿// <Snippet1>
 using System;
-using System.Reflection;
 
-public  class MyDemoClass
+
+public class MyDemoClass
 {
 }
 
@@ -12,13 +12,13 @@ public class MyTypeClass
     {
         try
         {
-            Type  myType = typeof(MyDemoClass);
+            Type myType = typeof(MyDemoClass);
             // Get and display the 'IsClass' property of the 'MyDemoClass' instance.
-            Console.WriteLine("\nIs the specified type a class? {0}.", myType.IsClass);
+            Console.WriteLine($"\nIs the specified type a class? {myType.IsClass}.");
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-            Console.WriteLine("\nAn exception occurred: {0}." ,e.Message);
+            Console.WriteLine($"\nAn exception occurred: {e.Message}.");
         }
     }
 }

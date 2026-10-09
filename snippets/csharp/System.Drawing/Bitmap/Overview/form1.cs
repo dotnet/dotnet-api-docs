@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 
-public class Form1:
+public class Form1 :
     System.Windows.Forms.Form
 
 {
     #region " Windows Form Designer generated code "
 
     public Form1() : base()
-    {        
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
-        this.Button1.Click += new EventHandler(Button1_Click);
-        this.Button2.Click += new EventHandler(Button2_Click);
-        this.Button3.Click += new EventHandler(Button3_Click);
-        this.Button4.Click += new EventHandler(Button4_Click);
-        this.Button5.Click += new EventHandler(Button5_Click);
-  
+        Button1.Click += new EventHandler(Button1_Click);
+        Button2.Click += new EventHandler(Button2_Click);
+        Button3.Click += new EventHandler(Button3_Click);
+        Button4.Click += new EventHandler(Button4_Click);
+        Button5.Click += new EventHandler(Button5_Click);
+
         //Add any initialization after the InitializeComponent() call
     }
 
@@ -28,10 +28,7 @@ public class Form1:
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -52,79 +49,79 @@ public class Form1:
     [System.Diagnostics.DebuggerStepThrough]
     private void InitializeComponent()
     {
-        this.PictureBox1 = new System.Windows.Forms.PictureBox();
-        this.Button1 = new System.Windows.Forms.Button();
-        this.Button2 = new System.Windows.Forms.Button();
-        this.Button3 = new System.Windows.Forms.Button();
-        this.Button4 = new System.Windows.Forms.Button();
-        this.Label1 = new System.Windows.Forms.Label();
-        this.Button5 = new System.Windows.Forms.Button();
-        this.SuspendLayout();
+        PictureBox1 = new System.Windows.Forms.PictureBox();
+        Button1 = new System.Windows.Forms.Button();
+        Button2 = new System.Windows.Forms.Button();
+        Button3 = new System.Windows.Forms.Button();
+        Button4 = new System.Windows.Forms.Button();
+        Label1 = new System.Windows.Forms.Label();
+        Button5 = new System.Windows.Forms.Button();
+        SuspendLayout();
         //
         //PictureBox1
         //
-        this.PictureBox1.Location = new System.Drawing.Point(24, 8);
-        this.PictureBox1.Name = "PictureBox1";
-        this.PictureBox1.Size = new System.Drawing.Size(100, 88);
-        this.PictureBox1.TabIndex = 0;
-        this.PictureBox1.TabStop = false;
+        PictureBox1.Location = new System.Drawing.Point(24, 8);
+        PictureBox1.Name = "PictureBox1";
+        PictureBox1.Size = new System.Drawing.Size(100, 88);
+        PictureBox1.TabIndex = 0;
+        PictureBox1.TabStop = false;
         //
         //Button1
         //
-        this.Button1.Location = new System.Drawing.Point(192, 8);
-        this.Button1.Name = "Button1";
-        this.Button1.TabIndex = 2;
-        this.Button1.Text = "Button1";
+        Button1.Location = new System.Drawing.Point(192, 8);
+        Button1.Name = "Button1";
+        Button1.TabIndex = 2;
+        Button1.Text = "Button1";
         //
         //Button2
         //
-        this.Button2.Location = new System.Drawing.Point(192, 40);
-        this.Button2.Name = "Button2";
-        this.Button2.TabIndex = 3;
-        this.Button2.Text = "Button2";
+        Button2.Location = new System.Drawing.Point(192, 40);
+        Button2.Name = "Button2";
+        Button2.TabIndex = 3;
+        Button2.Text = "Button2";
         //
         //Button3
         //
-        this.Button3.Location = new System.Drawing.Point(192, 72);
-        this.Button3.Name = "Button3";
-        this.Button3.TabIndex = 4;
-        this.Button3.Text = "Button3";
+        Button3.Location = new System.Drawing.Point(192, 72);
+        Button3.Name = "Button3";
+        Button3.TabIndex = 4;
+        Button3.Text = "Button3";
         //
         //Button4
         //
-        this.Button4.Location = new System.Drawing.Point(192, 104);
-        this.Button4.Name = "Button4";
-        this.Button4.TabIndex = 5;
-        this.Button4.Text = "Button4";
+        Button4.Location = new System.Drawing.Point(192, 104);
+        Button4.Name = "Button4";
+        Button4.TabIndex = 5;
+        Button4.Text = "Button4";
         //
         //Label1
         //
-        this.Label1.Location = new System.Drawing.Point(24, 72);
-        this.Label1.Name = "Label1";
-        this.Label1.Size = new System.Drawing.Size(152, 32);
-        this.Label1.TabIndex = 6;
-        this.Label1.Text = "Label1";
+        Label1.Location = new System.Drawing.Point(24, 72);
+        Label1.Name = "Label1";
+        Label1.Size = new System.Drawing.Size(152, 32);
+        Label1.TabIndex = 6;
+        Label1.Text = "Label1";
         //
         //Button5
         //
-        this.Button5.Location = new System.Drawing.Point(200, 136);
-        this.Button5.Name = "Button5";
-        this.Button5.TabIndex = 7;
-        this.Button5.Text = "Button5";
+        Button5.Location = new System.Drawing.Point(200, 136);
+        Button5.Name = "Button5";
+        Button5.TabIndex = 7;
+        Button5.Text = "Button5";
         //
         //Form1
         //
-        this.ClientSize = new System.Drawing.Size(292, 266);
-        this.Controls.Add(this.Button5);
-        this.Controls.Add(this.Label1);
-        this.Controls.Add(this.Button4);
-        this.Controls.Add(this.Button3);
-        this.Controls.Add(this.Button2);
-        this.Controls.Add(this.Button1);
-        this.Controls.Add(this.PictureBox1);
-        this.Name = "Form1";
-        this.Text = "Form1";
-        this.ResumeLayout(false);
+        ClientSize = new System.Drawing.Size(292, 266);
+        Controls.Add(Button5);
+        Controls.Add(Label1);
+        Controls.Add(Button4);
+        Controls.Add(Button3);
+        Controls.Add(Button2);
+        Controls.Add(Button1);
+        Controls.Add(PictureBox1);
+        Name = "Form1";
+        Text = "Form1";
+        ResumeLayout(false);
     }
 
     #endregion
@@ -140,21 +137,21 @@ public class Form1:
     //<snippet1>
     Bitmap image1;
 
-    private void Button1_Click(System.Object sender, System.EventArgs e)
+    private void Button1_Click(object sender, System.EventArgs e)
     {
 
         try
         {
             // Retrieve the image.
-            image1 = new Bitmap(@"C:\Documents and Settings\All Users\" 
+            image1 = new Bitmap(@"C:\Documents and Settings\All Users\"
                 + @"Documents\My Music\music.bmp", true);
 
             int x, y;
 
             // Loop through the images pixels to reset color.
-            for(x=0; x<image1.Width; x++)
+            for (x = 0; x < image1.Width; x++)
             {
-                for(y=0; y<image1.Height; y++)
+                for (y = 0; y < image1.Height; y++)
                 {
                     Color pixelColor = image1.GetPixel(x, y);
                     Color newColor = Color.FromArgb(pixelColor.R, 0, 0);
@@ -166,9 +163,9 @@ public class Form1:
             PictureBox1.Image = image1;
 
             // Display the pixel format in Label1.
-            Label1.Text = "Pixel format: "+image1.PixelFormat.ToString();
+            Label1.Text = "Pixel format: " + image1.PixelFormat.ToString();
         }
-        catch(ArgumentException)
+        catch (ArgumentException)
         {
             MessageBox.Show("There was an error." +
                 "Check the path to the image file.");
@@ -183,21 +180,23 @@ public class Form1:
     // a form containing a button named Button2. Paste the code into the form
     // and associate the Button2_Click method with the button's Click event.
     //<snippet2>
-    private void Button2_Click(System.Object sender, System.EventArgs e)
+    private void Button2_Click(object sender, System.EventArgs e)
     {
         try
         {
-            Bitmap image1 = (Bitmap) Image.FromFile(@"C:\Documents and Settings\" +
+            Bitmap image1 = (Bitmap)Image.FromFile(@"C:\Documents and Settings\" +
                 @"All Users\Documents\My Music\music.bmp", true);
 
-            TextureBrush texture = new TextureBrush(image1);
-            texture.WrapMode = System.Drawing.Drawing2D.WrapMode.Tile;
-            Graphics formGraphics = this.CreateGraphics();
-            formGraphics.FillEllipse(texture, 
+            TextureBrush texture = new TextureBrush(image1)
+            {
+                WrapMode = System.Drawing.Drawing2D.WrapMode.Tile
+            };
+            Graphics formGraphics = CreateGraphics();
+            formGraphics.FillEllipse(texture,
                 new RectangleF(90.0F, 110.0F, 100, 100));
             formGraphics.Dispose();
         }
-        catch(System.IO.FileNotFoundException)
+        catch (System.IO.FileNotFoundException)
         {
             MessageBox.Show("There was an error opening the bitmap." +
                 "Please check the path.");
@@ -213,12 +212,14 @@ public class Form1:
     // form and associate the Button3_Click method with the button's 
     // Click event.
     //<snippet3>
-    private void Button3_Click(System.Object sender, System.EventArgs e)
+    private void Button3_Click(object sender, System.EventArgs e)
     {
 
         Graphics buttonGraphics = Button3.CreateGraphics();
-        Pen myPen = new Pen(Color.ForestGreen, 4.0F);
-        myPen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDotDot;
+        Pen myPen = new Pen(Color.ForestGreen, 4.0F)
+        {
+            DashStyle = System.Drawing.Drawing2D.DashStyle.DashDotDot
+        };
 
         Rectangle theRectangle = Button3.ClientRectangle;
         theRectangle.Inflate(-2, -2);
@@ -235,7 +236,7 @@ public class Form1:
     // Paste the code into the form and associate 
     // the Button4_Click method with the button's Click event.
     //<snippet4>
-    private void Button4_Click(System.Object sender, System.EventArgs e)
+    private void Button4_Click(object sender, System.EventArgs e)
     {
 
         Graphics buttonGraphics = Button4.CreateGraphics();
@@ -251,7 +252,7 @@ public class Form1:
     // Paste the code to the form and associate 
     // the Button5_Click method with button's Click event.
     //<snippet5>
-    private void Button5_Click(System.Object sender, System.EventArgs e)
+    private void Button5_Click(object sender, System.EventArgs e)
     {
         try
         {
@@ -261,7 +262,7 @@ public class Form1:
                 Button5.Text = "Saved file.";
             }
         }
-        catch(Exception)
+        catch (Exception)
         {
             MessageBox.Show("There was a problem saving the file." +
                 "Check the file permissions.");
@@ -300,13 +301,13 @@ public class Form1:
             // For each PropertyItem in the array, display the id, 
             // type, and length.
             int count = 0;
-            foreach ( PropertyItem propItem in propItems )
+            foreach (PropertyItem propItem in propItems)
             {
-                e.Graphics.DrawString("Property Item " + 
+                e.Graphics.DrawString("Property Item " +
                     count.ToString(), font1, blackBrush, X, Y);
                 Y += font1.Height;
 
-                e.Graphics.DrawString("   ID: 0x" + 
+                e.Graphics.DrawString("   ID: 0x" +
                     propItem.Id.ToString("x"), font1, blackBrush, X, Y);
                 Y += font1.Height;
 
@@ -314,27 +315,27 @@ public class Form1:
                     propItem.Type.ToString(), font1, blackBrush, X, Y);
                 Y += font1.Height;
 
-                e.Graphics.DrawString("   length: " + 
-                    propItem.Len.ToString() + 
+                e.Graphics.DrawString("   length: " +
+                    propItem.Len.ToString() +
                     " bytes", font1, blackBrush, X, Y);
                 Y += font1.Height;
                 count += 1;
             }
             font1.Dispose();
         }
-        catch(Exception)
+        catch (Exception)
         {
-            MessageBox.Show("There was an error." + 
+            MessageBox.Show("There was an error." +
                 "Make sure the path to the image file is valid.");
         }
     }
     //</snippet6>
-// <Note to Cheryl--Put this one ImageExamples>
+    // <Note to Cheryl--Put this one ImageExamples>
     // The following code example demonstrates how to use the GetPropertyItem
     // and SetPropertyItem methods. This example is designed to be used with Windows
     // Forms. To run this example paste it into a form, and handle the form's Paint event
     // by calling the DemonstratePropertyItem method, passing e as PaintEventArgs.
-//<snippet7>
+    //<snippet7>
     private void DemonstratePropertyItem(PaintEventArgs e)
     {
 

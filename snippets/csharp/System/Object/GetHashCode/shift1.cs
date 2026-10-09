@@ -8,22 +8,19 @@ public struct Point
 
     public Point(int x, int y)
     {
-       this.x = x;
-       this.y = y;
+        this.x = x;
+        this.y = y;
     }
 
-    public override bool Equals(Object obj)
+    public override bool Equals(object obj)
     {
-       if (!(obj is Point)) return false;
+        if (!(obj is Point)) return false;
 
-       Point p = (Point) obj;
-       return x == p.x & y == p.y;
+        Point p = (Point)obj;
+        return x == p.x & y == p.y;
     }
 
-    public override int GetHashCode()
-    {
-        return ShiftAndWrap(x.GetHashCode(), 2) ^ y.GetHashCode();
-    }
+    public override int GetHashCode() => ShiftAndWrap(x.GetHashCode(), 2) ^ y.GetHashCode();
 
     private int ShiftAndWrap(int value, int positions)
     {
@@ -40,14 +37,14 @@ public struct Point
 
 public class Example2
 {
-   public static void Main()
-   {
-        Point pt = new Point(5, 8);
+    public static void Main()
+    {
+        Point pt = new(5, 8);
         Console.WriteLine(pt.GetHashCode());
 
-        pt = new Point(8, 5);
+        pt = new(8, 5);
         Console.WriteLine(pt.GetHashCode());
-   }
+    }
 }
 // The example displays the following output:
 //       28
@@ -56,7 +53,7 @@ public class Example2
 
 public class Utility
 {
-   // <Snippet4>
+    // <Snippet4>
     public int ShiftAndWrap(int value, int positions)
     {
         positions = positions & 0x1F;
@@ -68,5 +65,5 @@ public class Utility
         // Shift and wrap the discarded bits.
         return BitConverter.ToInt32(BitConverter.GetBytes((number << positions) | wrapped), 0);
     }
-   // </Snippet4>
+    // </Snippet4>
 }

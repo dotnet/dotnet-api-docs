@@ -2,32 +2,24 @@
 using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Data;
 using System.IO;
-using Microsoft.CSharp;
-using Microsoft.VisualBasic;
-using Microsoft.JScript;
+using System.Windows.Forms;
 
 namespace CodeDOMSamples
 {
     /// <summary>
     /// Provides a wrapper for CodeDOM samples.
     /// </summary>
-    public class Form1 : System.Windows.Forms.Form
+    public class Form1 : Form
     {
-        private System.CodeDom.CodeCompileUnit cu;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private int language = 1;    // 1 = Csharp 2 = VB 3 = JScript
+        private CodeCompileUnit cu;
+        private TextBox textBox1;
+        private Button button1;
+        private Button button2;
+        private GroupBox groupBox1;
+        private RadioButton radioButton1;
+        private RadioButton radioButton2;
+        private int language = 1;    // 1 = C# 2 = VB
         private System.ComponentModel.Container components = null;
 
         public Form1()
@@ -41,23 +33,33 @@ namespace CodeDOMSamples
         public CodeCompileUnit CreateGraph()
         {
             // Create a compile unit to contain a CodeDOM graph
-            CodeCompileUnit cu = new CodeCompileUnit();
+            CodeCompileUnit cu = new();
 
-            // Create a namespace named "TestSpace"
-            CodeNamespace cn = new CodeNamespace("TestSpace");
+            // Create a namespace named "Samples"
+            CodeNamespace cn = new("Samples");
+
+            // Import the System namespace
+            cn.Imports.Add(new CodeNamespaceImport("System"));
 
             // Create a new type named "TestClass"
-            CodeTypeDeclaration cd = new CodeTypeDeclaration("TestClass");
+            CodeTypeDeclaration cd = new("TestClass");
 
             // Create a new entry point method
-            CodeEntryPointMethod cm = new CodeEntryPointMethod();
+            CodeEntryPointMethod cm = new();
+
+            // Write "Hello World!" to the console
+            CodeMethodInvokeExpression writeLine = new(
+                new CodeTypeReferenceExpression("System.Console"),
+                "WriteLine",
+                new CodePrimitiveExpression("Hello World!"));
+            cm.Statements.Add(writeLine);
 
             // <Snippet1>
             // Create an initialization expression for a new array of type Int32 with 10 indices
-            CodeArrayCreateExpression ca1 = new CodeArrayCreateExpression("System.Int32", 10);
+            CodeArrayCreateExpression ca1 = new("System.Int32", 10);
 
             // Declare an array of type Int32, using the CodeArrayCreateExpression ca1 as the initialization expression
-            CodeVariableDeclarationStatement cv1 = new CodeVariableDeclarationStatement("System.Int32[]", "x", ca1);
+            CodeVariableDeclarationStatement cv1 = new("System.Int32[]", "x", ca1);
 
             // A C# code generator produces the following source code for the preceeding example code:
 
@@ -67,59 +69,77 @@ namespace CodeDOMSamples
             // Add the variable declaration and initialization statement to the entry point method
             cm.Statements.Add(cv1);
 
+            // <Snippet5>
+            // Declare a variable of type Int32 named "i"
+            CodeVariableDeclarationStatement cv2 = new("System.Int32", "i");
+            cm.Statements.Add(cv2);
+
+            // Assign the value 10 to the integer variable "i"
+            CodeAssignStatement assignment = new(new CodeVariableReferenceExpression("i"), new CodePrimitiveExpression(10));
+
+            // A C# code generator produces the following source code for the preceding example code:
+
+            // i = 10;
+            // </Snippet5>
+
+            cm.Statements.Add(assignment);
+
+            // <Snippet4>
+            // Create an array indexer expression that references index 5 of array "x"
+            CodeArrayIndexerExpression ci1 = new(new CodeVariableReferenceExpression("x"), new CodePrimitiveExpression(5));
+
+            // A C# code generator produces the following source code for the preceding example code:
+
+            // x[5]
+            // </Snippet4>
+
+            // Declare a variable of type Int32 and assign the value of the array indexer to it
+            CodeVariableDeclarationStatement cv3 = new("System.Int32", "y", ci1);
+            cm.Statements.Add(cv3);
+
             // Add the entry point method to the "TestClass" type
             cd.Members.Add(cm);
 
             // Add the "TestClass" type to the namespace
             cn.Types.Add(cd);
 
-            // Add the "TestSpace" namespace to the compile unit
+            // Add the "Samples" namespace to the compile unit
             cu.Namespaces.Add(cn);
 
             return cu;
         }
         // </Snippet2>
 
+        // <Snippet6>
         private void OutputGraph()
         {
             // Create string writer to output to textbox
-            StringWriter sw = new StringWriter();
+            StringWriter sw = new();
 
             // Create appropriate CodeProvider
-            System.CodeDom.Compiler.CodeDomProvider cp;
-            switch(language)
+            CodeDomProvider cp = language switch
             {
-                case 2: // VB
-                    cp = CodeDomProvider.CreateProvider("VisualBasic");
-                    break;
-                case 3: // JScript
-                    cp = CodeDomProvider.CreateProvider("JScript");
-                    break;
-                default:    // CSharp
-                    cp = CodeDomProvider.CreateProvider("CSharp");
-                    break;
-            }
-
-            // Create a code generator that will output to the string writer
-            ICodeGenerator cg = cp.CreateGenerator(sw);
+                // VB
+                2 => CodeDomProvider.CreateProvider("VisualBasic"),
+                // CSharp
+                _ => CodeDomProvider.CreateProvider("CSharp"),
+            };
 
             // Generate code from the compile unit and outputs it to the string writer
-            cg.GenerateCodeFromCompileUnit(cu, sw, new CodeGeneratorOptions());
+            cp.GenerateCodeFromCompileUnit(cu, sw, new CodeGeneratorOptions());
 
             // Output the contents of the string writer to the textbox
-            this.textBox1.Text = sw.ToString();
+            textBox1.Text = sw.ToString();
         }
+        // </Snippet6>
 
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
+            if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
@@ -129,97 +149,81 @@ namespace CodeDOMSamples
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.groupBox1.SuspendLayout();
-            this.SuspendLayout();
+            textBox1 = new TextBox();
+            button1 = new Button();
+            button2 = new Button();
+            groupBox1 = new GroupBox();
+            radioButton1 = new RadioButton();
+            radioButton2 = new RadioButton();
+            groupBox1.SuspendLayout();
+            SuspendLayout();
             //
             // textBox1
             //
-            this.textBox1.Location = new System.Drawing.Point(16, 112);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(664, 248);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "";
-            this.textBox1.WordWrap = false;
+            textBox1.Location = new System.Drawing.Point(16, 112);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.ScrollBars = ScrollBars.Both;
+            textBox1.Size = new System.Drawing.Size(664, 248);
+            textBox1.TabIndex = 0;
+            textBox1.Text = "";
+            textBox1.WordWrap = false;
             //
             // button1
             //
-            this.button1.BackColor = System.Drawing.Color.Aquamarine;
-            this.button1.Location = new System.Drawing.Point(16, 16);
-            this.button1.Name = "button1";
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Generate";
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.BackColor = System.Drawing.Color.Aquamarine;
+            button1.Location = new System.Drawing.Point(16, 16);
+            button1.Name = "button1";
+            button1.TabIndex = 1;
+            button1.Text = "Generate";
+            button1.Click += new System.EventHandler(button1_Click);
             //
             // button2
             //
-            this.button2.BackColor = System.Drawing.Color.MediumTurquoise;
-            this.button2.Location = new System.Drawing.Point(112, 16);
-            this.button2.Name = "button2";
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Show Code";
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            button2.BackColor = System.Drawing.Color.MediumTurquoise;
+            button2.Location = new System.Drawing.Point(112, 16);
+            button2.Name = "button2";
+            button2.TabIndex = 2;
+            button2.Text = "Clear Code";
+            button2.Click += new System.EventHandler(button2_Click);
             //
             // groupBox1
             //
-            this.groupBox1.Controls.AddRange(new System.Windows.Forms.Control[] {
-                                                                                    this.radioButton3,
-                                                                                    this.radioButton2,
-                                                                                    this.radioButton1});
-            this.groupBox1.Location = new System.Drawing.Point(16, 48);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(384, 56);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Language selection";
+            groupBox1.Controls.AddRange([radioButton2, radioButton1]);
+            groupBox1.Location = new System.Drawing.Point(16, 48);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(384, 56);
+            groupBox1.TabIndex = 3;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Language selection";
             //
             // radioButton1
             //
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(16, 24);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "CSharp";
-            this.radioButton1.Click += new System.EventHandler(this.radioButton1_CheckedChanged);
+            radioButton1.Checked = true;
+            radioButton1.Location = new System.Drawing.Point(16, 24);
+            radioButton1.Name = "radioButton1";
+            radioButton1.TabIndex = 0;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "CSharp";
+            radioButton1.Click += new System.EventHandler(radioButton1_CheckedChanged);
             //
             // radioButton2
             //
-            this.radioButton2.Location = new System.Drawing.Point(144, 24);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Visual Basic";
-            this.radioButton2.Click += new System.EventHandler(this.radioButton2_CheckedChanged);
-            //
-            // radioButton3
-            //
-            this.radioButton3.Location = new System.Drawing.Point(272, 24);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.TabIndex = 2;
-            this.radioButton3.Text = "JScript";
-            this.radioButton3.Click += new System.EventHandler(this.radioButton3_CheckedChanged);
+            radioButton2.Location = new System.Drawing.Point(144, 24);
+            radioButton2.Name = "radioButton2";
+            radioButton2.TabIndex = 1;
+            radioButton2.Text = "Visual Basic";
+            radioButton2.Click += new System.EventHandler(radioButton2_CheckedChanged);
             //
             // Form1
             //
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(714, 367);
-            this.Controls.AddRange(new System.Windows.Forms.Control[] {
-                                                                          this.groupBox1,
-                                                                          this.button2,
-                                                                          this.button1,
-                                                                          this.textBox1});
-            this.Name = "Form1";
-            this.Text = "CodeDOM Samples Framework";
-            this.groupBox1.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            ClientSize = new System.Drawing.Size(714, 367);
+            Controls.AddRange([groupBox1, button2, button1, textBox1]);
+            Name = "Form1";
+            Text = "CodeDOM Samples Framework";
+            groupBox1.ResumeLayout(false);
+            ResumeLayout(false);
         }
         #endregion
 
@@ -229,51 +233,39 @@ namespace CodeDOMSamples
             Application.Run(new Form1());
         }
 
-        private void ShowCode()
+        private void ClearCode()
         {
-            this.textBox1.Text="";
+            textBox1.Text = "";
         }
 
         // Show code button
-        private void button2_Click(object sender, System.EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-            ShowCode();
+            ClearCode();
         }
 
         // Generate and show code button
-        private void button1_Click(object sender, System.EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             OutputGraph();
         }
 
         // Csharp language selection button
-        private void radioButton1_CheckedChanged(object sender, System.EventArgs e)
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            radioButton1.Checked=true;
-            radioButton2.Checked=false;
-            radioButton3.Checked=false;
+            radioButton1.Checked = true;
+            radioButton2.Checked = false;
 
-            language=1;
+            language = 1;
         }
 
         // Visual Basic language selection button
-        private void radioButton2_CheckedChanged(object sender, System.EventArgs e)
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            radioButton1.Checked=false;
-            radioButton2.Checked=true;
-            radioButton3.Checked=false;
+            radioButton1.Checked = false;
+            radioButton2.Checked = true;
 
-            language=2;
-        }
-
-        // JScript language selection button
-        private void radioButton3_CheckedChanged(object sender, System.EventArgs e)
-        {
-            radioButton1.Checked=false;
-            radioButton2.Checked=false;
-            radioButton3.Checked=true;
-
-            language=3;
+            language = 2;
         }
     }
 }

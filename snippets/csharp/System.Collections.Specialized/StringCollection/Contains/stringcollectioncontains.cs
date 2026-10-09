@@ -5,30 +5,33 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesStringCollection  {
+public class SamplesStringCollection
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new StringCollection.
-      StringCollection myCol = new StringCollection();
-      String[] myArr = new String[] { "RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED" };
-      myCol.AddRange( myArr );
+        // Creates and initializes a new StringCollection.
+        StringCollection myCol = [];
+        string[] myArr = ["RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED"];
+        myCol.AddRange(myArr);
 
-      Console.WriteLine( "Initial contents of the StringCollection:" );
-      PrintValues( myCol );
+        Console.WriteLine("Initial contents of the StringCollection:");
+        PrintValues(myCol);
 
-      // Checks whether the collection contains "orange" and, if so, displays its index.
-      if ( myCol.Contains( "orange" ) )
-         Console.WriteLine( "The collection contains \"orange\" at index {0}.", myCol.IndexOf( "orange" ) );
-      else
-         Console.WriteLine( "The collection does not contain \"orange\"." );
-   }
+        // Checks whether the collection contains "orange" and, if so, displays its index.
+        if (myCol.Contains("orange"))
+            Console.WriteLine($"The collection contains \"orange\" at index {myCol.IndexOf("orange")}.");
+        else
+            Console.WriteLine("The collection does not contain \"orange\".");
+    }
 
-   public static void PrintValues( IEnumerable myCol )  {
-      foreach ( Object obj in myCol )
-         Console.WriteLine( "   {0}", obj );
-      Console.WriteLine();
-   }
+    public static void PrintValues(IEnumerable myCol)
+    {
+        foreach (object obj in myCol)
+            Console.WriteLine($"   {obj}");
+        Console.WriteLine();
+    }
 }
 
 /*

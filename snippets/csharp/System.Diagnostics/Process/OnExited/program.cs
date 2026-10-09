@@ -6,8 +6,8 @@ class MyProcess : Process
 {
     public void Stop()
     {
-        this.CloseMainWindow();
-        this.Close();
+        CloseMainWindow();
+        Close();
         OnExited();
     }
 }
@@ -16,7 +16,7 @@ class StartNotePad
 
     public static void Main(string[] args)
     {
-        MyProcess p = new MyProcess();
+        MyProcess p = new();
         p.StartInfo.FileName = "notepad.exe";
         p.EnableRaisingEvents = true;
         p.Exited += new EventHandler(myProcess_HasExited);

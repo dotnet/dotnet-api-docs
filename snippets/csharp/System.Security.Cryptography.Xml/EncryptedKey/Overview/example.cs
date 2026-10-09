@@ -16,7 +16,10 @@ class Program
 		try
 		{
 			xmlDoc.PreserveWhitespace = true;
-			xmlDoc.Load("test.xml");
+			using (XmlReader reader = XmlReader.Create("test.xml"))
+			{
+				xmlDoc.Load(reader);
+			}
 		}
 		catch (Exception e)
 		{

@@ -478,8 +478,7 @@ public class DemoControlDesigner : ControlDesigner
         object sender,
         ComponentChangedEventArgs e)
     {
-        string msg = string.Format(
-            "{0}, {1}", e.Component, e.Member);
+        string msg = $"{e.Component}, {e.Member}";
 
         _ = MessageBox.Show(msg, "ComponentChanged");
     }

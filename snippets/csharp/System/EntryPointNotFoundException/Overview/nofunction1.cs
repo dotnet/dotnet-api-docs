@@ -2,21 +2,22 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class Example
+public class NoFunctionExample
 {
-   [DllImport("user32.dll")]
-   public static extern int GetMyNumber();
+    [DllImport("user32.dll")]
+    public static extern int GetMyNumber();
 
-   public static void Main()
-   {
-      try {
-         int number = GetMyNumber();
-      }
-      catch (EntryPointNotFoundException e) {
-         Console.WriteLine("{0}:\n   {1}", e.GetType().Name,
-                           e.Message);
-      }
-   }
+    public static void Run()
+    {
+        try
+        {
+            int number = GetMyNumber();
+        }
+        catch (EntryPointNotFoundException e)
+        {
+            Console.WriteLine($"{e.GetType().Name}:\n   {e.Message}");
+        }
+    }
 }
 // The example displays the following output:
 //    EntryPointNotFoundException:

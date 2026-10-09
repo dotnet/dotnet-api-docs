@@ -1,13 +1,13 @@
-// <Snippet3>
+﻿// <Snippet3>
 using System;
 
 public class Example13
 {
     public static void Main()
     {
-        Double value = .1;
-        Double result1 = value * 10;
-        Double result2 = 0;
+        double value = .1;
+        double result1 = value * 10;
+        double result2 = 0;
         for (int ctr = 1; ctr <= 10; ctr++)
             result2 += value;
 

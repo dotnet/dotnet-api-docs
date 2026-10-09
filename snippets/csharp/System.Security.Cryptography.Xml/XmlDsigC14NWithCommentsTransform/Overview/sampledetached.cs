@@ -40,7 +40,7 @@ class XMLDSIGDetached
             Console.WriteLine("Verifying signature...");
 
             //Verify the XML signature in the XML file.
-            bool result = VerifyDetachedSignature(XmlFileName);
+            bool result = VerifyDetachedSignature(XmlFileName, Key);
 
             // Display the results of the signature verification to 
             // the console.
@@ -99,13 +99,16 @@ class XMLDSIGDetached
     // </Snippet2>
     // <Snippet3>
     // Verify the signature of an XML file and return the result.
-    public static Boolean VerifyDetachedSignature(string XmlSigFileName)
+    public static Boolean VerifyDetachedSignature(string XmlSigFileName, RSA Key)
     {	
         // Create a new XML document.
         XmlDocument xmlDocument = new XmlDocument();
 
         // Load the passed XML file into the document.
-        xmlDocument.Load(XmlSigFileName);
+        using (XmlReader reader = XmlReader.Create(XmlSigFileName))
+        {
+            xmlDocument.Load(reader);
+        }
 	
         // Create a new SignedXMl object.
         SignedXml signedXml = new SignedXml();
@@ -118,7 +121,7 @@ class XMLDSIGDetached
         signedXml.LoadXml((XmlElement)nodeList[0]);
 
         // Check the signature and return the result.
-        return signedXml.CheckSignature();
+        return signedXml.CheckSignature(Key);
     }
     // </Snippet3>
 }

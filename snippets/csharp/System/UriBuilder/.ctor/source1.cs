@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Data;
-using System.Security.Principal;
 using System.Windows.Forms;
 
-public class Form1: Form
+public class UriBuilderConstructorForm1 : Form
 {
- protected void Method()
- {
-// <Snippet1>
-UriBuilder myUri = new UriBuilder("http","www.contoso.com",8080);
+    protected void Method()
+    {
+        // <Snippet1>
+        UriBuilder myUri = new("http", "www.contoso.com", 8080);
 
-// </Snippet1>
- }
+        // </Snippet1>
+    }
 }

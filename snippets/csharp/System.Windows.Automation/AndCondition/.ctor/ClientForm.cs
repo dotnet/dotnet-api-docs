@@ -15,7 +15,6 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Automation;
-using System.Windows;
 using System.Diagnostics;
 
 namespace CustomElementClient

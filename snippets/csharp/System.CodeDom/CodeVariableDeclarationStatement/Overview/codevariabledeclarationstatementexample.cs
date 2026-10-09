@@ -1,5 +1,4 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
 
 namespace CodeDomSamples
@@ -15,7 +14,7 @@ namespace CodeDomSamples
                 // Name of the variable to declare.
                 "TestString",
                 // Optional initExpression parameter initializes the variable.
-                new CodePrimitiveExpression("Testing") );
+                new CodePrimitiveExpression("Testing"));
 
             // A C# code generator produces the following source code for the preceeding example code:
 

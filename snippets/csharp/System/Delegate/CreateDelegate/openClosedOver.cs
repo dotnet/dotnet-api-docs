@@ -1,4 +1,4 @@
-// All four permutations of instance/static with open/closed.
+﻿// All four permutations of instance/static with open/closed.
 //
 //<Snippet1>
 using System;
@@ -17,22 +17,19 @@ public delegate void D3();
 public class C
 {
     private int id;
-    public C(int id) { this.id = id; }
+    public C(int id) => this.id = id;
 
     public void M1(string s) =>
         Console.WriteLine($"Instance method M1 on C:  id = {this.id}, s = {s}");
 
-    public static void M2(string s)
-    {
-        Console.WriteLine($"Static method M2 on C:  s = {s}");
-    }
+    public static void M2(string s) => Console.WriteLine($"Static method M2 on C:  s = {s}");
 }
 
 public class Example2
 {
     public static void Main()
     {
-        C c1 = new C(42);
+        C c1 = new(42);
 
         // Get a MethodInfo for each method.
         //

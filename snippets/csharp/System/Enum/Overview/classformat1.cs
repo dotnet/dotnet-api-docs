@@ -7,7 +7,7 @@ public class Example5
         // <Snippet10>
         string[] formats = { "G", "F", "D", "X" };
         ArrivalStatus status = ArrivalStatus.Late;
-        foreach (var fmt in formats)
+        foreach (string fmt in formats)
             Console.WriteLine(status.ToString(fmt));
 
         // The example displays the following output:

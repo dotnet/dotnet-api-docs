@@ -1,4 +1,4 @@
-// <Snippet8>
+﻿// <Snippet8>
 using System;
 using System.Linq;
 
@@ -8,7 +8,7 @@ public class EnumerableEx3
     {
         int[] dbQueryResults = { 1, 2, 3, 4 };
 
-        var firstNum = dbQueryResults.First(n => n > 4);
+        int firstNum = dbQueryResults.First(n => n > 4);
 
         Console.WriteLine($"The first value greater than 4 is {firstNum}");
     }

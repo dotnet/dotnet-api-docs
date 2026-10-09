@@ -139,7 +139,7 @@ public class PurchaseItem : IEditableObject, INotifyPropertyChanged
         OfferExpires = endDate;
     }
 
-    public override string ToString() => string.Format("{0}, {1:c}, {2:D}", Description, Price, OfferExpires);
+    public override string ToString() => $"{Description}, {Price:c}, {OfferExpires:D}";
 
     public string Description
     {
@@ -198,7 +198,7 @@ public class PurchaseItem : IEditableObject, INotifyPropertyChanged
         NotifyPropertyChanged("");
     }
 
-    public void EndEdit() => copyData = new ItemData();
+    public void EndEdit() => copyData = default;
 
     #endregion
 
@@ -207,15 +207,16 @@ public class PurchaseItem : IEditableObject, INotifyPropertyChanged
 public class ItemsForSale : ObservableCollection<PurchaseItem>
 {
     public ItemsForSale() : base(
-[
+        [
             new("Snowboard and bindings", 120, new DateTime(2009, 1, 1)),
-            new ("Snowboard and bindings", 120, new DateTime(2009, 1, 1)),
-            new ("Inside C#, second edition", 10, new DateTime(2009, 2, 2)),
-            new ("Laptop - only 1 year old", 499.99, new DateTime(2009, 2, 28)),
-            new ("Set of 6 chairs", 120, new DateTime(2009, 2, 28)),
-            new ("My DVD Collection", 15, new DateTime(2009, 1, 1)),
-            new ("TV Drama Series", 39.985, new DateTime(2009, 1, 1)),
-            new ("Squash racket", 60, new DateTime(2009, 2, 28))
-         ])
-    { }
+            new("Snowboard and bindings", 120, new DateTime(2009, 1, 1)),
+            new("Inside C#, second edition", 10, new DateTime(2009, 2, 2)),
+            new("Laptop - only 1 year old", 499.99, new DateTime(2009, 2, 28)),
+            new("Set of 6 chairs", 120, new DateTime(2009, 2, 28)),
+            new("My DVD Collection", 15, new DateTime(2009, 1, 1)),
+            new("TV Drama Series", 39.985, new DateTime(2009, 1, 1)),
+            new("Squash racket", 60, new DateTime(2009, 2, 28))
+        ])
+    {
+    }
 }

@@ -4,46 +4,58 @@
 using System;
 using System.Collections;
 
-public class SamplesArrayList  {
+public class SamplesArrayList
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new ArrayList.
-      ArrayList myAL = new ArrayList();
-      myAL.Add( "The" );
-      myAL.Add( "quick" );
-      myAL.Add( "brown" );
-      myAL.Add( "fox" );
-      myAL.Add( "jumps" );
-      myAL.Add( "over" );
-      myAL.Add( "the" );
-      myAL.Add( "lazy" );
-      myAL.Add( "dog" );
+        // Creates and initializes a new ArrayList.
+        ArrayList myAL =
+        [
+            "The",
+            "quick",
+            "brown",
+            "fox",
+            "jumps",
+            "over",
+            "the",
+            "lazy",
+            "dog",
+        ];
 
-      // Displays the values of the ArrayList.
-      Console.WriteLine( "The ArrayList contains the following values:" );
-      PrintIndexAndValues( myAL );
+        // Displays the values of the ArrayList.
+        Console.WriteLine("The ArrayList contains the following values:");
+        PrintIndexAndValues(myAL);
 
-      // Copies the elements of the ArrayList to a string array.
-      String[] myArr = (String[]) myAL.ToArray( typeof( string ) );
+        // Copies the elements of the ArrayList to a string array.
+        string[] myArr = (string[])myAL.ToArray(typeof(string));
 
-      // Displays the contents of the string array.
-      Console.WriteLine( "The string array contains the following values:" );
-      PrintIndexAndValues( myArr );
-   }
+        // Displays the contents of the string array.
+        Console.WriteLine("The string array contains the following values:");
+        PrintIndexAndValues(myArr);
+    }
 
-   public static void PrintIndexAndValues( ArrayList myList )  {
-      int i = 0;
-      foreach ( Object o in myList )
-         Console.WriteLine( "\t[{0}]:\t{1}", i++, o );
-      Console.WriteLine();
-   }
+    public static void PrintIndexAndValues(ArrayList myList)
+    {
+        int i = 0;
+        foreach (object o in myList)
+        {
+            Console.WriteLine($"\t[{i++}]:\t{o}");
+        }
 
-   public static void PrintIndexAndValues( String[] myArr )  {
-      for ( int i = 0; i < myArr.Length; i++ )
-         Console.WriteLine( "\t[{0}]:\t{1}", i, myArr[i] );
-      Console.WriteLine();
-   }
+        Console.WriteLine();
+    }
+
+    public static void PrintIndexAndValues(string[] myArr)
+    {
+        for (int i = 0; i < myArr.Length; i++)
+        {
+            Console.WriteLine($"\t[{i}]:\t{myArr[i]}");
+        }
+
+        Console.WriteLine();
+    }
 }
 
 

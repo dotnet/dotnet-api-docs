@@ -6,9 +6,9 @@ class Sample
 {
     public static void Main()
     {
-    Console.WriteLine();
-    String[] drives = Environment.GetLogicalDrives();
-    Console.WriteLine("GetLogicalDrives: {0}", String.Join(", ", drives));
+        Console.WriteLine();
+        string[] drives = Environment.GetLogicalDrives();
+        Console.WriteLine($"GetLogicalDrives: {string.Join(", ", drives)}");
     }
 }
 /*

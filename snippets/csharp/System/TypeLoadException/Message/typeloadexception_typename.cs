@@ -14,28 +14,27 @@ using System.Reflection;
 
 public class TypeLoadException_TypeName
 {
-   public static void Main()
-   {
-      // Get a reference to the assembly mscorlib.dll, which is always
-      // loaded. (System.String is defined in mscorlib.)
-      Assembly mscorlib = typeof(string).Assembly;
+    public static void Main()
+    {
+        // Get a reference to the assembly mscorlib.dll, which is always
+        // loaded. (System.String is defined in mscorlib.)
+        Assembly mscorlib = typeof(string).Assembly;
 
-      try
-      {
-         Console.WriteLine("Attempting to load a type that does not exist in mscorlib.");
-         // The boolean parameter causes an exception to be thrown if the
-         // type is not found.
-         Type myType = mscorlib.GetType("System.NonExistentType", true);
-      }
-      catch (TypeLoadException ex)
-      {
-         // Display the name of the type that was not found, and the
-         // exception message.
-         Console.WriteLine("TypeLoadException was caught. Type = '{0}'.",
-             ex.TypeName);
-         Console.WriteLine("Error Message = '{0}'", ex.Message);
-      }
-   }
+        try
+        {
+            Console.WriteLine("Attempting to load a type that does not exist in mscorlib.");
+            // The boolean parameter causes an exception to be thrown if the
+            // type is not found.
+            Type myType = mscorlib.GetType("System.NonExistentType", true);
+        }
+        catch (TypeLoadException ex)
+        {
+            // Display the name of the type that was not found, and the
+            // exception message.
+            Console.WriteLine($"TypeLoadException was caught. Type = '{ex.TypeName}'.");
+            Console.WriteLine($"Error Message = '{ex.Message}'");
+        }
+    }
 }
 /*
  This code example produces output similar to the following:

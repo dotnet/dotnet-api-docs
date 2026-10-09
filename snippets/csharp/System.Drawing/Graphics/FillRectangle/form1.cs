@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Forms;
 using System.Data;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace System.Drawing.ClassicGraphicsExamples3CS
 {
@@ -38,10 +38,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -53,9 +50,9 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.Size = new System.Drawing.Size(300, 300);
-            this.Text = "Form1";
+            components = new System.ComponentModel.Container();
+            Size = new System.Drawing.Size(300, 300);
+            Text = "Form1";
         }
         #endregion
 
@@ -138,7 +135,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
             SolidBrush blueBrush = new SolidBrush(Color.Blue);
 
             // Create array of rectangles.
-            Rectangle[] rects = { new Rectangle(0, 0, 100, 200), new Rectangle(100, 200, 250, 50), new Rectangle(300, 0, 50, 100) };
+            Rectangle[] rects = [new Rectangle(0, 0, 100, 200), new Rectangle(100, 200, 250, 50), new Rectangle(300, 0, 50, 100)];
 
             // Fill rectangles to screen.
             e.Graphics.FillRectangles(blueBrush, rects);
@@ -154,7 +151,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
             SolidBrush blueBrush = new SolidBrush(Color.Blue);
 
             // Create array of rectangles.
-            RectangleF[] rects = { new RectangleF(0.0F, 0.0F, 100.0F, 200.0F), new RectangleF(100.0F, 200.0F, 250.0F, 50.0F), new RectangleF(300.0F, 0.0F, 50.0F, 100.0F) };
+            RectangleF[] rects = [new RectangleF(0.0F, 0.0F, 100.0F, 200.0F), new RectangleF(100.0F, 200.0F, 250.0F, 50.0F), new RectangleF(300.0F, 0.0F, 50.0F, 100.0F)];
 
             // Fill rectangles to screen.
             e.Graphics.FillRectangles(blueBrush, rects);
@@ -205,7 +202,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
         {
 
             // Get handle to form.
-            IntPtr hwnd = this.Handle;
+            IntPtr hwnd = Handle;
 
             // Create new graphics object using handle to window.
             Graphics newGraphics = Graphics.FromHwnd(hwnd);
@@ -644,7 +641,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
             Font stringFont = new Font("Times New Roman", 16.0F);
 
             // Set character ranges to "First" and "Second".
-            CharacterRange[] characterRanges = { new CharacterRange(0, 5), new CharacterRange(10, 6) };
+            CharacterRange[] characterRanges = [new CharacterRange(0, 5), new CharacterRange(10, 6)];
 
             // Create rectangle for layout.
             float x = 50.0F;
@@ -654,16 +651,18 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
             RectangleF layoutRect = new RectangleF(x, y, width, height);
 
             // Set string format.
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+            StringFormat stringFormat = new StringFormat
+            {
+                FormatFlags = StringFormatFlags.DirectionVertical
+            };
             stringFormat.SetMeasurableCharacterRanges(characterRanges);
 
             // Draw string to screen.
             e.Graphics.DrawString(measureString, stringFont, Brushes.Black, x, y, stringFormat);
 
             // Measure two ranges in string.
-            Region[] stringRegions = e.Graphics.MeasureCharacterRanges(measureString, 
-		stringFont, layoutRect, stringFormat);
+            Region[] stringRegions = e.Graphics.MeasureCharacterRanges(measureString,
+        stringFont, layoutRect, stringFormat);
 
             // Draw rectangle for first measured range.
             RectangleF measureRect1 = stringRegions[0].GetBounds(e.Graphics);
@@ -711,8 +710,10 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
             PointF ulCorner = new PointF(x, y);
 
             // Set string format.
-            StringFormat newStringFormat = new StringFormat();
-            newStringFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+            StringFormat newStringFormat = new StringFormat
+            {
+                FormatFlags = StringFormatFlags.DirectionVertical
+            };
 
             // Measure string.
             SizeF stringSize = new SizeF();
@@ -763,8 +764,10 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
             SizeF layoutSize = new SizeF(100.0F, 200.0F);
 
             // Set string format.
-            StringFormat newStringFormat = new StringFormat();
-            newStringFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+            StringFormat newStringFormat = new StringFormat
+            {
+                FormatFlags = StringFormatFlags.DirectionVertical
+            };
 
             // Measure string.
             SizeF stringSize = new SizeF();
@@ -791,8 +794,10 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
             SizeF layoutSize = new SizeF(100.0F, 200.0F);
 
             // Set string format.
-            StringFormat newStringFormat = new StringFormat();
-            newStringFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+            StringFormat newStringFormat = new StringFormat
+            {
+                FormatFlags = StringFormatFlags.DirectionVertical
+            };
 
             // Measure string.
             int charactersFitted;
@@ -849,8 +854,10 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
             int stringWidth = 100;
 
             // Set string format.
-            StringFormat newStringFormat = new StringFormat();
-            newStringFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+            StringFormat newStringFormat = new StringFormat
+            {
+                FormatFlags = StringFormatFlags.DirectionVertical
+            };
 
             // Measure string.
             SizeF stringSize = new SizeF();
@@ -1143,7 +1150,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
         {
 
             // Create temporary graphics object and set its clipping region.
-            Graphics newGraphics = this.CreateGraphics();
+            Graphics newGraphics = CreateGraphics();
             newGraphics.SetClip(new Rectangle(0, 0, 100, 100));
 
             // Update clipping region of graphics to clipping region of new
@@ -1165,7 +1172,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
         {
 
             // Create temporary graphics object and set its clipping region.
-            Graphics newGraphics = this.CreateGraphics();
+            Graphics newGraphics = CreateGraphics();
             newGraphics.SetClip(new Rectangle(0, 0, 100, 100));
 
             // Update clipping region of graphics to clipping region of new
@@ -1267,7 +1274,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
         {
 
             // Create array of two points.
-            Point[] points = { new Point(0, 0), new Point(100, 50) };
+            Point[] points = [new Point(0, 0), new Point(100, 50)];
 
             // Draw line connecting two untransformed points.
             e.Graphics.DrawLine(new Pen(Color.Blue, 3), points[0], points[1]);
@@ -1292,7 +1299,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
         {
 
             // Create array of two points.
-            PointF[] points = { new PointF(0.0F, 0.0F), new PointF(100.0F, 50.0F) };
+            PointF[] points = [new PointF(0.0F, 0.0F), new PointF(100.0F, 50.0F)];
 
             // Draw line connecting two untransformed points.
             e.Graphics.DrawLine(new Pen(Color.Blue, 3), points[0], points[1]);

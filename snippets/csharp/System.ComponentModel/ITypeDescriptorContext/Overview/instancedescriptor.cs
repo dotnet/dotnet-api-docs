@@ -8,11 +8,11 @@ using System.Globalization;
 using System.Reflection;
 
 namespace Microsoft.Samples.InstanceDescriptorSample;
-//  This sample shows how to support code generation for a custom type 
+//  This sample shows how to support code generation for a custom type
 //  of object using a type converter and InstanceDescriptor objects.
 
-//  To use this code, copy it to a file and add the file to a project. 
-//  Then add a component to the project and declare a Triangle field and 
+//  To use this code, copy it to a file and add the file to a project.
+//  Then add a component to the project and declare a Triangle field and
 //  a public property with accessors for the Triangle field on the component.
 
 //  The Triangle property will be persisted using code generation.
@@ -45,11 +45,11 @@ public class Triangle
         P3 = point3;
     }
 
-    // A TypeConverter for the Triangle object.  Note that you can make it internal,
+    // A TypeConverter for the Triangle object. Note that you can make it internal,
     //  private, or any scope you want and the designers will still be able to use
-    //  it through the TypeDescriptor object.  This type converter provides the
-    //  capability to convert to an InstanceDescriptor.  This object can be used by 
-    //  the .NET Framework to generate source code that creates an instance of a 
+    //  it through the TypeDescriptor object.This type converter provides the
+    //  capability to convert to an InstanceDescriptor.This object can be used by
+    //  .NET to generate source code that creates an instance of a
     //  Triangle object.
     internal class TriangleConverter : TypeConverter
     {

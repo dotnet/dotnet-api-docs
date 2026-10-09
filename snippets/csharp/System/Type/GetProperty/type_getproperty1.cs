@@ -21,7 +21,7 @@ public class MyTypeClass1
             PropertyInfo myPropInfo = myType.GetProperty("MyProperty");
 
             // Display the property name.
-            Console.WriteLine("The {0} property exists in MyClass1.", myPropInfo.Name);
+            Console.WriteLine($"The {myPropInfo.Name} property exists in MyClass1.");
         }
         catch (NullReferenceException e)
         {

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
-
-using microsoft.wcf.documentation;
-// for the client behavior
 using Microsoft.WCF.Documentation;
 
 // <snippet10>
@@ -13,12 +9,13 @@ public class Client
   {
     try
     {
-      // Picks up configuration from the config file.
+      WSHttpBinding binding = new(SecurityMode.Message);
+      EndpointAddress address = new("http://localhost:8080/ServiceMetadata/SampleService");
       ChannelFactory<ISampleServiceChannel> factory
-        = new ChannelFactory<ISampleServiceChannel>("WSHttpBinding_ISampleService");
+        = new(binding, address);
 
       // Add the client side behavior programmatically to all created channels.
-      factory.Endpoint.Behaviors.Add(new EndpointBehaviorMessageInspector());
+      factory.Endpoint.EndpointBehaviors.Add(new EndpointBehaviorMessageInspector());
 
       ISampleServiceChannel wcfClientChannel = factory.CreateChannel();
 

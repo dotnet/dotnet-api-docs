@@ -16,14 +16,11 @@ public class Example
         Point first = Array.Find(points, ProductGT10);
 
         // Display the first structure found.
-        Console.WriteLine("Found: X = {0}, Y = {1}", first.X, first.Y);
+        Console.WriteLine($"Found: X = {first.X}, Y = {first.Y}");
     }
 
     // Return true if X times Y is greater than 100000.
-    private static bool ProductGT10(Point p)
-    {
-        return p.X * p.Y > 100000;
-    }
+    private static bool ProductGT10(Point p) => p.X * p.Y > 100000;
 }
 // The example displays the following output:
 //       Found: X = 275, Y = 395

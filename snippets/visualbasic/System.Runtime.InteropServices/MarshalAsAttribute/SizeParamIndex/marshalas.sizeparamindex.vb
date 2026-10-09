@@ -6,8 +6,8 @@ Imports SomeNamespace
 
 Namespace SomeNamespace
     ' Force the layout of your fields to the C style struct layout.
-    ' Without this, the .NET Framework will reorder your fields.
-    
+    ' Without this, .NET will reorder your fields.
+
     <StructLayout(LayoutKind.Sequential)> _
     Structure Vertex
         Dim x As Decimal
@@ -22,7 +22,7 @@ Namespace SomeNamespace
 
         Declare Auto Sub SomeUnsafeMethod Lib "somelib.dll" ( _
                                       <MarshalAs(UnmanagedType.LPArray, SizeParamIndex:=1)> data() As Vertex, _
-                                      size As Long ) 
+                                      size As Long )
 
         Public Sub SomeMethod()
             Dim verts(3) As Vertex

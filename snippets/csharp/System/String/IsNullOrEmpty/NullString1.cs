@@ -1,19 +1,19 @@
-using System;
+﻿using System;
 
 public class Example
 {
     public static void Main()
     {
         // <Snippet2>
-        String s = null;
-      
+        string s = null;
+
         Console.WriteLine($"The value of the string is '{s}'");
 
-        try 
+        try
         {
             Console.WriteLine($"String length is {s.Length}");
         }
-        catch (NullReferenceException e) 
+        catch (NullReferenceException e)
         {
             Console.WriteLine(e.Message);
         }
@@ -30,11 +30,11 @@ public class Empty
     public void Test()
     {
         // <Snippet3>
-        String s = "";
+        string s = "";
         Console.WriteLine($"The length of '{s}' is {s.Length}.");
 
         // The example displays the following output:
-        //       The length of '' is 0.      
+        //       The length of '' is 0.
         // </Snippet3>
     }
 }

@@ -10,11 +10,10 @@ public class Example
                            0xFFFFFFFFFFFF, 123456789123456789,
                            1000000000000000 };
         // Convert each value to a Decimal.
-        foreach (var value in values) {
-           Decimal decValue = value;
-           Console.WriteLine("{0} ({1}) --> {2} ({3})", value,
-                             value.GetType().Name, decValue,
-                             decValue.GetType().Name);
+        foreach (ulong value in values)
+        {
+            decimal decValue = value;
+            Console.WriteLine($"{value} ({value.GetType().Name}) --> {decValue} ({decValue.GetType().Name})");
         }
     }
 }

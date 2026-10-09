@@ -6,9 +6,9 @@ class Sample
 {
     public static void Main()
     {
-    OperatingSystem os = Environment.OSVersion;
-    String sp = os.ServicePack;
-    Console.WriteLine("Service pack version = \"{0}\"", sp);
+        OperatingSystem os = Environment.OSVersion;
+        string sp = os.ServicePack;
+        Console.WriteLine($"Service pack version = \"{sp}\"");
     }
 }
 /*

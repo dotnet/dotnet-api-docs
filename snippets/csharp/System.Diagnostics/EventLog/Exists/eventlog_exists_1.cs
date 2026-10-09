@@ -8,27 +8,22 @@
 
 using System;
 using System.Diagnostics;
-class EventLog_Exists_1
+
+try
 {
-   public static void Main()
-   {
-      try
-      {
-// <Snippet1>
-         string myLog = "myNewLog";
-         if (EventLog.Exists(myLog))
-         {
-            Console.WriteLine("Log '"+myLog+"' exists.");
-         }
-         else
-         {
-            Console.WriteLine("Log '"+myLog+"' does not exist.");
-         }
-// </Snippet1>
-      }
-      catch(Exception e)
-      {
-         Console.WriteLine("Exception:"+ e.Message);
-      }
-   }
+    // <Snippet1>
+    string myLog = "myNewLog";
+    if (EventLog.Exists(myLog))
+    {
+        Console.WriteLine($"Log '{myLog}' exists.");
+    }
+    else
+    {
+        Console.WriteLine($"Log '{myLog}' does not exist.");
+    }
+    // </Snippet1>
+}
+catch (Exception e)
+{
+    Console.WriteLine($"Exception:{e.Message}");
 }

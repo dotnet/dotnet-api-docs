@@ -4,16 +4,16 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-      DateTime dateValue = new DateTime(2009, 6, 1, 16, 37, 0);
-      CultureInfo[] cultures = { new CultureInfo("en-US"),
+    public static void Main()
+    {
+        DateTime dateValue = new(2009, 6, 1, 16, 37, 0);
+        CultureInfo[] cultures = { new CultureInfo("en-US"),
                                  new CultureInfo("fr-FR"),
                                  new CultureInfo("it-IT"),
                                  new CultureInfo("de-DE") };
-      foreach (CultureInfo culture in cultures)
-         Console.WriteLine("{0}: {1}", culture.Name, dateValue.ToString(culture));
-   }
+        foreach (CultureInfo culture in cultures)
+            Console.WriteLine($"{culture.Name}: {dateValue.ToString(culture)}");
+    }
 }
 // The example displays the following output:
 //       en-US: 6/1/2009 4:37:00 PM

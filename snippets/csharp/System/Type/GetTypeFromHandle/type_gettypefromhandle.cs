@@ -9,20 +9,20 @@
 */
 
 using System;
-using System.Reflection;
+
 
 public class MyClass1
 {
 }
 public class MyClass2
 {
-   public static void Main()
-   {
-// <Snippet1>
-        MyClass1 myClass1 = new MyClass1();
-	     // Get the type referenced by the specified type handle.
+    public static void Main()
+    {
+        // <Snippet1>
+        MyClass1 myClass1 = new();
+        // Get the type referenced by the specified type handle.
         Type myClass1Type = Type.GetTypeFromHandle(Type.GetTypeHandle(myClass1));
-        Console.WriteLine("The Names of the Attributes :"+myClass1Type.Attributes);
-// </Snippet1>
-   }
+        Console.WriteLine("The Names of the Attributes :" + myClass1Type.Attributes);
+        // </Snippet1>
+    }
 }

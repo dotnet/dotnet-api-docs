@@ -134,9 +134,9 @@ public class XpsCreate
             // Commit the FixedDocumentSequence
             documentSequenceWriter.Commit();
         }
-        catch (XpsPackagingException xpsException)
+        catch (XpsPackagingException)
         {
-            throw xpsException;
+            throw;
         }
     }// end:AddPackageContent()
     //</SnippetXpsCreateAddPkgContent>
@@ -183,9 +183,9 @@ public class XpsCreate
             // Commit Page 2.
             fixedPageWriter.Commit();
         }
-        catch (XpsPackagingException xpsException)
+        catch (XpsPackagingException)
         {
-            throw xpsException;
+            throw;
         }
     }// end:AddDocumentContent()
     //</SnippetXpsCreateAddDocContent>
@@ -240,9 +240,9 @@ public class XpsCreate
             resources.Add("XpsFont", xpsFonts);
             return resources;
         }
-        catch (XpsPackagingException xpsException)
+        catch (XpsPackagingException)
         {
-            throw xpsException;
+            throw;
         }
     }// end:AddPageResources()
     //</SnippetXpsCreateAddPageResources>
@@ -431,7 +431,7 @@ public class XpsCreate
             // XOR the first 32 bytes of the source
             // resource stream with GUID byte.
             byte[] buf = new byte[obfuscatedByte];
-            filestream.Read(buf, 0, obfuscatedByte);
+            filestream.ReadExactly(buf, 0, obfuscatedByte);
 
             for (int i = 0; i < obfuscatedByte; i++)
             {

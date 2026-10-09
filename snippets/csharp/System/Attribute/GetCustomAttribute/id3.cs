@@ -1,6 +1,6 @@
 ﻿//<Snippet3>
 using System;
-using System.Reflection;
+
 using System.Runtime.InteropServices;
 
 namespace IsDef3CS
@@ -20,8 +20,7 @@ namespace IsDef3CS
             // See if the Guid attribute is defined for the class.
             bool isDef = Attribute.IsDefined(clsType, typeof(GuidAttribute));
             // Display the result.
-            Console.WriteLine("The Guid attribute {0} defined for class {1}.",
-                isDef ? "is" : "is not", clsType.Name);
+            Console.WriteLine($"The Guid attribute {(isDef ? "is" : "is not")} defined for class {clsType.Name}.");
             // If it's defined, display the GUID.
             if (isDef)
             {

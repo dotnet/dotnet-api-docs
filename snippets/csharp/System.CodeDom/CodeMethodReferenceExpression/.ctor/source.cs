@@ -13,7 +13,7 @@ public class CodeGenExample
         // Declares a type constructor that calls a method.
         CodeConstructor constructor1 = new CodeConstructor();
         constructor1.Attributes = MemberAttributes.Public;
-        class1.Members.Add( constructor1 );
+        class1.Members.Add(constructor1);
 
         // Creates a method reference for dict.Init.
         CodeMethodReferenceExpression methodRef1 =
@@ -25,8 +25,8 @@ public class CodeGenExample
                     new CodeTypeReference("System.Int32")});
 
         // Invokes the dict.Init method from the constructor.
-        CodeMethodInvokeExpression invoke1 = new CodeMethodInvokeExpression( methodRef1, new CodeParameterDeclarationExpression[] {} );
-        constructor1.Statements.Add( invoke1 );
+        CodeMethodInvokeExpression invoke1 = new CodeMethodInvokeExpression(methodRef1, []);
+        constructor1.Statements.Add(invoke1);
 
         // Create a C# code provider
         CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");

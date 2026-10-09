@@ -2,26 +2,26 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class SortedDictionaryConstructorExample3
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a new Dictionary of strings, with string keys and
         // a case-insensitive equality comparer for the current
         // culture.
         Dictionary<string, string> openWith =
-            new Dictionary<string, string>
-                (StringComparer.CurrentCultureIgnoreCase);
-
-        // Add some elements to the dictionary.
-        openWith.Add("txt", "notepad.exe");
-        openWith.Add("Bmp", "paint.exe");
-        openWith.Add("DIB", "paint.exe");
-        openWith.Add("rtf", "wordpad.exe");
+            new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase)
+            {
+                // Add some elements to the dictionary.
+                { "txt", "notepad.exe" },
+                { "Bmp", "paint.exe" },
+                { "DIB", "paint.exe" },
+                { "rtf", "wordpad.exe" }
+            };
 
         // List the contents of the Dictionary.
         Console.WriteLine();
-        foreach( KeyValuePair<string, string> kvp in openWith)
+        foreach (KeyValuePair<string, string> kvp in openWith)
         {
             Console.WriteLine("Key = {0}, Value = {1}", kvp.Key,
                 kvp.Value);
@@ -36,7 +36,7 @@ public class Example
 
         // List the sorted contents of the copy.
         Console.WriteLine();
-        foreach( KeyValuePair<string, string> kvp in copy )
+        foreach (KeyValuePair<string, string> kvp in copy)
         {
             Console.WriteLine("Key = {0}, Value = {1}", kvp.Key,
                 kvp.Value);

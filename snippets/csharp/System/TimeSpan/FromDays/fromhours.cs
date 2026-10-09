@@ -4,44 +4,42 @@ using System;
 
 class FromHoursDemo
 {
-    static void GenTimeSpanFromHours( double hours )
+    static void GenTimeSpanFromHours(double hours)
     {
-        // Create a TimeSpan object and TimeSpan string from 
+        // Create a TimeSpan object and TimeSpan string from
         // a number of hours.
-        TimeSpan    interval = TimeSpan.FromHours( hours );
-        string      timeInterval = interval.ToString( );
+        TimeSpan interval = TimeSpan.FromHours(hours);
+        string timeInterval = interval.ToString();
 
-        // Pad the end of the TimeSpan string with spaces if it 
+        // Pad the end of the TimeSpan string with spaces if it
         // does not contain milliseconds.
-        int pIndex = timeInterval.IndexOf( ':' );
-        pIndex = timeInterval.IndexOf( '.', pIndex );
-        if( pIndex < 0 )   timeInterval += "        ";
+        int pIndex = timeInterval.IndexOf(':');
+        pIndex = timeInterval.IndexOf('.', pIndex);
+        if (pIndex < 0) timeInterval += "        ";
 
-        Console.WriteLine( "{0,21}{1,26}", hours, timeInterval );
-    } 
+        Console.WriteLine($"{hours,21}{timeInterval,26}");
+    }
 
-    static void Main( )
+    static void Main()
     {
         Console.WriteLine(
             "This example of TimeSpan.FromHours( double )\n" +
-            "generates the following output.\n" );
-        Console.WriteLine( "{0,21}{1,18}",
-            "FromHours", "TimeSpan" );
-        Console.WriteLine( "{0,21}{1,18}", 
-            "---------", "--------" );
+            "generates the following output.\n");
+        Console.WriteLine($"{"FromHours",21}{"TimeSpan",18}");
+        Console.WriteLine($"{"---------",21}{"--------",18}");
 
-        GenTimeSpanFromHours( 0.0000002 );
-        GenTimeSpanFromHours( 0.0000003 );
-        GenTimeSpanFromHours( 0.0012345 );
-        GenTimeSpanFromHours( 12.3456789 );
-        GenTimeSpanFromHours( 123456.7898765 );
-        GenTimeSpanFromHours( 0.0002777 );
-        GenTimeSpanFromHours( 0.0166666 );
-        GenTimeSpanFromHours( 1 );
-        GenTimeSpanFromHours( 24 );
-        GenTimeSpanFromHours( 500.3389445 );
-    } 
-} 
+        GenTimeSpanFromHours(0.0000002);
+        GenTimeSpanFromHours(0.0000003);
+        GenTimeSpanFromHours(0.0012345);
+        GenTimeSpanFromHours(12.3456789);
+        GenTimeSpanFromHours(123456.7898765);
+        GenTimeSpanFromHours(0.0002777);
+        GenTimeSpanFromHours(0.0166666);
+        GenTimeSpanFromHours(1);
+        GenTimeSpanFromHours(24);
+        GenTimeSpanFromHours(500.3389445);
+    }
+}
 
 /*
 This example of TimeSpan.FromHours( double )
@@ -59,5 +57,5 @@ generates the following output.
                     1          01:00:00
                    24        1.00:00:00
           500.3389445       20.20:20:20.2000000
-*/ 
+*/
 //</Snippet5>

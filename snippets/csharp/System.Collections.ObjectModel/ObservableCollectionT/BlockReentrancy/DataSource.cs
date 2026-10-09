@@ -1,11 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Data;
-using System.Windows.Media;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace SDKSample
 {
@@ -17,37 +12,29 @@ namespace SDKSample
     //<Snippet1>
     public class NumberListItem : INotifyPropertyChanged
     {
-        private int _NLValue;
-
-        public NumberListItem()
-        {
-        }
+        private int _nlValue;
 
         public int NLValue
         {
             get
             {
-                return _NLValue;
+                return _nlValue;
             }
 
             set
             {
-                if (_NLValue != value)
+                if (_nlValue != value)
                 {
-                    _NLValue = value;
-                    OnPropertyChanged("NLValue");
+                    _nlValue = value;
+                    OnPropertyChanged(nameof(NLValue));
                 }
             }
         }
 
-        // The following variable and method provide the support for
-        // handling property changed events.
+        // The following event and method support property-changed events.
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(String info)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-        }
+        private void OnPropertyChanged(string info) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
     }
     //</Snippet1>
 
@@ -62,9 +49,9 @@ namespace SDKSample
         public NumberList()
             : base()
         {
-            Add(new NumberListItem());
-            Add(new NumberListItem());
-            Add(new NumberListItem());
+            Add(new());
+            Add(new());
+            Add(new());
         }
 
         public void SetOdd()
@@ -91,7 +78,7 @@ namespace SDKSample
             //<SnippetBlockReentrancy>
             using (BlockReentrancy())
             {
-                // OnCollectionChanged call
+                // OnCollectionChanged call.
             }
             //</SnippetBlockReentrancy>
         }

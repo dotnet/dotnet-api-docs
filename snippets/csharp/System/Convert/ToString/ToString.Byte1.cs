@@ -3,15 +3,13 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      byte[] values = { Byte.MinValue, 12, 100, 179, Byte.MaxValue } ;
+    public static void Main()
+    {
+        byte[] values = { byte.MinValue, 12, 100, 179, byte.MaxValue };
 
-      foreach (var value in values)
-         Console.WriteLine("{0,3} ({1}) --> {2}", value,
-                           value.GetType().Name,
-                           Convert.ToString(value));
-   }
+        foreach (byte value in values)
+            Console.WriteLine($"{value,3} ({value.GetType().Name}) --> {Convert.ToString(value)}");
+    }
 }
 // The example displays the following output:
 //       0 (Byte) --> 0

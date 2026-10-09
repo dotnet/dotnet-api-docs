@@ -6,10 +6,10 @@ static class ImmutableHashSetSnippets
     static void SnippetIterate()
     {
         // <SnippetIterate>
-        // Create immutable set of strings
+        // Create an immutable set of strings.
         ImmutableHashSet<string> colors = ImmutableHashSet.Create("Red", "Green", "Blue");
 
-        // Iterate over all items in the set and print them
+        // Iterate over all items in the set and print them.
         Console.WriteLine("colors:");
 
         foreach (string s in colors)
@@ -17,11 +17,11 @@ static class ImmutableHashSetSnippets
             Console.WriteLine(s);
         }
 
-        // Try to add duplicate item into the set 
+        // Try to add a duplicate item to the set.
         ImmutableHashSet<string> colors2 = colors.Add("Red");
         Console.WriteLine("colors2:");
 
-        // Print items in the new set
+        // Print items in the new set.
         foreach (string s in colors2)
         {
             Console.WriteLine(s);
@@ -43,10 +43,10 @@ static class ImmutableHashSetSnippets
     static void SnippetModify()
     {
         // <SnippetModify>
-        // Create immutable set of strings
+        // Create an immutable set of strings.
         ImmutableHashSet<string> colors = ImmutableHashSet.Create("Red", "Green", "Blue");
 
-        // Create a new set by adding and removing items from the original set
+        // Create a new set by adding and removing items from the original set.
         ImmutableHashSet<string> colorsModified = colors.Remove("Red").Add("Orange");
 
         foreach (string s in colorsModified)
@@ -65,35 +65,47 @@ static class ImmutableHashSetSnippets
     static void SnippetSetOperations()
     {
         // <SnippetSetOperations>
-        // Create two sets of numbers
+        // Create two sets of numbers.
         ImmutableHashSet<int> evenNumbers = ImmutableHashSet<int>.Empty;
         ImmutableHashSet<int> oddNumbers = ImmutableHashSet<int>.Empty;
 
         for (int i = 0; i < 5; i++)
-        {            
+        {
             evenNumbers = evenNumbers.Add(i * 2);
             oddNumbers = oddNumbers.Add((i * 2) + 1);
         }
 
         Console.Write("evenNumbers: ");
 
-        foreach (int n in evenNumbers) Console.Write($"{n} ");
-        
+        foreach (int n in evenNumbers)
+        {
+            Console.Write($"{n} ");
+        }
+
         Console.Write("\noddNumbers: ");
 
-        foreach (int n in oddNumbers) Console.Write($"{n} ");
+        foreach (int n in oddNumbers)
+        {
+            Console.Write($"{n} ");
+        }
 
-        // Create a new set that contains an intersection of two sets
+        // Create a new set that contains an intersection of two sets.
         ImmutableHashSet<int> intersection = evenNumbers.Intersect(oddNumbers);
         Console.Write("\nintersection: ");
 
-        foreach (int n in intersection) Console.Write($"{n} ");
+        foreach (int n in intersection)
+        {
+            Console.Write($"{n} ");
+        }
 
-        // Create a new set that contains a union of two sets
+        // Create a new set that contains a union of two sets.
         ImmutableHashSet<int> union = evenNumbers.Union(oddNumbers);
         Console.Write("\nunion: ");
 
-        foreach (int n in union) Console.Write($"{n} ");
+        foreach (int n in union)
+        {
+            Console.Write($"{n} ");
+        }
 
         /* Example output:
          evenNumbers: 0 2 4 6 8

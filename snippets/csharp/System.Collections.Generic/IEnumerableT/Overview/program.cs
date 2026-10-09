@@ -1,8 +1,8 @@
 ﻿//<snippet1>
 using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 public class App
@@ -17,49 +17,54 @@ public class App
     }
 
     public static void TestStreamReaderEnumerable()
-	{
-		// Check the memory before the iterator is used.
-		long memoryBefore = GC.GetTotalMemory(true);
-      IEnumerable<String> stringsFound;
-		// Open a file with the StreamReaderEnumerable and check for a string.
-      try {
-         stringsFound =
-               from line in new StreamReaderEnumerable(@"c:\temp\tempFile.txt")
-               where line.Contains("string to search for")
-               select line;
-         Console.WriteLine("Found: " + stringsFound.Count());
-      }
-      catch (FileNotFoundException) {
-         Console.WriteLine(@"This example requires a file named C:\temp\tempFile.txt.");
-         return;
-      }
+    {
+        // Check the memory before the iterator is used.
+        long memoryBefore = GC.GetTotalMemory(true);
+        IEnumerable<string> stringsFound;
+        // Open a file with the StreamReaderEnumerable and check for a string.
+        try
+        {
+            stringsFound =
+                  from line in new StreamReaderEnumerable(@"c:\temp\tempFile.txt")
+                  where line.Contains("string to search for")
+                  select line;
+            Console.WriteLine("Found: " + stringsFound.Count());
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine(@"This example requires a file named C:\temp\tempFile.txt.");
+            return;
+        }
 
-		// Check the memory after the iterator and output it to the console.
-		long memoryAfter = GC.GetTotalMemory(false);
-		Console.WriteLine("Memory Used With Iterator = \t"
+        // Check the memory after the iterator and output it to the console.
+        long memoryAfter = GC.GetTotalMemory(false);
+        Console.WriteLine("Memory Used With Iterator = \t"
             + string.Format(((memoryAfter - memoryBefore) / 1000).ToString(), "n") + "kb");
-	}
+    }
 
     public static void TestReadingFile()
-	{
-		long memoryBefore = GC.GetTotalMemory(true);
-      StreamReader sr;
-      try {
-         sr = File.OpenText("c:\\temp\\tempFile.txt");
-      }
-      catch (FileNotFoundException) {
-         Console.WriteLine(@"This example requires a file named C:\temp\tempFile.txt.");
-         return;
-      }
+    {
+        long memoryBefore = GC.GetTotalMemory(true);
+        StreamReader sr;
+        try
+        {
+            sr = File.OpenText("c:\\temp\\tempFile.txt");
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine(@"This example requires a file named C:\temp\tempFile.txt.");
+            return;
+        }
 
         // Add the file contents to a generic list of strings.
-		List<string> fileContents = new List<string>();
-		while (!sr.EndOfStream) {
-			fileContents.Add(sr.ReadLine());
-		}
+        List<string> fileContents = [];
+        while (!sr.EndOfStream)
+        {
+            fileContents.Add(sr.ReadLine());
+        }
 
-		// Check for the string.
-		var stringsFound =
+        // Check for the string.
+        IEnumerable<string> stringsFound =
             from line in fileContents
             where line.Contains("string to search for")
             select line;
@@ -67,11 +72,11 @@ public class App
         sr.Close();
         Console.WriteLine("Found: " + stringsFound.Count());
 
-		// Check the memory after when the iterator is not used, and output it to the console.
-		long memoryAfter = GC.GetTotalMemory(false);
-		Console.WriteLine("Memory Used Without Iterator = \t" +
+        // Check the memory after when the iterator is not used, and output it to the console.
+        long memoryAfter = GC.GetTotalMemory(false);
+        Console.WriteLine("Memory Used Without Iterator = \t" +
             string.Format(((memoryAfter - memoryBefore) / 1000).ToString(), "n") + "kb");
-	}
+    }
 }
 
 // A custom class that implements IEnumerable(T). When you implement IEnumerable(T),
@@ -173,16 +178,17 @@ public class StreamReaderEnumerator : IEnumerator<string>
                 // Dispose of managed resources.
             }
             _current = null;
-            if (_sr != null) {
-               _sr.Close();
-               _sr.Dispose();
+            if (_sr != null)
+            {
+                _sr.Close();
+                _sr.Dispose();
             }
         }
 
         this.disposedValue = true;
     }
 
-     ~StreamReaderEnumerator()
+    ~StreamReaderEnumerator()
     {
         Dispose(disposing: false);
     }

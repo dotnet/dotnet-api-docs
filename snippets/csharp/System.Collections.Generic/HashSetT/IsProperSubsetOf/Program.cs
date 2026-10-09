@@ -7,8 +7,8 @@ class Program
     static void Main()
     {
         //<snippet02>
-        HashSet<int> lowNumbers = new HashSet<int>();
-        HashSet<int> allNumbers = new HashSet<int>();
+        HashSet<int> lowNumbers = [];
+        HashSet<int> allNumbers = [];
 
         for (int i = 1; i < 5; i++)
         {
@@ -32,7 +32,7 @@ class Program
         Console.WriteLine("allNumbers and lowNumbers are equal sets: {0}",
             allNumbers.SetEquals(lowNumbers));
 
-        // Show the results of sub/superset testing
+        // Show the results of sub/superset testing.
         Console.WriteLine("lowNumbers is a subset of allNumbers: {0}",
             lowNumbers.IsSubsetOf(allNumbers));
         Console.WriteLine("allNumbers is a superset of lowNumbers: {0}",

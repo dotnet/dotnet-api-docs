@@ -5,13 +5,13 @@ public class Example4
     public static void Main()
     {
         // <Snippet20>
-        dynamic[] values = { Byte.MinValue, Byte.MaxValue, Decimal.MinValue,
-                           Decimal.MaxValue, Int16.MinValue, Int16.MaxValue,
-                           Int32.MinValue, Int32.MaxValue, Int64.MinValue,
-                           Int64.MaxValue, SByte.MinValue, SByte.MaxValue,
-                           Single.MinValue, Single.MaxValue, UInt16.MinValue,
-                           UInt16.MaxValue, UInt32.MinValue, UInt32.MaxValue,
-                           UInt64.MinValue, UInt64.MaxValue };
+        dynamic[] values = { byte.MinValue, byte.MaxValue, decimal.MinValue,
+                           decimal.MaxValue, short.MinValue, short.MaxValue,
+                           int.MinValue, int.MaxValue, long.MinValue,
+                           long.MaxValue, sbyte.MinValue, sbyte.MaxValue,
+                           float.MinValue, float.MaxValue, ushort.MinValue,
+                           ushort.MaxValue, uint.MinValue, uint.MaxValue,
+                           ulong.MinValue, ulong.MaxValue };
         double dblValue;
         foreach (dynamic value in values)
         {

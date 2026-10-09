@@ -6,8 +6,8 @@ class Sample
 {
     public static void Main()
     {
-    Console.WriteLine();
-    Console.WriteLine("StackTrace: '{0}'", Environment.StackTrace);
+        Console.WriteLine();
+        Console.WriteLine($"StackTrace: '{Environment.StackTrace}'");
     }
 }
 /*

@@ -12,7 +12,7 @@ public class Form1 : Form
         EventDescriptorCollection events = TypeDescriptor.GetEvents(button1);
 
         // Prints the number of events on button1 in a text box.
-        textBox1.Text = events.Count.ToString();
+        textBox1.Text = $"{events.Count}";
     }
 
     // </Snippet1>

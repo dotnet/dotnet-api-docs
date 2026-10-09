@@ -15,8 +15,8 @@ class MyUInt16_Equals
         try
         {
             // <Snippet1>
-            UInt16 myVariable1 = 10;
-            UInt16 myVariable2 = 10;
+            ushort myVariable1 = 10;
+            ushort myVariable2 = 10;
 
             //Display the declaring type.
             Console.WriteLine("\nType of 'myVariable1' is '{0}' and" +
@@ -36,7 +36,7 @@ class MyUInt16_Equals
         }
         catch (Exception e)
         {
-            Console.WriteLine("Exception :{0}", e.Message);
+            Console.WriteLine($"Exception :{e.Message}");
         }
     }
 }

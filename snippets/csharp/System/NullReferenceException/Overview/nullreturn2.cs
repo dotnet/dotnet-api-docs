@@ -44,15 +44,12 @@ public class Person
     {
         Person[] p = new Person[firstNames.Length];
         for (int ctr = 0; ctr < firstNames.Length; ctr++)
-            p[ctr] = new Person(firstNames[ctr]);
+            p[ctr] = new(firstNames[ctr]);
 
         return p;
     }
 
-    public Person(string firstName)
-    {
-        FirstName = firstName;
-    }
+    public Person(string firstName) => FirstName = firstName;
 
     public string FirstName;
 }

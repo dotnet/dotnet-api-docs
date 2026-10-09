@@ -1,14 +1,14 @@
 ﻿using System;
 
-public class Example
+public class TrimCharactersExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
-        char[] charsToTrim = { '*', ' ', '\''};
+        char[] charsToTrim = ['*', ' ', '\''];
         string banner = "*** Much Ado About Nothing ***";
         string result = banner.Trim(charsToTrim);
-        Console.WriteLine("Trimmed\n   {0}\nto\n   '{1}'", banner, result);
+        Console.WriteLine($"Trimmed\n   {banner}\nto\n   '{result}'");
 
         // The example displays the following output:
         //       Trimmed

@@ -3,16 +3,17 @@ using System;
 
 class Example
 {
-    public static void Main( )
+    public static void Main()
     {
         // Define an array of byte values.
         byte[] bytes = { 0, 1, 2, 4, 8, 16, 32, 64, 128, 255 };
 
-        Console.WriteLine("{0,5}{1,16}{2,10}\n", "index", "array element", "bool" );
+        Console.WriteLine($"{"index",5}{"array element",16}{"bool",10}\n");
         // Convert each array element to a Boolean value.
         for (int index = 0; index < bytes.Length; index++)
-           Console.WriteLine("{0,5}{1,16:X2}{2,10}", index, bytes[index],
-                             BitConverter.ToBoolean(bytes, index));
+        {
+            Console.WriteLine($"{index,5}{bytes[index],16:X2}{BitConverter.ToBoolean(bytes, index),10}");
+        }
     }
 }
 // The example displays the following output:

@@ -7,8 +7,8 @@ namespace IsDef5CS
     public class TestClass
     {
         // Assign a ParamArray attribute to the parameter using the keyword.
-        public void Method1(params String[] args)
-        {}
+        public void Method1(params string[] args)
+        { }
     }
 
     public class DemoClass

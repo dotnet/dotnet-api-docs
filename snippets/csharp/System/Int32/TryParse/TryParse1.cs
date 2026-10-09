@@ -3,25 +3,25 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      string[] values = { null, "160519", "9432.0", "16,667",
+    public static void Main()
+    {
+        string[] values = { null, "160519", "9432.0", "16,667",
                           "   -322   ", "+4302", "(100);", "01FA" };
-      foreach (var value in values)
-      {
-         int number;
+        foreach (string value in values)
+        {
+            int number;
 
-         bool success = int.TryParse(value, out number);
-         if (success)
-         {
-            Console.WriteLine($"Converted '{value}' to {number}.");
-         }
-         else
-         {
-            Console.WriteLine($"Attempted conversion of '{value ?? "<null>"}' failed.");
-         }
-      }
-   }
+            bool success = int.TryParse(value, out number);
+            if (success)
+            {
+                Console.WriteLine($"Converted '{value}' to {number}.");
+            }
+            else
+            {
+                Console.WriteLine($"Attempted conversion of '{value ?? "<null>"}' failed.");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //       Attempted conversion of '<null>' failed.

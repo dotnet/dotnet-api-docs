@@ -1,20 +1,16 @@
 ﻿//<snippet1>
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 internal class Win32
 {
     // The SHAutoComplete function allows you
     // to add auto-compete functionality to your
-    // Windows Forms text boxes. In .NET Framework
-    // 1.1 and earlier, you can use SHAutoComplete.
-    // Later versions have this ability built in without
-    // requiring platform invoke.
+    // Windows Forms text boxes.
 
-    // See the MSDN documentation of the
-    // SHAutoComplete function for the
-    // complete set of flags.
+    // For the complete set of flags,
+    // see the documentation of the
+    // SHAutoComplete function.
     public enum SHAutoCompleteFlags
     {
         SHACF_DEFAULT = 0x00000000,

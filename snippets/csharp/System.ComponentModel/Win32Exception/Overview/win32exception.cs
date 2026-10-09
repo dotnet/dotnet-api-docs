@@ -17,8 +17,8 @@ static class Class1
         catch (Win32Exception w)
         {
             Console.WriteLine(w.Message);
-            Console.WriteLine(w.ErrorCode.ToString());
-            Console.WriteLine(w.NativeErrorCode.ToString());
+            Console.WriteLine(w.ErrorCode);
+            Console.WriteLine(w.NativeErrorCode);
             Console.WriteLine(w.StackTrace);
             Console.WriteLine(w.Source);
             Exception e = w.GetBaseException();

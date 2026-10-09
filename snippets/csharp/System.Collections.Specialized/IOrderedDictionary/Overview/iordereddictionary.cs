@@ -10,7 +10,7 @@ public class People : IOrderedDictionary
 
     public People(int numItems)
     {
-        _people = new ArrayList(numItems);
+        _people = new(numItems);
     }
 
     public int IndexOfKey(object key)
@@ -21,7 +21,7 @@ public class People : IOrderedDictionary
                 return i;
         }
 
-        // key not found, return -1.
+        // Key not found.
         return -1;
     }
 
@@ -37,7 +37,7 @@ public class People : IOrderedDictionary
         }
     }
 
-    // IOrderedDictionary Members
+    // IOrderedDictionary members.
     public IDictionaryEnumerator GetEnumerator()
     {
         return new PeopleEnum(_people);
@@ -69,7 +69,7 @@ public class People : IOrderedDictionary
             _people[index] = new DictionaryEntry(key, value);
         }
     }
-    // IDictionary Members
+    // IDictionary members.
 
     public void Add(object key, object value)
     {
@@ -97,30 +97,18 @@ public class People : IOrderedDictionary
         }
     }
 
-    public bool IsFixedSize
-    {
-        get
-        {
-            return false;
-        }
-    }
+    public bool IsFixedSize => false;
 
-    public bool IsReadOnly
-    {
-        get
-        {
-            return false;
-        }
-    }
+    public bool IsReadOnly => false;
 
     public ICollection Keys
     {
         get
         {
-            ArrayList KeyCollection = new ArrayList(_people.Count);
+            ArrayList KeyCollection = new(_people.Count);
             for (int i = 0; i < _people.Count; i++)
             {
-                KeyCollection.Add( ((DictionaryEntry)_people[i]).Key );
+                KeyCollection.Add(((DictionaryEntry)_people[i]).Key);
             }
             return KeyCollection;
         }
@@ -135,52 +123,31 @@ public class People : IOrderedDictionary
     {
         get
         {
-            ArrayList ValueCollection = new ArrayList(_people.Count);
+            ArrayList ValueCollection = new(_people.Count);
             for (int i = 0; i < _people.Count; i++)
             {
-                ValueCollection.Add( ((DictionaryEntry)_people[i]).Value );
+                ValueCollection.Add(((DictionaryEntry)_people[i]).Value);
             }
             return ValueCollection;
         }
     }
 
-    // ICollection Members
+    // ICollection members.
 
     public void CopyTo(Array array, int index)
     {
         _people.CopyTo(array, index);
     }
 
-    public int Count
-    {
-        get
-        {
-            return _people.Count;
-        }
-    }
+    public int Count => _people.Count;
 
-    public bool IsSynchronized
-    {
-        get
-        {
-            return _people.IsSynchronized;
-        }
-    }
+    public bool IsSynchronized => _people.IsSynchronized;
 
-    public object SyncRoot
-    {
-        get
-        {
-            return _people.SyncRoot;
-        }
-    }
+    public object SyncRoot => _people.SyncRoot;
 
-    // IEnumerable Members
+    // IEnumerable members.
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return new PeopleEnum(_people);
-    }
+    IEnumerator IEnumerable.GetEnumerator() => new PeopleEnum(_people);
 }
 
 public class PeopleEnum : IDictionaryEnumerator
@@ -189,23 +156,17 @@ public class PeopleEnum : IDictionaryEnumerator
 
     // Enumerators are positioned before the first element
     // until the first MoveNext() call.
-    int position = -1;
+    int _position = -1;
 
-    public PeopleEnum(ArrayList list)
-    {
-        _people = list;
-    }
+    public PeopleEnum(ArrayList list) => _people = list;
 
     public bool MoveNext()
     {
-        position++;
-        return (position < _people.Count);
+        _position++;
+        return (_position < _people.Count);
     }
 
-    public void Reset()
-    {
-        position = -1;
-    }
+    public void Reset() => _position = -1;
 
     public object Current
     {
@@ -213,7 +174,7 @@ public class PeopleEnum : IDictionaryEnumerator
         {
             try
             {
-                return _people[position];
+                return _people[_position];
             }
             catch (IndexOutOfRangeException)
             {
@@ -222,13 +183,7 @@ public class PeopleEnum : IDictionaryEnumerator
         }
     }
 
-    public DictionaryEntry Entry
-    {
-        get
-        {
-            return (DictionaryEntry)Current;
-        }
-    }
+    public DictionaryEntry Entry => (DictionaryEntry)Current;
 
     public object Key
     {
@@ -236,7 +191,7 @@ public class PeopleEnum : IDictionaryEnumerator
         {
             try
             {
-                return ((DictionaryEntry)_people[position]).Key;
+                return ((DictionaryEntry)_people[_position]).Key;
             }
             catch (IndexOutOfRangeException)
             {
@@ -251,7 +206,7 @@ public class PeopleEnum : IDictionaryEnumerator
         {
             try
             {
-                return ((DictionaryEntry)_people[position]).Value;
+                return ((DictionaryEntry)_people[_position]).Value;
             }
             catch (IndexOutOfRangeException)
             {
@@ -262,19 +217,21 @@ public class PeopleEnum : IDictionaryEnumerator
 }
 //</snippet01>
 
-class App
+class PeopleApp
 {
-    static void Main()
+    public static void Main()
     {
-        People peopleCollection = new People(3);
-        peopleCollection.Add("John", "Smith");
-        peopleCollection.Add("Jim", "Johnson");
-        peopleCollection.Add("Sue", "Rabon");
+        People peopleCollection = new(3)
+        {
+            { "John", "Smith" },
+            { "Jim", "Johnson" },
+            { "Sue", "Rabon" }
+        };
 
         Console.WriteLine("Displaying the entries in peopleCollection:");
         foreach (DictionaryEntry de in peopleCollection)
         {
-            Console.WriteLine("{0} {1}", de.Key, de.Value);
+            Console.WriteLine($"{de.Key} {de.Value}");
         }
 
         Console.WriteLine();
@@ -283,12 +240,15 @@ class App
         peopleCollection.Remove("Sue");
         peopleCollection.Insert(0, "Fred", "Anderson");
 
+        // <SnippetDictionaryEntry>
         foreach (DictionaryEntry de in peopleCollection)
         {
-            Console.WriteLine("{0} {1}", de.Key, de.Value);
+            Console.WriteLine($"{de.Key} {de.Value}");
         }
+        // </SnippetDictionaryEntry>
     }
 }
+
 /* This code produces output similar to the following:
  *
  * Displaying the entries in peopleCollection:
@@ -301,4 +261,5 @@ class App
  * John Smith
  * Jim Jackson
  */
+
 //</snippet00>

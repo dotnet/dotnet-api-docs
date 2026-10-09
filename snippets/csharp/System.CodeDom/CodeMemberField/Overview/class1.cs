@@ -1,19 +1,18 @@
-﻿using System;
-using System.CodeDom;
+﻿using System.CodeDom;
 
 namespace CodeMemberField_PublicConst_Example
 {
-	public class Class1
-	{
+    public class Class1
+    {
         private static CodeCompileUnit GetCompileUnit()
-        {			
+        {
             CodeCompileUnit cu = new CodeCompileUnit();
 
             CodeNamespace nsp = new CodeNamespace("TestNamespace");
-            cu.Namespaces.Add( nsp );
+            cu.Namespaces.Add(nsp);
 
             CodeTypeDeclaration testType = new CodeTypeDeclaration("testType");
-            nsp.Types.Add( testType );
+            nsp.Types.Add(testType);
 
             //<Snippet1>
             // This example demonstrates declaring a public constant type member field.
@@ -30,8 +29,8 @@ namespace CodeMemberField_PublicConst_Example
             constPublicField.Attributes = (constPublicField.Attributes & ~MemberAttributes.AccessMask & ~MemberAttributes.ScopeMask) | MemberAttributes.Public | MemberAttributes.Const;
             //</Snippet1>
 
-            testType.Members.Add( constPublicField );
+            testType.Members.Add(constPublicField);
             return cu;
         }
-	}
+    }
 }

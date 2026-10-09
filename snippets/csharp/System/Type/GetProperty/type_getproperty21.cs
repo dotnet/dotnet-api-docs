@@ -4,18 +4,12 @@ using System.Reflection;
 
 public class MyPropertyClass
 {
-    private readonly int [,] _myPropertyArray = new int[10,10];
+    private readonly int[,] _myPropertyArray = new int[10, 10];
     // Declare an indexer.
-    public int this [int i,int j]
+    public int this[int i, int j]
     {
-        get
-        {
-            return _myPropertyArray[i,j];
-        }
-        set
-        {
-            _myPropertyArray[i,j] = value;
-        }
+        get => _myPropertyArray[i, j];
+        set => _myPropertyArray[i, j] = value;
     }
 }
 
@@ -25,22 +19,22 @@ public class MyTypeClass
     {
         try
         {
-            Type myType=typeof(MyPropertyClass);
+            Type myType = typeof(MyPropertyClass);
             Type[] myTypeArray = new Type[2];
 
             // Create an instance of the Type array representing the number, order
             // and type of the parameters for the property.
-            myTypeArray.SetValue(typeof(int),0);
-            myTypeArray.SetValue(typeof(int),1);
+            myTypeArray.SetValue(typeof(int), 0);
+            myTypeArray.SetValue(typeof(int), 1);
 
             // Search for the indexed property whose parameters match the
             // specified argument types and modifiers.
             PropertyInfo myPropertyInfo = myType.GetProperty("Item",
-                typeof(int),myTypeArray,null);
+                typeof(int), myTypeArray, null);
             Console.WriteLine(myType.FullName + "." + myPropertyInfo.Name +
                 " has a property type of " + myPropertyInfo.PropertyType);
-         }
-        catch(Exception ex)
+        }
+        catch (Exception ex)
         {
             Console.WriteLine("An exception occurred " + ex.Message);
         }

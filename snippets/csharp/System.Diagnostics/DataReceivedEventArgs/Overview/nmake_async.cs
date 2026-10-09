@@ -1,14 +1,5 @@
-﻿// System.Diagnostics
-//
-// Requires .NET Framework version 1.2 or higher.
-
-// Define the namespaces used by this sample.
-using System;
+﻿using System.Diagnostics;
 using System.Text;
-using System.IO;
-using System.Diagnostics;
-using System.Threading;
-using System.ComponentModel;
 
 // <Snippet3>
 namespace ProcessAsyncStreamSamples
@@ -16,43 +7,41 @@ namespace ProcessAsyncStreamSamples
     class ProcessNMakeStreamRedirection
     {
         // Define static variables shared by class methods.
-        private static StreamWriter buildLogStream =null;
-        private static Mutex logMutex = new Mutex();
-        private static int maxLogLines = 25;
-        private static int currentLogLines = 0;
+        private static StreamWriter? s_buildLogStream;
+        private static readonly Mutex s_logMutex = new();
+        private static int s_maxLogLines = 25;
+        private static int s_currentLogLines = 0;
 
         public static void RedirectNMakeCommandStreams()
         {
-            String nmakeArguments = null;
+            string? nmakeArguments = null;
             Process nmakeProcess;
 
             // Get the input nmake command-line arguments.
-            Console.WriteLine("Enter the NMake command line arguments " +
-                "(@commandfile or /f makefile, etc):");
-            String inputText = Console.ReadLine();
-            if (!String.IsNullOrEmpty(inputText))
+            while (string.IsNullOrEmpty(nmakeArguments))
             {
-                nmakeArguments = inputText;
+                Console.WriteLine("Enter the NMake command line arguments " +
+                    "(@commandfile or /f makefile, etc):");
+                nmakeArguments = Console.ReadLine();
             }
 
             Console.WriteLine("Enter max line limit for log file (default is 25):");
-            inputText = Console.ReadLine();
-            if (!String.IsNullOrEmpty(inputText))
+            string? inputText = Console.ReadLine();
+            if (!string.IsNullOrEmpty(inputText))
             {
-                if (!Int32.TryParse(inputText, out maxLogLines))
+                if (!int.TryParse(inputText, out s_maxLogLines))
                 {
-                    maxLogLines = 25;
+                    s_maxLogLines = 25;
                 }
             }
-            Console.WriteLine("Output beyond {0} lines will be ignored.",
-                maxLogLines);
+            Console.WriteLine($"Output beyond {s_maxLogLines} lines will be ignored.");
 
             // Initialize the process and its StartInfo properties.
             nmakeProcess = new Process();
             nmakeProcess.StartInfo.FileName = "NMake.exe";
 
             // Build the nmake command argument list.
-            if (!String.IsNullOrEmpty(nmakeArguments))
+            if (!string.IsNullOrEmpty(nmakeArguments))
             {
                 nmakeProcess.StartInfo.Arguments = nmakeArguments;
             }
@@ -69,45 +58,43 @@ namespace ProcessAsyncStreamSamples
             nmakeProcess.StartInfo.RedirectStandardError = true;
             nmakeProcess.ErrorDataReceived += new DataReceivedEventHandler(NMakeErrorDataHandler);
 
-            logMutex.WaitOne();
+            s_logMutex.WaitOne();
 
-            currentLogLines = 0;
+            s_currentLogLines = 0;
 
             // Write a header to the log file.
-            const String buildLogFile = "NmakeCmd.Txt";
+            const string buildLogFile = "NmakeCmd.Txt";
             try
             {
-                buildLogStream = new StreamWriter(buildLogFile, true);
+                s_buildLogStream = new StreamWriter(buildLogFile, true);
             }
             catch (Exception e)
             {
-                Console.WriteLine("Could not open output file {0}", buildLogFile);
-                Console.WriteLine("Exception = {0}", e.ToString());
+                Console.WriteLine($"Could not open output file {buildLogFile}");
+                Console.WriteLine($"Exception = {e}");
                 Console.WriteLine(e.Message);
 
-                buildLogStream = null;
+                s_buildLogStream = null;
             }
 
-            if (buildLogStream != null)
+            if (s_buildLogStream != null)
             {
-                Console.WriteLine("Nmake output logged to {0}",
-                    buildLogFile);
+                Console.WriteLine($"Nmake output logged to {buildLogFile}");
 
-                buildLogStream.WriteLine();
-                buildLogStream.WriteLine(DateTime.Now.ToString());
-                if (!String.IsNullOrEmpty(nmakeArguments))
+                s_buildLogStream.WriteLine();
+                s_buildLogStream.WriteLine(DateTime.Now);
+                if (!string.IsNullOrEmpty(nmakeArguments))
                 {
-                    buildLogStream.Write("Command line = NMake {0}",
-                        nmakeArguments);
+                    s_buildLogStream.Write($"Command line = NMake {nmakeArguments}");
                 }
                 else
                 {
-                    buildLogStream.Write("Command line = Nmake");
+                    s_buildLogStream.Write("Command line = Nmake");
                 }
-                buildLogStream.WriteLine();
-                buildLogStream.Flush();
+                s_buildLogStream.WriteLine();
+                s_buildLogStream.Flush();
 
-                logMutex.ReleaseMutex();
+                s_logMutex.ReleaseMutex();
 
                 // Start the process.
                 Console.WriteLine();
@@ -125,8 +112,8 @@ namespace ProcessAsyncStreamSamples
                 nmakeProcess.WaitForExit();
 
                 nmakeProcess.Close();
-                buildLogStream.Close();
-                logMutex.Dispose();
+                s_buildLogStream.Close();
+                s_logMutex.Dispose();
             }
         }
 
@@ -137,25 +124,24 @@ namespace ProcessAsyncStreamSamples
             // logging it to the output file.  Cancel the read
             // operation when the maximum line limit is reached.
 
-            if (!String.IsNullOrEmpty(outLine.Data))
+            if (!string.IsNullOrEmpty(outLine.Data))
             {
-                logMutex.WaitOne();
+                s_logMutex.WaitOne();
 
-                currentLogLines++;
-                if (currentLogLines > maxLogLines)
+                s_currentLogLines++;
+                if (s_currentLogLines > s_maxLogLines)
                 {
                     // Display the line to the console.
                     // Skip writing the line to the log file.
-                    Console.WriteLine("StdOut: {0}", outLine.Data);
+                    Console.WriteLine($"StdOut: {outLine.Data}");
                 }
-                else if (currentLogLines == maxLogLines)
+                else if (s_currentLogLines == s_maxLogLines)
                 {
                     LogToFile("StdOut", "<Max build log limit reached!>",
                         true);
 
                     // Stop reading the output streams.
-                    Process p = sendingProcess as Process;
-                    if (p != null)
+                    if (sendingProcess is Process p)
                     {
                         p.CancelOutputRead();
                         p.CancelErrorRead();
@@ -166,7 +152,7 @@ namespace ProcessAsyncStreamSamples
                     // Write the line to the log file.
                     LogToFile("StdOut", outLine.Data, true);
                 }
-                logMutex.ReleaseMutex();
+                s_logMutex.ReleaseMutex();
             }
         }
 
@@ -177,25 +163,24 @@ namespace ProcessAsyncStreamSamples
             // logging it to the output file.  Cancel the error output
             // read operation when the maximum line limit is reached.
 
-            if (!String.IsNullOrEmpty(errLine.Data))
+            if (!string.IsNullOrEmpty(errLine.Data))
             {
-                logMutex.WaitOne();
+                s_logMutex.WaitOne();
 
-                currentLogLines++;
-                if (currentLogLines > maxLogLines)
+                s_currentLogLines++;
+                if (s_currentLogLines > s_maxLogLines)
                 {
                     // Display the error line to the console.
                     // Skip writing the line to the log file.
-                    Console.WriteLine("StdErr: {0}", errLine.Data);
+                    Console.WriteLine($"StdErr: {errLine.Data}");
                 }
-                else if (currentLogLines == maxLogLines)
+                else if (s_currentLogLines == s_maxLogLines)
                 {
                     LogToFile("StdErr", "<Max build log limit reached!>",
                         true);
 
-                    // Stop reading the output streams
-                    Process p = sendingProcess as Process;
-                    if (p != null)
+                    // Stop reading the output streams.
+                    if (sendingProcess is Process p)
                     {
                         p.CancelErrorRead();
                         p.CancelOutputRead();
@@ -207,36 +192,35 @@ namespace ProcessAsyncStreamSamples
                     LogToFile("StdErr", errLine.Data, true);
                 }
 
-                logMutex.ReleaseMutex();
+                s_logMutex.ReleaseMutex();
             }
         }
 
-        private static void LogToFile(String logPrefix,
-            String logText, bool echoToConsole)
+        private static void LogToFile(string logPrefix,
+            string logText, bool echoToConsole)
         {
             // Write the specified line to the log file stream.
             StringBuilder logString = new StringBuilder();
 
-            if (!String.IsNullOrEmpty(logPrefix))
+            if (!string.IsNullOrEmpty(logPrefix))
             {
-                logString.AppendFormat("{0}> ", logPrefix);
+                logString.Append($"{logPrefix}> ");
             }
 
-            if (!String.IsNullOrEmpty(logText))
+            if (!string.IsNullOrEmpty(logText))
             {
                 logString.Append(logText);
             }
 
-            if (buildLogStream != null)
+            if (s_buildLogStream != null)
             {
-                buildLogStream.WriteLine("[{0}] {1}",
-                    DateTime.Now.ToString(), logString.ToString());
-                buildLogStream.Flush();
+                s_buildLogStream.WriteLine($"[{DateTime.Now}] {logString}");
+                s_buildLogStream.Flush();
             }
 
             if (echoToConsole)
             {
-                Console.WriteLine(logString.ToString());
+                Console.WriteLine(logString);
             }
         }
     }
@@ -245,11 +229,10 @@ namespace ProcessAsyncStreamSamples
 
 namespace ProcessAsyncStreamSamples
 {
-
-    class ProcessSampleMain
+    class ProcessSample
     {
         /// The main entry point for the application.
-        static void Main()
+        public static void Run()
         {
             try
             {
@@ -258,7 +241,7 @@ namespace ProcessAsyncStreamSamples
             catch (InvalidOperationException e)
             {
                 Console.WriteLine("Exception:");
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
             }
         }
     }

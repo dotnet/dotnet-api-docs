@@ -1,6 +1,6 @@
 ﻿// <Snippet1>
 using System;
-using System.IO;
+
 using System.Reflection;
 
 class Example
@@ -11,10 +11,8 @@ class Example
         Type t = Type.GetType("System.IO.File");
         MemberInfo[] members = t.GetMembers();
         // Get and display the DeclaringType method.
-        Console.WriteLine("\nThere are {0} members in {1}.",
-                          members.Length, t.FullName);
-        Console.WriteLine("Is {0} non-public? {1}",
-                          t.FullName, t.IsNotPublic);
+        Console.WriteLine($"\nThere are {members.Length} members in {t.FullName}.");
+        Console.WriteLine($"Is {t.FullName} non-public? {t.IsNotPublic}");
     }
 }
 // The example displays output like the following:

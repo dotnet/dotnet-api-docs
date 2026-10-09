@@ -14,10 +14,10 @@ public class Example19
 
     public Example19()
     {
-        s_rand = new Random();
-        s_randLock = new object();
-        s_numericLock = new object();
-        s_source = new CancellationTokenSource();
+        s_rand = new();
+        s_randLock = new();
+        s_numericLock = new();
+        s_source = new();
     }
 
     public static async Task Main()
@@ -65,10 +65,10 @@ public class Example19
                    }
 
                    // Show result.
-                   Console.WriteLine("Task {0} finished execution.", taskNo);
-                   Console.WriteLine("Random numbers generated: {0:N0}", taskCtr);
-                   Console.WriteLine("Sum of random numbers: {0:N2}", taskTotal);
-                   Console.WriteLine("Random number mean: {0:N4}\n", taskTotal / taskCtr);
+                   Console.WriteLine($"Task {taskNo} finished execution.");
+                   Console.WriteLine($"Random numbers generated: {taskCtr:N0}");
+                   Console.WriteLine($"Sum of random numbers: {taskTotal:N2}");
+                   Console.WriteLine($"Random number mean: {taskTotal / taskCtr:N4}\n");
 
                    // Update overall totals.
                    lock (s_numericLock)
@@ -91,9 +91,9 @@ public class Example19
             foreach (Exception inner in e.InnerExceptions)
             {
                 if (inner is TaskCanceledException canc)
-                    Console.WriteLine("Task #{0} cancelled.", canc.Task.Id);
+                    Console.WriteLine($"Task #{canc.Task.Id} cancelled.");
                 else
-                    Console.WriteLine("Exception: {0}", inner.GetType().Name);
+                    Console.WriteLine($"Exception: {inner.GetType().Name}");
             }
         }
         finally

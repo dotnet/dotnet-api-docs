@@ -1,17 +1,16 @@
 ﻿using System;
-using System.CodeDom;
 using System.CodeDom.Compiler;
 
 namespace CodeGeneratorOptionsExample
 {
-	class Class1
-	{
-		[STAThread]
-		static void Main(string[] args)
-		{
+    class Class1
+    {
+        [STAThread]
+        static void Main()
+        {
             //<Snippet1>
             // Creates a new CodeGeneratorOptions.
-            CodeGeneratorOptions genOptions = new CodeGeneratorOptions();
+            CodeGeneratorOptions genOptions = new();
 
             // Sets a value indicating that the code generator should insert blank lines between type members.
             genOptions.BlankLinesBetweenMembers = true;
@@ -22,7 +21,7 @@ namespace CodeGeneratorOptionsExample
             genOptions.BracingStyle = "C";
 
             // Sets a value indicating that the code generator should not append an else,
-            // catch or finally block, including brackets, at the closing line of a preceeding if or try block.
+            // catch, or finally block, including brackets, at the closing line of a preceding if or try block.
             genOptions.ElseOnClosing = false;
 
             // Sets the string to indent each line with.
@@ -34,7 +33,7 @@ namespace CodeGeneratorOptionsExample
             // in this dictionary to customize process behavior.
             genOptions["CustomGeneratorOptionStringExampleID"] = "BuildFlags: /A /B /C /D /E";
             //</Snippet1>
-            Console.WriteLine(genOptions.ToString());
-		}
-	}
+            Console.WriteLine(genOptions);
+        }
+    }
 }

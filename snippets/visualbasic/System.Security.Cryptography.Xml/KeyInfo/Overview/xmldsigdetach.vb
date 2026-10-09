@@ -37,7 +37,7 @@ Class XMLDSIGDetached
          Console.WriteLine("Verifying signature...")
          
          'Verify the XML signature in the XML file.
-         Dim result As Boolean = VerifyDetachedSignature(XmlFileName)
+         Dim result As Boolean = VerifyDetachedSignature(XmlFileName, Key)
          
          ' Display the results of the signature verification to 
          ' the console.
@@ -92,12 +92,14 @@ Class XMLDSIGDetached
  
 ' <Snippet3> 
    ' Verify the signature of an XML file and return the result.
-   Public Shared Function VerifyDetachedSignature(XmlSigFileName As String) As [Boolean]
+   Public Shared Function VerifyDetachedSignature(XmlSigFileName As String, Key As RSA) As [Boolean]
       ' Create a new XML document.
       Dim xmlDocument As New XmlDocument()
       
       ' Load the passed XML file into the document.
-      xmlDocument.Load(XmlSigFileName)
+      Using reader As XmlReader = XmlReader.Create(XmlSigFileName)
+         xmlDocument.Load(reader)
+      End Using
       
       ' Create a new SignedXMl object.
       Dim signedXml As New SignedXml()
@@ -110,7 +112,7 @@ Class XMLDSIGDetached
       signedXml.LoadXml(CType(nodeList(0), XmlElement))
       
       ' Check the signature and return the result.
-      Return signedXml.CheckSignature()
+      Return signedXml.CheckSignature(Key)
    End Function
 ' </Snippet3>  
 End Class 

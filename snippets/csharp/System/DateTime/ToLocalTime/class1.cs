@@ -3,42 +3,42 @@ using System;
 
 class Example
 {
-	static void Main()
-	{
-		DateTime localDateTime, univDateTime;
-		
-		Console.WriteLine("Enter a date and time.");
-		string strDateTime = Console.ReadLine();
+    static void Main()
+    {
+        DateTime localDateTime, univDateTime;
 
-		try {
-			localDateTime = DateTime.Parse(strDateTime);
-    		univDateTime = localDateTime.ToUniversalTime();
+        Console.WriteLine("Enter a date and time.");
+        string strDateTime = Console.ReadLine();
 
-    		Console.WriteLine("{0} local time is {1} universal time.",
-   								localDateTime,
-    								univDateTime);
-		}
-		catch (FormatException) {
-			Console.WriteLine("Invalid format.");
-			return;
-		}
+        try
+        {
+            localDateTime = DateTime.Parse(strDateTime);
+            univDateTime = localDateTime.ToUniversalTime();
 
-		Console.WriteLine("Enter a date and time in universal time.");
-		strDateTime = Console.ReadLine();
+            Console.WriteLine($"{localDateTime} local time is {univDateTime} universal time.");
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid format.");
+            return;
+        }
 
-		try {
-			univDateTime = DateTime.Parse(strDateTime);
-    		localDateTime = univDateTime.ToLocalTime();
+        Console.WriteLine("Enter a date and time in universal time.");
+        strDateTime = Console.ReadLine();
 
-    		Console.WriteLine("{0} universal time is {1} local time.",
-    								 univDateTime,
-    								 localDateTime);
-		}
-		catch (FormatException) {
-			Console.WriteLine("Invalid format.");
-			return;
-		}
-	}
+        try
+        {
+            univDateTime = DateTime.Parse(strDateTime);
+            localDateTime = univDateTime.ToLocalTime();
+
+            Console.WriteLine($"{univDateTime} universal time is {localDateTime} local time.");
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid format.");
+            return;
+        }
+    }
 }
 // The example displays output like the following when run on a
 // computer whose culture is en-US in the Pacific Standard Time zone:

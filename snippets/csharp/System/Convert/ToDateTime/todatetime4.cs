@@ -4,57 +4,56 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-      string[] cultureNames = { "en-US", "hu-HU", "pt-PT" };
-      object[] objects = { 12, 17.2, false, new DateTime(2010, 1, 1), "today",
+    public static void Main()
+    {
+        string[] cultureNames = { "en-US", "hu-HU", "pt-PT" };
+        object[] objects = { 12, 17.2, false, new DateTime(2010, 1, 1), "today",
                            new System.Collections.ArrayList(), 'c',
                            "05/10/2009 6:13:18 PM", "September 8, 1899" };
 
-      foreach (string cultureName in cultureNames)
-      {
-         Console.WriteLine("{0} culture:", cultureName);
-         CustomProvider provider = new CustomProvider(cultureName);
-         foreach (object obj in objects)
-         {
-            try {
-               DateTime dateValue = Convert.ToDateTime(obj, provider);
-               Console.WriteLine("{0} --> {1}", obj,
-                                 dateValue.ToString(new CultureInfo(cultureName)));
+        foreach (string cultureName in cultureNames)
+        {
+            Console.WriteLine($"{cultureName} culture:");
+            CustomProvider provider = new(cultureName);
+            foreach (object obj in objects)
+            {
+                try
+                {
+                    DateTime dateValue = Convert.ToDateTime(obj, provider);
+                    Console.WriteLine($"{obj} --> {dateValue.ToString(new CultureInfo(cultureName))}");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine($"{obj} --> Bad Format");
+                }
+                catch (InvalidCastException)
+                {
+                    Console.WriteLine($"{obj} --> Conversion Not Supported");
+                }
             }
-            catch (FormatException) {
-               Console.WriteLine("{0} --> Bad Format", obj);
-            }
-            catch (InvalidCastException) {
-               Console.WriteLine("{0} --> Conversion Not Supported", obj);
-            }
-         }
-         Console.WriteLine();
-      }
-   }
+            Console.WriteLine();
+        }
+    }
 }
 
 public class CustomProvider : IFormatProvider
 {
-   private string cultureName;
+    private string cultureName;
 
-   public CustomProvider(string cultureName)
-   {
-      this.cultureName = cultureName;
-   }
+    public CustomProvider(string cultureName) => this.cultureName = cultureName;
 
-   public object GetFormat(Type formatType)
-   {
-      if (formatType == typeof(DateTimeFormatInfo))
-      {
-         Console.Write("(CustomProvider retrieved.) ");
-         return new CultureInfo(cultureName).GetFormat(formatType);
-      }
-      else
-      {
-         return null;
-      }
-   }
+    public object GetFormat(Type formatType)
+    {
+        if (formatType == typeof(DateTimeFormatInfo))
+        {
+            Console.Write("(CustomProvider retrieved.) ");
+            return new CultureInfo(cultureName).GetFormat(formatType);
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
 // The example displays the following output:
 //    en-US culture:

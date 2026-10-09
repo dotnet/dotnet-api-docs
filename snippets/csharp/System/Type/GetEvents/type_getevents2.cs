@@ -3,9 +3,9 @@ using System;
 using System.Reflection;
 using System.Security;
 
-class EventsSample
+class EventsSample2
 {
-    public static void Main()
+    public static void Run()
     {
         try
         {
@@ -16,18 +16,18 @@ class EventsSample
             Console.WriteLine("\nThe events on the Button class with the specified BindingFlags are:");
             for (int index = 0; index < myEventsBindingFlags.Length; index++)
             {
-                Console.WriteLine(myEventsBindingFlags[index].ToString());
+                Console.WriteLine(myEventsBindingFlags[index]);
             }
         }
-        catch(SecurityException e)
+        catch (SecurityException e)
         {
             Console.WriteLine("SecurityException:" + e.Message);
         }
-        catch(ArgumentNullException e)
+        catch (ArgumentNullException e)
         {
             Console.WriteLine("ArgumentNullException: " + e.Message);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine("Exception: " + e.Message);
         }

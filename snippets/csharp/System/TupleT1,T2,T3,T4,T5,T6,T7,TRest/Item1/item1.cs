@@ -6,15 +6,15 @@ class Example
     static void Main(string[] args)
     {
         Tuple<int, int, int> from1980 = Tuple.Create(1203339, 1027974, 951270);
-        var from1910 = new Tuple<int, int, int, int, int, int, int, Tuple<int, int, int>> 
+        var from1910 = new Tuple<int, int, int, int, int, int, int, Tuple<int, int, int>>
             (465766, 993078, 1568622, 1623452, 1849568, 1670144, 1511462, from1980);
         var population = new Tuple<string, int, int, int, int, int, int,
-            Tuple<int, int, int, int, int, int, int, Tuple<int, int, int>>> 
+            Tuple<int, int, int, int, int, int, int, Tuple<int, int, int>>>
             ("Detroit", 1860, 45619, 79577, 116340, 205876, 285704, from1910);
 
-        Console.WriteLine("Population of {0}", population.Item1);
+        Console.WriteLine($"Population of {population.Item1}");
         Console.WriteLine();
-        Console.WriteLine("{0,5}  {1,14}  {2,10}", "Year", "Population", "Change");
+        Console.WriteLine($"{"Year",5}  {"Population",14}  {"Change",10}");
 
         int year = population.Item2;
         ShowPopulation(year, population.Item3);
@@ -48,16 +48,9 @@ class Example
         ShowPopulationChange(year, population.Rest.Rest.Item3, population.Rest.Rest.Item2);
     }
 
-    private static void ShowPopulationChange(int year, int newPopulation, int oldPopulation)
-    {
-        Console.WriteLine("{0,5}  {1,14:N0}  {2,10:P2}", year, newPopulation,
-                          ((double)(newPopulation - oldPopulation) / oldPopulation) / 10);
-    }
+    private static void ShowPopulationChange(int year, int newPopulation, int oldPopulation) => Console.WriteLine($"{year,5}  {newPopulation,14:N0}  {((double)(newPopulation - oldPopulation) / oldPopulation) / 10,10:P2}");
 
-    private static void ShowPopulation(int year, int newPopulation)
-    {
-        Console.WriteLine("{0,5}  {1,14:N0}  {2,10:P2}", year, newPopulation, "n/a");
-    }
+    private static void ShowPopulation(int year, int newPopulation) => Console.WriteLine($"{year,5}  {newPopulation,14:N0}  {"n/a",10}");
 }
 // The example displays the following output:
 //

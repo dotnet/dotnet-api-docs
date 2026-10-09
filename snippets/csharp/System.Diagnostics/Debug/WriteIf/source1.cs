@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 
 public class Form2
@@ -8,15 +6,15 @@ public class Form2
     // <Snippet1>
     // Class-level declaration.
     // Create a TraceSwitch.
-    static TraceSwitch generalSwitch = new TraceSwitch("General", "Entire Application");
+    private static readonly TraceSwitch s_generalSwitch = new("General", "Entire Application");
 
-    static public void MyErrorMethod(Object myObject)
+    public static void MyErrorMethod(object myObject)
     {
         // Write the message if the TraceSwitch level is set to Error or higher.
-        Debug.WriteIf(generalSwitch.TraceError, myObject);
+        Debug.WriteIf(s_generalSwitch.TraceError, myObject);
 
         // Write a second message if the TraceSwitch level is set to Verbose.
-        Debug.WriteLineIf(generalSwitch.TraceVerbose, " is not a valid value for this method.");
+        Debug.WriteLineIf(s_generalSwitch.TraceVerbose, " is not a valid value for this method.");
     }
     // </Snippet1>
 }

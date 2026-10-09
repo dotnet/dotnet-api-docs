@@ -1,58 +1,68 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class Base64FormattingExample
 {
-   public static void Main()
-   {
-      // Define an array of 20 elements and display it.
-      int[] arr = new int[20];
-      int value = 1;
-      for (int ctr = 0; ctr <= arr.GetUpperBound(0); ctr++) {
-         arr[ctr] = value;
-         value = value * 2 + 1;
-      }
-      DisplayArray(arr);
+    public static void Main()
+    {
+        // Define an array of 20 elements and display it.
+        int[] arr = new int[20];
+        int value = 1;
+        for (int ctr = 0; ctr <= arr.GetUpperBound(0); ctr++)
+        {
+            arr[ctr] = value;
+            value = value * 2 + 1;
+        }
+        DisplayArray(arr);
 
-      // Convert the array of integers to a byte array.
-      byte[] bytes = new byte[arr.Length * 4];
-      for (int ctr = 0; ctr < arr.Length; ctr++) {
-         Array.Copy(BitConverter.GetBytes(arr[ctr]), 0,
-                    bytes, ctr * 4, 4);
-      }
+        // Convert the array of integers to a byte array.
+        byte[] bytes = new byte[arr.Length * 4];
+        for (int ctr = 0; ctr < arr.Length; ctr++)
+        {
+            Array.Copy(BitConverter.GetBytes(arr[ctr]), 0,
+                       bytes, ctr * 4, 4);
+        }
 
-      // Encode the byte array using Base64 encoding
-      String base64 = Convert.ToBase64String(bytes);
-      Console.WriteLine("The encoded string: ");
-      for (int ctr = 0; ctr <= base64.Length / 50; ctr++)
-         Console.WriteLine(base64.Substring(ctr * 50,
-                                            ctr * 50 + 50 <= base64.Length
-                                               ? 50 : base64.Length - ctr * 50));
-      Console.WriteLine();
+        // Encode the byte array using Base64 encoding
+        string base64 = Convert.ToBase64String(bytes);
+        Console.WriteLine("The encoded string: ");
+        for (int ctr = 0; ctr <= base64.Length / 50; ctr++)
+        {
+            Console.WriteLine(base64.Substring(ctr * 50,
+                                               ctr * 50 + 50 <= base64.Length
+                                                  ? 50 : base64.Length - ctr * 50));
+        }
 
-      // Convert the string back to a byte array.
-      byte[] newBytes = Convert.FromBase64String(base64);
+        Console.WriteLine();
 
-      // Convert the byte array back to an integer array.
-      int[] newArr = new int[newBytes.Length/4];
-      for (int ctr = 0; ctr < newBytes.Length / 4; ctr ++)
-         newArr[ctr] = BitConverter.ToInt32(newBytes, ctr * 4);
+        // Convert the string back to a byte array.
+        byte[] newBytes = Convert.FromBase64String(base64);
 
-      DisplayArray(newArr);
-   }
+        // Convert the byte array back to an integer array.
+        int[] newArr = new int[newBytes.Length / 4];
+        for (int ctr = 0; ctr < newBytes.Length / 4; ctr++)
+        {
+            newArr[ctr] = BitConverter.ToInt32(newBytes, ctr * 4);
+        }
 
-   private static void DisplayArray(Array arr)
-   {
-      Console.WriteLine("The array:");
-      Console.Write("{ ");
-      for (int ctr = 0; ctr < arr.GetUpperBound(0); ctr++) {
-         Console.Write("{0}, ", arr.GetValue(ctr));
-         if ((ctr + 1) % 10 == 0)
-            Console.Write("\n  ");
-      }
-      Console.WriteLine("{0} {1}", arr.GetValue(arr.GetUpperBound(0)), "}");
-      Console.WriteLine();
-   }
+        DisplayArray(newArr);
+    }
+
+    private static void DisplayArray(Array arr)
+    {
+        Console.WriteLine("The array:");
+        Console.Write("{ ");
+        for (int ctr = 0; ctr < arr.GetUpperBound(0); ctr++)
+        {
+            Console.Write($"{arr.GetValue(ctr)}, ");
+            if ((ctr + 1) % 10 == 0)
+            {
+                Console.Write("\n  ");
+            }
+        }
+        Console.WriteLine($"{arr.GetValue(arr.GetUpperBound(0))} }}");
+        Console.WriteLine();
+    }
 }
 // The example displays the following output:
 // The array:

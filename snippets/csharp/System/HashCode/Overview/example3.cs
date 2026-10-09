@@ -2,21 +2,21 @@
 using System;
 using System.Collections.Generic;
 
-public struct Path : IEquatable<Path>
+public struct PathExample3 : IEquatable<PathExample3>
 {
     public IReadOnlyList<string> Segments { get; }
 
-    public Path(params string[] segments) => Segments = segments;
+    public PathExample3(params string[] segments) => Segments = segments;
 
-    public override bool Equals(object obj) => obj is Path o && Equals(o);
+    public override bool Equals(object obj) => obj is PathExample3 o && Equals(o);
 
-    public bool Equals(Path other)
+    public bool Equals(PathExample3 other)
     {
         if (ReferenceEquals(Segments, other.Segments)) return true;
         if (Segments is null || other.Segments is null) return false;
         if (Segments.Count != other.Segments.Count) return false;
 
-        for (var i = 0; i < Segments.Count; i++)
+        for (int i = 0; i < Segments.Count; i++)
         {
             if (!string.Equals(Segments[i], other.Segments[i], StringComparison.OrdinalIgnoreCase))
                 return false;
@@ -29,22 +29,22 @@ public struct Path : IEquatable<Path>
     {
         var hash = new HashCode();
 
-        for (var i = 0; i < Segments?.Count; i++)
+        for (int i = 0; i < Segments?.Count; i++)
             hash.Add(Segments[i], StringComparer.OrdinalIgnoreCase);
 
         return hash.ToHashCode();
     }
 }
 
-class Program
+class PathHashCodeExample3
 {
-    static void Main(string[] args)
+    public static void Run(string[] args)
     {
-        var set = new HashSet<Path>
+        var set = new HashSet<PathExample3>
         {
-            new Path("C:", "tmp", "file.txt"),
-            new Path("C:", "TMP", "file.txt"),
-            new Path("C:", "tmp", "FILE.TXT")
+            new PathExample3("C:", "tmp", "file.txt"),
+            new PathExample3("C:", "TMP", "file.txt"),
+            new PathExample3("C:", "tmp", "FILE.TXT")
         };
 
         Console.WriteLine($"Item count: {set.Count}.");

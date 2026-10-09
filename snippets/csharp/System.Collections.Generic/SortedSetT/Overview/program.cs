@@ -17,7 +17,7 @@ class Program
 
             // <Snippet2>
             // Create a sorted set using the ByFileExtension comparer.
-            var mediaFiles1 = new SortedSet<string>(new ByFileExtension());
+            SortedSet<string> mediaFiles1 = new(new ByFileExtension());
             // </Snippet2>
 
             // Note that there is a SortedSet constructor that takes an IEnumerable,
@@ -58,7 +58,7 @@ class Program
                 Directory.EnumerateFiles(@"\\archives\2008\media",
                     "*", SearchOption.AllDirectories);
 
-            var mediaFiles2 = new SortedSet<string>(new ByFileExtension());
+            SortedSet<string> mediaFiles2 = new(new ByFileExtension());
 
             foreach (string f in files2)
             {
@@ -86,12 +86,14 @@ class Program
             IEqualityComparer<SortedSet<string>> comparer =
                 SortedSet<string>.CreateSetComparer();
 
-            var allMedia = new HashSet<SortedSet<string>>(comparer);
-            allMedia.Add(mediaFiles1);
-            allMedia.Add(mediaFiles2);
+            HashSet<SortedSet<string>> allMedia = new(comparer)
+            {
+                mediaFiles1,
+                mediaFiles2
+            };
             // </Snippet7>
         }
-        catch(IOException ioEx)
+        catch (IOException ioEx)
         {
             Console.WriteLine(ioEx.Message);
         }
@@ -125,7 +127,7 @@ public class ByFileExtension : IComparer<string>
 {
     string xExt, yExt;
 
-	CaseInsensitiveComparer caseiComp = new CaseInsensitiveComparer();
+    CaseInsensitiveComparer caseiComp = new();
 
     public int Compare(string x, string y)
     {

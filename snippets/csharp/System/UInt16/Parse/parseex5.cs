@@ -1,29 +1,33 @@
 ﻿// <Snippet5>
 using System;
 
-public class Example
+public class UInt16ParseExample5
 {
-   public static void Main()
-   {
-      string[] values = { "-0", "17", "-12", "185", "66012", "+0", 
+    public static void Run()
+    {
+        string[] values = { "-0", "17", "-12", "185", "66012", "+0",
                           "", null, "16.1", "28.0", "1,034" };
-      foreach (string value in values)
-      {
-         try {
-            ushort number = UInt16.Parse(value);
-            Console.WriteLine("'{0}' --> {1}", value, number);
-         }
-         catch (FormatException) {
-            Console.WriteLine("'{0}' --> Bad Format", value);
-         }
-         catch (OverflowException) {   
-            Console.WriteLine("'{0}' --> OverflowException", value);
-         }
-         catch (ArgumentNullException) {
-            Console.WriteLine("'{0}' --> Null", value);
-         }
-      }                                 
-   }
+        foreach (string value in values)
+        {
+            try
+            {
+                ushort number = ushort.Parse(value);
+                Console.WriteLine($"'{value}' --> {number}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($"'{value}' --> Bad Format");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"'{value}' --> OverflowException");
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine($"'{value}' --> Null");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //       '-0' --> 0

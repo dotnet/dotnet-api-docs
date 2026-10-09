@@ -7,17 +7,19 @@ public class HashtableExample
     public static void Main()
     {
         // Creates and initializes a new Hashtable.
-        Hashtable clouds = new Hashtable();
-        clouds.Add("Cirrus", "Castellanus");
-        clouds.Add("Cirrocumulus", "Stratiformis");
-        clouds.Add("Altostratus", "Radiatus");
-        clouds.Add("Stratocumulus", "Perlucidus");
-        clouds.Add("Stratus", "Fractus");
-        clouds.Add("Nimbostratus", "Pannus");
-        clouds.Add("Cumulus", "Humilis");
-        clouds.Add("Cumulonimbus", "Incus");
+        Hashtable clouds = new()
+        {
+            { "Cirrus", "Castellanus" },
+            { "Cirrocumulus", "Stratiformis" },
+            { "Altostratus", "Radiatus" },
+            { "Stratocumulus", "Perlucidus" },
+            { "Stratus", "Fractus" },
+            { "Nimbostratus", "Pannus" },
+            { "Cumulus", "Humilis" },
+            { "Cumulonimbus", "Incus" }
+        };
 
-        // Displays the keys and values of the Hashtable using GetEnumerator()
+        // Displays the keys and values of the Hashtable using GetEnumerator().
 
         IDictionaryEnumerator denum = clouds.GetEnumerator();
         DictionaryEntry dentry;
@@ -27,18 +29,18 @@ public class HashtableExample
         Console.WriteLine("    -----------------------------");
         while (denum.MoveNext())
         {
-            dentry = (DictionaryEntry) denum.Current;
-            Console.WriteLine("    {0,-17}{1}", dentry.Key, dentry.Value);
+            dentry = (DictionaryEntry)denum.Current;
+            Console.WriteLine($"    {dentry.Key,-17}{dentry.Value}");
         }
         Console.WriteLine();
 
-        // Displays the keys and values of the Hashtable using foreach statement
+        // Displays the keys and values of the Hashtable using foreach statement.
 
         Console.WriteLine("    Cloud Type       Variation");
         Console.WriteLine("    -----------------------------");
         foreach (DictionaryEntry de in clouds)
         {
-            Console.WriteLine("    {0,-17}{1}", de.Key, de.Value);
+            Console.WriteLine($"    {de.Key,-17}{de.Value}");
         }
         Console.WriteLine();
     }

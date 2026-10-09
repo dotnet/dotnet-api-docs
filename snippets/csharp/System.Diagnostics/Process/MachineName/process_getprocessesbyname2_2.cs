@@ -33,7 +33,9 @@ class GetProcessesByNameClass
             Process[] myProcesses = Process.GetProcessesByName("notepad", remoteMachineName);
 
             if (myProcesses.Length == 0)
+            {
                 Console.WriteLine("Could not find notepad processes on remote computer.");
+            }
 
             foreach (Process myProcess in myProcesses)
             {
@@ -45,7 +47,7 @@ class GetProcessesByNameClass
         }
         catch (ArgumentException)
         {
-            Console.WriteLine($"The value \'{remoteMachineName}\' is an invalid remote computer name.");
+            Console.WriteLine($"The value '{remoteMachineName}' is an invalid remote computer name.");
         }
         catch (InvalidOperationException)
         {

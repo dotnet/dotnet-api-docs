@@ -1,16 +1,18 @@
 ﻿using System;
 
 // <Snippet1>
-class ExecuteAssemblySnippet {
-   public static void Main() {
-      AppDomain currentDomain = AppDomain.CurrentDomain;
-      AppDomain otherDomain = AppDomain.CreateDomain("otherDomain");
+class ExecuteAssemblySnippet
+{
+    public static void Main()
+    {
+        AppDomain currentDomain = AppDomain.CurrentDomain;
+        AppDomain otherDomain = AppDomain.CreateDomain("otherDomain");
 
-      currentDomain.ExecuteAssembly("MyExecutable.exe");
-      // Prints "MyExecutable running on [default]"
+        currentDomain.ExecuteAssembly("MyExecutable.exe");
+        // Prints "MyExecutable running on [default]"
 
-      otherDomain.ExecuteAssembly("MyExecutable.exe");
-      // Prints "MyExecutable running on otherDomain"
-   }
+        otherDomain.ExecuteAssembly("MyExecutable.exe");
+        // Prints "MyExecutable running on otherDomain"
+    }
 }
 // </Snippet1>

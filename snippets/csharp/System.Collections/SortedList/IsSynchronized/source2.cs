@@ -3,10 +3,10 @@ using System.Collections;
 
 public class SamplesSortedList2
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
-        SortedList myCollection = new SortedList();
+        SortedList myCollection = [];
         lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)

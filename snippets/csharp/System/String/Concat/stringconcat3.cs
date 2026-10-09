@@ -1,13 +1,13 @@
 ﻿//<snippet1>
 using System;
 
-public class Example
+public class ConcatArrayExample
 {
-    public static void Main()
+    public static void Run()
     {
         // Make an array of strings. Note that we have included spaces.
-        string [] s = { "hello ", "and ", "welcome ", "to ",
-                        "this ", "demo! " };
+        string[] s = [ "hello ", "and ", "welcome ", "to ",
+                        "this ", "demo! " ];
 
         // Put all the strings together.
         Console.WriteLine(string.Concat(s));

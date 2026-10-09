@@ -23,7 +23,7 @@ namespace Chain1
 
         public Page CurrentPage
         {
-            get { return _page[_ctr]; }
+            get => _page[_ctr];
             set
             {
                 // Move all the page objects down to accommodate the new one.

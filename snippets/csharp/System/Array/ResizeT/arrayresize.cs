@@ -5,10 +5,11 @@ using System;
 
 public class SamplesArray
 {
-    public static void Main()  {
+    public static void Main()
+    {
 
         // Create and initialize a new string array.
-        String[] myArr = {"The", "quick", "brown", "fox", "jumps",
+        string[] myArr = {"The", "quick", "brown", "fox", "jumps",
             "over", "the", "lazy", "dog"};
 
         // Display the values of the array.
@@ -33,10 +34,11 @@ public class SamplesArray
         PrintIndexAndValues(myArr);
     }
 
-    public static void PrintIndexAndValues(String[] myArr)  {
-        for(int i = 0; i < myArr.Length; i++)
+    public static void PrintIndexAndValues(string[] myArr)
+    {
+        for (int i = 0; i < myArr.Length; i++)
         {
-            Console.WriteLine("   [{0}] : {1}", i, myArr[i]);
+            Console.WriteLine($"   [{i}] : {myArr[i]}");
         }
         Console.WriteLine();
     }

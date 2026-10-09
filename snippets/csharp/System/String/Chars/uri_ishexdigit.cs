@@ -8,18 +8,18 @@
 using System;
 class MyIsHexDigitSample
 {
-	public static void Main()
-	{
-		try
-		{
+    public static void Main()
+    {
+        try
+        {
             // <Snippet1>
-			Console.Write("Type a string : ");
-			string myString = Console.ReadLine();
-			for (int i = 0; i < myString.Length; i ++)
-               if(Uri.IsHexDigit(myString[i]))
-                  Console.WriteLine("{0} is a hexadecimal digit.", myString[i]);
-               else
-                  Console.WriteLine("{0} is not a hexadecimal digit.", myString[i]);
+            Console.Write("Type a string : ");
+            string myString = Console.ReadLine();
+            for (int i = 0; i < myString.Length; i++)
+                if (Uri.IsHexDigit(myString[i]))
+                    Console.WriteLine($"{myString[i]} is a hexadecimal digit.");
+                else
+                    Console.WriteLine($"{myString[i]} is not a hexadecimal digit.");
             // The example produces output like the following:
             //    Type a string : 3f5EaZ
             //    3 is a hexadecimal digit.
@@ -29,12 +29,12 @@ class MyIsHexDigitSample
             //    a is a hexadecimal digit.
             //    Z is not a hexadecimal digit.
             // </Snippet1>
-		}
-		catch(Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-	}
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
 }
 // ***** Output *****
 /*

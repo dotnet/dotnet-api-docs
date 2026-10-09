@@ -7,36 +7,36 @@ class DecimalFromOACurrencyDemo
     const string dataFmt = "{0,21}{1,25}";
 
     // Display the decimal.FromOACurrency parameter and decimal result.
-    public static void ShowDecimalFromOACurrency( long Argument )
+    public static void ShowDecimalFromOACurrency(long Argument)
     {
-        decimal decCurrency = decimal.FromOACurrency( Argument );
+        decimal decCurrency = decimal.FromOACurrency(Argument);
 
-        Console.WriteLine( dataFmt, Argument, decCurrency );
+        Console.WriteLine(dataFmt, Argument, decCurrency);
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of the " +
+        Console.WriteLine("This example of the " +
             "decimal.FromOACurrency( ) method generates \nthe " +
             "following output. It displays the OLE Automation " +
             "Currency \nvalue as a long and the result as a " +
-            "decimal.\n" );
-        Console.WriteLine( dataFmt, "OA Currency", "Decimal Value" );
-        Console.WriteLine( dataFmt, "-----------", "-------------" );
+            "decimal.\n");
+        Console.WriteLine(dataFmt, "OA Currency", "Decimal Value");
+        Console.WriteLine(dataFmt, "-----------", "-------------");
 
         // Convert OLE Automation Currency values to decimal objects.
-        ShowDecimalFromOACurrency( 0L );
-        ShowDecimalFromOACurrency( 1L );
-        ShowDecimalFromOACurrency( 100000L );
-        ShowDecimalFromOACurrency( 100000000000L );
-        ShowDecimalFromOACurrency( 1000000000000000000L );
-        ShowDecimalFromOACurrency( 1000000000000000001L );
-        ShowDecimalFromOACurrency( long.MaxValue );
-        ShowDecimalFromOACurrency( long.MinValue );
-        ShowDecimalFromOACurrency( 123456789L );
-        ShowDecimalFromOACurrency( 1234567890000L );
-        ShowDecimalFromOACurrency( 1234567890987654321 );
-        ShowDecimalFromOACurrency( 4294967295L );
+        ShowDecimalFromOACurrency(0L);
+        ShowDecimalFromOACurrency(1L);
+        ShowDecimalFromOACurrency(100000L);
+        ShowDecimalFromOACurrency(100000000000L);
+        ShowDecimalFromOACurrency(1000000000000000000L);
+        ShowDecimalFromOACurrency(1000000000000000001L);
+        ShowDecimalFromOACurrency(long.MaxValue);
+        ShowDecimalFromOACurrency(long.MinValue);
+        ShowDecimalFromOACurrency(123456789L);
+        ShowDecimalFromOACurrency(1234567890000L);
+        ShowDecimalFromOACurrency(1234567890987654321);
+        ShowDecimalFromOACurrency(4294967295L);
     }
 }
 

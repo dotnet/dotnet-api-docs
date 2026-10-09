@@ -6,17 +6,17 @@ using System.Diagnostics;
 
 // Provides a SampleFraction counter to measure the percentage of the user processor
 // time for this process to total processor time for the process.
-public class App
+public class SampleFractionApp
 {
 
     private static PerformanceCounter perfCounter;
     private static PerformanceCounter basePerfCounter;
     private static Process thisProcess = Process.GetCurrentProcess();
 
-    public static void Main()
+    public static void Run()
     {
 
-        ArrayList samplesList = new ArrayList();
+        ArrayList samplesList = [];
 
         // If the category does not exist, create the category and exit.
         // Performance counters should not be created and immediately used.
@@ -35,18 +35,22 @@ public class App
         if (!PerformanceCounterCategory.Exists("SampleFractionCategory"))
         {
 
-            CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
+            CounterCreationDataCollection CCDC = [];
 
             // Add the counter.
-            CounterCreationData sampleFraction = new CounterCreationData();
-            sampleFraction.CounterType = PerformanceCounterType.SampleFraction;
-            sampleFraction.CounterName = "SampleFractionSample";
+            CounterCreationData sampleFraction = new()
+            {
+                CounterType = PerformanceCounterType.SampleFraction,
+                CounterName = "SampleFractionSample"
+            };
             CCDC.Add(sampleFraction);
 
             // Add the base counter.
-            CounterCreationData sampleFractionBase = new CounterCreationData();
-            sampleFractionBase.CounterType = PerformanceCounterType.SampleBase;
-            sampleFractionBase.CounterName = "SampleFractionSampleBase";
+            CounterCreationData sampleFractionBase = new()
+            {
+                CounterType = PerformanceCounterType.SampleBase,
+                CounterName = "SampleFractionSampleBase"
+            };
             CCDC.Add(sampleFractionBase);
 
             // Create the category.
@@ -128,11 +132,11 @@ public class App
     // average ratio of user proccessor time to total processor time  during the last
     // two sample intervals.
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
-    private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
+    private static float MyComputeCounterValue(CounterSample s0, CounterSample s1)
     {
-        Single numerator = (Single)s1.RawValue - (Single)s0.RawValue;
-        Single denomenator = (Single)s1.BaseValue - (Single)s0.BaseValue;
-        Single counterValue = 100 * (numerator / denomenator);
+        float numerator = (float)s1.RawValue - (float)s0.RawValue;
+        float denomenator = (float)s1.BaseValue - (float)s0.BaseValue;
+        float counterValue = 100 * (numerator / denomenator);
         return (counterValue);
     }
 
@@ -153,3 +157,43 @@ public class App
     }
 }
 //</Snippet1>
+
+internal static class Program
+{
+    public static void Main(string[] args)
+    {
+        switch (args.Length > 0 ? args[0] : null)
+        {
+            case "average-timer":
+#if BELOW_WHIDBEY_BUILD
+                App.Run();
+#else
+                App2.Run();
+#endif
+                break;
+            case "number-of-items-32":
+                NumberOfItems32.Run();
+                break;
+            case "number-of-items-64":
+                NumberOfItems64_1.Run();
+                break;
+            case "sample-fraction":
+                SampleFractionApp.Run();
+                break;
+            case "rate-32":
+                App3.Run();
+                break;
+            case "rate-64":
+                App4.Run();
+                break;
+            case "raw-fraction":
+                App5.Run();
+                break;
+            default:
+                Console.WriteLine(
+                    "Specify: average-timer, number-of-items-32, " +
+                    "number-of-items-64, sample-fraction, rate-32, rate-64, or raw-fraction.");
+                break;
+        }
+    }
+}

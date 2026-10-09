@@ -7,19 +7,13 @@ using System;
 using System.Collections;
 using System.Globalization;
 
-class myCultureComparer : IEqualityComparer
+class DictionaryLoadFactorCultureEqualityComparer : IEqualityComparer
 {
     public CaseInsensitiveComparer myComparer;
 
-    public myCultureComparer()
-    {
-        myComparer = CaseInsensitiveComparer.DefaultInvariant;
-    }
+    public DictionaryLoadFactorCultureEqualityComparer() => myComparer = CaseInsensitiveComparer.DefaultInvariant;
 
-    public myCultureComparer(CultureInfo myCulture)
-    {
-        myComparer = new CaseInsensitiveComparer(myCulture);
-    }
+    public DictionaryLoadFactorCultureEqualityComparer(CultureInfo myCulture) => myComparer = new(myCulture);
 
     public new bool Equals(object x, object y)
     {
@@ -33,24 +27,24 @@ class myCultureComparer : IEqualityComparer
         }
     }
 
-    public int GetHashCode(object obj)
-    {
+    public int GetHashCode(object obj) =>
         // Compare the hash code for the lowercase versions of the strings.
-        return obj.ToString().ToLower().GetHashCode();
-    }
+        obj.ToString().ToLower().GetHashCode();
 }
 
-public class SamplesHashtable
+public class SamplesHashtableDictionaryLoadFactor
 {
 
-    public static void Main()
+    public static void Run()
     {
 
         // Create the dictionary.
-        SortedList mySL = new SortedList();
-        mySL.Add("FIRST", "Hello");
-        mySL.Add("SECOND", "World");
-        mySL.Add("THIRD", "!");
+        SortedList mySL = new()
+        {
+            { "FIRST", "Hello" },
+            { "SECOND", "World" },
+            { "THIRD", "!" }
+        };
 
         // Create a hash table using the default comparer.
         Hashtable myHT1 = new Hashtable(mySL, .8f);
@@ -58,18 +52,18 @@ public class SamplesHashtable
         // Create a hash table using the specified IEqualityComparer that uses
         // the CaseInsensitiveComparer.DefaultInvariant to determine equality.
         Hashtable myHT2 = new Hashtable(mySL, .8f,
-            new myCultureComparer());
+            new DictionaryLoadFactorCultureEqualityComparer());
 
         // Create a hash table using an IEqualityComparer that is based on
         // the Turkish culture (tr-TR) where "I" is not the uppercase
         // version of "i".
-        CultureInfo myCul = new CultureInfo("tr-TR");
-        Hashtable myHT3 = new Hashtable(mySL, .8f, new myCultureComparer(myCul));
+        CultureInfo myCul = new("tr-TR");
+        Hashtable myHT3 = new Hashtable(mySL, .8f, new DictionaryLoadFactorCultureEqualityComparer(myCul));
 
         // Search for a key in each hash table.
-        Console.WriteLine("first is in myHT1: {0}", myHT1.ContainsKey("first"));
-        Console.WriteLine("first is in myHT2: {0}", myHT2.ContainsKey("first"));
-        Console.WriteLine("first is in myHT3: {0}", myHT3.ContainsKey("first"));
+        Console.WriteLine($"first is in myHT1: {myHT1.ContainsKey("first")}");
+        Console.WriteLine($"first is in myHT2: {myHT2.ContainsKey("first")}");
+        Console.WriteLine($"first is in myHT3: {myHT3.ContainsKey("first")}");
     }
 }
 

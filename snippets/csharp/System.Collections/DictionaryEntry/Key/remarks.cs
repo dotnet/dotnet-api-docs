@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections;
 
-public class SimpleDictionary : DictionaryBase
+public class SimpleDictionaryBase : DictionaryBase
 {
 }
 
 public class DictionaySamples
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a dictionary that contains no more than three entries.
-        IDictionary myDictionary = new SimpleDictionary();
+        IDictionary myDictionary = new SimpleDictionaryBase();
 
         // Add three people and their ages to the dictionary.
         myDictionary.Add("Jeff", 40);
@@ -19,7 +19,7 @@ public class DictionaySamples
         // Display every entry's key and value.
         foreach (DictionaryEntry de in myDictionary)
         {
-            Console.WriteLine("{0} is {1} years old.", de.Key, de.Value);
+            Console.WriteLine($"{de.Key} is {de.Value} years old.");
         }
 
         // Remove an entry that exists.

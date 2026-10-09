@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-public partial class Program
+public class ListConstructorExample1
 {
-    public static void Main()
+    public static void Run()
     {
         List<string> animals = new List<string>(4);
 

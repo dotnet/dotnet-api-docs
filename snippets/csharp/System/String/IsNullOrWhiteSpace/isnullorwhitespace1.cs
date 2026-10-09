@@ -1,16 +1,16 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class IsNullOrWhiteSpaceExample
 {
-   public static void Main()
-   {
-      string[] values = { null, String.Empty, "ABCDE", 
-                          new String(' ', 20), "  \t   ", 
-                          new String('\u2000', 10) };
-      foreach (string value in values)
-         Console.WriteLine(String.IsNullOrWhiteSpace(value));
-   }
+    public static void Run()
+    {
+        string[] values = [ null, string.Empty, "ABCDE",
+                          new string(' ', 20), "  \t   ",
+                          new string('\u2000', 10) ];
+        foreach (string value in values)
+            Console.WriteLine(string.IsNullOrWhiteSpace(value));
+    }
 }
 // The example displays the following output:
 //       True

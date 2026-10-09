@@ -3,10 +3,10 @@ using System.Collections;
 
 public class SamplesStack2
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
-        Stack myCollection = new Stack();
+        Stack myCollection = new();
 
         lock (myCollection.SyncRoot)
         {

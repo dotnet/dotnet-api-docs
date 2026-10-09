@@ -16,11 +16,10 @@ public class Form1 : Form
         IEnumerator ie = properties.GetEnumerator();
 
         // Prints the name of each property in the collection.
-        object myProperty;
         while (ie.MoveNext())
         {
-            myProperty = ie.Current;
-            textBox1.Text += myProperty.ToString() + '\n';
+            object myProperty = ie.Current;
+            textBox1.Text += $"{myProperty}\n";
         }
     }
 

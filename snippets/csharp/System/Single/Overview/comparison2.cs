@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 public class Example1
 {
@@ -11,10 +11,9 @@ public class Example1
         value2 = ((float)Math.Sqrt(value2)) / 3.51f;
         Console.WriteLine($"{value1} = {value2}: {value1.Equals(value2)}");
 
-        // The example displays the following output on .NET:
+        // The example displays the following output on modern .NET:
         //       10.201438 = 10.201439: False
-        // The example displays the following output on .NET Framework:
-        //       10.20144 = 10.20144: False
+
         // </Snippet10>
     }
 }

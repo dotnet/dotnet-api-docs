@@ -11,9 +11,9 @@ namespace DocRefreshSnippets
     {
         public Form1()
         {
-           // InitializeComponent();
+            // InitializeComponent();
             CharacterRangeInequality();
-            this.Paint += new PaintEventHandler(Form1_Paint);
+            Paint += new PaintEventHandler(Form1_Paint);
         }
 
         void Form1_Paint(object sender, PaintEventArgs e)
@@ -42,9 +42,9 @@ namespace DocRefreshSnippets
             string message = "Strings or strings; that is the question.";
 
             // Compare the ranges for equality. The should not be equal.
-            CharacterRange range1 = 
+            CharacterRange range1 =
                 new CharacterRange(message.IndexOf("Strings"), "Strings".Length);
-            CharacterRange range2 = 
+            CharacterRange range2 =
                 new CharacterRange(message.IndexOf("strings"), "strings".Length);
 
             if (range1 == range2)
@@ -97,7 +97,7 @@ namespace DocRefreshSnippets
         //<snippet4>
         private void CopyPixels1(PaintEventArgs e)
         {
-            e.Graphics.CopyFromScreen(this.Location, 
+            e.Graphics.CopyFromScreen(Location,
                 new Point(40, 40), new Size(100, 100));
         }
         //</snippet4>
@@ -105,8 +105,8 @@ namespace DocRefreshSnippets
         //<snippet5>
         private void CopyPixels2(PaintEventArgs e)
         {
-            e.Graphics.CopyFromScreen(this.Location, new Point(40, 40), 
-                new Size(100, 100), CopyPixelOperation.MergePaint); 
+            e.Graphics.CopyFromScreen(Location, new Point(40, 40),
+                new Size(100, 100), CopyPixelOperation.MergePaint);
         }
         //</snippet5>
         //<snippet6>
@@ -119,7 +119,7 @@ namespace DocRefreshSnippets
         //<snippet7>
         private void CopyPixels4(PaintEventArgs e)
         {
-            e.Graphics.CopyFromScreen(0, 0, 20, 20, new Size(160, 160), 
+            e.Graphics.CopyFromScreen(0, 0, 20, 20, new Size(160, 160),
                 CopyPixelOperation.SourceInvert);
         }
         //</snippet7>
@@ -127,10 +127,10 @@ namespace DocRefreshSnippets
         //<snippet8>
         private void DrawImageUnscaled(PaintEventArgs e)
         {
-            string filepath = @"C:\Documents and Settings\All Users\Documents\" + 
+            string filepath = @"C:\Documents and Settings\All Users\Documents\" +
                 @"My Pictures\Sample Pictures\Water Lilies.jpg";
             Bitmap bitmap1 = new Bitmap(filepath);
-            e.Graphics.DrawImageUnscaledAndClipped(bitmap1, new Rectangle(10,10,250,250));
+            e.Graphics.DrawImageUnscaledAndClipped(bitmap1, new Rectangle(10, 10, 250, 250));
         }
         //</snippet8>
 
@@ -138,7 +138,7 @@ namespace DocRefreshSnippets
         private void AddPoint(PaintEventArgs e)
         {
             Point point1 = new Point(10, 10);
-            Point point2 = Point.Add(point1, new Size(250,0));
+            Point point2 = Point.Add(point1, new Size(250, 0));
             e.Graphics.DrawLine(Pens.Red, point1, point2);
         }
         //</snippet9>
@@ -157,8 +157,8 @@ namespace DocRefreshSnippets
         private void AddSizes(PaintEventArgs e)
         {
             Size size1 = new Size(100, 100);
-            Size size2 = new Size(50,50);
-            e.Graphics.DrawRectangle(Pens.Black, new Rectangle(new Point(10,10), size1));
+            Size size2 = new Size(50, 50);
+            e.Graphics.DrawRectangle(Pens.Black, new Rectangle(new Point(10, 10), size1));
             size1 = Size.Add(size1, size2);
             e.Graphics.DrawRectangle(Pens.Red, new Rectangle(new Point(10, 10), size1));
         }

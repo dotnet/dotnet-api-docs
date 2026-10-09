@@ -4,9 +4,9 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-        PersianCalendar pc = new PersianCalendar();
+    public static void Main()
+    {
+        PersianCalendar pc = new();
         DateTime thisDate = DateTime.Now;
 
         // Display the current date using the Gregorian and Persian calendars.
@@ -68,38 +68,24 @@ public class Example
                           pc.GetHour(pc.MinSupportedDateTime),
                           pc.GetMinute(pc.MaxSupportedDateTime),
                           pc.GetSecond(pc.MaxSupportedDateTime));
-   }
+    }
 }
-// The example displays the following output when run under the .NET Framework 4.6:
-//    Today in the Gregorian Calendar:  Monday, 2/4/2013 9:11:36 AM
-//    Today in the Persian Calendar:    Monday, 11/16/1391 9:11:36
+
+// The example displays output similar to the following:
+
+// Today in the Gregorian Calendar:  Thursday, 7/30/2026 4:19:25 PM
+// Today in the Persian Calendar:    Thursday, 5/8/1405 16:19:25
 //
-//    Gregorian Calendar:  Tuesday, May 28, 2013
-//    Persian Calendar:    Tuesday, 3/7/1392 10:35:0
+// Gregorian Calendar:  Tuesday, May 28, 2013
+// Persian Calendar:    Tuesday, 3/7/1392 10:35:0
 //
-//    Gregorian Calendar:  Tuesday, July 12, 2016
-//    Persian Calendar:    Tuesday, 4/22/1395 12:30:0
+// Gregorian Calendar:  Tuesday, July 12, 2016
+// Persian Calendar:    Tuesday, 4/22/1395 12:30:0
 //
-//    Minimum Persian Calendar date (Gregorian Calendar):  Friday, March 22, 0622
-//    Minimum Persian Calendar date (Persian Calendar):  Friday, 1/1/1 0:0:0
+// Minimum Persian Calendar date (Gregorian Calendar):  Friday, March 22, 0622
+// Minimum Persian Calendar date (Persian Calendar):  Friday, 1/1/1 0:0:0
 //
-//    Maximum Persian Calendar date (Gregorian Calendar):  Friday, December 31, 9999
-//    Maximum Persian Calendar date (Persian Calendar):  Friday, 10/13/9378 0:59:59
-//
-// The example displays the following output when run under versions of
-// the .NET Framework before the .NET Framework 4.6:
-//    Today in the Gregorian Calendar:  Monday, 2/4/2013 9:11:36 AM
-//    Today in the Persian Calendar:    Monday, 11/16/1391 9:11:36
-//
-//    Gregorian Calendar:  Tuesday, May 28, 2013
-//    Persian Calendar:    Tuesday, 3/7/1392 10:35:0
-//
-//    Gregorian Calendar:  Tuesday, July 12, 2016
-//    Persian Calendar:    Tuesday, 4/22/1395 12:30:0
-//
-//    Minimum Persian Calendar date (Gregorian Calendar):  Thursday, March 21, 0622
-//    Minimum Persian Calendar date (Persian Calendar):  Thursday, 1/1/1 0:0:0
-//
-//    Maximum Persian Calendar date (Gregorian Calendar):  Friday, December 31, 9999
-//    Maximum Persian Calendar date (Persian Calendar):  Friday, 10/10/9378 0:59:59
+// Maximum Persian Calendar date (Gregorian Calendar):  Friday, December 31, 9999
+// Maximum Persian Calendar date (Persian Calendar):  Friday, 10/13/9378 0:59:59
+
 // </Snippet3>

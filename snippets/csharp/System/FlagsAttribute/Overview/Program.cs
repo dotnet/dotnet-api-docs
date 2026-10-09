@@ -1,0 +1,2 @@
+FlagsFormattingExample.Run();
+PhoneServiceExample.Run();

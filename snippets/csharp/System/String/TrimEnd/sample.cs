@@ -10,14 +10,14 @@ namespace String_Example
             // Create a string that will be trimmed.
             string path = "c:/temp//";
 
-            // Create an array of characters 
+            // Create an array of characters
             // that represent characters to trim.
-            char[] charsToTrim = {'/'};
+            char[] charsToTrim = ['/'];
 
             // Thim the string.
             string trimmedPath = path.TrimEnd(charsToTrim);
 
-            Console.WriteLine("The trimmed value is: {0}.", trimmedPath);
+            Console.WriteLine($"The trimmed value is: {trimmedPath}.");
 
             // Create a string that will be trimmed.
             string pathWhitespace = "c:/temp/  ";
@@ -25,7 +25,7 @@ namespace String_Example
             // Trim white spaces by passing null.
             string trimmedWhiteSpace = pathWhitespace.TrimEnd(null);
 
-            Console.WriteLine("The trimmed value is: {0}.", trimmedWhiteSpace);
+            Console.WriteLine($"The trimmed value is: {trimmedWhiteSpace}.");
 
             // This code example displays the following
             // to the console:

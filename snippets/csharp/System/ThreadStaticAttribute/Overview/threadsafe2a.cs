@@ -31,14 +31,8 @@ class Program
         PerformLogging();
     }
 
-    static void PerformDatabaseOperation()
-    {
-        Console.WriteLine($"Thread {Environment.CurrentManagedThreadId}: Processing DB operation for request {_requestId}");
-    }
+    static void PerformDatabaseOperation() => Console.WriteLine($"Thread {Environment.CurrentManagedThreadId}: Processing DB operation for request {_requestId}");
 
-    static void PerformLogging()
-    {
-        Console.WriteLine($"Thread {Environment.CurrentManagedThreadId}: Logging request {_requestId}");
-    }
+    static void PerformLogging() => Console.WriteLine($"Thread {Environment.CurrentManagedThreadId}: Logging request {_requestId}");
 }
 // </Snippet1>

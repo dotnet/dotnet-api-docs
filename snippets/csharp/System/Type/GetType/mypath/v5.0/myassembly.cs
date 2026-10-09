@@ -1,6 +1,6 @@
-﻿using System;
+﻿
 
 namespace MyNamespace
 {
-    public class MyType {}
+    public class MyType { }
 }

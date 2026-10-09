@@ -5,49 +5,52 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesStringCollection  {
+public class SamplesStringCollection
+{
+    public static void Main()
+    {
+        // Creates and initializes a new StringCollection.
+        StringCollection myCol = [];
+        string[] myArr = ["RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED"];
+        myCol.AddRange(myArr);
 
-   public static void Main()  {
+        Console.WriteLine("Initial contents of the StringCollection:");
+        PrintValues(myCol);
 
-      // Creates and initializes a new StringCollection.
-      StringCollection myCol = new StringCollection();
-      String[] myArr = new String[] { "RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED" };
-      myCol.AddRange( myArr );
+        // Removes one element from the StringCollection.
+        myCol.Remove("yellow");
 
-      Console.WriteLine( "Initial contents of the StringCollection:" );
-      PrintValues( myCol );
+        Console.WriteLine("After removing \"yellow\":");
+        PrintValues(myCol);
 
-      // Removes one element from the StringCollection.
-      myCol.Remove( "yellow" );
+        // Removes all occurrences of a value from the StringCollection.
+        int i = myCol.IndexOf("RED");
+        while (i > -1)
+        {
+            myCol.RemoveAt(i);
+            i = myCol.IndexOf("RED");
+        }
 
-      Console.WriteLine( "After removing \"yellow\":" );
-      PrintValues( myCol );
+        Console.WriteLine("After removing all occurrences of \"RED\":");
+        PrintValues(myCol);
 
-      // Removes all occurrences of a value from the StringCollection.
-      int i = myCol.IndexOf( "RED" );
-      while ( i > -1 )  {
-         myCol.RemoveAt( i );
-         i = myCol.IndexOf( "RED" );
-      }
+        // Clears the entire collection.
+        myCol.Clear();
 
-      Console.WriteLine( "After removing all occurrences of \"RED\":" );
-      PrintValues( myCol );
+        Console.WriteLine("After clearing the collection:");
+        PrintValues(myCol);
+    }
 
-      // Clears the entire collection.
-      myCol.Clear();
-
-      Console.WriteLine( "After clearing the collection:" );
-      PrintValues( myCol );
-   }
-
-   public static void PrintValues( IEnumerable myCol )  {
-      foreach ( Object obj in myCol )
-         Console.WriteLine( "   {0}", obj );
-      Console.WriteLine();
-   }
+    public static void PrintValues(IEnumerable myCol)
+    {
+        foreach (object obj in myCol)
+            Console.WriteLine($"   {obj}");
+        Console.WriteLine();
+    }
 }
 
 /*
+
 This code produces the following output.
 
 Initial contents of the StringCollection:
@@ -83,4 +86,5 @@ After removing all occurrences of "RED":
 After clearing the collection:
 
 */
+
 // </snippet1>

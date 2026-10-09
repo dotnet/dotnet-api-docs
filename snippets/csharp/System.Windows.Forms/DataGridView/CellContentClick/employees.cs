@@ -192,10 +192,16 @@ public class Employees : Form
 
     private DataTable Populate(string sqlCommand)
     {
+        return Populate(sqlCommand, Array.Empty<SqlParameter>());
+    }
+
+    private DataTable Populate(string sqlCommand, params SqlParameter[] parameters)
+    {
         SqlConnection northwindConnection = new SqlConnection(connectionString);
         northwindConnection.Open();
 
         SqlCommand command = new SqlCommand(sqlCommand, northwindConnection);
+        command.Parameters.AddRange(parameters);
         SqlDataAdapter adapter = new SqlDataAdapter();
         adapter.SelectCommand = command;
 
@@ -276,7 +282,9 @@ public class Employees : Form
 
         string employeeId = DataGridView1.Rows[buttonClick.RowIndex]
             .Cells[ColumnName.EmployeeId.ToString()].Value.ToString();
-        DataGridView2.DataSource = Populate("SELECT * FROM Orders WHERE EmployeeId = " + employeeId);
+        DataGridView2.DataSource = Populate(
+            "SELECT * FROM Orders WHERE EmployeeId = @EmployeeId",
+            new SqlParameter("@EmployeeId", employeeId));
     }
 
     #region "SQL Error handling"

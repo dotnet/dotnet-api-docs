@@ -7,39 +7,39 @@ class GetBytesSingleDemo
     const string formatter = "{0,16:E7}{1,20}";
 
     // Convert a float argument to a byte array and display it.
-    public static void GetBytesSingle( float argument )
+    public static void GetBytesSingle(float argument)
     {
-        byte[ ] byteArray = BitConverter.GetBytes( argument );
-        Console.WriteLine( formatter, argument,
-            BitConverter.ToString( byteArray ) );
+        byte[] byteArray = BitConverter.GetBytes(argument);
+        Console.WriteLine(formatter, argument,
+            BitConverter.ToString(byteArray));
     }
 
-    public static void Main( )
+    public static void Main()
     {
         Console.WriteLine(
             "This example of the BitConverter.GetBytes( float ) " +
-            "\nmethod generates the following output.\n" );
-        Console.WriteLine( formatter, "float", "byte array" );
-        Console.WriteLine( formatter, "-----", "----------" );
+            "\nmethod generates the following output.\n");
+        Console.WriteLine(formatter, "float", "byte array");
+        Console.WriteLine(formatter, "-----", "----------");
 
         // Convert float values and display the results.
-        GetBytesSingle( 0.0F );
-        GetBytesSingle( 1.0F );
-        GetBytesSingle( 15.0F );
-        GetBytesSingle( 65535.0F );
-        GetBytesSingle( 0.00390625F );
-        GetBytesSingle( 0.00000000023283064365386962890625F );
-        GetBytesSingle( 1.2345E-35F );
-        GetBytesSingle( 1.2345671F );
-        GetBytesSingle( 1.2345673F );
-        GetBytesSingle( 1.2345677F );
-        GetBytesSingle( 1.23456789E+35F );
-        GetBytesSingle( float.MinValue );
-        GetBytesSingle( float.MaxValue );
-        GetBytesSingle( float.Epsilon );
-        GetBytesSingle( float.NaN );
-        GetBytesSingle( float.NegativeInfinity );
-        GetBytesSingle( float.PositiveInfinity );
+        GetBytesSingle(0.0F);
+        GetBytesSingle(1.0F);
+        GetBytesSingle(15.0F);
+        GetBytesSingle(65535.0F);
+        GetBytesSingle(0.00390625F);
+        GetBytesSingle(0.00000000023283064365386962890625F);
+        GetBytesSingle(1.2345E-35F);
+        GetBytesSingle(1.2345671F);
+        GetBytesSingle(1.2345673F);
+        GetBytesSingle(1.2345677F);
+        GetBytesSingle(1.23456789E+35F);
+        GetBytesSingle(float.MinValue);
+        GetBytesSingle(float.MaxValue);
+        GetBytesSingle(float.Epsilon);
+        GetBytesSingle(float.NaN);
+        GetBytesSingle(float.NegativeInfinity);
+        GetBytesSingle(float.PositiveInfinity);
     }
 }
 

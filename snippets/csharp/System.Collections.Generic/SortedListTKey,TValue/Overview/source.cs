@@ -2,22 +2,23 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class SortedListOverviewExample2
 {
-    public static void Main()
+    public static void Run()
     {
         //<Snippet2>
         // Create a new sorted list of strings, with string
         // keys.
         SortedList<string, string> openWith =
-            new SortedList<string, string>();
-
-        // Add some elements to the list. There are no
-        // duplicate keys, but some of the values are duplicates.
-        openWith.Add("txt", "notepad.exe");
-        openWith.Add("bmp", "paint.exe");
-        openWith.Add("dib", "paint.exe");
-        openWith.Add("rtf", "wordpad.exe");
+            new()
+            {
+                // Add some elements to the list. There are no
+                // duplicate keys, but some of the values are duplicates.
+                { "txt", "notepad.exe" },
+                { "bmp", "paint.exe" },
+                { "dib", "paint.exe" },
+                { "rtf", "wordpad.exe" }
+            };
 
         // The Add method throws an exception if the new key is
         // already in the list.
@@ -92,7 +93,7 @@ public class Example
         // When you use foreach to enumerate list elements,
         // the elements are retrieved as KeyValuePair objects.
         Console.WriteLine();
-        foreach( KeyValuePair<string, string> kvp in openWith )
+        foreach (KeyValuePair<string, string> kvp in openWith)
         {
             Console.WriteLine("Key = {0}, Value = {1}",
                 kvp.Key, kvp.Value);
@@ -106,7 +107,7 @@ public class Example
         // The elements of the list are strongly typed with the
         // type that was specified for the SortedList values.
         Console.WriteLine();
-        foreach( string s in ilistValues )
+        foreach (string s in ilistValues)
         {
             Console.WriteLine("Value = {0}", s);
         }
@@ -124,7 +125,7 @@ public class Example
         // The elements of the list are strongly typed with the
         // type that was specified for the SortedList keys.
         Console.WriteLine();
-        foreach( string s in ilistKeys )
+        foreach (string s in ilistKeys)
         {
             Console.WriteLine("Key = {0}", s);
         }

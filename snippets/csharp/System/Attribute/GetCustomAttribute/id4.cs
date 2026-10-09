@@ -9,9 +9,9 @@ namespace IsDef4CS
         // Assign the Obsolete attribute to a method.
         [Obsolete("This method is obsolete. Use Method2 instead.")]
         public void Method1()
-        {}
+        { }
         public void Method2()
-        {}
+        { }
     }
 
     public class DemoClass
@@ -25,8 +25,7 @@ namespace IsDef4CS
             // See if the Obsolete attribute is defined for this method.
             bool isDef = Attribute.IsDefined(mInfo, typeof(ObsoleteAttribute));
             // Display the result.
-            Console.WriteLine("The Obsolete Attribute {0} defined for {1} of class {2}.",
-                isDef ? "is" : "is not", mInfo.Name, clsType.Name);
+            Console.WriteLine($"The Obsolete Attribute {(isDef ? "is" : "is not")} defined for {mInfo.Name} of class {clsType.Name}.");
             // If it's defined, display the attribute's message.
             if (isDef)
             {
@@ -34,8 +33,7 @@ namespace IsDef4CS
                                  (ObsoleteAttribute)Attribute.GetCustomAttribute(
                                                     mInfo, typeof(ObsoleteAttribute));
                 if (obsAttr != null)
-                    Console.WriteLine("The message is: \"{0}\".",
-                        obsAttr.Message);
+                    Console.WriteLine($"The message is: \"{obsAttr.Message}\".");
                 else
                     Console.WriteLine("The message could not be retrieved.");
             }

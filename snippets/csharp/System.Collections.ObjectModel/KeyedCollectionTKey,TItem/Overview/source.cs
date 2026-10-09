@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
+namespace KeyedCollectionBasicExample;
+
 // This class represents a very simple keyed list of OrderItems,
 // inheriting most of its behavior from the KeyedCollection and
 // Collection classes. The immediate base class is the constructed
@@ -35,27 +37,26 @@ public class Demo
 {
     public static void Main()
     {
-        SimpleOrder weekly = new SimpleOrder();
-
-        // The Add method, inherited from Collection, takes OrderItem.
-        //
-        weekly.Add(new OrderItem(110072674, "Widget", 400, 45.17));
-        weekly.Add(new OrderItem(110072675, "Sprocket", 27, 5.3));
-        weekly.Add(new OrderItem(101030411, "Motor", 10, 237.5));
-        weekly.Add(new OrderItem(110072684, "Gear", 175, 5.17));
+        SimpleOrder weekly =
+        [
+            // The Add method, inherited from Collection, takes OrderItem.
+            //
+            new OrderItem(110072674, "Widget", 400, 45.17),
+            new OrderItem(110072675, "Sprocket", 27, 5.3),
+            new OrderItem(101030411, "Motor", 10, 237.5),
+            new OrderItem(110072684, "Gear", 175, 5.17),
+        ];
 
         Display(weekly);
 
         // The Contains method of KeyedCollection takes the key,
         // type, in this case int.
         //
-        Console.WriteLine("\nContains(101030411): {0}",
-            weekly.Contains(101030411));
+        Console.WriteLine($"\nContains(101030411): {weekly.Contains(101030411)}");
 
         // The default Item property of KeyedCollection takes a key.
         //
-        Console.WriteLine("\nweekly[101030411].Description: {0}",
-            weekly[101030411].Description);
+        Console.WriteLine($"\nweekly[101030411].Description: {weekly[101030411].Description}");
 
         // The Remove method of KeyedCollection takes a key.
         //
@@ -82,8 +83,7 @@ public class Demo
         // as a key, and KeyNotFoundException is thrown.
         //
         Collection<OrderItem> coweekly = weekly;
-        Console.WriteLine("\ncoweekly[2].Description: {0}",
-            coweekly[2].Description);
+        Console.WriteLine($"\ncoweekly[2].Description: {coweekly[2].Description}");
 
         Console.WriteLine("\ncoweekly[2] = new OrderItem(...)");
         coweekly[2] = new OrderItem(127700026, "Crank", 27, 5.98);
@@ -93,7 +93,7 @@ public class Demo
         // The IndexOf method inherited from Collection<OrderItem>
         // takes an OrderItem instead of a key
         //
-        Console.WriteLine("\nIndexOf(temp): {0}", weekly.IndexOf(temp));
+        Console.WriteLine($"\nIndexOf(temp): {weekly.IndexOf(temp)}");
 
         // The inherited Remove method also takes an OrderItem.
         //
@@ -109,7 +109,7 @@ public class Demo
     private static void Display(SimpleOrder order)
     {
         Console.WriteLine();
-        foreach( OrderItem item in order )
+        foreach (OrderItem item in order)
         {
             Console.WriteLine(item);
         }
@@ -141,20 +141,15 @@ public class OrderItem
         get { return _quantity; }
         set
         {
-            if (value<0)
+            if (value < 0)
                 throw new ArgumentException("Quantity cannot be negative.");
 
             _quantity = value;
         }
     }
 
-    public override string ToString()
-    {
-        return String.Format(
-            "{0,9} {1,6} {2,-12} at {3,8:#,###.00} = {4,10:###,###.00}",
-            PartNumber, _quantity, Description, UnitPrice,
-            UnitPrice * _quantity);
-    }
+    public override string ToString() =>
+        $"{PartNumber,9} {_quantity,6} {Description,-12} at {UnitPrice,8:#,###.00} = {UnitPrice * _quantity,10:###,###.00}";
 }
 
 /* This code example produces the following output:

@@ -15,7 +15,7 @@ namespace Process_StandardError
 {
     class Class1
     {
-        static void Main(string[] args)
+        public static void Run(string[] args)
         {
             if (args.Length < 1)
             {
@@ -34,12 +34,13 @@ namespace Process_StandardError
         public static void GetStandardError(string[] args)
         {
             // <Snippet1>
-            using (Process myProcess = new Process())
             {
-                ProcessStartInfo myProcessStartInfo = new ProcessStartInfo("net ", "use " + args[0]);
-
-                myProcessStartInfo.UseShellExecute = false;
-                myProcessStartInfo.RedirectStandardError = true;
+                using Process myProcess = new();
+                ProcessStartInfo myProcessStartInfo = new("net", "use " + args[0])
+                {
+                    UseShellExecute = false,
+                    RedirectStandardError = true
+                };
                 myProcess.StartInfo = myProcessStartInfo;
                 myProcess.Start();
 

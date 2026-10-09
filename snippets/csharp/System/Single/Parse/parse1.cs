@@ -1,28 +1,31 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class SingleParseDefaultExample
 {
-   public static void Main()
-   {
-      string[] values = { "100", "(100)", "-123,456,789", "123.45e+6", 
-                          "+500", "5e2", "3.1416", "600.", "-.123", 
-                          "-Infinity", "-1E-16", Double.MaxValue.ToString(), 
-                          Single.MinValue.ToString(), String.Empty };
-      foreach (string value in values)
-      {
-         try {   
-            float number = Single.Parse(value);
-            Console.WriteLine("{0} -> {1}", value, number);
-         }
-         catch (FormatException) {
-            Console.WriteLine("'{0}' is not in a valid format.", value);
-         }
-         catch (OverflowException) {
-            Console.WriteLine("{0} is outside the range of a Single.", value);
-         }
-      }                                  
-   }
+    public static void Run()
+    {
+        string[] values = ["100", "(100)", "-123,456,789", "123.45e+6",
+                           "+500", "5e2", "3.1416", "600.", "-.123",
+                           "-Infinity", "-1E-16", $"{double.MaxValue}",
+                           $"{float.MinValue}", string.Empty];
+        foreach (string value in values)
+        {
+            try
+            {
+                float number = float.Parse(value);
+                Console.WriteLine($"{value} -> {number}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($"'{value}' is not in a valid format.");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"{value} is outside the range of a Single.");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //       100 -> 100

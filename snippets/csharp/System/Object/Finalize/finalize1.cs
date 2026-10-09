@@ -4,36 +4,31 @@ using System.Diagnostics;
 
 public class ExampleClass
 {
-   Stopwatch sw;
+    Stopwatch sw;
 
-   public ExampleClass()
-   {
-      sw = Stopwatch.StartNew();
-      Console.WriteLine("Instantiated object");
-   }
+    public ExampleClass()
+    {
+        sw = Stopwatch.StartNew();
+        Console.WriteLine("Instantiated object");
+    }
 
-   public void ShowDuration()
-   {
-      Console.WriteLine("This instance of {0} has been in existence for {1}",
-                        this, sw.Elapsed);
-   }
+    public void ShowDuration() => Console.WriteLine($"This instance of {this} has been in existence for {sw.Elapsed}");
 
-   ~ExampleClass()
-   {
-      Console.WriteLine("Finalizing object");
-      sw.Stop();
-      Console.WriteLine("This instance of {0} has been in existence for {1}",
-                        this, sw.Elapsed);
-   }
+    ~ExampleClass()
+    {
+        Console.WriteLine("Finalizing object");
+        sw.Stop();
+        Console.WriteLine($"This instance of {this} has been in existence for {sw.Elapsed}");
+    }
 }
 
 public class Demo
 {
-   public static void Main()
-   {
-      ExampleClass ex = new ExampleClass();
-      ex.ShowDuration();
-   }
+    public static void Main()
+    {
+        ExampleClass ex = new();
+        ex.ShowDuration();
+    }
 }
 // The example displays output like the following:
 //    Instantiated object

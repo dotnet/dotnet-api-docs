@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class LastIndexOfIgnorable25Example
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet25>
         string searchString = "\u00ADm";

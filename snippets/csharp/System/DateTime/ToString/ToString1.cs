@@ -7,7 +7,7 @@ public class ToStringExample1
     public static void Main()
     {
         CultureInfo currentCulture = CultureInfo.CurrentCulture;
-        DateTime exampleDate = new DateTime(2021, 5, 1, 18, 32, 6);
+        DateTime exampleDate = new(2021, 5, 1, 18, 32, 6);
 
         // Change the current culture to en-US and display the date.
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");

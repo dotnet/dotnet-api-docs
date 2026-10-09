@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class GuidTryParseExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
         Guid originalGuid = Guid.NewGuid();
@@ -12,7 +12,7 @@ public class Example
                                  originalGuid.ToString("X") };
 
         // Parse each string representation.
-        foreach (var stringGuid in stringGuids)
+        foreach (string stringGuid in stringGuids)
         {
             if (Guid.TryParse(stringGuid, out var newGuid))
                 Console.WriteLine($"Converted {stringGuid} to a Guid");

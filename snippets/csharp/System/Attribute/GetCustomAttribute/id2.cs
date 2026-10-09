@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 
 // Add the Debuggable attribute to the module.
-[module:Debuggable(true, false)]
+[module: Debuggable(true, false)]
 namespace IsDef2CS
 {
     public class DemoClass
@@ -29,10 +29,8 @@ namespace IsDef2CS
                     typeof(DebuggableAttribute));
                 if (dbgAttr != null)
                 {
-                    Console.WriteLine("JITTrackingEnabled is {0}.",
-                        dbgAttr.IsJITTrackingEnabled);
-                    Console.WriteLine("JITOptimizerDisabled is {0}.",
-                        dbgAttr.IsJITOptimizerDisabled);
+                    Console.WriteLine($"JITTrackingEnabled is {dbgAttr.IsJITTrackingEnabled}.");
+                    Console.WriteLine($"JITOptimizerDisabled is {dbgAttr.IsJITOptimizerDisabled}.");
                 }
                 else
                     Console.WriteLine("The Debuggable attribute " +

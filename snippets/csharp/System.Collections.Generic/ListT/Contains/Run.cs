@@ -1,0 +1,2 @@
+﻿CubeExample.Run();
+PartExample.Run();

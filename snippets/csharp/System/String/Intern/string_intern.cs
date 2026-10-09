@@ -12,13 +12,13 @@ class Sample
         Console.WriteLine($"s1 == {s1}");
         Console.WriteLine($"s2 == {s2}");
         Console.WriteLine($"Are s1 and s2 equal in value? {s1 == s2}");
-        Console.WriteLine($"Are s1 and s2 the same reference? {Object.ReferenceEquals(s1, s2)}");
+        Console.WriteLine($"Are s1 and s2 the same reference? {object.ReferenceEquals(s1, s2)}");
 
-        string i1 = String.Intern(s1);
-        string i2 = String.Intern(s2);
+        string i1 = string.Intern(s1);
+        string i2 = string.Intern(s2);
         Console.WriteLine($"After interning:");
         Console.WriteLine($"  Are i1 and i2 equal in value? {i1 == i2}");
-        Console.WriteLine($"  Are i1 and i2 the same reference? {Object.ReferenceEquals(i1, i2)}");
+        Console.WriteLine($"  Are i1 and i2 the same reference? {object.ReferenceEquals(i1, i2)}");
     }
 }
 /*

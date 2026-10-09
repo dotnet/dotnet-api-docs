@@ -10,8 +10,8 @@ public class Snippet
         // an executable directly and in this case depending on it being in a PATH folder. By setting
         // RedirectStandardOutput to true, the output of csc.exe is directed to the Process.StandardOutput stream
         // which is then displayed in this console window directly.
-        using (Process compiler = new Process())
         {
+            using Process compiler = new();
             compiler.StartInfo.FileName = "csc.exe";
             compiler.StartInfo.Arguments = "/r:System.dll /out:sample.exe stdstr.cs";
             compiler.StartInfo.UseShellExecute = false;

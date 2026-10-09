@@ -5,16 +5,12 @@ public class Example1
 {
     public static void Main()
     {
-        String[] words = { "the", "today", "tomorrow", " ", "" };
-        foreach (var word in words)
-            Console.WriteLine("First character of '{0}': '{1}'",
-                              word, GetFirstCharacter(word));
+        string[] words = { "the", "today", "tomorrow", " ", "" };
+        foreach (string word in words)
+            Console.WriteLine($"First character of '{word}': '{GetFirstCharacter(word)}'");
     }
 
-    private static char GetFirstCharacter(string s)
-    {
-        return s[0];
-    }
+    private static char GetFirstCharacter(string s) => s[0];
 }
 // The example displays the following output:
 //    First character of //the//: //t//
@@ -38,8 +34,5 @@ public static class StringLib
     }
     // </Snippet16>
 
-    public static char DoNothing(string s)
-    {
-        return GetFirstCharacter(s);
-    }
+    public static char DoNothing(string s) => GetFirstCharacter(s);
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 [assembly: CLSCompliant(true)]
 public class Class1

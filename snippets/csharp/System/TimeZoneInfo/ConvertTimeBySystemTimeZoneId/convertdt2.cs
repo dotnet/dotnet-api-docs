@@ -3,20 +3,20 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      // Get time in local time zone 
-      DateTime thisTime = DateTime.Now;
-      Console.WriteLine("Time in {0} zone: {1}", TimeZoneInfo.Local.IsDaylightSavingTime(thisTime) ?
-                        TimeZoneInfo.Local.DaylightName : TimeZoneInfo.Local.StandardName, thisTime);
-      Console.WriteLine("   UTC Time: {0}", TimeZoneInfo.ConvertTimeToUtc(thisTime, TimeZoneInfo.Local));
-      // Get Tokyo Standard Time zone
-      TimeZoneInfo tst = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
-      DateTime tstTime = TimeZoneInfo.ConvertTime(thisTime, TimeZoneInfo.Local, tst);      
-      Console.WriteLine("Time in {0} zone: {1}", tst.IsDaylightSavingTime(tstTime) ?
-                        tst.DaylightName : tst.StandardName, tstTime);
-      Console.WriteLine("   UTC Time: {0}", TimeZoneInfo.ConvertTimeToUtc(tstTime, tst));
-   }
+    public static void Main()
+    {
+        // Get time in local time zone
+        DateTime thisTime = DateTime.Now;
+        Console.WriteLine($"Time in {(TimeZoneInfo.Local.IsDaylightSavingTime(thisTime) ?
+                          TimeZoneInfo.Local.DaylightName : TimeZoneInfo.Local.StandardName)} zone: {thisTime}");
+        Console.WriteLine($"   UTC Time: {TimeZoneInfo.ConvertTimeToUtc(thisTime, TimeZoneInfo.Local)}");
+        // Get Tokyo Standard Time zone
+        TimeZoneInfo tst = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
+        DateTime tstTime = TimeZoneInfo.ConvertTime(thisTime, TimeZoneInfo.Local, tst);
+        Console.WriteLine($"Time in {(tst.IsDaylightSavingTime(tstTime) ?
+                          tst.DaylightName : tst.StandardName)} zone: {tstTime}");
+        Console.WriteLine($"   UTC Time: {TimeZoneInfo.ConvertTimeToUtc(tstTime, tst)}");
+    }
 }
 // The example displays output like the following when run on a system in the
 // U.S. Pacific Standard Time zone:

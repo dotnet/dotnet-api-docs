@@ -482,20 +482,32 @@
       </Parameters>
       <Docs>
         <param name="source">The stream containing the tar archive.</param>
-        <param name="destinationDirectoryName">The path of the destination directory where the filesystem entries should be extracted.</param>
+        <param name="destinationDirectoryName">The path of the destination directory where the filesystem entries should be extracted. In .NET 11 and earlier versions, the directory must already exist. In .NET 12 and later versions, missing destination and parent directories are created as needed when entries are extracted. An empty archive does not create any directories.</param>
         <param name="overwriteFiles">
           <see langword="true" /> to overwrite files and directories in <paramref name="destinationDirectoryName" />; <see langword="false" /> to avoid overwriting, and throw if any files or directories are found with existing names.</param>
         <summary>Extracts the contents of a stream that represents a tar archive into the specified directory.</summary>
         <remarks>
-          <para>If a symbolic link or junction in the tar archive results in a file being extracted outside the specified <paramref name="destinationDirectoryName" />, an <see cref="T:System.IO.IOException" /> is thrown to ensure extraction remains within the same directory.</para>
-          <para>If <paramref name="destinationDirectoryName" /> or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.</para>
-          <para>Files of type <see cref="F:System.Formats.Tar.TarEntryType.BlockDevice" />, <see cref="F:System.Formats.Tar.TarEntryType.CharacterDevice" />, or <see cref="F:System.Formats.Tar.TarEntryType.Fifo" /> can only be extracted in Unix platforms.</para>
-          <para>Elevation is required to extract a <see cref="F:System.Formats.Tar.TarEntryType.BlockDevice" /> or <see cref="F:System.Formats.Tar.TarEntryType.CharacterDevice" /> to disk.</para>
-          <para>This method doesn't limit the total extracted size or the number of entries extracted from the archive. When processing archives from untrusted sources, iterate over the entries manually using <see cref="T:System.Formats.Tar.TarReader" />, and validate that the size and the number of entries are within acceptable limits for your scenario.</para>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
+
+In .NET 11 and earlier versions, the directory specified by `destinationDirectoryName` must already exist. If it doesn't exist, this method throws an <xref:System.IO.DirectoryNotFoundException>, even if the archive is empty.
+
+In .NET 12 and later versions, the destination directory can already exist. Missing destination and parent directories are created as needed when entries are extracted. An empty archive doesn't create any directories.
+
+If a symbolic link or junction in the tar archive results in a file being extracted outside the specified `destinationDirectoryName`, an <xref:System.IO.IOException> is thrown to ensure extraction remains within the same directory.
+
+If `destinationDirectoryName` or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.
+
+Files of type <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice>, or <xref:System.Formats.Tar.TarEntryType.Fifo> can only be extracted in Unix platforms.
+
+Elevation is required to extract a <xref:System.Formats.Tar.TarEntryType.BlockDevice> or <xref:System.Formats.Tar.TarEntryType.CharacterDevice> to disk.
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="source" /> or <paramref name="destinationDirectoryName" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.IO.DirectoryNotFoundException">The <paramref name="destinationDirectoryName" /> directory path is not found.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">.NET 11 and earlier versions: The <paramref name="destinationDirectoryName" /> directory does not exist.</exception>
         <exception cref="T:System.UnauthorizedAccessException">Permissions are insufficient.</exception>
         <exception cref="T:System.ArgumentException">
 Extracting one of the tar entries would have resulted in a file outside the specified destination directory.
@@ -533,10 +545,37 @@ Extracting one of the tar entries would have resulted in a file outside the spec
       </Parameters>
       <Docs>
         <param name="source">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
+        <param name="destinationDirectoryName">The path to the directory in which to place the extracted files. In .NET 11 and earlier versions, the directory must already exist. In .NET 12 and later versions, missing destination and parent directories are created as needed when entries are extracted. An empty archive does not create any directories.</param>
         <param name="options">To be added.</param>
         <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
+
+In .NET 11 and earlier versions, the directory specified by `destinationDirectoryName` must already exist. If it doesn't exist, this method throws an <xref:System.IO.DirectoryNotFoundException>, even if the archive is empty.
+
+In .NET 12 and later versions, the destination directory can already exist. Missing destination and parent directories are created as needed when entries are extracted. An empty archive doesn't create any directories.
+
+The path can be relative or absolute. A relative path is interpreted as relative to the current working directory.
+
+If an error occurs during extraction, the archive remains partially extracted.
+
+Set <xref:System.Formats.Tar.TarExtractOptions.OverwriteFiles> to `true` to overwrite existing files. The default is `false`. Use <xref:System.Formats.Tar.TarExtractOptions.HardLinkMode> to control how hard link entries are extracted.
+
+If a symbolic link or junction in the tar archive results in a file being extracted outside the specified `destinationDirectoryName`, an <xref:System.IO.IOException> is thrown to ensure extraction remains within the same directory.
+
+If `destinationDirectoryName` or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.
+
+Files of type <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice>, or <xref:System.Formats.Tar.TarEntryType.Fifo> can only be extracted in Unix platforms.
+
+Elevation is required to extract a <xref:System.Formats.Tar.TarEntryType.BlockDevice> or <xref:System.Formats.Tar.TarEntryType.CharacterDevice> to disk.
+
+The `source` stream is left open after extraction.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.DirectoryNotFoundException">.NET 11 and earlier versions: The <paramref name="destinationDirectoryName" /> directory does not exist.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectory">
@@ -564,20 +603,32 @@ Extracting one of the tar entries would have resulted in a file outside the spec
       </Parameters>
       <Docs>
         <param name="sourceFileName">The path of the tar file to extract.</param>
-        <param name="destinationDirectoryName">The path of the destination directory where the filesystem entries should be extracted.</param>
+        <param name="destinationDirectoryName">The path of the destination directory where the filesystem entries should be extracted. In .NET 11 and earlier versions, the directory must already exist. In .NET 12 and later versions, missing destination and parent directories are created as needed when entries are extracted. An empty archive does not create any directories.</param>
         <param name="overwriteFiles">
           <see langword="true" /> to overwrite files and directories in <paramref name="destinationDirectoryName" />; <see langword="false" /> to avoid overwriting, and throw if any files or directories are found with existing names.</param>
         <summary>Extracts the contents of a tar file into the specified directory.</summary>
         <remarks>
-          <para>If a symbolic link or junction in the tar archive results in a file being extracted outside the specified <paramref name="destinationDirectoryName" />, an <see cref="T:System.IO.IOException" /> is thrown to ensure extraction remains within the same directory.</para>
-          <para>If <paramref name="destinationDirectoryName" /> or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.</para>
-          <para>Files of type <see cref="F:System.Formats.Tar.TarEntryType.BlockDevice" />, <see cref="F:System.Formats.Tar.TarEntryType.CharacterDevice" />, or <see cref="F:System.Formats.Tar.TarEntryType.Fifo" /> can only be extracted in Unix platforms.</para>
-          <para>Elevation is required to extract a <see cref="F:System.Formats.Tar.TarEntryType.BlockDevice" /> or <see cref="F:System.Formats.Tar.TarEntryType.CharacterDevice" /> to disk.</para>
-          <para>This method doesn't limit the total extracted size or the number of entries extracted from the archive. When processing archives from untrusted sources, iterate over the entries manually using <see cref="T:System.Formats.Tar.TarReader" />, and validate that the size and the number of entries are within acceptable limits for your scenario.</para>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
+
+In .NET 11 and earlier versions, the directory specified by `destinationDirectoryName` must already exist. If it doesn't exist, this method throws an <xref:System.IO.DirectoryNotFoundException>, even if the archive is empty.
+
+In .NET 12 and later versions, the destination directory can already exist. Missing destination and parent directories are created as needed when entries are extracted. An empty archive doesn't create any directories.
+
+If a symbolic link or junction in the tar archive results in a file being extracted outside the specified `destinationDirectoryName`, an <xref:System.IO.IOException> is thrown to ensure extraction remains within the same directory.
+
+If `destinationDirectoryName` or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.
+
+Files of type <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice>, or <xref:System.Formats.Tar.TarEntryType.Fifo> can only be extracted in Unix platforms.
+
+Elevation is required to extract a <xref:System.Formats.Tar.TarEntryType.BlockDevice> or <xref:System.Formats.Tar.TarEntryType.CharacterDevice> to disk.
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="sourceFileName" /> or <paramref name="destinationDirectoryName" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.IO.DirectoryNotFoundException">The <paramref name="destinationDirectoryName" /> directory path is not found.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">.NET 11 and earlier versions: The <paramref name="destinationDirectoryName" /> directory does not exist.</exception>
         <exception cref="T:System.IO.FileNotFoundException">The <paramref name="sourceFileName" /> file path is not found.</exception>
         <exception cref="T:System.UnauthorizedAccessException">Permissions are insufficient.</exception>
         <exception cref="T:System.ArgumentException">
@@ -612,10 +663,35 @@ Extracting one of the tar entries would have resulted in a file outside the spec
       </Parameters>
       <Docs>
         <param name="sourceFileName">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
+        <param name="destinationDirectoryName">The path to the directory in which to place the extracted files. In .NET 11 and earlier versions, the directory must already exist. In .NET 12 and later versions, missing destination and parent directories are created as needed when entries are extracted. An empty archive does not create any directories.</param>
         <param name="options">To be added.</param>
         <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
+
+In .NET 11 and earlier versions, the directory specified by `destinationDirectoryName` must already exist. If it doesn't exist, this method throws an <xref:System.IO.DirectoryNotFoundException>, even if the archive is empty.
+
+In .NET 12 and later versions, the destination directory can already exist. Missing destination and parent directories are created as needed when entries are extracted. An empty archive doesn't create any directories.
+
+The path can be relative or absolute. A relative path is interpreted as relative to the current working directory.
+
+If an error occurs during extraction, the archive remains partially extracted.
+
+Set <xref:System.Formats.Tar.TarExtractOptions.OverwriteFiles> to `true` to overwrite existing files. The default is `false`. Use <xref:System.Formats.Tar.TarExtractOptions.HardLinkMode> to control how hard link entries are extracted.
+
+If a symbolic link or junction in the tar archive results in a file being extracted outside the specified `destinationDirectoryName`, an <xref:System.IO.IOException> is thrown to ensure extraction remains within the same directory.
+
+If `destinationDirectoryName` or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.
+
+Files of type <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice>, or <xref:System.Formats.Tar.TarEntryType.Fifo> can only be extracted in Unix platforms.
+
+Elevation is required to extract a <xref:System.Formats.Tar.TarEntryType.BlockDevice> or <xref:System.Formats.Tar.TarEntryType.CharacterDevice> to disk.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.DirectoryNotFoundException">.NET 11 and earlier versions: The <paramref name="destinationDirectoryName" /> directory does not exist.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="ExtractToDirectoryAsync">
@@ -648,23 +724,36 @@ Extracting one of the tar entries would have resulted in a file outside the spec
       </Parameters>
       <Docs>
         <param name="source">The stream containing the tar archive.</param>
-        <param name="destinationDirectoryName">The path of the destination directory where the filesystem entries should be extracted.</param>
+        <param name="destinationDirectoryName">The path of the destination directory where the filesystem entries should be extracted. In .NET 11 and earlier versions, the directory must already exist. In .NET 12 and later versions, missing destination and parent directories are created as needed when entries are extracted. An empty archive does not create any directories.</param>
         <param name="overwriteFiles">
           <see langword="true" /> to overwrite files and directories in <paramref name="destinationDirectoryName" />; <see langword="false" /> to avoid overwriting, and throw if any files or directories are found with existing names.</param>
         <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
         <summary>Asynchronously extracts the contents of a stream that represents a tar archive into the specified directory.</summary>
         <returns>A task that represents the asynchronous extraction operation.</returns>
         <remarks>
-          <para>If a symbolic link or junction in the tar archive results in a file being extracted outside the specified <paramref name="destinationDirectoryName" />, an <see cref="T:System.IO.IOException" /> is thrown to ensure extraction remains within the same directory.</para>
-          <para>If <paramref name="destinationDirectoryName" /> or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.</para>
-          <para>Files of type <see cref="F:System.Formats.Tar.TarEntryType.BlockDevice" />, <see cref="F:System.Formats.Tar.TarEntryType.CharacterDevice" />, or <see cref="F:System.Formats.Tar.TarEntryType.Fifo" /> can only be extracted in Unix platforms.</para>
-          <para>Elevation is required to extract a <see cref="F:System.Formats.Tar.TarEntryType.BlockDevice" /> or <see cref="F:System.Formats.Tar.TarEntryType.CharacterDevice" /> to disk.</para>
-          <para>This method doesn't limit the total extracted size or the number of entries extracted from the archive. When processing archives from untrusted sources, iterate over the entries manually using <see cref="T:System.Formats.Tar.TarReader" />, and validate that the size and the number of entries are within acceptable limits for your scenario.</para>
-          <para>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Formats.Tar.TarFile.ExtractToDirectory(System.IO.Stream,System.String,System.Boolean)" />.</para>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
+
+In .NET 11 and earlier versions, the directory specified by `destinationDirectoryName` must already exist. If it doesn't exist, this method throws an <xref:System.IO.DirectoryNotFoundException>, even if the archive is empty.
+
+In .NET 12 and later versions, the destination directory can already exist. Missing destination and parent directories are created as needed when entries are extracted. An empty archive doesn't create any directories.
+
+If a symbolic link or junction in the tar archive results in a file being extracted outside the specified `destinationDirectoryName`, an <xref:System.IO.IOException> is thrown to ensure extraction remains within the same directory.
+
+If `destinationDirectoryName` or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.
+
+Files of type <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice>, or <xref:System.Formats.Tar.TarEntryType.Fifo> can only be extracted in Unix platforms.
+
+Elevation is required to extract a <xref:System.Formats.Tar.TarEntryType.BlockDevice> or <xref:System.Formats.Tar.TarEntryType.CharacterDevice> to disk.
+
+This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.Formats.Tar.TarFile.ExtractToDirectory(System.IO.Stream,System.String,System.Boolean)>.
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="source" /> or <paramref name="destinationDirectoryName" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.IO.DirectoryNotFoundException">The <paramref name="destinationDirectoryName" /> directory path is not found.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">.NET 11 and earlier versions: The <paramref name="destinationDirectoryName" /> directory does not exist.</exception>
         <exception cref="T:System.UnauthorizedAccessException">Permissions are insufficient.</exception>
         <exception cref="T:System.ArgumentException">
 Extracting one of the tar entries would have resulted in a file outside the specified destination directory.
@@ -703,12 +792,41 @@ Extracting one of the tar entries would have resulted in a file outside the spec
       </Parameters>
       <Docs>
         <param name="source">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
+        <param name="destinationDirectoryName">The path to the directory in which to place the extracted files. In .NET 11 and earlier versions, the directory must already exist. In .NET 12 and later versions, missing destination and parent directories are created as needed when entries are extracted. An empty archive does not create any directories.</param>
         <param name="options">To be added.</param>
         <param name="cancellationToken">To be added.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
+
+In .NET 11 and earlier versions, the directory specified by `destinationDirectoryName` must already exist. If it doesn't exist, this method throws an <xref:System.IO.DirectoryNotFoundException>, even if the archive is empty.
+
+In .NET 12 and later versions, the destination directory can already exist. Missing destination and parent directories are created as needed when entries are extracted. An empty archive doesn't create any directories.
+
+The path can be relative or absolute. A relative path is interpreted as relative to the current working directory.
+
+If an error occurs during extraction, the archive remains partially extracted.
+
+Set <xref:System.Formats.Tar.TarExtractOptions.OverwriteFiles> to `true` to overwrite existing files. The default is `false`. Use <xref:System.Formats.Tar.TarExtractOptions.HardLinkMode> to control how hard link entries are extracted.
+
+If a symbolic link or junction in the tar archive results in a file being extracted outside the specified `destinationDirectoryName`, an <xref:System.IO.IOException> is thrown to ensure extraction remains within the same directory.
+
+If `destinationDirectoryName` or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.
+
+Files of type <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice>, or <xref:System.Formats.Tar.TarEntryType.Fifo> can only be extracted in Unix platforms.
+
+Elevation is required to extract a <xref:System.Formats.Tar.TarEntryType.BlockDevice> or <xref:System.Formats.Tar.TarEntryType.CharacterDevice> to disk.
+
+The `source` stream is left open after extraction.
+
+Exceptions that occur during asynchronous extraction are stored in the returned task and are thrown when the task is awaited.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.DirectoryNotFoundException">.NET 11 and earlier versions: The <paramref name="destinationDirectoryName" /> directory does not exist.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectoryAsync">
@@ -736,23 +854,36 @@ Extracting one of the tar entries would have resulted in a file outside the spec
       </Parameters>
       <Docs>
         <param name="sourceFileName">The path of the tar file to extract.</param>
-        <param name="destinationDirectoryName">The path of the destination directory where the filesystem entries should be extracted.</param>
+        <param name="destinationDirectoryName">The path of the destination directory where the filesystem entries should be extracted. In .NET 11 and earlier versions, the directory must already exist. In .NET 12 and later versions, missing destination and parent directories are created as needed when entries are extracted. An empty archive does not create any directories.</param>
         <param name="overwriteFiles">
           <see langword="true" /> to overwrite files and directories in <paramref name="destinationDirectoryName" />; <see langword="false" /> to avoid overwriting, and throw if any files or directories are found with existing names.</param>
         <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
         <summary>Asynchronously extracts the contents of a tar file into the specified directory.</summary>
         <returns>A task that represents the asynchronous extraction operation.</returns>
         <remarks>
-          <para>If a symbolic link or junction in the tar archive results in a file being extracted outside the specified <paramref name="destinationDirectoryName" />, an <see cref="T:System.IO.IOException" /> is thrown to ensure extraction remains within the same directory.</para>
-          <para>If <paramref name="destinationDirectoryName" /> or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.</para>
-          <para>Files of type <see cref="F:System.Formats.Tar.TarEntryType.BlockDevice" />, <see cref="F:System.Formats.Tar.TarEntryType.CharacterDevice" />, or <see cref="F:System.Formats.Tar.TarEntryType.Fifo" /> can only be extracted in Unix platforms.</para>
-          <para>Elevation is required to extract a <see cref="F:System.Formats.Tar.TarEntryType.BlockDevice" /> or <see cref="F:System.Formats.Tar.TarEntryType.CharacterDevice" /> to disk.</para>
-          <para>This method doesn't limit the total extracted size or the number of entries extracted from the archive. When processing archives from untrusted sources, iterate over the entries manually using <see cref="T:System.Formats.Tar.TarReader" />, and validate that the size and the number of entries are within acceptable limits for your scenario.</para>
-          <para>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Formats.Tar.TarFile.ExtractToDirectory(System.String,System.String,System.Boolean)" />.</para>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
+
+In .NET 11 and earlier versions, the directory specified by `destinationDirectoryName` must already exist. If it doesn't exist, this method throws an <xref:System.IO.DirectoryNotFoundException>, even if the archive is empty.
+
+In .NET 12 and later versions, the destination directory can already exist. Missing destination and parent directories are created as needed when entries are extracted. An empty archive doesn't create any directories.
+
+If a symbolic link or junction in the tar archive results in a file being extracted outside the specified `destinationDirectoryName`, an <xref:System.IO.IOException> is thrown to ensure extraction remains within the same directory.
+
+If `destinationDirectoryName` or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.
+
+Files of type <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice>, or <xref:System.Formats.Tar.TarEntryType.Fifo> can only be extracted in Unix platforms.
+
+Elevation is required to extract a <xref:System.Formats.Tar.TarEntryType.BlockDevice> or <xref:System.Formats.Tar.TarEntryType.CharacterDevice> to disk.
+
+This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.Formats.Tar.TarFile.ExtractToDirectory(System.String,System.String,System.Boolean)>.
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="sourceFileName" /> or <paramref name="destinationDirectoryName" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.IO.DirectoryNotFoundException">The <paramref name="destinationDirectoryName" /> directory path is not found.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">.NET 11 and earlier versions: The <paramref name="destinationDirectoryName" /> directory does not exist.</exception>
         <exception cref="T:System.IO.FileNotFoundException">The <paramref name="sourceFileName" /> file path is not found.</exception>
         <exception cref="T:System.UnauthorizedAccessException">Permissions are insufficient.</exception>
         <exception cref="T:System.ArgumentException">
@@ -788,12 +919,39 @@ Extracting one of the tar entries would have resulted in a file outside the spec
       </Parameters>
       <Docs>
         <param name="sourceFileName">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
+        <param name="destinationDirectoryName">The path to the directory in which to place the extracted files. In .NET 11 and earlier versions, the directory must already exist. In .NET 12 and later versions, missing destination and parent directories are created as needed when entries are extracted. An empty archive does not create any directories.</param>
         <param name="options">To be added.</param>
         <param name="cancellationToken">To be added.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[tar-zip-extracttodirectory](~/includes/tar-zip-extracttodirectory.md)]
+
+In .NET 11 and earlier versions, the directory specified by `destinationDirectoryName` must already exist. If it doesn't exist, this method throws an <xref:System.IO.DirectoryNotFoundException>, even if the archive is empty.
+
+In .NET 12 and later versions, the destination directory can already exist. Missing destination and parent directories are created as needed when entries are extracted. An empty archive doesn't create any directories.
+
+The path can be relative or absolute. A relative path is interpreted as relative to the current working directory.
+
+If an error occurs during extraction, the archive remains partially extracted.
+
+Set <xref:System.Formats.Tar.TarExtractOptions.OverwriteFiles> to `true` to overwrite existing files. The default is `false`. Use <xref:System.Formats.Tar.TarExtractOptions.HardLinkMode> to control how hard link entries are extracted.
+
+If a symbolic link or junction in the tar archive results in a file being extracted outside the specified `destinationDirectoryName`, an <xref:System.IO.IOException> is thrown to ensure extraction remains within the same directory.
+
+If `destinationDirectoryName` or any of its parent directories is a pre-existing junction or symbolic link, the link is followed and the extraction writes to the final target folder.
+
+Files of type <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice>, or <xref:System.Formats.Tar.TarEntryType.Fifo> can only be extracted in Unix platforms.
+
+Elevation is required to extract a <xref:System.Formats.Tar.TarEntryType.BlockDevice> or <xref:System.Formats.Tar.TarEntryType.CharacterDevice> to disk.
+
+Exceptions that occur during asynchronous extraction are stored in the returned task and are thrown when the task is awaited.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.DirectoryNotFoundException">.NET 11 and earlier versions: The <paramref name="destinationDirectoryName" /> directory does not exist.</exception>
       </Docs>
     </Member>
   </Members>

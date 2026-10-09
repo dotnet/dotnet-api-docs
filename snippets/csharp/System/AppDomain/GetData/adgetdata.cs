@@ -1,6 +1,6 @@
 ﻿//<Snippet1>
 using System;
-using System.Reflection;
+
 
 class ADGetData
 {
@@ -16,8 +16,7 @@ class ADGetData
         Console.WriteLine("ADVALUE is: " + currentDomain.GetData("ADVALUE"));
 
         //get a system value specified at appdomainsetup
-        Console.WriteLine("System value for loader optimization: {0}",
-            currentDomain.GetData("LOADER_OPTIMIZATION"));
+        Console.WriteLine($"System value for loader optimization: {currentDomain.GetData("LOADER_OPTIMIZATION")}");
     }
 }
 

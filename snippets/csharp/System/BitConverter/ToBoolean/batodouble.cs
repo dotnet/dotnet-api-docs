@@ -7,37 +7,37 @@ class BytesToDoubleDemo
     const string formatter = "{0,5}{1,27}{2,27:E16}";
 
     // Convert eight byte array elements to a double and display it.
-    public static void BAToDouble( byte[ ] bytes, int index )
+    public static void BAToDouble(byte[] bytes, int index)
     {
-        double value = BitConverter.ToDouble( bytes, index );
+        double value = BitConverter.ToDouble(bytes, index);
 
-        Console.WriteLine( formatter, index,
-            BitConverter.ToString( bytes, index, 8 ), value );
+        Console.WriteLine(formatter, index,
+            BitConverter.ToString(bytes, index, 8), value);
     }
 
     // Display a byte array, using multiple lines if necessary.
-    public static void WriteMultiLineByteArray( byte[ ] bytes )
+    public static void WriteMultiLineByteArray(byte[] bytes)
     {
         const int rowSize = 20;
         int iter;
 
-        Console.WriteLine( "initial byte array" );
-        Console.WriteLine( "------------------" );
+        Console.WriteLine("initial byte array");
+        Console.WriteLine("------------------");
 
-        for( iter = 0; iter < bytes.Length - rowSize; iter += rowSize )
+        for (iter = 0; iter < bytes.Length - rowSize; iter += rowSize)
         {
             Console.Write(
-                BitConverter.ToString( bytes, iter, rowSize ) );
-            Console.WriteLine( "-" );
+                BitConverter.ToString(bytes, iter, rowSize));
+            Console.WriteLine("-");
         }
 
-        Console.WriteLine( BitConverter.ToString( bytes, iter ) );
-        Console.WriteLine( );
+        Console.WriteLine(BitConverter.ToString(bytes, iter));
+        Console.WriteLine();
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        byte[ ] byteArray = {
+        byte[] byteArray = {
               0,   0,   0,   0,   0,   0,   0,   0, 240,  63,
               0,   0,   0,   0,   0, 224, 111,  64,   0,   0,
             224, 255, 255, 255, 239,  65,   0,   0,   0,   0,
@@ -55,33 +55,33 @@ class BytesToDoubleDemo
         Console.WriteLine(
             "This example of the BitConverter.ToDouble( byte[ ], " +
             "int ) \nmethod generates the following output. It " +
-            "converts elements \nof a byte array to double values.\n" );
+            "converts elements \nof a byte array to double values.\n");
 
-        WriteMultiLineByteArray( byteArray );
+        WriteMultiLineByteArray(byteArray);
 
-        Console.WriteLine( formatter, "index", "array elements",
-            "double" );
-        Console.WriteLine( formatter, "-----", "--------------",
-            "------" );
+        Console.WriteLine(formatter, "index", "array elements",
+            "double");
+        Console.WriteLine(formatter, "-----", "--------------",
+            "------");
 
         // Convert byte array elements to double values.
-        BAToDouble( byteArray, 0 );
-        BAToDouble( byteArray, 2 );
-        BAToDouble( byteArray, 10 );
-        BAToDouble( byteArray, 18 );
-        BAToDouble( byteArray, 26 );
-        BAToDouble( byteArray, 34 );
-        BAToDouble( byteArray, 42 );
-        BAToDouble( byteArray, 50 );
-        BAToDouble( byteArray, 58 );
-        BAToDouble( byteArray, 66 );
-        BAToDouble( byteArray, 74 );
-        BAToDouble( byteArray, 82 );
-        BAToDouble( byteArray, 89 );
-        BAToDouble( byteArray, 97 );
-        BAToDouble( byteArray, 99 );
-        BAToDouble( byteArray, 107 );
-        BAToDouble( byteArray, 115 );
+        BAToDouble(byteArray, 0);
+        BAToDouble(byteArray, 2);
+        BAToDouble(byteArray, 10);
+        BAToDouble(byteArray, 18);
+        BAToDouble(byteArray, 26);
+        BAToDouble(byteArray, 34);
+        BAToDouble(byteArray, 42);
+        BAToDouble(byteArray, 50);
+        BAToDouble(byteArray, 58);
+        BAToDouble(byteArray, 66);
+        BAToDouble(byteArray, 74);
+        BAToDouble(byteArray, 82);
+        BAToDouble(byteArray, 89);
+        BAToDouble(byteArray, 97);
+        BAToDouble(byteArray, 99);
+        BAToDouble(byteArray, 107);
+        BAToDouble(byteArray, 115);
     }
 }
 

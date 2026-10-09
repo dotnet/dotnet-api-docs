@@ -1,5 +1,4 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
 
 namespace CodeDomSamples
@@ -15,7 +14,7 @@ namespace CodeDomSamples
                 // methodName indicates the method to invoke.
                 "Dispose",
                 // parameters array contains the parameters for the method.
-                new CodeExpression[] { new CodePrimitiveExpression(true) } );
+                [new CodePrimitiveExpression(true)]);
 
             // A C# code generator produces the following source code for the preceeding example code:
 

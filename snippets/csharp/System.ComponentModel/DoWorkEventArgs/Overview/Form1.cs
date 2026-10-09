@@ -57,7 +57,7 @@ public class Form1 : Form
         else
         {
             // The operation completed normally.
-            string msg = string.Format("Result = {0}", e.Result);
+            string msg = $"Result = {e.Result}";
             _ = MessageBox.Show(msg);
         }
     }

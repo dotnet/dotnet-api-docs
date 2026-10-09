@@ -5,9 +5,9 @@ using System.ComponentModel;
 
 namespace ReadOnlyPropertyDescriptorTest;
 
-// The SerializeReadOnlyPropertyDescriptor shows how to implement a 
-// custom property descriptor. It provides a read-only wrapper 
-// around the specified PropertyDescriptor. 
+// The SerializeReadOnlyPropertyDescriptor shows how to implement a
+// custom property descriptor. It provides a read-only wrapper
+// around the specified PropertyDescriptor.
 sealed class SerializeReadOnlyPropertyDescriptor : PropertyDescriptor
 {
     readonly PropertyDescriptor _pd;
@@ -27,7 +27,7 @@ sealed class SerializeReadOnlyPropertyDescriptor : PropertyDescriptor
     // A translator can overwrite with its own converter.
     public override TypeConverter Converter => _pd.Converter;
 
-    // Returns the property editor 
+    // Returns the property editor.
     // A translator can overwrite with its own editor.
     public override object GetEditor(Type editorBaseType) => _pd.GetEditor(editorBaseType);
 
@@ -89,7 +89,7 @@ sealed class SerializeReadOnlyPropertyDescriptor : PropertyDescriptor
             }
 
             // Check if this attribute is already in the existing
-            // array.  If it is, replace it.
+            // array. If it is, replace it.
             bool match = false;
             for (int existingIdx = 0; existingIdx < existing.Count; existingIdx++)
             {

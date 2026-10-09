@@ -1,42 +1,43 @@
 ﻿// <Snippet3>
 using System;
 
-public class Example
+public class Base64RoundTripExample
 {
-   public static void Main()
-   {
-       // Define a byte array.
-       var bytes = new byte[100];
-       int originalTotal = 0;
-       for (int ctr = 0; ctr <= bytes.GetUpperBound(0); ctr++) {
-          bytes[ctr] = (byte)(ctr + 1);
-          originalTotal += bytes[ctr];
-       }
-       // Display summary information about the array.
-       Console.WriteLine("The original byte array:");
-       Console.WriteLine("   Total elements: {0}", bytes.Length);
-       Console.WriteLine("   Length of String Representation: {0}",
-                         BitConverter.ToString(bytes).Length);
-       Console.WriteLine("   Sum of elements: {0:N0}", originalTotal);
-       Console.WriteLine();
+    public static void Main()
+    {
+        // Define a byte array.
+        byte[] bytes = new byte[100];
+        int originalTotal = 0;
+        for (int ctr = 0; ctr <= bytes.GetUpperBound(0); ctr++)
+        {
+            bytes[ctr] = (byte)(ctr + 1);
+            originalTotal += bytes[ctr];
+        }
+        // Display summary information about the array.
+        Console.WriteLine("The original byte array:");
+        Console.WriteLine($"   Total elements: {bytes.Length}");
+        Console.WriteLine($"   Length of String Representation: {BitConverter.ToString(bytes).Length}");
+        Console.WriteLine($"   Sum of elements: {originalTotal:N0}");
+        Console.WriteLine();
 
-       // Convert the array to a base 64 string.
-       string s = Convert.ToBase64String(bytes,
-                                         Base64FormattingOptions.InsertLineBreaks);
-       Console.WriteLine("The base 64 string:\n   {0}\n", s);
+        // Convert the array to a base 64 string.
+        string s = Convert.ToBase64String(bytes,
+                                          Base64FormattingOptions.InsertLineBreaks);
+        Console.WriteLine($"The base 64 string:\n   {s}\n");
 
-       // Restore the byte array.
-       Byte[] newBytes = Convert.FromBase64String(s);
-       int newTotal = 0;
-       foreach (var newByte in newBytes)
-          newTotal += newByte;
+        // Restore the byte array.
+        byte[] newBytes = Convert.FromBase64String(s);
+        int newTotal = 0;
+        foreach (byte newByte in newBytes)
+        {
+            newTotal += newByte;
+        }
 
-       // Display summary information about the restored array.
-       Console.WriteLine("   Total elements: {0}", newBytes.Length);
-       Console.WriteLine("   Length of String Representation: {0}",
-                         BitConverter.ToString(newBytes).Length);
-       Console.WriteLine("   Sum of elements: {0:N0}", newTotal);
-   }
+        // Display summary information about the restored array.
+        Console.WriteLine($"   Total elements: {newBytes.Length}");
+        Console.WriteLine($"   Length of String Representation: {BitConverter.ToString(newBytes).Length}");
+        Console.WriteLine($"   Sum of elements: {newTotal:N0}");
+    }
 }
 // The example displays the following output:
 //   The original byte array:

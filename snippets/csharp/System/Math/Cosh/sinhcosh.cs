@@ -10,14 +10,14 @@ class SinhCosh
         Console.WriteLine(
             "This example of hyperbolic Math.Sinh( double ) " +
             "and Math.Cosh( double )\n" +
-            "generates the following output.\n" );
+            "generates the following output.\n");
         Console.WriteLine(
             "Evaluate these hyperbolic identities " +
-            "with selected values for X:" );
+            "with selected values for X:");
         Console.WriteLine(
             "   cosh^2(X) - sinh^2(X) == 1\n" +
-            "   sinh(2 * X) == 2 * sinh(X) * cosh(X)" );
-        Console.WriteLine( "   cosh(2 * X) == cosh^2(X) + sinh^2(X)" );
+            "   sinh(2 * X) == 2 * sinh(X) * cosh(X)");
+        Console.WriteLine("   cosh(2 * X) == cosh^2(X) + sinh^2(X)");
 
         UseSinhCosh(0.1);
         UseSinhCosh(1.2);
@@ -25,11 +25,11 @@ class SinhCosh
 
         Console.WriteLine(
             "\nEvaluate these hyperbolic identities " +
-            "with selected values for X and Y:" );
+            "with selected values for X and Y:");
         Console.WriteLine(
-            "   sinh(X + Y) == sinh(X) * cosh(Y) + cosh(X) * sinh(Y)" );
+            "   sinh(X + Y) == sinh(X) * cosh(Y) + cosh(X) * sinh(Y)");
         Console.WriteLine(
-            "   cosh(X + Y) == cosh(X) * cosh(Y) + sinh(X) * sinh(Y)" );
+            "   cosh(X + Y) == cosh(X) * cosh(Y) + sinh(X) * sinh(Y)");
 
         UseTwoArgs(0.1, 1.2);
         UseTwoArgs(1.2, 4.9);
@@ -45,26 +45,22 @@ class SinhCosh
         Console.WriteLine(
             "\n                         Math.Sinh({0}) == {1:E16}\n" +
             "                         Math.Cosh({0}) == {2:E16}",
-            arg, Math.Sinh(arg), Math.Cosh(arg) );
+            arg, Math.Sinh(arg), Math.Cosh(arg));
         Console.WriteLine(
             "(Math.Cosh({0}))^2 - (Math.Sinh({0}))^2 == {1:E16}",
-            arg, coshArg * coshArg - sinhArg * sinhArg );
+            arg, coshArg * coshArg - sinhArg * sinhArg);
 
         // Evaluate sinh(2 * X) == 2 * sinh(X) * cosh(X).
-        Console.WriteLine(
-            "                         Math.Sinh({0}) == {1:E16}",
-            2.0 * arg, Math.Sinh(2.0 * arg) );
+        Console.WriteLine($"                         Math.Sinh({2.0 * arg}) == {Math.Sinh(2.0 * arg):E16}");
         Console.WriteLine(
             "    2 * Math.Sinh({0}) * Math.Cosh({0}) == {1:E16}",
-            arg, 2.0 * sinhArg * coshArg );
+            arg, 2.0 * sinhArg * coshArg);
 
         // Evaluate cosh(2 * X) == cosh^2(X) + sinh^2(X).
-        Console.WriteLine(
-            "                         Math.Cosh({0}) == {1:E16}",
-            2.0 * arg, Math.Cosh(2.0 * arg) );
+        Console.WriteLine($"                         Math.Cosh({2.0 * arg}) == {Math.Cosh(2.0 * arg):E16}");
         Console.WriteLine(
             "(Math.Cosh({0}))^2 + (Math.Sinh({0}))^2 == {1:E16}",
-            arg, coshArg * coshArg + sinhArg * sinhArg );
+            arg, coshArg * coshArg + sinhArg * sinhArg);
     }
 
     // Evaluate hyperbolic identities that are functions of two arguments.
@@ -76,9 +72,7 @@ class SinhCosh
             "        Math.Cosh({0}) * Math.Sinh({1}) == {2:E16}",
             argX, argY, Math.Sinh(argX) * Math.Cosh(argY) +
             Math.Cosh(argX) * Math.Sinh(argY));
-        Console.WriteLine(
-            "                         Math.Sinh({0}) == {1:E16}",
-            argX + argY, Math.Sinh(argX + argY));
+        Console.WriteLine($"                         Math.Sinh({argX + argY}) == {Math.Sinh(argX + argY):E16}");
 
         // Evaluate cosh(X + Y) == cosh(X) * cosh(Y) + sinh(X) * sinh(Y).
         Console.WriteLine(
@@ -86,9 +80,7 @@ class SinhCosh
             "        Math.Sinh({0}) * Math.Sinh({1}) == {2:E16}",
             argX, argY, Math.Cosh(argX) * Math.Cosh(argY) +
             Math.Sinh(argX) * Math.Sinh(argY));
-        Console.WriteLine(
-            "                         Math.Cosh({0}) == {1:E16}",
-            argX + argY, Math.Cosh(argX + argY));
+        Console.WriteLine($"                         Math.Cosh({argX + argY}) == {Math.Cosh(argX + argY):E16}");
     }
 }
 

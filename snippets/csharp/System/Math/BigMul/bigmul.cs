@@ -6,13 +6,13 @@ class Sample
 {
     public static void Main()
     {
-    int int1 = Int32.MaxValue;
-    int int2 = Int32.MaxValue;
-    long longResult;
-//
-    longResult = Math.BigMul(int1, int2);
-    Console.WriteLine("Calculate the product of two Int32 values:");
-    Console.WriteLine("{0} * {1} = {2}", int1, int2, longResult);
+        int int1 = int.MaxValue;
+        int int2 = int.MaxValue;
+        long longResult;
+        //
+        longResult = Math.BigMul(int1, int2);
+        Console.WriteLine("Calculate the product of two Int32 values:");
+        Console.WriteLine($"{int1} * {int2} = {longResult}");
     }
 }
 /*

@@ -29,18 +29,14 @@ public class MarshalableExample : MarshalByRefObject, ITest
             System.Reflection.BindingFlags.InvokeMethod,
             Type.DefaultBinder, obj, new object[] { "Hello" });
 
-        ITest it = (ITest) obj;
+        ITest it = (ITest)obj;
         it.Test("Hi");
 
-        MarshalableExample ex = (MarshalableExample) obj;
+        MarshalableExample ex = (MarshalableExample)obj;
         ex.Test("Goodbye");
     }
 
-    public void Test(string greeting)
-    {
-        Console.WriteLine("{0} from '{1}'!", greeting,
-            AppDomain.CurrentDomain.FriendlyName);
-    }
+    public void Test(string greeting) => Console.WriteLine($"{greeting} from '{AppDomain.CurrentDomain.FriendlyName}'!");
 }
 
 /* This example produces the following output:

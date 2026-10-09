@@ -1,4 +1,4 @@
-// Showing all the things D(A) can bind to.
+﻿// Showing all the things D(A) can bind to.
 //
 //<Snippet1>
 using System;
@@ -18,54 +18,31 @@ public class C1
     public int ID => id;
     public C1(int id) => this.id = id;
 
-    public void M1(C1 c)
-    {
-        Console.WriteLine("Instance method M1(C1 c) on C1:  this.id = {0}, c.ID = {1}",
-            this.id, c.ID);
-    }
+    public void M1(C1 c) => Console.WriteLine($"Instance method M1(C1 c) on C1:  this.id = {this.id}, c.ID = {c.ID}");
 
-    public void M2()
-    {
-        Console.WriteLine($"Instance method M2() on C1:  this.id = {this.id}");
-    }
+    public void M2() => Console.WriteLine($"Instance method M2() on C1:  this.id = {this.id}");
 
-    public static void M3(C1 c)
-    {
-        Console.WriteLine($"Static method M3(C1 c) on C1:  c.ID = {c.ID}");
-    }
+    public static void M3(C1 c) => Console.WriteLine($"Static method M3(C1 c) on C1:  c.ID = {c.ID}");
 
-    public static void M4(C1 c1, C1 c2)
-    {
-        Console.WriteLine("Static method M4(C1 c1, C1 c2) on C1:  c1.ID = {0}, c2.ID = {1}",
-            c1.ID, c2.ID);
-    }
+    public static void M4(C1 c1, C1 c2) => Console.WriteLine($"Static method M4(C1 c1, C1 c2) on C1:  c1.ID = {c1.ID}, c2.ID = {c2.ID}");
 }
 
 public class F
 {
-    public void M1(C1 c)
-    {
-        Console.WriteLine($"Instance method M1(C1 c) on F:  c.ID = {c.ID}");
-    }
+    public void M1(C1 c) => Console.WriteLine($"Instance method M1(C1 c) on F:  c.ID = {c.ID}");
 
-    public static void M3(C1 c)
-    {
-        Console.WriteLine($"Static method M3(C1 c) on F:  c.ID = {c.ID}");
-    }
+    public static void M3(C1 c) => Console.WriteLine($"Static method M3(C1 c) on F:  c.ID = {c.ID}");
 
-    public static void M4(F f, C1 c)
-    {
-        Console.WriteLine($"Static method M4(F f, C1 c) on F:  c.ID = {c.ID}");
-    }
+    public static void M4(F f, C1 c) => Console.WriteLine($"Static method M4(F f, C1 c) on F:  c.ID = {c.ID}");
 }
 
 public class Example
 {
     public static void Main()
     {
-        C1 c1 = new (42);
-        C1 c2 = new (1491);
-        F f1 = new ();
+        C1 c1 = new(42);
+        C1 c2 = new(1491);
+        F f1 = new();
 
         D d;
 

@@ -11,20 +11,17 @@ public class DisposeExample
     // A base class that implements IDisposable.
     // By implementing IDisposable, you are announcing that
     // instances of this type allocate scarce resources.
-    public class MyResource: IDisposable
+    public class MyResource : IDisposable
     {
         // Pointer to an external unmanaged resource.
         private IntPtr handle;
         // Other managed resource this class uses.
-        private Component component = new Component();
+        private Component component = new();
         // Track whether Dispose has been called.
         private bool disposed = false;
 
         // The class constructor.
-        public MyResource(IntPtr handle)
-        {
-            this.handle = handle;
-        }
+        public MyResource(IntPtr handle) => this.handle = handle;
 
         // Implement IDisposable.
         // Do not make this method virtual.
@@ -50,11 +47,11 @@ public class DisposeExample
         protected virtual void Dispose(bool disposing)
         {
             // Check to see if Dispose has already been called.
-            if(!this.disposed)
+            if (!this.disposed)
             {
                 // If disposing equals true, dispose all managed
                 // and unmanaged resources.
-                if(disposing)
+                if (disposing)
                 {
                     // Dispose managed resources.
                     component.Dispose();
@@ -75,7 +72,7 @@ public class DisposeExample
         // Use interop to call the method necessary
         // to clean up the unmanaged resource.
         [System.Runtime.InteropServices.DllImport("Kernel32")]
-        private extern static Boolean CloseHandle(IntPtr handle);
+        private extern static bool CloseHandle(IntPtr handle);
 
         // Use C# finalizer syntax for finalization code.
         // This finalizer will run only if the Dispose method

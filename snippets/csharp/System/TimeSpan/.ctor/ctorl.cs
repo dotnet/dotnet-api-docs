@@ -5,41 +5,41 @@ using System;
 class TimeSpanCtorLDemo
 {
     // Create a TimeSpan object and display its value.
-    static void CreateTimeSpan( long ticks )
+    static void CreateTimeSpan(long ticks)
     {
-        TimeSpan elapsedTime = new TimeSpan( ticks );
+        TimeSpan elapsedTime = new(ticks);
 
         // Format the constructor for display.
-        string ctor = String.Format( "TimeSpan( {0} )", ticks );
+        string ctor = $"TimeSpan( {ticks} )";
 
         // Pad the end of a TimeSpan string with spaces if
         // it does not contain milliseconds.
-        string  elapsedStr = elapsedTime.ToString( );
-        int     pointIndex = elapsedStr.IndexOf( ':' );
+        string elapsedStr = elapsedTime.ToString();
+        int pointIndex = elapsedStr.IndexOf(':');
 
-        pointIndex = elapsedStr.IndexOf( '.', pointIndex );
-        if( pointIndex < 0 ) elapsedStr += "        ";
+        pointIndex = elapsedStr.IndexOf('.', pointIndex);
+        if (pointIndex < 0) elapsedStr += "        ";
 
         // Display the constructor and its value.
-        Console.WriteLine( "{0,-33}{1,24}", ctor, elapsedStr );
+        Console.WriteLine($"{ctor,-33}{elapsedStr,24}");
     }
-    
-    static void Main( )
-    {
-        Console.WriteLine( 
-            "This example of the TimeSpan( long ) constructor " +
-            "\ngenerates the following output.\n" );
-        Console.WriteLine( "{0,-33}{1,16}", "Constructor", "Value" );
-        Console.WriteLine( "{0,-33}{1,16}", "-----------", "-----" );
 
-        CreateTimeSpan( 1 );                
-        CreateTimeSpan( 999999 );                
-        CreateTimeSpan( -1000000000000 );        
-        CreateTimeSpan( 18012202000000 );        
-        CreateTimeSpan( 999999999999999999 );    
-        CreateTimeSpan( 1000000000000000000 );   
-    } 
-} 
+    static void Main()
+    {
+        Console.WriteLine(
+            "This example of the TimeSpan( long ) constructor " +
+            "\ngenerates the following output.\n");
+        Console.WriteLine($"{"Constructor",-33}{"Value",16}");
+        Console.WriteLine($"{"-----------",-33}{"-----",16}");
+
+        CreateTimeSpan(1);
+        CreateTimeSpan(999999);
+        CreateTimeSpan(-1000000000000);
+        CreateTimeSpan(18012202000000);
+        CreateTimeSpan(999999999999999999);
+        CreateTimeSpan(1000000000000000000);
+    }
+}
 
 /*
 This example of the TimeSpan( long ) constructor

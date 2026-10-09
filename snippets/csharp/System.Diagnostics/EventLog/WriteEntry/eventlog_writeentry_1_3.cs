@@ -13,41 +13,52 @@ using System.Diagnostics;
 
 class MyEventLog
 {
-    public static void Main()
+    public static void Run()
     {
-
         // <Snippet1>
         int myEventID = 20;
         short myCategory = 10;
         // Write an informational entry to the event log.
         Console.WriteLine("Write from first source ");
-        EventLog.WriteEntry("FirstSource", "Writing warning to event log.",
-                             EventLogEntryType.Information, myEventID, myCategory);
+        EventLog.WriteEntry(
+            "FirstSource",
+            "Writing warning to event log.",
+            EventLogEntryType.Information,
+            myEventID,
+            myCategory);
         // </Snippet1>
 
         // <Snippet2>
-        //Create a byte array for binary data to associate with the entry.
+        // Create a byte array for binary data to associate with the entry.
         byte[] myByte = new byte[10];
-        //Populate the byte array with simulated data.
-        for (int i = 0; i < 10; i++)
+        // Populate the byte array with simulated data.
+        for (int i = 0; i < myByte.Length; i++)
         {
             myByte[i] = (byte)(i % 2);
         }
         // Write an entry to the event log that includes associated binary data.
         Console.WriteLine("Write from second source ");
-        EventLog.WriteEntry("SecondSource", "Writing warning to event log.",
-                             EventLogEntryType.Error, myEventID, myCategory, myByte);
+        EventLog.WriteEntry(
+            "SecondSource",
+            "Writing warning to event log.",
+            EventLogEntryType.Error,
+            myEventID,
+            myCategory,
+            myByte);
         // </Snippet2>
 
         // <Snippet3>
         // Create an EventLog instance and assign its source.
-        EventLog myLog = new EventLog();
+        using EventLog myLog = new();
         myLog.Source = "ThirdSource";
 
-        // Write an informational entry to the event log.
+        // Write a warning entry to the event log.
         Console.WriteLine("Write from third source ");
-        myLog.WriteEntry("Writing warning to event log.",
-                          EventLogEntryType.Warning, myEventID, myCategory);
+        myLog.WriteEntry(
+            "Writing warning to event log.",
+            EventLogEntryType.Warning,
+            myEventID,
+            myCategory);
         // </Snippet3>
     }
 }

@@ -7,9 +7,10 @@ class Example
     static void Main()
     {
         //<snippet02>
-        HashSet<int> numbers = new HashSet<int>();
+        HashSet<int> numbers = [];
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++)
+        {
             numbers.Add(i);
         }
 
@@ -23,7 +24,8 @@ class Example
         DisplaySet(numbers);
 
         // Check if the hash table contains 0 and, if so, remove it.
-        if (numbers.Contains(0)) {
+        if (numbers.Contains(0))
+        {
             numbers.Remove(0);
         }
         Console.Write("numbers contains {0} elements: ", numbers.Count);

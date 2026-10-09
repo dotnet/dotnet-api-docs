@@ -3,12 +3,12 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      var dat = new DateTime(2015, 12, 31);
-      for (int ctr = 0; ctr <= 15; ctr++)
-         Console.WriteLine(dat.AddMonths(ctr).ToString("d"));
-   }
+    public static void Main()
+    {
+        var dat = new DateTime(2015, 12, 31);
+        for (int ctr = 0; ctr <= 15; ctr++)
+            Console.WriteLine(dat.AddMonths(ctr).ToString("d"));
+    }
 }
 // The example displays the following output:
 //       12/31/2015

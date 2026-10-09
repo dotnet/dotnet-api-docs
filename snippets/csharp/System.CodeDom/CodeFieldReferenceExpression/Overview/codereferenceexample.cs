@@ -1,5 +1,4 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
 
 namespace CodeDomSamples

@@ -4,7 +4,7 @@ using System;
 public class RandomNextDemo
 {
     static void Main()
-    {	
+    {
         //<Snippet1>
         Console.WriteLine(
             """
@@ -20,7 +20,7 @@ public class RandomNextDemo
             combinations of bounds have on the sequences.
             """
             );
-    	
+
         NoBoundsRandoms(234);
 
         UpperBoundRandoms(234, int.MaxValue);

@@ -5,42 +5,34 @@ using System;
 class CloneCompareDemo
 {
     // Copy, clone, and duplicate an OperatingSystem object.
-    static void CopyOperatingSystemObjects( )
+    static void CopyOperatingSystemObjects()
     {
         // The Version object does not need to correspond to an
         // actual OS version.
-        Version verMMBVer = new Version( 5, 6, 7, 8 );
+        Version verMMBVer = new(5, 6, 7, 8);
 
-        OperatingSystem opCreate1 = new
-            OperatingSystem( PlatformID.Win32NT, verMMBVer );
+        OperatingSystem opCreate1 = new(PlatformID.Win32NT, verMMBVer);
 
         // Create another OperatingSystem object with the same
         // parameters as opCreate1.
-        OperatingSystem opCreate2 = new
-            OperatingSystem( PlatformID.Win32NT, verMMBVer );
+        OperatingSystem opCreate2 = new(PlatformID.Win32NT, verMMBVer);
 
         // Clone opCreate1 and copy the opCreate1 reference.
         OperatingSystem opClone =
-            (OperatingSystem)opCreate1.Clone( );
+            (OperatingSystem)opCreate1.Clone();
         OperatingSystem opCopy = opCreate1;
 
         // Compare the various objects for equality.
-        Console.WriteLine( "{0,-50}{1}",
-            "Is the second object the same as the original?",
-            opCreate1.Equals( opCreate2 ) );
-        Console.WriteLine( "{0,-50}{1}",
-            "Is the object clone the same as the original?",
-            opCreate1.Equals( opClone ) );
-        Console.WriteLine( "{0,-50}{1}",
-            "Is the copied object the same as the original?",
-            opCreate1.Equals( opCopy ) );
+        Console.WriteLine($"{"Is the second object the same as the original?",-50}{opCreate1.Equals(opCreate2)}");
+        Console.WriteLine($"{"Is the object clone the same as the original?",-50}{opCreate1.Equals(opClone)}");
+        Console.WriteLine($"{"Is the copied object the same as the original?",-50}{opCreate1.Equals(opCopy)}");
     }
 
-    static void Main( )
+    static void Main()
     {
         Console.WriteLine(
             "This example of OperatingSystem.Clone( ) " +
-            "generates the following output.\n" );
+            "generates the following output.\n");
         Console.WriteLine(
             "Create an OperatingSystem object, and then " +
             "create another object with the \n" +
@@ -49,9 +41,9 @@ class CloneCompareDemo
             "each object with the original " +
             "using the Equals( ) method. Equals( ) \n" +
             "returns true only when both " +
-            "references refer to the same object.\n" );
+            "references refer to the same object.\n");
 
-        CopyOperatingSystemObjects( );
+        CopyOperatingSystemObjects();
     }
 }
 

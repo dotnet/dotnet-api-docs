@@ -9,35 +9,35 @@ namespace GCCollectIntExample
 
         static void Main()
         {
-            MyGCCollectClass myGCCol = new MyGCCollectClass();
+            MyGCCollectClass myGCCol = new();
 
             // Determine the maximum number of generations the system
-	    // garbage collector currently supports.
-            Console.WriteLine("The highest generation is {0}", GC.MaxGeneration);
+            // garbage collector currently supports.
+            Console.WriteLine($"The highest generation is {GC.MaxGeneration}");
 
             myGCCol.MakeSomeGarbage();
 
             // Determine which generation myGCCol object is stored in.
-            Console.WriteLine("Generation: {0}", GC.GetGeneration(myGCCol));
+            Console.WriteLine($"Generation: {GC.GetGeneration(myGCCol)}");
 
             // Determine the best available approximation of the number
-	    // of bytes currently allocated in managed memory.
-            Console.WriteLine("Total Memory: {0}", GC.GetTotalMemory(false));
+            // of bytes currently allocated in managed memory.
+            Console.WriteLine($"Total Memory: {GC.GetTotalMemory(false)}");
 
             // Perform a collection of generation 0 only.
             GC.Collect(0);
 
             // Determine which generation myGCCol object is stored in.
-            Console.WriteLine("Generation: {0}", GC.GetGeneration(myGCCol));
+            Console.WriteLine($"Generation: {GC.GetGeneration(myGCCol)}");
 
-            Console.WriteLine("Total Memory: {0}", GC.GetTotalMemory(false));
+            Console.WriteLine($"Total Memory: {GC.GetTotalMemory(false)}");
 
             // Perform a collection of all generations up to and including 2.
             GC.Collect(2);
 
             // Determine which generation myGCCol object is stored in.
-            Console.WriteLine("Generation: {0}", GC.GetGeneration(myGCCol));
-            Console.WriteLine("Total Memory: {0}", GC.GetTotalMemory(false));
+            Console.WriteLine($"Generation: {GC.GetGeneration(myGCCol)}");
+            Console.WriteLine($"Total Memory: {GC.GetTotalMemory(false)}");
             Console.Read();
         }
 
@@ -45,11 +45,11 @@ namespace GCCollectIntExample
         {
             Version vt;
 
-            for(int i = 0; i < maxGarbage; i++)
+            for (int i = 0; i < maxGarbage; i++)
             {
                 // Create objects and release them to fill up memory
-		// with unused objects.
-                vt = new Version();
+                // with unused objects.
+                vt = new();
             }
         }
     }

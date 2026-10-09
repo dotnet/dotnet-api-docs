@@ -10,7 +10,7 @@ class Program2
         new Random(42).NextBytes(_array);
         Span<byte> span = _array;
 
-        Task.Run( () => ClearContents() );
+        Task.Run(() => ClearContents());
 
         EnumerateSpan(span);
     }
@@ -20,7 +20,7 @@ class Program2
         Task.Delay(20).Wait();
         lock (_array)
         {
-           Array.Clear(_array, 0, _array.Length);
+            Array.Clear(_array, 0, _array.Length);
         }
     }
 

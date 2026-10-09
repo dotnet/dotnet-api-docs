@@ -9,17 +9,14 @@ namespace WFCrossThreadCS
     {
         public static void Main() { }
 
-        public Form1()
-        {
-            InitializeComponent();
-        }
+        public Form1() => InitializeComponent();
 
         // <Snippet2>
-        List<String> lines = new List<String>();
+        List<string> lines = new();
 
         private async void threadExampleBtn_Click(object sender, EventArgs e)
         {
-            textBox1.Text = String.Empty;
+            textBox1.Text = string.Empty;
             lines.Clear();
 
             lines.Add("Simulating work on UI thread.");
@@ -40,7 +37,7 @@ namespace WFCrossThreadCS
             await Task.Delay(milliseconds);
 
             // report completion
-            lines.Add(String.Format("Some work completed in {0} ms on UI thread.", milliseconds));
+            lines.Add($"Some work completed in {milliseconds} ms on UI thread.");
             textBox1.Lines = lines.ToArray();
         }
         // </Snippet2>

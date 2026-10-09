@@ -1,13 +1,12 @@
-﻿using System;
-using System.CodeDom;
+﻿using System.CodeDom;
 
 namespace CodeTypeDeclarationCollectionExample
 {
-	public class Class1
-	{
-		public Class1()
-		{
-		}
+    public class Class1
+    {
+        public Class1()
+        {
+        }
 
         // CodeTypeDeclarationCollection
         public void CodeTypeDeclarationCollectionExample()
@@ -20,20 +19,20 @@ namespace CodeTypeDeclarationCollectionExample
 
             //<Snippet3>
             // Adds a CodeTypeDeclaration to the collection.
-            collection.Add( new CodeTypeDeclaration("TestType") );
+            collection.Add(new CodeTypeDeclaration("TestType"));
             //</Snippet3>
 
             //<Snippet4>
             // Adds an array of CodeTypeDeclaration objects to the collection.
-            CodeTypeDeclaration[] declarations = { new CodeTypeDeclaration("TestType1"), new CodeTypeDeclaration("TestType2") };
-            collection.AddRange( declarations );
+            CodeTypeDeclaration[] declarations = [new CodeTypeDeclaration("TestType1"), new CodeTypeDeclaration("TestType2")];
+            collection.AddRange(declarations);
 
             // Adds a collection of CodeTypeDeclaration objects to the
             // collection.
             CodeTypeDeclarationCollection declarationsCollection = new CodeTypeDeclarationCollection();
-            declarationsCollection.Add( new CodeTypeDeclaration("TestType1") );
-            declarationsCollection.Add( new CodeTypeDeclaration("TestType2") );
-            collection.AddRange( declarationsCollection );
+            declarationsCollection.Add(new CodeTypeDeclaration("TestType1"));
+            declarationsCollection.Add(new CodeTypeDeclaration("TestType2"));
+            collection.AddRange(declarationsCollection);
             //</Snippet4>
 
             //<Snippet5>
@@ -41,15 +40,15 @@ namespace CodeTypeDeclarationCollectionExample
             // collection, and retrieves its index if it is found.
             CodeTypeDeclaration testDeclaration = new CodeTypeDeclaration("TestType");
             int itemIndex = -1;
-            if( collection.Contains( testDeclaration ) )
-                itemIndex = collection.IndexOf( testDeclaration );
+            if (collection.Contains(testDeclaration))
+                itemIndex = collection.IndexOf(testDeclaration);
             //</Snippet5>
 
             //<Snippet6>
             // Copies the contents of the collection, beginning at index 0,
             // to the specified CodeTypeDeclaration array.
             // 'declarations' is a CodeTypeDeclaration array.
-            collection.CopyTo( declarations, 0 );
+            collection.CopyTo(declarations, 0);
             //</Snippet6>
 
             //<Snippet7>
@@ -59,13 +58,13 @@ namespace CodeTypeDeclarationCollectionExample
 
             //<Snippet8>
             // Inserts a CodeTypeDeclaration at index 0 of the collection.
-            collection.Insert( 0, new CodeTypeDeclaration("TestType") );
+            collection.Insert(0, new CodeTypeDeclaration("TestType"));
             //</Snippet8>
 
             //<Snippet9>
             // Removes the specified CodeTypeDeclaration from the collection.
             CodeTypeDeclaration declaration = new CodeTypeDeclaration("TestType");
-            collection.Remove( declaration );
+            collection.Remove(declaration);
             //</Snippet9>
 
             //<Snippet10>
@@ -74,5 +73,5 @@ namespace CodeTypeDeclarationCollectionExample
             //</Snippet10>
             //</Snippet1>
         }
-	}
+    }
 }

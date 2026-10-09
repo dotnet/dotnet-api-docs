@@ -5,15 +5,12 @@ public class MyTypeDelegator : TypeDelegator
 {
     public string myElementType = null;
     public Type myType;
-    public MyTypeDelegator(Type myType) : base(myType)
-    {
-        this.myType = myType;
-    }
+    public MyTypeDelegator(Type myType) : base(myType) => this.myType = myType;
     // Override IsArrayImpl().
     protected override bool IsArrayImpl()
     {
         // Determine whether the type is an array.
-        if(myType.IsArray)
+        if (myType.IsArray)
         {
             myElementType = "array";
             return true;
@@ -28,27 +25,27 @@ public class Type_IsArrayImpl
     {
         try
         {
-            int myInt = 0 ;
+            int myInt = 0;
             // Create an instance of an array element.
             int[] myArray = new int[5];
-            MyTypeDelegator myType = new MyTypeDelegator(myArray.GetType());
+            MyTypeDelegator myType = new(myArray.GetType());
             Console.WriteLine("\nDetermine whether the variable is an array.\n");
             // Determine whether myType is an array type.
-            if( myType.IsArray)
-                Console.WriteLine("The type of myArray is {0}.", myType.myElementType);
+            if (myType.IsArray)
+                Console.WriteLine($"The type of myArray is {myType.myElementType}.");
             else
                 Console.WriteLine("myArray is not an array.");
-            myType = new MyTypeDelegator(myInt.GetType());
+            myType = new(myInt.GetType());
 
             // Determine whether myType is an array type.
-            if( myType.IsArray)
-                Console.WriteLine("The type of myInt is {0}.", myType.myElementType);
+            if (myType.IsArray)
+                Console.WriteLine($"The type of myInt is {myType.myElementType}.");
             else
                 Console.WriteLine("myInt is not an array.");
         }
-        catch( Exception e )
+        catch (Exception e)
         {
-            Console.WriteLine("Exception: {0}", e.Message );
+            Console.WriteLine($"Exception: {e.Message}");
         }
     }
 }

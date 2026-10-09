@@ -18,8 +18,8 @@ public class Form1 : Form
 
     void InitializeComponent()
     {
-        label1 = new Label();
-        userControl11 = new UserControl1();
+        label1 = new();
+        userControl11 = new();
         SuspendLayout();
         // 
         // label1
@@ -80,12 +80,13 @@ public class UserControl1 : UserControl
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public string LabelText
     {
-        get => label1.Text; set => label1.Text = value;
+        get => label1.Text;
+        set => label1.Text = value;
     }
 
     void InitializeComponent()
     {
-        label1 = new Label();
+        label1 = new();
         SuspendLayout();
         // 
         // label1
@@ -183,10 +184,10 @@ public class ToolboxItemDialog : Form
 
     void InitializeComponent()
     {
-        label1 = new Label();
-        textBox1 = new TextBox();
-        button1 = new Button();
-        button2 = new Button();
+        label1 = new();
+        textBox1 = new();
+        button1 = new();
+        button2 = new();
         SuspendLayout();
         // 
         // label1
@@ -236,8 +237,7 @@ public class ToolboxItemDialog : Form
         Controls.Add(button1);
         Controls.Add(textBox1);
         Controls.Add(label1);
-        FormBorderStyle =
-            FormBorderStyle.FixedDialog;
+        FormBorderStyle = FormBorderStyle.FixedDialog;
         Name = "ToolboxItemDialog";
         Text = "ToolboxItemDialog";
         ResumeLayout(false);

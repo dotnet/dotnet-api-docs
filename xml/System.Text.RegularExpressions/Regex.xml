@@ -58,14 +58,14 @@
     <summary>
             Represents an immutable regular expression. Also contains static methods that
             allow use of regular expressions without instantiating a Regex explicitly.
-            </summary>
+    </summary>
     <remarks>
       <para>
             The <see cref="T:System.Text.RegularExpressions.Regex" /> class represents the .NET regular expression engine.
             It can be used to quickly parse large amounts of text to find specific character patterns;
             to extract, edit, replace, or delete text substrings; and to add the extracted strings to a
             collection to generate a report.
-            </para>
+      </para>
     </remarks>
     <threadsafe>The <see cref="T:System.Text.RegularExpressions.Regex" /> class is immutable (read-only) and thread safe. <see cref="T:System.Text.RegularExpressions.Regex" /> objects can be created on any thread and shared between threads. For more information, see <see href="/dotnet/standard/base-types/thread-safety-in-regular-expressions">Thread Safety</see>.</threadsafe>
     <altmember cref="T:System.Configuration.RegexStringValidator" />
@@ -174,8 +174,6 @@
  A <xref:System.Text.RegularExpressions.Regex> object is immutable, which means that it can be used only for the match pattern you define when you create it. However, it can be used any number of times without being recompiled.
 
  This constructor instantiates a regular expression object that attempts a case-sensitive match of any alphabetical characters defined in `pattern`. For a case-insensitive match, use the <xref:System.Text.RegularExpressions.Regex.%23ctor(System.String,System.Text.RegularExpressions.RegexOptions)?displayProperty=nameWithType> constructor.
-
-
 
 ## Examples
  The following example illustrates how to use this constructor to instantiate a regular expression that matches any word that begins with the letters "a" or "t".
@@ -302,8 +300,6 @@
 
  A <xref:System.Text.RegularExpressions.Regex> object is immutable, which means that it can be used only for the match parameters you define when you create it. However, it can be used any number of times without being recompiled.
 
-
-
 ## Examples
  The following example illustrates how to use this constructor to instantiate a regular expression that matches any word that begins with the letters "a" or "t".
 
@@ -401,8 +397,6 @@
 - The length and complexity of the regular expression pattern. Longer and more complex regular expressions require more time than shorter and simpler ones.
 
 - The expected machine load. Processing takes more time on systems that have high CPU and memory utilization.
-
-
 
 ## Examples
  The following example calls the <xref:System.Text.RegularExpressions.Regex.%23ctor(System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)> constructor to instantiate a <xref:System.Text.RegularExpressions.Regex> object with a time-out value of one second. The regular expression pattern `(a+)+$`, which matches one or more sequences of one or more "a" characters at the end of a line, is subject to excessive backtracking. If a <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> is thrown, the example increases the time-out value up to the maximum value of three seconds. Otherwise, it abandons the attempt to match the pattern.
@@ -912,8 +906,6 @@
 5.  Instantiate a <xref:System.Reflection.Emit.CustomAttributeBuilder> object by passing its constructor the <xref:System.Reflection.ConstructorInfo> object retrieved in step 3 and the <xref:System.Object> array created in step 4.
 
  You can then pass an array of these <xref:System.Reflection.Emit.CustomAttributeBuilder> objects instead of the `attributes` parameter to the <xref:System.Text.RegularExpressions.Regex.CompileToAssembly(System.Text.RegularExpressions.RegexCompilationInfo[],System.Reflection.AssemblyName,System.Reflection.Emit.CustomAttributeBuilder[])?displayProperty=nameWithType> method.
-
-
 
 ## Examples
  The following example creates an assembly named RegexLib.dll and applies the <xref:System.Reflection.AssemblyTitleAttribute> attribute to it. The assembly includes two compiled regular expressions. The first, `Utilities.RegularExpressions.DuplicatedString`, matches two identical contiguous words. The second, `Utilities.RegularExpressions.EmailAddress`, checks whether a string has the correct format to be an email address.
@@ -3229,22 +3221,80 @@
         <param name="input">The string to search for a match.</param>
         <param name="startat">The zero-based character position at which to start the search.</param>
         <summary>
-            Searches the input string for the first occurrence of a regular expression, beginning at the
-            specified starting position in the string.
-            </summary>
+             Searches the input string for the first occurrence of a regular expression, beginning at the
+             specified starting position in the string.
+             </summary>
         <returns>An object that contains information about the match.</returns>
         <remarks>
-            For more information about <paramref name="startat" />, see
-            <see href="https://github.com/dotnet/docs/blob/main/docs/fundamentals/runtime-libraries/system-text-regularexpressions-regex-match.md">
-            Supplemental API remarks for Regex.Match</see>.
-            </remarks>
+          <format type="text/markdown"><![CDATA[
+             The <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)> method returns the first substring that matches a regular expression pattern,
+             starting at or after the `startat` character position, in an input string. The regular expression pattern for which the
+             <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)> method searches is defined by the call to one of the <xref:System.Text.RegularExpressions.Regex>
+             class constructors. For information about the language elements used to build a regular expression pattern,
+             see [Regular Expression Language - Quick Reference](https://learn.microsoft.com/dotnet/standard/base-types/regular-expression-language-quick-reference).
+
+             ## The `startat` parameter
+
+             Use the `startat` parameter to specify the character position at which the search starts. In a left-to-right search, any matches that begin before `startat` in the string are ignored.
+             To start at the default position, use the <xref:System.Text.RegularExpressions.Regex.Match(System.String)> overload (or pass 0 for a left-to-right search and `input.Length` for a right-to-left search).
+             Despite starting the search at `startat`, the index of any returned match is relative to the start of the string.
+
+             Although the regular expression engine doesn't return any match starting before `startat`, it doesn't ignore the string before `startat`. This means that assertions
+             such as [anchors](https://learn.microsoft.com/dotnet/standard/base-types/anchors-in-regular-expressions) or [lookbehind assertions](https://learn.microsoft.com/dotnet/standard/base-types/backtracking-in-regular-expressions#lookbehind-assertions)
+             still apply to the input as a whole. For example, the following code includes a pattern with a lookbehind assertion that's satisfied even though it occurs
+             before the `startat` index of 5 in the input string.
+
+             :::code language="csharp" source="~/snippets/csharp/System.Text.RegularExpressions/Regex/Match/Regex.Examples.cs" id="Match":::
+
+             > [!TIP]
+             > - If a pattern starts with the `^` anchor, `startat` is greater than 0, and the regular expression isn't using <xref:System.Text.RegularExpressions.RegexOptions.Multiline?displayProperty=nameWithType>, no matches will ever be found since they are constrained by `^` to start at index 0.
+             > - The [`\G` anchor](https://learn.microsoft.com/dotnet/standard/base-types/anchors-in-regular-expressions#contiguous-matches-g) is satisfied at `startat`. Because of this, if you want to restrict
+             >   a match so that it begins exactly at a particular character position in the string, anchor the regular expression with a `\G` on the left for a left-to-right pattern.
+             >   This restricts the match so it must start exactly at `startat` (or, when multiple matches are desired, so the matches are contiguous).
+
+             ## Right-to-left searches
+
+             A right-to-left search, that is, when the regular expression pattern is constructed with the
+             <xref:System.Text.RegularExpressions.RegexOptions.RightToLeft?displayProperty=nameWithType> option, behaves in the following ways:
+
+             - The scan moves in the opposite direction and the pattern is matched from back (right) to front (left).
+             - The default starting position is the right end of the input string.
+             - If `startat` is specified, the right-to-left scan begins at the character at `startat` - 1 (not `startat`).
+             - When the `\G` anchor is specified at the right end of a pattern, it restricts the (first) match to end exactly at `startat` - 1.
+
+             For more information about right-to-left searches, see [Right-to-left mode](https://learn.microsoft.com/dotnet/standard/base-types/regular-expression-options#right-to-left-mode).
+
+             ## Determine whether a match is found
+
+             You can determine whether the regular expression pattern has been found in the input string by checking the value of the returned <xref:System.Text.RegularExpressions.Match>
+             object's <xref:System.Text.RegularExpressions.Group.Success> property. If a match is found, the returned <xref:System.Text.RegularExpressions.Match> object's
+             <xref:System.Text.RegularExpressions.Capture.Value> property contains the substring from `input` that matches the regular expression pattern.
+             If no match is found, its value is <xref:System.String.Empty?displayProperty=nameWithType>.
+
+             ## First or multiple matches
+
+             This method returns the first substring found by scanning `input` starting at the `startat` position (or, for right-to-left searches, at `startat` - 1) that matches the regular expression pattern.
+             You can retrieve subsequent matches by repeatedly calling the returned <xref:System.Text.RegularExpressions.Match> object's
+             <xref:System.Text.RegularExpressions.Match.NextMatch*?displayProperty=nameWithType> method. You can also retrieve all matches in a single method call by calling the
+             <xref:System.Text.RegularExpressions.Regex.Matches(System.String,System.Int32)?displayProperty=nameWithType> method.
+
+             ## Time-out exceptions
+
+             The <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> exception is thrown if the execution time of the matching operation exceeds the time-out
+             interval specified by the <xref:System.Text.RegularExpressions.Regex.%23ctor(System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)?displayProperty=nameWithType>
+             constructor. If you do not set a time-out interval when you call the constructor, the exception is thrown if the operation exceeds any time-out value established
+             for the application domain in which the <xref:System.Text.RegularExpressions.Regex> object is created. If no time-out is defined in the <xref:System.Text.RegularExpressions.Regex>
+             constructor call or in the application domain's properties, or if the time-out value is <xref:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout?displayProperty=nameWithType>,
+             no exception is thrown.
+             ]]></format>
+        </remarks>
         <altmember cref="M:System.Text.RegularExpressions.Match.NextMatch" />
         <related type="Article" href="/dotnet/standard/base-types/regular-expression-language-quick-reference">Regular Expression Language - Quick Reference</related>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="input" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="startat" /> is less than zero or greater than the length of <paramref name="input" />.
-            </exception>
+             </exception>
         <exception cref="T:System.Text.RegularExpressions.RegexMatchTimeoutException">A time-out occurred.</exception>
       </Docs>
     </Member>

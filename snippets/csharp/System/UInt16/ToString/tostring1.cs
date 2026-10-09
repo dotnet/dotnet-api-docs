@@ -1,22 +1,21 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class UInt16ToStringExample1
 {
-   public static void Main()
-   {
-      ushort value = 16324;
-      // Display value using default ToString method.
-      Console.WriteLine(value.ToString());      
-      Console.WriteLine();
-      
-      // Define an array of format specifiers.
-      string[] formats = { "G", "C", "D", "F", "N", "X" };
-      // Display value using the standard format specifiers.
-      foreach (string format in formats)
-         Console.WriteLine("{0} format specifier: {1,12}", 
-                           format, value.ToString(format));         
-   }
+    public static void Run()
+    {
+        ushort value = 16324;
+        // Display value using default ToString method.
+        Console.WriteLine(value.ToString());
+        Console.WriteLine();
+
+        // Define an array of format specifiers.
+        string[] formats = { "G", "C", "D", "F", "N", "X" };
+        // Display value using the standard format specifiers.
+        foreach (string format in formats)
+            Console.WriteLine($"{format} format specifier: {value.ToString(format),12}");
+    }
 }
 // The example displays the following output:
 //       16324

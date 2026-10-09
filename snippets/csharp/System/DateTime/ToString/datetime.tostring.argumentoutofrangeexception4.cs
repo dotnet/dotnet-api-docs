@@ -6,9 +6,9 @@ public class Example4
 {
     public static void Main()
     {
-        CultureInfo arSA = new CultureInfo("ar-SA");
+        CultureInfo arSA = new("ar-SA");
         arSA.DateTimeFormat.Calendar = new UmAlQuraCalendar();
-        DateTime date1 = new DateTime(1890, 9, 10);
+        DateTime date1 = new(1890, 9, 10);
 
         try
         {
@@ -16,10 +16,7 @@ public class Example4
         }
         catch (ArgumentOutOfRangeException)
         {
-            Console.WriteLine("{0:d} is earlier than {1:d} or later than {2:d}",
-                              date1,
-                              arSA.DateTimeFormat.Calendar.MinSupportedDateTime,
-                              arSA.DateTimeFormat.Calendar.MaxSupportedDateTime);
+            Console.WriteLine($"{date1:d} is earlier than {arSA.DateTimeFormat.Calendar.MinSupportedDateTime:d} or later than {arSA.DateTimeFormat.Calendar.MaxSupportedDateTime:d}");
         }
     }
 }

@@ -2,8 +2,8 @@
 // Specify /d:DEBUG when compiling.
 
 using System;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 
 class Test
 {

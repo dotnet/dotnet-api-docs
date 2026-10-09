@@ -1,12 +1,9 @@
 ﻿//<Snippet1>
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
-using System.Data;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace EventDesignerTest
 {
@@ -28,34 +25,42 @@ namespace EventDesignerTest
         // "textEvent" event of the associated control.
         private void ConnectEvent(object sender, EventArgs e)
         {
-            IEventBindingService eventservice = (IEventBindingService)this.Component.Site.GetService(typeof(System.ComponentModel.Design.IEventBindingService));
-            if( eventservice != null )
+            IEventBindingService eventservice = (IEventBindingService)Component.Site.GetService(typeof(IEventBindingService));
+            if (eventservice != null)
             {
                 // Attempt to obtain a PropertyDescriptor for a 
                 // component event named "testEvent".
                 EventDescriptorCollection edc = TypeDescriptor.GetEvents(this.Component);				
-                if( edc == null || edc.Count == 0 )
+                if (edc == null || edc.Count == 0)
+                {
                     return;
+                }
                                 
                 EventDescriptor ed = null;
                 // Search for an event named "testEvent".
-                foreach(EventDescriptor edi in edc)
-                    if(edi.Name == "testEvent")
+                foreach (EventDescriptor edi in edc)
+                {
+                    if (edi.Name == "testEvent")
                     {
                         ed = edi;
                         break;
                     }
-                if( ed == null )
+                }
+                if (ed == null)
+                {
                     return;
+                }
 
                 // Use the IEventBindingService to get a 
                 // PropertyDescriptor for the event.
                 PropertyDescriptor pd = eventservice.GetEventProperty(ed);
-                if( pd == null )
-                    return;				
+                if (pd == null)
+                {
+                    return;
+                }
                 
                 // Set the value of the event to "testEventHandler".
-                pd.SetValue(this.Component, "testEventHandler");
+                pd.SetValue(Component, "testEventHandler");
             }
         }
 
@@ -65,8 +70,8 @@ namespace EventDesignerTest
         {
             get
             {
-                DesignerVerbCollection dvc = new DesignerVerbCollection();
-                dvc.Add(new DesignerVerb("Connect testEvent", new EventHandler(ConnectEvent)));
+                DesignerVerbCollection dvc = new();
+                dvc.Add(new DesignerVerb("Connect testEvent", ConnectEvent));
                 return dvc;
             }
         }
@@ -77,7 +82,7 @@ namespace EventDesignerTest
     [Designer(typeof(EventDesigner))]
     public class EventControl : System.Windows.Forms.UserControl
     {
-        public event System.EventHandler testEvent;
+        public event EventHandler testEvent;
 
         public EventControl()
         {		

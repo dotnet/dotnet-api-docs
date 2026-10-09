@@ -6,18 +6,19 @@ public class Example
 {
     public static void Main()
     {
-        List<string> dinosaurs = new List<string>();
-
-        dinosaurs.Add("Tyrannosaurus");
-        dinosaurs.Add("Amargasaurus");
-        dinosaurs.Add("Mamenchisaurus");
-        dinosaurs.Add("Brachiosaurus");
-        dinosaurs.Add("Deinonychus");
-        dinosaurs.Add("Tyrannosaurus");
-        dinosaurs.Add("Compsognathus");
+        List<string> dinosaurs =
+        [
+            "Tyrannosaurus",
+            "Amargasaurus",
+            "Mamenchisaurus",
+            "Brachiosaurus",
+            "Deinonychus",
+            "Tyrannosaurus",
+            "Compsognathus",
+        ];
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }

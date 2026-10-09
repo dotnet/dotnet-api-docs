@@ -3,26 +3,24 @@ using System;
 
 public class DateToStringExample2
 {
-   public static void Main()
-   {
-      DateTime dateValue = new DateTime(2008, 6, 15, 21, 15, 07);
-      // Create an array of standard format strings.
-      string[] standardFmts = {"d", "D", "f", "F", "g", "G", "m", "o",
+    public static void Main()
+    {
+        DateTime dateValue = new(2008, 6, 15, 21, 15, 07);
+        // Create an array of standard format strings.
+        string[] standardFmts = {"d", "D", "f", "F", "g", "G", "m", "o",
                                "R", "s", "t", "T", "u", "U", "y"};
-      // Output date and time using each standard format string.
-      foreach (string standardFmt in standardFmts)
-         Console.WriteLine("{0}: {1}", standardFmt,
-                           dateValue.ToString(standardFmt));
-      Console.WriteLine();
+        // Output date and time using each standard format string.
+        foreach (string standardFmt in standardFmts)
+            Console.WriteLine($"{standardFmt}: {dateValue.ToString(standardFmt)}");
+        Console.WriteLine();
 
-      // Create an array of some custom format strings.
-      string[] customFmts = {"h:mm:ss.ff t", "d MMM yyyy", "HH:mm:ss.f",
+        // Create an array of some custom format strings.
+        string[] customFmts = {"h:mm:ss.ff t", "d MMM yyyy", "HH:mm:ss.f",
                              "dd MMM HH:mm:ss", @"\Mon\t\h\: M", "HH:mm:ss.ffffzzz" };
-      // Output date and time using each custom format string.
-      foreach (string customFmt in customFmts)
-         Console.WriteLine("'{0}': {1}", customFmt,
-                           dateValue.ToString(customFmt));
-   }
+        // Output date and time using each custom format string.
+        foreach (string customFmt in customFmts)
+            Console.WriteLine($"'{customFmt}': {dateValue.ToString(customFmt)}");
+    }
 }
 // This example displays the following output to the console:
 //       d: 6/15/2008

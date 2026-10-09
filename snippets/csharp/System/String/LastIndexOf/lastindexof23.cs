@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class LastIndexOfIgnorable23Example
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet23>
         int position = 0;

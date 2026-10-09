@@ -2,35 +2,34 @@
 using System;
 using System.IO;
 
-public class TestDelegate
+public class FuncDelegateExample
 {
-   public static void Main()
-   {
-      OutputTarget output = new OutputTarget();
-      Func<bool> methodCall = output.SendToFile;
-      if (methodCall())
-         Console.WriteLine("Success!");
-      else
-         Console.WriteLine("File write operation failed.");
-   }
+    public static void Run()
+    {
+        FuncDelegateOutputTarget output = new();
+        Func<bool> methodCall = output.SendToFile;
+        if (methodCall())
+            Console.WriteLine("Success!");
+        else
+            Console.WriteLine("File write operation failed.");
+    }
 }
 
-public class OutputTarget
+public class FuncDelegateOutputTarget
 {
-   public bool SendToFile()
-   {
-      try
-      {
-         string fn = Path.GetTempFileName();
-         StreamWriter sw = new StreamWriter(fn);
-         sw.WriteLine("Hello, World!");
-         sw.Close();
-         return true;
-      }
-      catch
-      {
-         return false;
-      }
-   }
+    public bool SendToFile()
+    {
+        try
+        {
+            string fn = Path.GetTempFileName();
+            using StreamWriter sw = new(fn);
+            sw.WriteLine("Hello, World!");
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
 // </Snippet2>

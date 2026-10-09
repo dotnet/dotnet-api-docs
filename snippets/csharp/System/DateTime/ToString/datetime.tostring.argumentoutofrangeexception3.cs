@@ -7,9 +7,9 @@ public class Example3
 {
     public static void Main()
     {
-        DateTime date1 = new DateTime(1550, 7, 21);
+        DateTime date1 = new(1550, 7, 21);
         CultureInfo dft;
-        CultureInfo heIL = new CultureInfo("he-IL");
+        CultureInfo heIL = new("he-IL");
         heIL.DateTimeFormat.Calendar = new HebrewCalendar();
 
         // Change current culture to he-IL.
@@ -23,10 +23,7 @@ public class Example3
         }
         catch (ArgumentOutOfRangeException)
         {
-            Console.WriteLine("{0} is earlier than {1} or later than {2}",
-                              date1.ToString("d", CultureInfo.InvariantCulture),
-                              heIL.DateTimeFormat.Calendar.MinSupportedDateTime.ToString("d", CultureInfo.InvariantCulture),
-                              heIL.DateTimeFormat.Calendar.MaxSupportedDateTime.ToString("d", CultureInfo.InvariantCulture));
+            Console.WriteLine($"{date1.ToString("d", CultureInfo.InvariantCulture)} is earlier than {heIL.DateTimeFormat.Calendar.MinSupportedDateTime.ToString("d", CultureInfo.InvariantCulture)} or later than {heIL.DateTimeFormat.Calendar.MaxSupportedDateTime.ToString("d", CultureInfo.InvariantCulture)}");
         }
 
         // Restore the default culture.

@@ -1,0 +1,2 @@
+﻿IsNullOrWhiteSpaceEquivalentExample.Run();
+IsNullOrWhiteSpaceExample.Run();

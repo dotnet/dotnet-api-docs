@@ -4,26 +4,28 @@
 using System;
 using System.Collections.Specialized;
 
-public class SamplesStringEnumerator  {
+public class SamplesStringEnumerator
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a StringCollection.
-      StringCollection myCol = new StringCollection();
-      String[] myArr = new String[] { "red", "orange", "yellow", "green", "blue", "indigo", "violet" };
-      myCol.AddRange( myArr );
+        // Creates and initializes a StringCollection.
+        StringCollection myCol = [];
+        string[] myArr = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+        myCol.AddRange(myArr);
 
-      // Enumerates the elements in the StringCollection.
-      StringEnumerator myEnumerator = myCol.GetEnumerator();
-      while ( myEnumerator.MoveNext() )
-         Console.WriteLine( "{0}", myEnumerator.Current );
-      Console.WriteLine();
+        // Enumerates the elements in the StringCollection.
+        StringEnumerator myEnumerator = myCol.GetEnumerator();
+        while (myEnumerator.MoveNext())
+            Console.WriteLine($"{myEnumerator.Current}");
+        Console.WriteLine();
 
-      // Resets the enumerator and displays the first element again.
-      myEnumerator.Reset();
-      if ( myEnumerator.MoveNext() )
-         Console.WriteLine( "The first element is {0}.", myEnumerator.Current );
-   }
+        // Resets the enumerator and displays the first element again.
+        myEnumerator.Reset();
+        if (myEnumerator.MoveNext())
+            Console.WriteLine($"The first element is {myEnumerator.Current}.");
+    }
 }
 
 /*

@@ -54,7 +54,7 @@ public class BIExample1
         string string1 = "244";
         try
         {
-            byte byte1 = Byte.Parse(string1);
+            byte byte1 = byte.Parse(string1);
             Console.WriteLine(byte1);
         }
         catch (OverflowException)
@@ -69,7 +69,7 @@ public class BIExample1
         string string2 = "F9";
         try
         {
-            byte byte2 = Byte.Parse(string2,
+            byte byte2 = byte.Parse(string2,
                                     System.Globalization.NumberStyles.HexNumber);
             Console.WriteLine(byte2);
         }

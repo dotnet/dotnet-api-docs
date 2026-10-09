@@ -16,115 +16,120 @@ using System.Runtime.InteropServices;
 public class App
 {
 
-	private static PerformanceCounter PC;
-	private static PerformanceCounter BPC;
+    private static PerformanceCounter PC;
+    private static PerformanceCounter BPC;
 
-	public static void Main()
-	{	
-		ArrayList samplesList = new ArrayList();
+    public static void Run()
+    {
+        ArrayList samplesList = [];
 
-		SetupCategory();
-		CreateCounters();
-		CollectSamples(samplesList);
-		CalculateResults(samplesList);
-	}
+        SetupCategory();
+        CreateCounters();
+        CollectSamples(samplesList);
+        CalculateResults(samplesList);
+    }
 
 
-	
-	
-	private static bool SetupCategory()
-	{
-		
-		if ( !PerformanceCounterCategory.Exists("AverageTimer32SampleCategory") )
-		{
 
-			CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
 
-			// Add the counter.
-			CounterCreationData averageTimer32 = new CounterCreationData();
-			averageTimer32.CounterType = PerformanceCounterType.AverageTimer32;
-			averageTimer32.CounterName = "AverageTimer32Sample";
-			CCDC.Add(averageTimer32);
-	
-	        // Add the base counter.
-			CounterCreationData averageTimer32Base = new CounterCreationData();
-			averageTimer32Base.CounterType = PerformanceCounterType.AverageBase;
-			averageTimer32Base.CounterName = "AverageTimer32SampleBase";
-			CCDC.Add(averageTimer32Base);
+    private static bool SetupCategory()
+    {
 
-			// Create the category.
-			PerformanceCounterCategory.Create("AverageTimer32SampleCategory",
-				"Demonstrates usage of the AverageTimer32 performance counter type",
-				CCDC);
-				
-			return(true);
-		}
-		else
-		{
-			Console.WriteLine("Category exists - " + "AverageTimer32SampleCategory");
-			return(false);
-		}
-	}
-	
-	private static void CreateCounters()
-	{
-		// Create the counters.
-		PC = new PerformanceCounter("AverageTimer32SampleCategory",
-			"AverageTimer32Sample",
-			false);
-			
-		BPC = new PerformanceCounter("AverageTimer32SampleCategory",
-			"AverageTimer32SampleBase",
-			false);
-			
-		PC.RawValue = 0;
-		BPC.RawValue = 0;
-	}
-	
+        if (!PerformanceCounterCategory.Exists("AverageTimer32SampleCategory"))
+        {
 
-	private static void CollectSamples(ArrayList samplesList)
-	{
-		
-		long perfTime = 0;
-	    Random r = new Random( DateTime.Now.Millisecond );
+            CounterCreationDataCollection CCDC = [];
 
-	    // Loop for the samples.
-	    for (int i = 0; i < 10; i++) {
-	
-			QueryPerformanceCounter(out perfTime);
-			PC.RawValue = perfTime;
-			
-			BPC.IncrementBy(10);
+            // Add the counter.
+            CounterCreationData averageTimer32 = new()
+            {
+                CounterType = PerformanceCounterType.AverageTimer32,
+                CounterName = "AverageTimer32Sample"
+            };
+            CCDC.Add(averageTimer32);
 
-	        System.Threading.Thread.Sleep(1000);
-			Console.WriteLine("Next value = " + PC.NextValue().ToString());
-			samplesList.Add(PC.NextSample());
-	    }
+            // Add the base counter.
+            CounterCreationData averageTimer32Base = new()
+            {
+                CounterType = PerformanceCounterType.AverageBase,
+                CounterName = "AverageTimer32SampleBase"
+            };
+            CCDC.Add(averageTimer32Base);
+
+            // Create the category.
+            PerformanceCounterCategory.Create("AverageTimer32SampleCategory",
+                "Demonstrates usage of the AverageTimer32 performance counter type",
+                CCDC);
+
+            return (true);
+        }
+        else
+        {
+            Console.WriteLine("Category exists - " + "AverageTimer32SampleCategory");
+            return (false);
+        }
+    }
+
+    private static void CreateCounters()
+    {
+        // Create the counters.
+        PC = new PerformanceCounter("AverageTimer32SampleCategory",
+            "AverageTimer32Sample",
+            false);
+
+        BPC = new PerformanceCounter("AverageTimer32SampleCategory",
+            "AverageTimer32SampleBase",
+            false);
+
+        PC.RawValue = 0;
+        BPC.RawValue = 0;
+    }
+
+
+    private static void CollectSamples(ArrayList samplesList)
+    {
+
+        long perfTime = 0;
+        Random r = new(DateTime.Now.Millisecond);
+
+        // Loop for the samples.
+        for (int i = 0; i < 10; i++)
+        {
+
+            QueryPerformanceCounter(out perfTime);
+            PC.RawValue = perfTime;
+
+            BPC.IncrementBy(10);
+
+            System.Threading.Thread.Sleep(1000);
+            Console.WriteLine($"Next value = {PC.NextValue()}");
+            samplesList.Add(PC.NextSample());
+        }
 
     }
 
-	private static void CalculateResults(ArrayList samplesList)
-	{
-		for(int i = 0; i < (samplesList.Count - 1); i++)
-		{
-			// Output the sample.
-			OutputSample( (CounterSample)samplesList[i] );
-			OutputSample( (CounterSample)samplesList[i+1] );
+    private static void CalculateResults(ArrayList samplesList)
+    {
+        for (int i = 0; i < (samplesList.Count - 1); i++)
+        {
+            // Output the sample.
+            OutputSample((CounterSample)samplesList[i]);
+            OutputSample((CounterSample)samplesList[i + 1]);
 
-			// Use .NET to calculate the counter value.
-			Console.WriteLine(".NET computed counter value = " +
-				CounterSample.Calculate((CounterSample)samplesList[i],
-				(CounterSample)samplesList[i+1]) );
+            // Use .NET to calculate the counter value.
+            Console.WriteLine(".NET computed counter value = " +
+                CounterSample.Calculate((CounterSample)samplesList[i],
+                (CounterSample)samplesList[i + 1]));
 
-			// Calculate the counter value manually.
-			Console.WriteLine("My computed counter value = " +
-				MyComputeCounterValue((CounterSample)samplesList[i],
-				(CounterSample)samplesList[i+1]) );
+            // Calculate the counter value manually.
+            Console.WriteLine("My computed counter value = " +
+                MyComputeCounterValue((CounterSample)samplesList[i],
+                (CounterSample)samplesList[i + 1]));
 
-		}
-	}
-	
-	
+        }
+    }
+
+
 
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//+++++++
     // PERF_AVERAGE_TIMER
@@ -149,39 +154,39 @@ public class App
     //
     //  Example - PhysicalDisk\ Avg. Disk sec/Transfer
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//+++++++
-    private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
-	{
-		Int64 n1 = s1.RawValue;
-		Int64 n0 = s0.RawValue;
-		ulong f = (ulong)s1.SystemFrequency;
-		Int64 d1 = s1.BaseValue;
-		Int64 d0 = s0.BaseValue;
+    private static float MyComputeCounterValue(CounterSample s0, CounterSample s1)
+    {
+        long n1 = s1.RawValue;
+        long n0 = s0.RawValue;
+        ulong f = (ulong)s1.SystemFrequency;
+        long d1 = s1.BaseValue;
+        long d0 = s0.BaseValue;
 
-		double numerator = (double)(n1 - n0);
-		double denominator = (double)(d1 - d0);
-		Single counterValue = (Single)(( numerator / f ) / denominator);
-		return(counterValue);
-	}
-	
-	// Output information about the counter sample.
-	private static void OutputSample(CounterSample s)
-	{
-		Console.WriteLine("+++++++++++");
-		Console.WriteLine("Sample values - \r\n");
-		Console.WriteLine("   BaseValue        = " + s.BaseValue);
-		Console.WriteLine("   CounterFrequency = " + s.CounterFrequency);
-		Console.WriteLine("   CounterTimeStamp = " + s.CounterTimeStamp);
-		Console.WriteLine("   CounterType      = " + s.CounterType);
-		Console.WriteLine("   RawValue         = " + s.RawValue);
-		Console.WriteLine("   SystemFrequency  = " + s.SystemFrequency);
-		Console.WriteLine("   TimeStamp        = " + s.TimeStamp);
-		Console.WriteLine("   TimeStamp100nSec = " + s.TimeStamp100nSec);
-		Console.WriteLine("++++++++++++++++++++++");
-	}
-	
+        double numerator = (double)(n1 - n0);
+        double denominator = (double)(d1 - d0);
+        float counterValue = (float)((numerator / f) / denominator);
+        return (counterValue);
+    }
 
-	[DllImport("Kernel32.dll")]
-	public static extern bool QueryPerformanceCounter(out long value);
+    // Output information about the counter sample.
+    private static void OutputSample(CounterSample s)
+    {
+        Console.WriteLine("+++++++++++");
+        Console.WriteLine("Sample values - \r\n");
+        Console.WriteLine("   BaseValue        = " + s.BaseValue);
+        Console.WriteLine("   CounterFrequency = " + s.CounterFrequency);
+        Console.WriteLine("   CounterTimeStamp = " + s.CounterTimeStamp);
+        Console.WriteLine("   CounterType      = " + s.CounterType);
+        Console.WriteLine("   RawValue         = " + s.RawValue);
+        Console.WriteLine("   SystemFrequency  = " + s.SystemFrequency);
+        Console.WriteLine("   TimeStamp        = " + s.TimeStamp);
+        Console.WriteLine("   TimeStamp100nSec = " + s.TimeStamp100nSec);
+        Console.WriteLine("++++++++++++++++++++++");
+    }
+
+
+    [DllImport("Kernel32.dll")]
+    public static extern bool QueryPerformanceCounter(out long value);
 
 }
 
@@ -201,13 +206,13 @@ public class App2
     private static PerformanceCounter PC;
     private static PerformanceCounter BPC;
 
-    private const String categoryName = "AverageTimer32SampleCategory";
-    private const String counterName = "AverageTimer32Sample";
-    private const String baseCounterName = "AverageTimer32SampleBase";
+    private const string categoryName = "AverageTimer32SampleCategory";
+    private const string counterName = "AverageTimer32Sample";
+    private const string baseCounterName = "AverageTimer32SampleBase";
 
-    public static void Main()
+    public static void Run()
     {
-        ArrayList samplesList = new ArrayList();
+        ArrayList samplesList = [];
 
         // If the category does not exist, create the category and exit.
         // Performance counters should not be created and immediately used.
@@ -226,18 +231,22 @@ public class App2
         if (!PerformanceCounterCategory.Exists(categoryName))
         {
 
-            CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
+            CounterCreationDataCollection CCDC = [];
 
             // Add the counter.
-            CounterCreationData averageTimer32 = new CounterCreationData();
-            averageTimer32.CounterType = PerformanceCounterType.AverageTimer32;
-            averageTimer32.CounterName = counterName;
+            CounterCreationData averageTimer32 = new()
+            {
+                CounterType = PerformanceCounterType.AverageTimer32,
+                CounterName = counterName
+            };
             CCDC.Add(averageTimer32);
 
             // Add the base counter.
-            CounterCreationData averageTimer32Base = new CounterCreationData();
-            averageTimer32Base.CounterType = PerformanceCounterType.AverageBase;
-            averageTimer32Base.CounterName = baseCounterName;
+            CounterCreationData averageTimer32Base = new()
+            {
+                CounterType = PerformanceCounterType.AverageBase,
+                CounterName = baseCounterName
+            };
             CCDC.Add(averageTimer32Base);
 
             // Create the category.
@@ -274,7 +283,7 @@ public class App2
     private static void CollectSamples(ArrayList samplesList)
     {
 
-        Random r = new Random(DateTime.Now.Millisecond);
+        Random r = new(DateTime.Now.Millisecond);
 
         // Loop for the samples.
         for (int i = 0; i < 10; i++)
@@ -286,7 +295,7 @@ public class App2
 
             System.Threading.Thread.Sleep(1000);
 
-            Console.WriteLine("Next value = " + PC.NextValue().ToString());
+            Console.WriteLine($"Next value = {PC.NextValue()}");
             samplesList.Add(PC.NextSample());
         }
     }
@@ -334,17 +343,17 @@ public class App2
     //
     //  Example - PhysicalDisk\ Avg. Disk sec/Transfer
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//+++++++
-    private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
+    private static float MyComputeCounterValue(CounterSample s0, CounterSample s1)
     {
-        Int64 n1 = s1.RawValue;
-        Int64 n0 = s0.RawValue;
+        long n1 = s1.RawValue;
+        long n0 = s0.RawValue;
         ulong f = (ulong)s1.SystemFrequency;
-        Int64 d1 = s1.BaseValue;
-        Int64 d0 = s0.BaseValue;
+        long d1 = s1.BaseValue;
+        long d0 = s0.BaseValue;
 
         double numerator = (double)(n1 - n0);
         double denominator = (double)(d1 - d0);
-        Single counterValue = (Single)((numerator / f) / denominator);
+        float counterValue = (float)((numerator / f) / denominator);
         return (counterValue);
     }
 

@@ -5,7 +5,7 @@ using SomeNamespace;
 namespace SomeNamespace
 {
     // Force the layout of your fields to the C style struct layout.
-    // Without this, the .NET Framework will reorder your fields.
+    // Without this, .NET will reorder your fields.
     [StructLayout(LayoutKind.Sequential)]
     public struct Vertex
     {

@@ -2,14 +2,14 @@
 
 public class Example4
 {
-   public static void Main()
-   {
-      // <Snippet1>
-      Object obj = new Object();
-      Console.WriteLine(obj.ToString());
+    public static void Main()
+    {
+        // <Snippet1>
+        object obj = new();
+        Console.WriteLine(obj.ToString());
 
-      // The example displays the following output:
-      //      System.Object
-      // </Snippet1>
-   }
+        // The example displays the following output:
+        //      System.Object
+        // </Snippet1>
+    }
 }

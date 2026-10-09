@@ -27,26 +27,28 @@ namespace MyDiagnostics
     {
         static void Main()
         {
-            CounterCreationDataCollection myCol =
-                                       new CounterCreationDataCollection();
+            CounterCreationDataCollection myCol = new();
 
             // Create two custom counter objects.
             CounterCreationData myCounter1 = new CounterCreationData("Counter1",
                "First custom counter", PerformanceCounterType.CounterDelta32);
 
-            CounterCreationData myCounter2 = new CounterCreationData();
-
-            // Set the properties of the 'CounterCreationData' object.
-            myCounter2.CounterName = "Counter2";
-            myCounter2.CounterHelp = "Second custom counter";
-            myCounter2.CounterType = PerformanceCounterType.NumberOfItemsHEX32;
+            CounterCreationData myCounter2 = new()
+            {
+                // Set the properties of the 'CounterCreationData' object.
+                CounterName = "Counter2",
+                CounterHelp = "Second custom counter",
+                CounterType = PerformanceCounterType.NumberOfItemsHEX32
+            };
 
             // Add custom counter objects to CounterCreationDataCollection.
             myCol.Add(myCounter1);
             myCol.Add(myCounter2);
 
             if (PerformanceCounterCategory.Exists("New Counter Category"))
+            {
                 PerformanceCounterCategory.Delete("New Counter Category");
+            }
 
             // Bind the counters to a PerformanceCounterCategory.
             PerformanceCounterCategory myCategory =
@@ -54,13 +56,13 @@ namespace MyDiagnostics
                 PerformanceCounterCategoryType.SingleInstance, myCol);
 
             Console.WriteLine("Counter Information:");
-            Console.WriteLine("Category Name: " + myCategory.CategoryName);
+            Console.WriteLine($"Category Name: {myCategory.CategoryName}");
             for (int i = 0; i < myCol.Count; i++)
             {
                 // Display the properties of the CounterCreationData objects.
-                Console.WriteLine("CounterName : " + myCol[i].CounterName);
-                Console.WriteLine("CounterHelp : " + myCol[i].CounterHelp);
-                Console.WriteLine("CounterType : " + myCol[i].CounterType);
+                Console.WriteLine($"CounterName : {myCol[i].CounterName}");
+                Console.WriteLine($"CounterHelp : {myCol[i].CounterHelp}");
+                Console.WriteLine($"CounterType : {myCol[i].CounterType}");
             }
         }
     }

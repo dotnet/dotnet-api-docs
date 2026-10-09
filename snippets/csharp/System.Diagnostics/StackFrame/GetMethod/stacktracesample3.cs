@@ -6,16 +6,16 @@ class MyConsoleApp
     [STAThread]
     static void Main(string[] args)
     {
-        MyConsoleApp myApp = new MyConsoleApp();
+        MyConsoleApp myApp = new();
         myApp.MyPublicMethod();
     }
 
     public void MyPublicMethod()
     {
-        MyInnerClass helperClass = new MyInnerClass();
+        MyInnerClass helperClass = new();
         helperClass.ThrowsException();
     }
-//<snippet5>
+    //<snippet5>
     class MyInnerClass
     {
         public void ThrowsException()
@@ -31,8 +31,8 @@ class MyConsoleApp
                 // exception output by limiting the trace to the
                 // frame of the calling method.
                 //<snippet6>
-                StackFrame fr = new StackFrame(1,true);
-                StackTrace st = new StackTrace(fr);
+                StackFrame fr = new(1, true);
+                StackTrace st = new(fr);
                 EventLog.WriteEntry(fr.GetMethod().Name,
                                     st.ToString(),
                                     EventLogEntryType.Warning);
@@ -57,5 +57,5 @@ class MyConsoleApp
             }
         }
     }
-//</snippet5>
+    //</snippet5>
 }

@@ -6,60 +6,71 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class MyCollection : NameObjectCollectionBase  {
+public class MyCollection : NameObjectCollectionBase
+{
 
-   private DictionaryEntry _de = new DictionaryEntry();
+    private DictionaryEntry _de = new();
 
-   // Gets a key-and-value pair (DictionaryEntry) using an index.
-   public DictionaryEntry this[ int index ]  {
-      get  {
-         _de.Key = this.BaseGetKey( index );
-         _de.Value = this.BaseGet( index );
-         return( _de );
-      }
-   }
+    // Gets a key-and-value pair (DictionaryEntry) using an index.
+    public DictionaryEntry this[int index]
+    {
+        get
+        {
+            _de.Key = this.BaseGetKey(index);
+            _de.Value = this.BaseGet(index);
+            return (_de);
+        }
+    }
 
-   // Creates an empty collection.
-   public MyCollection()  {
-   }
+    // Creates an empty collection.
+    public MyCollection()
+    {
+    }
 
-   // Adds an entry to the collection.
-   public void Add( String key, Object value )  {
-      this.BaseAdd( key, value );
-   }
+    // Adds an entry to the collection.
+    public void Add(string key, object value)
+    {
+        this.BaseAdd(key, value);
+    }
 
-   // Gets a value indicating whether the collection contains keys that are not a null reference.
-   public Boolean HasKeys  {
-      get  {
-         return( this.BaseHasKeys() );
-      }
-   }
+    // Gets a value indicating whether the collection contains keys that are not a null reference.
+    public bool HasKeys
+    {
+        get
+        {
+            return (this.BaseHasKeys());
+        }
+    }
 }
 
-public class SamplesNameObjectCollectionBase  {
+public class SamplesNameObjectCollectionBase
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates an empty MyCollection instance.
-      MyCollection myCol = new MyCollection();
-      Console.WriteLine( "Initial state of the collection (Count = {0}):", myCol.Count );
-      PrintKeysAndValues( myCol );
-      Console.WriteLine( "HasKeys? {0}", myCol.HasKeys );
+        // Creates an empty MyCollection instance.
+        MyCollection myCol = [];
+        Console.WriteLine($"Initial state of the collection (Count = {myCol.Count}):");
+        PrintKeysAndValues(myCol);
+        Console.WriteLine($"HasKeys? {myCol.HasKeys}");
 
-      Console.WriteLine();
+        Console.WriteLine();
 
-      // Adds an item to the collection.
-      myCol.Add( "blue", "sky" );
-      Console.WriteLine( "Initial state of the collection (Count = {0}):", myCol.Count );
-      PrintKeysAndValues( myCol );
-      Console.WriteLine( "HasKeys? {0}", myCol.HasKeys );
-   }
+        // Adds an item to the collection.
+        myCol.Add("blue", "sky");
+        Console.WriteLine($"Initial state of the collection (Count = {myCol.Count}):");
+        PrintKeysAndValues(myCol);
+        Console.WriteLine($"HasKeys? {myCol.HasKeys}");
+    }
 
-   public static void PrintKeysAndValues( MyCollection myCol )  {
-      for ( int i = 0; i < myCol.Count; i++ )  {
-         Console.WriteLine( "[{0}] : {1}, {2}", i, myCol[i].Key, myCol[i].Value );
-      }
-   }
+    public static void PrintKeysAndValues(MyCollection myCol)
+    {
+        for (int i = 0; i < myCol.Count; i++)
+        {
+            Console.WriteLine($"[{i}] : {myCol[i].Key}, {myCol[i].Value}");
+        }
+    }
 }
 
 

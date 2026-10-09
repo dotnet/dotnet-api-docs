@@ -4,8 +4,10 @@ using System;
 using System.Text;
 using System.IO;
 
-public class Decoder {
-    public static void Main() {
+public class Decoder
+{
+    public static void Main()
+    {
         Stream inputStream = Console.OpenStandardInput();
         byte[] bytes = new byte[100];
         Console.WriteLine("To decode, type or paste the UTF7 encoded string and press enter:");

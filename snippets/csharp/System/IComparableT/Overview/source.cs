@@ -18,46 +18,25 @@ public class Temperature : IComparable<Temperature>
     }
 
     // Define the is greater than operator.
-    public static bool operator >  (Temperature operand1, Temperature operand2)
-    {
-       return operand1.CompareTo(operand2) > 0;
-    }
+    public static bool operator >(Temperature operand1, Temperature operand2) => operand1.CompareTo(operand2) > 0;
 
     // Define the is less than operator.
-    public static bool operator <  (Temperature operand1, Temperature operand2)
-    {
-       return operand1.CompareTo(operand2) < 0;
-    }
+    public static bool operator <(Temperature operand1, Temperature operand2) => operand1.CompareTo(operand2) < 0;
 
     // Define the is greater than or equal to operator.
-    public static bool operator >=  (Temperature operand1, Temperature operand2)
-    {
-       return operand1.CompareTo(operand2) >= 0;
-    }
+    public static bool operator >=(Temperature operand1, Temperature operand2) => operand1.CompareTo(operand2) >= 0;
 
     // Define the is less than or equal to operator.
-    public static bool operator <=  (Temperature operand1, Temperature operand2)
-    {
-       return operand1.CompareTo(operand2) <= 0;
-    }
+    public static bool operator <=(Temperature operand1, Temperature operand2) => operand1.CompareTo(operand2) <= 0;
 
     // The underlying temperature value.
     protected double m_value = 0.0;
 
-    public double Celsius
-    {
-        get
-        {
-            return m_value - 273.15;
-        }
-    }
+    public double Celsius => m_value - 273.15;
 
     public double Kelvin
     {
-        get
-        {
-            return m_value;
-        }
+        get => m_value;
         set
         {
             if (value < 0.0)
@@ -71,10 +50,7 @@ public class Temperature : IComparable<Temperature>
         }
     }
 
-    public Temperature(double kelvins)
-    {
-        this.Kelvin = kelvins;
-    }
+    public Temperature(double kelvins) => this.Kelvin = kelvins;
 }
 
 public class Example
@@ -82,7 +58,7 @@ public class Example
     public static void Main()
     {
         SortedList<Temperature, string> temps =
-            new SortedList<Temperature, string>();
+            new();
 
         // Add entries to the sorted list, out of order.
         temps.Add(new Temperature(2017.15), "Boiling point of Lead");
@@ -92,9 +68,9 @@ public class Example
         temps.Add(new Temperature(373.15), "Boiling point of water");
         temps.Add(new Temperature(600.65), "Melting point of Lead");
 
-        foreach( KeyValuePair<Temperature, string> kvp in temps )
+        foreach (KeyValuePair<Temperature, string> kvp in temps)
         {
-            Console.WriteLine("{0} is {1} degrees Celsius.", kvp.Value, kvp.Key.Celsius);
+            Console.WriteLine($"{kvp.Value} is {kvp.Key.Celsius} degrees Celsius.");
         }
     }
 }

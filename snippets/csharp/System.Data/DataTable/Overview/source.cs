@@ -21,9 +21,9 @@ class Program
             orderDetailTable.Columns["OrderId"],
             true);
 
-        Console.WriteLine("After creating the foreign key constraint, " +
-            "you'll see the following error if you insert " +
-            "an order detail with the wrong OrderId:\n");
+        Console.WriteLine(
+            "After creating the foreign key constraint, you'll see the following error " +
+            "if you insert an order detail with the wrong OrderId:\n");
         try
         {
             DataRow errorRow = orderDetailTable.NewRow();
@@ -97,12 +97,12 @@ class Program
         // Define all the columns at once.
         DataColumn[] cols =
         [
-            new DataColumn("OrderDetailId", typeof(int)),
-            new DataColumn("OrderId", typeof(string)),
-            new DataColumn("Product", typeof(string)),
-            new DataColumn("UnitPrice", typeof(decimal)),
-            new DataColumn("OrderQty", typeof(int)),
-            new DataColumn("LineTotal", typeof(decimal), "UnitPrice*OrderQty")
+            new("OrderDetailId", typeof(int)),
+            new("OrderId", typeof(string)),
+            new("Product", typeof(string)),
+            new("UnitPrice", typeof(decimal)),
+            new("OrderQty", typeof(int)),
+            new("LineTotal", typeof(decimal), "UnitPrice*OrderQty")
         ];
 
         orderDetailTable.Columns.AddRange(cols);
@@ -131,7 +131,7 @@ class Program
 
     private static void InsertOrderDetails(DataTable orderDetailTable)
     {
-        // Use an Object array to insert all the rows.
+        // Use an object array to insert all the rows.
         // Values in the array are matched sequentially to the columns,
         // based on the order in which they appear in the table.
         object[][] rows =
@@ -164,11 +164,17 @@ class Program
             foreach (DataColumn col in table.Columns)
             {
                 if (col.DataType.Equals(typeof(DateTime)))
+                {
                     Console.Write("{0,-14:d}", row[col]);
+                }
                 else if (col.DataType.Equals(typeof(decimal)))
+                {
                     Console.Write("{0,-14:C}", row[col]);
+                }
                 else
+                {
                     Console.Write("{0,-14}", row[col]);
+                }
             }
             Console.WriteLine();
         }

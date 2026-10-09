@@ -4,42 +4,42 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-      string[] values = { "6", "6:12", "6:12:14", "6:12:14:45", 
-                          "6.12:14:45", "6:12:14:45.3448", 
-                          "6:12:14:45,3448", "6:34:14:45" };
-      CultureInfo[] cultures = { new CultureInfo("en-US"), 
+    public static void Main()
+    {
+        string[] values = [ "6", "6:12", "6:12:14", "6:12:14:45",
+                          "6.12:14:45", "6:12:14:45.3448",
+                          "6:12:14:45,3448", "6:34:14:45" ];
+        CultureInfo[] cultures = [ new CultureInfo("en-US"),
                                  new CultureInfo("ru-RU"),
-                                 CultureInfo.InvariantCulture };
-      
-      string header = String.Format("{0,-17}", "String");
-      foreach (CultureInfo culture in cultures)
-         header += culture.Equals(CultureInfo.InvariantCulture) ? 
-                      String.Format("{0,20}", "Invariant") :
-                      String.Format("{0,20}", culture.Name);
+                                 CultureInfo.InvariantCulture ];
 
-      Console.WriteLine(header);
-      Console.WriteLine();
-      
-      foreach (string value in values)
-      {
-         Console.Write("{0,-17}", value);
-         foreach (CultureInfo culture in cultures)
-         {
-            TimeSpan interval = new TimeSpan();
-            if (TimeSpan.TryParse(value, culture, out interval))
-               Console.Write("{0,20}", interval.ToString("c"));
-            else
-               Console.Write("{0,20}", "Unable to Parse");
-         }
-         Console.WriteLine();                                
-      }
-   }
+        string header = $"{"String",-17}";
+        foreach (CultureInfo culture in cultures)
+            header += culture.Equals(CultureInfo.InvariantCulture) ?
+                         $"{"Invariant",20}" :
+                         $"{culture.Name,20}";
+
+        Console.WriteLine(header);
+        Console.WriteLine();
+
+        foreach (string value in values)
+        {
+            Console.Write($"{value,-17}");
+            foreach (CultureInfo culture in cultures)
+            {
+                TimeSpan interval = new();
+                if (TimeSpan.TryParse(value, culture, out interval))
+                    Console.Write($"{interval.ToString("c"),20}");
+                else
+                    Console.Write($"{"Unable to Parse",20}");
+            }
+            Console.WriteLine();
+        }
+    }
 }
 // The example displays the following output:
 //    String                          en-US               ru-RU           Invariant
-//    
+//
 //    6                          6.00:00:00          6.00:00:00          6.00:00:00
 //    6:12                         06:12:00            06:12:00            06:12:00
 //    6:12:14                      06:12:14            06:12:14            06:12:14

@@ -3,48 +3,37 @@ using System;
 
 public struct Number
 {
-   private int n;
+    private int n;
 
-   public Number(int value)
-   {
-      n = value;
-   }
+    public Number(int value) => n = value;
 
-   public int Value
-   {
-      get { return n; }
-   }
+    public int Value => n;
 
-   public override bool Equals(Object obj)
-   {
-      if (obj == null || ! (obj is Number))
-         return false;
-      else
-         return n == ((Number) obj).n;
-   }
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is Number))
+            return false;
+        else
+            return n == ((Number)obj).n;
+    }
 
-   public override int GetHashCode()
-   {
-      return n;
-   }
+    public override int GetHashCode() => n;
 
-   public override string ToString()
-   {
-      return n.ToString();
-   }
+    public override string ToString() => n.ToString();
 }
 
 public class Example1
 {
-   public static void Main()
-   {
-      Random rnd = new Random();
-      for (int ctr = 0; ctr <= 9; ctr++) {
-         int randomN = rnd.Next(Int32.MinValue, Int32.MaxValue);
-         Number n = new Number(randomN);
-         Console.WriteLine("n = {0,12}, hash code = {1,12}", n, n.GetHashCode());
-      }
-   }
+    public static void Main()
+    {
+        Random rnd = new();
+        for (int ctr = 0; ctr <= 9; ctr++)
+        {
+            int randomN = rnd.Next(int.MinValue, int.MaxValue);
+            Number n = new(randomN);
+            Console.WriteLine($"n = {n,12}, hash code = {n.GetHashCode(),12}");
+        }
+    }
 }
 // The example displays output like the following:
 //       n =   -634398368, hash code =   -634398368

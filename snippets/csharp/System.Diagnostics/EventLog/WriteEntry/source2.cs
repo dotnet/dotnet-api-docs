@@ -1,19 +1,15 @@
 ﻿// <Snippet1>
-using System;
 using System.Diagnostics;
-using System.Threading;
 
 class MySample2
 {
-
-    public static void Main()
+    public static void Run()
     {
-
-        // Write an informational entry to the event log.
-        EventLog.WriteEntry("MySource",
+        // Write a warning entry to the event log.
+        EventLog.WriteEntry(
+            "MySource",
             "Writing warning to event log.",
             EventLogEntryType.Warning);
     }
 }
-
 // </Snippet1>

@@ -1,7 +1,7 @@
 ﻿//<Snippet1>
 using System;
-using System.Reflection;
-using System.Collections.Generic;
+
+
 
 // Define a base class with two type parameters.
 public class Base<T, U> { }
@@ -25,10 +25,10 @@ public class Test
             "\r\n--- Display a generic type and the open constructed");
         Console.WriteLine("    type from which it is derived.");
 
-        // Create a Type object representing the generic type definition 
+        // Create a Type object representing the generic type definition
         // for the Derived type, by omitting the type argument. (For
         // types with multiple type parameters, supply the commas but
-        // omit the type arguments.) 
+        // omit the type arguments.)
         //
         Type derivedType = typeof(Derived<>);
         DisplayGenericTypeInfo(derivedType);
@@ -39,16 +39,13 @@ public class Test
 
     private static void DisplayGenericTypeInfo(Type t)
     {
-        Console.WriteLine("\r\n{0}", t);
+        Console.WriteLine($"\r\n{t}");
 
-        Console.WriteLine("\tIs this a generic type definition? {0}", 
-            t.IsGenericTypeDefinition);
+        Console.WriteLine($"\tIs this a generic type definition? {t.IsGenericTypeDefinition}");
 
-        Console.WriteLine("\tIs it a generic type? {0}", 
-            t.IsGenericType);
+        Console.WriteLine($"\tIs it a generic type? {t.IsGenericType}");
 
-        Console.WriteLine("\tDoes it have unassigned generic parameters? {0}", 
-            t.ContainsGenericParameters);
+        Console.WriteLine($"\tDoes it have unassigned generic parameters? {t.ContainsGenericParameters}");
 
         if (t.IsGenericType)
         {
@@ -56,8 +53,7 @@ public class Test
             //
             Type[] typeArguments = t.GetGenericArguments();
 
-            Console.WriteLine("\tList type arguments ({0}):", 
-                typeArguments.Length);
+            Console.WriteLine($"\tList type arguments ({typeArguments.Length}):");
 
             foreach (Type tParam in typeArguments)
             {
@@ -66,14 +62,11 @@ public class Test
                 //
                 if (tParam.IsGenericParameter)
                 {
-                    Console.WriteLine(
-                        "\t\t{0}  (unassigned - parameter position {1})",
-                        tParam,
-                        tParam.GenericParameterPosition);
+                    Console.WriteLine($"\t\t{tParam}  (unassigned - parameter position {tParam.GenericParameterPosition})");
                 }
                 else
                 {
-                    Console.WriteLine("\t\t{0}", tParam);
+                    Console.WriteLine($"\t\t{tParam}");
                 }
             }
         }

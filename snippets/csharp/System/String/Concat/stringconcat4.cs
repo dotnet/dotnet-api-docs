@@ -1,8 +1,10 @@
 ﻿//<snippet1>
 using System;
 
-public class ConcatTest {
-    public static void Main() {
+public class ConcatNamesTest
+{
+    public static void Run()
+    {
 
         // we want to simply quickly add this person's name together
         string fName = "Simon";
@@ -16,7 +18,7 @@ public class ConcatTest {
         lName = " " + lName.Trim();
 
         // this line simply concatenates the two strings
-        Console.WriteLine("Welcome to this page, '{0}'!", string.Concat( string.Concat(fName, mName), lName ) );
+        Console.WriteLine($"Welcome to this page, '{string.Concat(string.Concat(fName, mName), lName)}'!");
     }
 }
 // The example displays the following output:

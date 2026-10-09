@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class ComparisonTOverviewExample2
 {
     private static int CompareDinosByLength(string x, string y)
     {
@@ -26,7 +26,7 @@ public class Example
             // If x is not null...
             //
             if (y == null)
-                // ...and y is null, x is greater.
+            // ...and y is null, x is greater.
             {
                 return 1;
             }
@@ -55,15 +55,17 @@ public class Example
         }
     }
 
-    public static void Main()
+    public static void Run()
     {
-        List<string> dinosaurs = new List<string>();
-        dinosaurs.Add("Pachycephalosaurus");
-        dinosaurs.Add("Amargasaurus");
-        dinosaurs.Add("");
-        dinosaurs.Add(null);
-        dinosaurs.Add("Mamenchisaurus");
-        dinosaurs.Add("Deinonychus");
+        List<string> dinosaurs = new()
+        {
+            "Pachycephalosaurus",
+            "Amargasaurus",
+            "",
+            null,
+            "Mamenchisaurus",
+            "Deinonychus"
+        };
         Display(dinosaurs);
 
         Console.WriteLine("\nSort with generic Comparison<string> delegate:");
@@ -74,12 +76,12 @@ public class Example
     private static void Display(List<string> list)
     {
         Console.WriteLine();
-        foreach( string s in list )
+        foreach (string s in list)
         {
             if (s == null)
                 Console.WriteLine("(null)");
             else
-                Console.WriteLine("\"{0}\"", s);
+                Console.WriteLine($"\"{s}\"");
         }
     }
 }

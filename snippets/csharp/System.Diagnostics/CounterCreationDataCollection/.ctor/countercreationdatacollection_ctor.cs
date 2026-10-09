@@ -11,9 +11,9 @@
 using System;
 using System.Diagnostics;
 
-public class CounterCreationExample
+public class CounterCreationArrayExample
 {
-    public static void Main()
+    public static void Run()
     {
         try
         {
@@ -32,7 +32,7 @@ public class CounterCreationExample
 
                 for (int i = 0; i < numberOfCounters; i++)
                 {
-                    Console.Write("Enter the counter name for {0} counter : ", i);
+                    Console.Write($"Enter the counter name for {i} counter : ");
                     myCounterCreationData[i] = new CounterCreationData();
                     myCounterCreationData[i].CounterName = Console.ReadLine();
                 }
@@ -45,7 +45,7 @@ public class CounterCreationExample
 
                 Console.WriteLine("The list of counters in 'CounterCollection' are :");
                 for (int i = 0; i < myCounterCollection.Count; i++)
-                    Console.WriteLine("Counter {0} is '{1}'", i, myCounterCollection[i].CounterName);
+                    Console.WriteLine($"Counter {i} is '{myCounterCollection[i].CounterName}'");
             }
             else
             {
@@ -55,7 +55,7 @@ public class CounterCreationExample
         }
         catch (Exception e)
         {
-            Console.WriteLine("Exception: {0}.", e.Message);
+            Console.WriteLine($"Exception: {e.Message}.");
             return;
         }
     }

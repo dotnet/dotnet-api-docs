@@ -6,17 +6,15 @@ public class Example
     public static void Main()
     {
         // Create parallel arrays of Decimals to use as the dividend and divisor.
-        Decimal[] dividends = { 79m, 1000m, -1000m, 123m, 1234567800000m,
+        decimal[] dividends = { 79m, 1000m, -1000m, 123m, 1234567800000m,
                                 1234.0123m };
-        Decimal[] divisors = { 11m, 7m, 7m, .00123m, 0.12345678m, 1234.5678m };
+        decimal[] divisors = { 11m, 7m, 7m, .00123m, 0.12345678m, 1234.5678m };
 
         for (int ctr = 0; ctr < dividends.Length; ctr++)
         {
-           Decimal dividend = dividends[ctr];
-           Decimal divisor = divisors[ctr];
-           Console.WriteLine("{0:N3} / {1:N3} = {2:N3} Remainder {3:N3}", dividend,
-                             divisor, Decimal.Divide(dividend, divisor),
-                             Decimal.Remainder(dividend, divisor));
+            decimal dividend = dividends[ctr];
+            decimal divisor = divisors[ctr];
+            Console.WriteLine($"{dividend:N3} / {divisor:N3} = {decimal.Divide(dividend, divisor):N3} Remainder {decimal.Remainder(dividend, divisor):N3}");
         }
     }
 }

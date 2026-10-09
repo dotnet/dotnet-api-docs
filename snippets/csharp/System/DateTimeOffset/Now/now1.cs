@@ -3,21 +3,20 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      String[] fmtStrings = { "d", "D", "f", "F", "g", "G", "M",
+    public static void Main()
+    {
+        string[] fmtStrings = { "d", "D", "f", "F", "g", "G", "M",
                               "R", "s", "t", "T", "u", "y" };
 
-      DateTimeOffset value = DateTimeOffset.Now;
-      // Display date in default format.
-      Console.WriteLine(value);
-      Console.WriteLine();
+        DateTimeOffset value = DateTimeOffset.Now;
+        // Display date in default format.
+        Console.WriteLine(value);
+        Console.WriteLine();
 
-      // Display date using each of the specified formats.
-      foreach (var fmtString in fmtStrings)
-         Console.WriteLine("{0} --> {1}",
-                           fmtString, value.ToString(fmtString));
-   }
+        // Display date using each of the specified formats.
+        foreach (string fmtString in fmtStrings)
+            Console.WriteLine($"{fmtString} --> {value.ToString(fmtString)}");
+    }
 }
 // The example displays output similar to the following:
 //    11/19/2012 10:57:11 AM -08:00

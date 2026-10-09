@@ -1,7 +1,4 @@
 ﻿module sortasync
-// System.Diagnostics
-//
-// Requires .NET Framework version 1.2 or higher.
 
 // The following example uses the sort command to sort a list
 // of input text lines, and displays the sorted list to the console.

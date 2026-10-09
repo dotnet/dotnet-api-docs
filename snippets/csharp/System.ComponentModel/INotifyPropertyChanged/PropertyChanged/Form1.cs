@@ -1,6 +1,5 @@
-﻿// <snippet1>
+// <snippet1>
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
@@ -13,21 +12,19 @@ namespace TestNotifyPropertyChangedCS
     // a list to a DataGridView control. The list does not
     // raise change notifications. However the DemoCustomer type 
     // in the list does.
-    public partial class Form1 : Form
+    public class Form1 : Form
     {
         // This button causes the value of a list element to be changed.
-        private Button changeItemBtn = new Button();
+        private Button changeItemBtn = new();
 
         // This DataGridView control displays the contents of the list.
-        private DataGridView customersDataGridView = new DataGridView();
+        private DataGridView customersDataGridView = new();
 
         // This BindingSource binds the list to the DataGridView control.
-        private BindingSource customersBindingSource = new BindingSource();
+        private BindingSource customersBindingSource = new();
 
         public Form1()
         {
-            InitializeComponent();
-
             // Set up the "Change Item" button.
             this.changeItemBtn.Text = "Change Item";
             this.changeItemBtn.Dock = DockStyle.Bottom;
@@ -39,14 +36,14 @@ namespace TestNotifyPropertyChangedCS
             customersDataGridView.Dock = DockStyle.Top;
             this.Controls.Add(customersDataGridView);
 
-            this.Size = new Size(400, 200);
+            this.Size = new(400, 200);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             // Create and populate the list of DemoCustomer objects
             // which will supply data to the DataGridView.
-            BindingList<DemoCustomer> customerList = new BindingList<DemoCustomer>();
+            BindingList<DemoCustomer> customerList = new();
             customerList.Add(DemoCustomer.CreateNewCustomer());
             customerList.Add(DemoCustomer.CreateNewCustomer());
             customerList.Add(DemoCustomer.CreateNewCustomer());
@@ -80,7 +77,6 @@ namespace TestNotifyPropertyChangedCS
     public class DemoCustomer : INotifyPropertyChanged
     {
         // These fields hold the values for the public properties.
-        private Guid idValue = Guid.NewGuid();
         private string customerNameValue = string.Empty;
         private string phoneNumberValue = string.Empty;
 
@@ -112,20 +108,11 @@ namespace TestNotifyPropertyChangedCS
 
         // This property represents an ID, suitable
         // for use as a primary key in a database.
-        public Guid ID
-        {
-            get
-            {
-                return this.idValue;
-            }
-        }
+        public Guid ID { get; } = Guid.NewGuid();
 
         public string CustomerName
         {
-            get
-            {
-                return this.customerNameValue;
-            }
+            get => this.customerNameValue;
 
             set
             {
@@ -139,10 +126,7 @@ namespace TestNotifyPropertyChangedCS
 
         public string PhoneNumber
         {
-            get
-            {
-                return this.phoneNumberValue;
-            }
+            get => this.phoneNumberValue;
 
             set
             {

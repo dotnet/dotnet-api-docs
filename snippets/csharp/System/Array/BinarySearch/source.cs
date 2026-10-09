@@ -1,4 +1,4 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 
 public class SamplesArray
@@ -18,12 +18,12 @@ public class SamplesArray
         Array.Sort(myIntArray);
 
         // Displays the values of the Array.
-        Console.WriteLine( "The int array contains the following:" );
+        Console.WriteLine("The int array contains the following:");
         PrintValues(myIntArray);
 
         // Locates a specific object that does not exist in the Array.
         object myObjectOdd = 1;
-        FindMyObject( myIntArray, myObjectOdd );
+        FindMyObject(myIntArray, myObjectOdd);
 
         // Locates an object that exists in the Array.
         object myObjectEven = 6;
@@ -32,14 +32,14 @@ public class SamplesArray
 
     public static void FindMyObject(Array myArr, object myObject)
     {
-        int myIndex=Array.BinarySearch(myArr, myObject);
+        int myIndex = Array.BinarySearch(myArr, myObject);
         if (myIndex < 0)
         {
-            Console.WriteLine("The object to search for ({0}) is not found. The next larger object is at index {1}.", myObject, ~myIndex );
+            Console.WriteLine($"The object to search for ({myObject}) is not found. The next larger object is at index {~myIndex}.");
         }
         else
         {
-            Console.WriteLine("The object to search for ({0}) is at index {1}.", myObject, myIndex );
+            Console.WriteLine($"The object to search for ({myObject}) is at index {myIndex}.");
         }
     }
 
@@ -49,7 +49,7 @@ public class SamplesArray
         int cols = myArr.GetLength(myArr.Rank - 1);
         foreach (object o in myArr)
         {
-            if ( i < cols )
+            if (i < cols)
             {
                 i++;
             }
@@ -58,7 +58,7 @@ public class SamplesArray
                 Console.WriteLine();
                 i = 1;
             }
-            Console.Write( "\t{0}", o);
+            Console.Write($"\t{o}");
         }
         Console.WriteLine();
     }

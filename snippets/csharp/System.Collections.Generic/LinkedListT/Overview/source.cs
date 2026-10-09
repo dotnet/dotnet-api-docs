@@ -1,7 +1,7 @@
 ﻿// <Snippet1>
 using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Text;
 
 public class Example
 {
@@ -10,8 +10,8 @@ public class Example
         // <Snippet2>
         // Create the link list.
         string[] words =
-            { "the", "fox", "jumps", "over", "the", "dog" };
-        LinkedList<string> sentence = new LinkedList<string>(words);
+            ["the", "fox", "jumps", "over", "the", "dog"];
+        LinkedList<string> sentence = new(words);
         Display(sentence, "The linked list values:");
         // </Snippet2>
 
@@ -81,7 +81,7 @@ public class Example
         }
         catch (InvalidOperationException ex)
         {
-            Console.WriteLine("Exception message: {0}", ex.Message);
+            Console.WriteLine($"Exception message: {ex.Message}");
         }
         Console.WriteLine();
 
@@ -135,7 +135,7 @@ public class Example
         Console.WriteLine("Test 17: linked list Contains 'jumps' = {0}",
             sentence.Contains("jumps"));
         //</Snippet11>
-        
+
         //<Snippet12>
         // Release all the nodes.
         sentence.Clear();
@@ -151,11 +151,7 @@ public class Example
     private static void Display(LinkedList<string> words, string test)
     {
         Console.WriteLine(test);
-        foreach (string word in words)
-        {
-            Console.Write(word + " ");
-        }
-        Console.WriteLine();
+        Console.WriteLine(string.Join(" ", words));
         Console.WriteLine();
     }
 
@@ -164,12 +160,11 @@ public class Example
         Console.WriteLine(test);
         if (node.List == null)
         {
-            Console.WriteLine("Node '{0}' is not in the list.\n",
-                node.Value);
+            Console.WriteLine($"Node '{node.Value}' is not in the list.\n");
             return;
         }
 
-        StringBuilder result = new StringBuilder("(" + node.Value + ")");
+        StringBuilder result = new($"({node.Value})");
         LinkedListNode<string> nodeP = node.Previous;
 
         while (nodeP != null)
@@ -191,7 +186,7 @@ public class Example
 }
 
 //This code example produces the following output:
-//
+
 //The linked list values:
 //the fox jumps over the dog
 
@@ -249,10 +244,10 @@ public class Example
 //over
 //the
 //lazy
-//rhinoceros
+//rhinoceros.
 
 //Test 17: linked list Contains 'jumps'= True
 
 //Test 18: Cleared linked list Contains 'jumps'  = False
-//
+
 // </Snippet1>

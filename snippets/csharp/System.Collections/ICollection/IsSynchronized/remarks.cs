@@ -5,10 +5,10 @@ public class Remarks
 {
     public static void Main()
     {
-        ArrayList someCollection = new ArrayList(5);
+        ArrayList someCollection = new(5);
         // <Snippet1>
         ICollection myCollection = someCollection;
-        lock(myCollection.SyncRoot)
+        lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)
             {
@@ -20,10 +20,10 @@ public class Remarks
 
     public static void Dummy()
     {
-        ArrayList someCollection = new ArrayList(5);
+        ArrayList someCollection = new(5);
         // <Snippet2>
         ICollection myCollection = someCollection;
-        lock(myCollection.SyncRoot)
+        lock (myCollection.SyncRoot)
         {
             // Some operation on the collection, which is now thread safe.
         }

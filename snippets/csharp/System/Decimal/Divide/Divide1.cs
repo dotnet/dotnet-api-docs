@@ -3,17 +3,17 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      // Divide a series of numbers by 22.1
-      Decimal dividend = 1230.0m;
-      Decimal divisor = 22.1m;
-      for (int ctr = 0; ctr <= 10; ctr++) {
-         Console.WriteLine("{0:N1} / {1:N1} = {2:N4}", dividend, divisor,
-                           Decimal.Divide(dividend, divisor));
-         dividend += .1m;
-      }
-   }
+    public static void Main()
+    {
+        // Divide a series of numbers by 22.1
+        decimal dividend = 1230.0m;
+        decimal divisor = 22.1m;
+        for (int ctr = 0; ctr <= 10; ctr++)
+        {
+            Console.WriteLine($"{dividend:N1} / {divisor:N1} = {decimal.Divide(dividend, divisor):N4}");
+            dividend += .1m;
+        }
+    }
 }
 // The example displays the following output:
 //       1,230.0 / 22.1 = 55.6561

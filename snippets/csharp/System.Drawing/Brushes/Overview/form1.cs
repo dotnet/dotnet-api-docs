@@ -1,19 +1,19 @@
-﻿using System.Drawing.Drawing2D;
+﻿using System;
 using System.Drawing;
-using System;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-public class Form1:
+public class Form1 :
     System.Windows.Forms.Form
 {
     #region " Windows Form Designer generated code "
 
     public Form1() : base()
-    {        
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
-        this.Paint += new PaintEventHandler(Form1_Paint);
+        Paint += new PaintEventHandler(Form1_Paint);
         Button1.Click += new EventHandler(Button1_Click);
         DrawFirstRectangle();
 
@@ -25,10 +25,7 @@ public class Form1:
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -43,23 +40,23 @@ public class Form1:
     [System.Diagnostics.DebuggerStepThrough]
     private void InitializeComponent()
     {
-        this.Button1 = new System.Windows.Forms.Button();
-        this.SuspendLayout();
+        Button1 = new System.Windows.Forms.Button();
+        SuspendLayout();
         //
         //Button1
         //
-        this.Button1.Location = new System.Drawing.Point(208, 16);
-        this.Button1.Name = "Button1";
-        this.Button1.TabIndex = 0;
-        this.Button1.Text = "Button1";
+        Button1.Location = new System.Drawing.Point(208, 16);
+        Button1.Name = "Button1";
+        Button1.TabIndex = 0;
+        Button1.Text = "Button1";
         //
         //Form1
         //
-        this.ClientSize = new System.Drawing.Size(292, 266);
-        this.Controls.Add(this.Button1);
-        this.Name = "Form1";
-        this.Text = "Form1";
-        this.ResumeLayout(false);
+        ClientSize = new System.Drawing.Size(292, 266);
+        Controls.Add(Button1);
+        Name = "Form1";
+        Text = "Form1";
+        ResumeLayout(false);
     }
 
     #endregion
@@ -78,7 +75,7 @@ public class Form1:
 
     private void Form1_Paint(object sender, PaintEventArgs e)
     {
-       
+
         //ConvertRectangleToRectangleF(e)
         //RoundingAndTruncatingRectangles(e);
     }
@@ -120,7 +117,7 @@ public class Form1:
 
         Rectangle rectangle1 = new Rectangle(50, 50, 200, 100);
         Rectangle rectangle2 = new Rectangle(70, 20, 100, 200);
-    
+
         e.Graphics.DrawRectangle(Pens.Black, rectangle1);
         e.Graphics.DrawRectangle(Pens.Red, rectangle2);
 
@@ -147,7 +144,7 @@ public class Form1:
 
     private void DrawFirstRectangle()
     {
-        ControlPaint.DrawReversibleFrame(rectangle1, 
+        ControlPaint.DrawReversibleFrame(rectangle1,
             SystemColors.Highlight, FrameStyle.Thick);
     }
 
@@ -160,16 +157,16 @@ public class Form1:
         // Check to see if the rectangle is within the bounds of the screen.
         if (screenRectangle.Contains(rectangle1))
 
-            // If so, erase the previous rectangle.
+        // If so, erase the previous rectangle.
         {
-            ControlPaint.DrawReversibleFrame(rectangle1, 
+            ControlPaint.DrawReversibleFrame(rectangle1,
                 SystemColors.Highlight, FrameStyle.Thick);
 
             // Call the Offset method to move the rectangle.
             rectangle1.Offset(20, 20);
 
             // Draw the new, offset rectangle.
-            ControlPaint.DrawReversibleFrame(rectangle1, 
+            ControlPaint.DrawReversibleFrame(rectangle1,
                 SystemColors.Highlight, FrameStyle.Thick);
         }
     }
@@ -208,7 +205,7 @@ public class Form1:
     {
 
         // Construct a new RectangleF.
-        RectangleF myRectangleF = 
+        RectangleF myRectangleF =
             new RectangleF(30.6F, 30.7F, 40.8F, 100.9F);
 
         // Call the Round method.

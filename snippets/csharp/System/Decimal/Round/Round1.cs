@@ -3,11 +3,11 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      for (decimal value = 100m; value <= 102m; value += .1m)
-         Console.WriteLine("{0} --> {1}", value, Decimal.Round(value));
-   }
+    public static void Main()
+    {
+        for (decimal value = 100m; value <= 102m; value += .1m)
+            Console.WriteLine($"{value} --> {decimal.Round(value)}");
+    }
 }
 // The example displays the following output:
 //     100 --> 100

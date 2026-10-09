@@ -1,12 +1,9 @@
 ﻿//<Snippet1>
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace SampleRootDesigner
 {	
@@ -38,7 +35,7 @@ namespace SampleRootDesigner
         // will be shown in the Forms designer view. This member is 
         // cached to reduce processing needed to recreate the 
         // view control on each call to GetView().
-        private RootDesignerView m_view;			
+        private RootDesignerView _view;
 
         // This method returns an instance of the view for this root
         // designer. The "view" is the user interface that is presented
@@ -49,36 +46,30 @@ namespace SampleRootDesigner
             {
                 throw new ArgumentException("Not a supported view technology", "technology");
             }
-            if (m_view == null)
+            if (_view == null)
             {
                    // Some type of displayable Form or control is required 
                    // for a root designer that overrides GetView(). In this 
                    // example, a Control of type RootDesignerView is used.
                    // Any class that inherits from Control will work.
-                m_view = new RootDesignerView(this);
+                _view = new RootDesignerView(this);
             }
-            return m_view;
+            return _view;
         }
 
         // IRootDesigner.SupportedTechnologies is a required override for an
         // IRootDesigner. Default is the view technology used by this designer.  
-        ViewTechnology[] IRootDesigner.SupportedTechnologies 
-        {
-            get
-            {
-                return new ViewTechnology[] {ViewTechnology.Default};
-            }
-        }
+        ViewTechnology[] IRootDesigner.SupportedTechnologies => [ViewTechnology.Default];
 
         // RootDesignerView is a simple control that will be displayed 
         // in the designer window.
         private class RootDesignerView : Control 
         {
-            private SampleRootDesigner m_designer;
+            private readonly SampleRootDesigner _designer;
 
             public RootDesignerView(SampleRootDesigner designer)
             {
-                m_designer = designer;
+                _designer = designer;
                 BackColor = Color.Blue;
                 Font = new Font(Font.FontFamily.Name, 24.0f);
             }
@@ -88,7 +79,7 @@ namespace SampleRootDesigner
                 base.OnPaint(pe);
 
                 // Draws the name of the component in large letters.
-                pe.Graphics.DrawString(m_designer.Component.Site.Name, Font, Brushes.Yellow, ClientRectangle);
+                pe.Graphics.DrawString(_designer.Component.Site.Name, Font, Brushes.Yellow, ClientRectangle);
             }
         }		
     }

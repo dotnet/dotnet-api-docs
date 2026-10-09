@@ -1,20 +1,20 @@
 ﻿//<snippet1>
-// This example demonstrates the 
+// This example demonstrates the
 // System.String.Compare(String, String, StringComparison) method.
 
 using System;
 using System.Threading;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
-        string intro = "Compare three versions of the letter I using different " + 
+        string intro = "Compare three versions of the letter I using different " +
                        "values of StringComparison.";
 
-        // Define an array of strings where each element contains a version of the 
-        // letter I. (An array of strings is used so you can easily modify this 
-        // code example to test additional or different combinations of strings.)  
+        // Define an array of strings where each element contains a version of the
+        // letter I. (An array of strings is used so you can easily modify this
+        // code example to test additional or different combinations of strings.)
 
         string[] threeIs = new string[3];
         // LATIN SMALL LETTER I (U+0069)
@@ -24,10 +24,10 @@ class Sample
         // LATIN CAPITAL LETTER I (U+0049)
         threeIs[2] = "\u0049";
 
-        string[] unicodeNames = 
+        string[] unicodeNames =
         {
-            "LATIN SMALL LETTER I (U+0069)", 
-            "LATIN SMALL LETTER DOTLESS I (U+0131)", 
+            "LATIN SMALL LETTER I (U+0069)",
+            "LATIN SMALL LETTER DOTLESS I (U+0131)",
             "LATIN CAPITAL LETTER I (U+0049)"
         };
 
@@ -46,13 +46,12 @@ class Sample
 
         // Display the current culture because the culture-specific comparisons
         // can produce different results with different cultures.
-        Console.WriteLine(
-            "The current culture is {0}.\n", Thread.CurrentThread.CurrentCulture.Name);
+        Console.WriteLine($"The current culture is {Thread.CurrentThread.CurrentCulture.Name}.\n");
 
-        // Determine the relative sort order of three versions of the letter I. 
+        // Determine the relative sort order of three versions of the letter I.
         foreach (StringComparison sc in scValues)
         {
-            Console.WriteLine("StringComparison.{0}:", sc);
+            Console.WriteLine($"StringComparison.{sc}:");
 
             // LATIN SMALL LETTER I (U+0069) : LATIN SMALL LETTER DOTLESS I (U+0131)
             Test(0, 1, sc, threeIs, unicodeNames);
@@ -74,7 +73,7 @@ class Sample
         string result = "equal to";
         int cmpValue = 0;
 
-        cmpValue = String.Compare(testI[x], testI[y], comparison);
+        cmpValue = string.Compare(testI[x], testI[y], comparison);
         if (cmpValue < 0)
             result = "less than";
         else if (cmpValue > 0)

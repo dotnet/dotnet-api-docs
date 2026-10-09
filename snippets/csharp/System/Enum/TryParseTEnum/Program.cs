@@ -1,0 +1,2 @@
+CaseSensitiveTryParseExample.Run();
+IgnoreCaseTryParseExample.Run();

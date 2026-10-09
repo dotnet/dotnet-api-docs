@@ -4,26 +4,25 @@ using System.Threading;
 
 namespace Examples.AdvancedProgramming.AsynchronousOperations
 {
-    public class AsyncMain
+    public class WaitHandleExample
     {
-        static void Main()
+        public static void Run()
         {
             // The asynchronous method puts the thread id here.
             int threadId;
 
             // Create an instance of the test class.
-            AsyncDemo ad = new AsyncDemo();
+            AsyncDemo ad = new();
 
             // Create the delegate.
-            AsyncMethodCaller caller = new AsyncMethodCaller(ad.TestMethod);
+            AsyncMethodCaller caller = new(ad.TestMethod);
 
             // Initiate the asychronous call.
             IAsyncResult result = caller.BeginInvoke(3000,
                 out threadId, null, null);
 
             Thread.Sleep(0);
-            Console.WriteLine("Main thread {0} does some work.",
-                Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine($"Main thread {Thread.CurrentThread.ManagedThreadId} does some work.");
 
             // Wait for the WaitHandle to become signaled.
             result.AsyncWaitHandle.WaitOne();
@@ -35,8 +34,7 @@ namespace Examples.AdvancedProgramming.AsynchronousOperations
             // Close the wait handle.
             result.AsyncWaitHandle.Close();
 
-            Console.WriteLine("The call executed on thread {0}, with return value \"{1}\".",
-                threadId, returnValue);
+            Console.WriteLine($"The call executed on thread {threadId}, with return value \"{returnValue}\".");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// <Snippet1>
 using System;
-using System.Reflection;
+
 
 public abstract class dtype
 {
@@ -14,11 +14,7 @@ public abstract class dtype
     {
     }
 
-    public static void Main(string[] args)
-    {
-        Console.WriteLine("The declaring type of m is {0}.",
-            typeof(MyClassB).GetMethod("m").DeclaringType);
-    }
+    public static void Main(string[] args) => Console.WriteLine($"The declaring type of m is {typeof(MyClassB).GetMethod("m").DeclaringType}.");
 }
 /* The example produces the following output:
 

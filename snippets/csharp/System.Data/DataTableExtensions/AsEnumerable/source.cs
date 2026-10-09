@@ -2,26 +2,26 @@
 using System;
 using System.Data;
 
-class Program {
-   public void DisplayProducts(DataTable table) {
-      var productNames = from products in table.AsEnumerable() select products.Field<string>("ProductName");
-      Console.WriteLine("Product Names: ");
-      foreach (string productName in productNames) {
-         Console.WriteLine(productName);
-      }
-   }
+DataTable table = new();
+table.Columns.Add("ID");
+table.Columns.Add("ProductName");
 
-   static void Main(string[] args) {
-      DataTable table = new DataTable();
-      table.Columns.Add("ID");
-      table.Columns.Add("ProductName");
+table.Rows.Add("1", "Chai");
+table.Rows.Add("2", "Queso Cabrales");
+table.Rows.Add("3", "Tofu");
 
-      table.Rows.Add("1", "Chai");
-      table.Rows.Add("2", "Queso Cabrales");
-      table.Rows.Add("3", "Tofu");
+DisplayProducts(table);
 
-      Program inst = new Program();
-      inst.DisplayProducts(table);
-   }
+static void DisplayProducts(DataTable table)
+{
+    EnumerableRowCollection<string> productNames =
+        from product in table.AsEnumerable()
+        select product.Field<string>("ProductName");
+
+    Console.WriteLine("Product Names: ");
+    foreach (string productName in productNames)
+    {
+        Console.WriteLine(productName);
+    }
 }
 //</snippet1>

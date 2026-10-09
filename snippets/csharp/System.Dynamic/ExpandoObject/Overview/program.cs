@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Dynamic;
 using System.ComponentModel;
+using System.Dynamic;
 
 namespace N1
 {
@@ -26,7 +24,7 @@ namespace N1
 
             //<Snippet3>
             sampleObject.number = 10;
-            sampleObject.Increment = (Action)(() => { sampleObject.number++; });
+            sampleObject.Increment = (Action)(() => sampleObject.number++);
 
             // Before calling the Increment method.
             Console.WriteLine(sampleObject.number);
@@ -45,9 +43,9 @@ namespace N1
             employee.Name = "John Smith";
             employee.Age = 33;
 
-            foreach (var property in (IDictionary<String, Object>)employee)
+            foreach (KeyValuePair<string, object> property in (IDictionary<string, object>)employee)
             {
-                Console.WriteLine(property.Key + ": " + property.Value);
+                Console.WriteLine($"{property.Key}: {property.Value}");
             }
             // This code example produces the following output:
             // Name: John Smith
@@ -60,7 +58,7 @@ namespace N1
             //<Snippet6>
             dynamic employee = new ExpandoObject();
             employee.Name = "John Smith";
-            ((IDictionary<String, Object>)employee).Remove("Name");
+            ((IDictionary<string, object>)employee).Remove("Name");
             //</Snippet6>
         }
     }
@@ -89,8 +87,7 @@ namespace n2
         }
         private static void WritePerson(dynamic person)
         {
-            Console.WriteLine("{0} is {1} years old.",
-                              person.Name, person.Age);
+            Console.WriteLine($"{person.Name} is {person.Age} years old.");
             // The following statement causes an exception
             // if you pass the employee object.
             // Console.WriteLine("Manages {0} people", person.TeamSize);
@@ -105,23 +102,20 @@ namespace n2
 namespace n3
 {
     //<Snippet7>
-    // Add "using System.ComponentModel;" line
+    // Add a "using System.ComponentModel;" line
     // to the beginning of the file.
     class Program
     {
         static void Test()
         {
             dynamic employee = new ExpandoObject();
-            ((INotifyPropertyChanged)employee).PropertyChanged +=
-                new PropertyChangedEventHandler(HandlePropertyChanges);
+            ((INotifyPropertyChanged)employee).PropertyChanged += HandlePropertyChanges;
             employee.Name = "John Smith";
         }
 
         private static void HandlePropertyChanges(
             object sender, PropertyChangedEventArgs e)
-        {
-            Console.WriteLine("{0} has changed.", e.PropertyName);
-        }
+            => Console.WriteLine($"{e.PropertyName} has changed.");
     }
     //</Snippet7>
 }

@@ -8,18 +8,15 @@ public class SamplesArray
     public static void Main()
     {
         // create a three element array of integers
-        int[] intArray = new int[] {2, 3, 4};
+        int[] intArray = new int[] { 2, 3, 4 };
 
         // set a delegate for the ShowSquares method
-        Action<int> action = new Action<int>(ShowSquares);
+        Action<int> action = new(ShowSquares);
 
         Array.ForEach(intArray, action);
     }
 
-    private static void ShowSquares(int val)
-    {
-        Console.WriteLine("{0:d} squared = {1:d}", val, val*val);
-    }
+    private static void ShowSquares(int val) => Console.WriteLine($"{val:d} squared = {val * val:d}");
 }
 
 /*

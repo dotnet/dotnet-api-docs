@@ -18,9 +18,7 @@ public class Example7
         for (int ctr = 0; ctr <= 9; ctr++)
         {
             double lowerRange = 10 + ctr * .1;
-            Console.WriteLine("{0:N1} to {1:N1}: {2,8:N0}  ({3,7:P2})",
-                              lowerRange, lowerRange + .1, range[ctr],
-                              range[ctr] / 1000000.0);
+            Console.WriteLine($"{lowerRange:N1} to {lowerRange + .1:N1}: {range[ctr],8:N0}  ({range[ctr] / 1000000.0,7:P2})");
         }
 
         // The example displays output like the following:

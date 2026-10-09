@@ -6,14 +6,13 @@ class Example
     public static void Main()
     {
         // Define an array of Char values.
-        Char[] values = { '\0', ' ', '*', 'A', 'a', '{', 'Æ' };
+        char[] values = { '\0', ' ', '*', 'A', 'a', '{', 'Æ' };
 
         // Convert each Char value to a Decimal.
-        foreach (var value in values) {
-           decimal decValue = value;
-           Console.WriteLine("'{0}' ({1}) --> {2} ({3})", value,
-                             value.GetType().Name, decValue,
-                             decValue.GetType().Name);
+        foreach (char value in values)
+        {
+            decimal decValue = value;
+            Console.WriteLine($"'{value}' ({value.GetType().Name}) --> {decValue} ({decValue.GetType().Name})");
         }
     }
 }

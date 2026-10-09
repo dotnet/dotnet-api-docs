@@ -16,9 +16,9 @@ public struct OrderOrderLine : IEquatable<OrderOrderLine>
     public override int GetHashCode() => HashCode.Combine(OrderId, OrderLineId);
 }
 
-class Program
+class OrderHashCodeExample
 {
-    static void Main(string[] args)
+    public static void Run(string[] args)
     {
         var set = new HashSet<OrderOrderLine>
         {

@@ -10,7 +10,7 @@ class Sample
         Console.Clear();
 
         // Establish an event handler to process key press events.
-        Console.CancelKeyPress += new ConsoleCancelEventHandler(myHandler);
+        Console.CancelKeyPress += new(myHandler);
         while (true)
         {
             Console.Write("Press any key, or 'X' to quit, or ");

@@ -1,5 +1,4 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
 
 namespace CodeDomSamples
@@ -16,10 +15,10 @@ namespace CodeDomSamples
             // Declare a new namespace object and name it
             CodeNamespace Samples = new CodeNamespace("Samples");
             // Add the namespace object to the compile unit
-            CompileUnit.Namespaces.Add( Samples );
+            CompileUnit.Namespaces.Add(Samples);
 
             // Add a new namespace import for the System namespace
-            Samples.Imports.Add( new CodeNamespaceImport("System") );
+            Samples.Imports.Add(new CodeNamespaceImport("System"));
 
             // Declare a new type object and name it
             CodeTypeDeclaration Class1 = new CodeTypeDeclaration("Class1");
@@ -33,12 +32,12 @@ namespace CodeDomSamples
                 // Call the System.Console.WriteLine method
                 new CodeTypeReferenceExpression("System.Console"), "WriteLine",
                 // Pass a primitive string parameter to the WriteLine method
-                new CodePrimitiveExpression("Hello World!") );
+                new CodePrimitiveExpression("Hello World!"));
             // Add the new method code statement
             Start.Statements.Add(new CodeExpressionStatement(cs1));
 
             // Add the code entry point method to the type's members collection
-            Class1.Members.Add( Start );
+            Class1.Members.Add(Start);
 
             return CompileUnit;
             //</Snippet2>

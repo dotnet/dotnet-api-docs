@@ -1,55 +1,66 @@
 ﻿//<Snippet1>
 using System;
 
-namespace AttTargsCS {
+namespace AttTargsCS
+{
     // This attribute is only valid on a class.
     [AttributeUsage(AttributeTargets.Class)]
-    public class ClassTargetAttribute : Attribute {
+    public class ClassTargetAttribute : Attribute
+    {
     }
 
     // This attribute is only valid on a method.
     [AttributeUsage(AttributeTargets.Method)]
-    public class MethodTargetAttribute : Attribute {
+    public class MethodTargetAttribute : Attribute
+    {
     }
 
     // This attribute is only valid on a constructor.
     [AttributeUsage(AttributeTargets.Constructor)]
-    public class ConstructorTargetAttribute : Attribute {
+    public class ConstructorTargetAttribute : Attribute
+    {
     }
 
     // This attribute is only valid on a field.
     [AttributeUsage(AttributeTargets.Field)]
-    public class FieldTargetAttribute : Attribute {
+    public class FieldTargetAttribute : Attribute
+    {
     }
 
     // This attribute is valid on a class or a method.
-    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method)]
-    public class ClassMethodTargetAttribute : Attribute {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class ClassMethodTargetAttribute : Attribute
+    {
     }
 
     // This attribute is valid on a generic type parameter.
     [AttributeUsage(AttributeTargets.GenericParameter)]
-    public class GenericParameterTargetAttribute : Attribute {
+    public class GenericParameterTargetAttribute : Attribute
+    {
     }
 
     // This attribute is valid on any target.
     [AttributeUsage(AttributeTargets.All)]
-    public class AllTargetsAttribute : Attribute {
+    public class AllTargetsAttribute : Attribute
+    {
     }
 
     [ClassTarget]
     [ClassMethodTarget]
     [AllTargets]
-    public class TestClassAttribute {
+    public class TestClassAttribute
+    {
         [ConstructorTarget]
         [AllTargets]
-        TestClassAttribute() {
+        TestClassAttribute()
+        {
         }
 
         [MethodTarget]
         [ClassMethodTarget]
         [AllTargets]
-        public void Method1() {
+        public void Method1()
+        {
         }
 
         [FieldTarget]
@@ -57,10 +68,12 @@ namespace AttTargsCS {
         public int myInt;
 
         public void GenericMethod<
-            [GenericParameterTarget, AllTargets] T>(T x) {
+            [GenericParameterTarget, AllTargets] T>(T x)
+        {
         }
 
-        static void Main(string[] args) {
+        static void Main(string[] args)
+        {
         }
     }
 }

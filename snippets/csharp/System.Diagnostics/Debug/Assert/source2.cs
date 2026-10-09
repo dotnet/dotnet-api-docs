@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Diagnostics;
 
 public class Form3
@@ -7,8 +6,8 @@ public class Form3
     // <Snippet1>
     public static void MyMethod(Type type, Type baseType)
     {
-        Debug.Assert(type != null, "Type parameter is null",
-           "Can't get object for null type");
+        Debug.Assert(type is not null, "Type parameter is null",
+            "Can't get object for null type");
 
         // Perform some processing.
     }

@@ -1,5 +1,4 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
 
 namespace CodeDomSamples
@@ -17,7 +16,7 @@ namespace CodeDomSamples
                 // createType parameter inidicates the type of object to create.
                 new CodeTypeReference(typeof(System.Exception)),
                 // parameters parameter indicates the constructor parameters.
-                new CodeExpression[] {} ) );
+                []));
 
             // A C# code generator produces the following source code for the preceeding example code:
 

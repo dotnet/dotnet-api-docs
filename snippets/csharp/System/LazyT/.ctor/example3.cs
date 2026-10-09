@@ -1,19 +1,17 @@
 ﻿//<SnippetAll>
 using System;
 using System.Threading;
+using LargeObject = LargeObjectCtorExample4;
 
-class Program
+class LazyCtorExample4
 {
     static Lazy<LargeObject> lazyLargeObject = null;
 
     //<SnippetFactoryFunc>
-    static LargeObject InitLargeObject()
-    {
-        return new LargeObject();
-    }
+    static LargeObject InitLargeObject() => new LargeObject();
     //</SnippetFactoryFunc>
 
-    static void Main()
+    public static void Run()
     {
         // The lazy initializer is created here. LargeObject is not created until the
         // ThreadProc method executes.
@@ -40,7 +38,7 @@ class Program
             }
             catch (ApplicationException aex)
             {
-                Console.WriteLine("Exception: {0}", aex.Message);
+                Console.WriteLine($"Exception: {aex.Message}");
             }
         }
         //</SnippetValueProp>
@@ -50,11 +48,11 @@ class Program
     }
 }
 
-class LargeObject
+class LargeObjectCtorExample4
 {
     //<SnippetLargeCtor>
     static bool pleaseThrow = true;
-    public LargeObject()
+    public LargeObjectCtorExample4()
     {
         if (pleaseThrow)
         {
@@ -62,8 +60,7 @@ class LargeObject
             throw new ApplicationException("Throw only ONCE.");
         }
 
-        Console.WriteLine("LargeObject was created on thread id {0}.",
-            Thread.CurrentThread.ManagedThreadId);
+        Console.WriteLine($"LargeObject was created on thread id {Thread.CurrentThread.ManagedThreadId}.");
     }
     //</SnippetLargeCtor>
     public long[] Data = new long[100000000];

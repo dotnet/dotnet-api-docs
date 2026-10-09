@@ -1,12 +1,15 @@
 ﻿#define TRACE
 
 using System;
-using System.Data;
 using System.Diagnostics;
 
 public class Form2
 {
-    public enum Option { First, Second };
+    public enum Option
+    {
+        First,
+        Second
+    }
 
     protected double result;
 
@@ -21,7 +24,7 @@ public class Form2
         // <Snippet1>
         catch (Exception)
         {
-            Trace.Fail("Invalid value: " + value.ToString(),
+            Trace.Fail($"Invalid value: {value}",
                "Resetting value to newValue.");
             value = newValue;
         }
@@ -36,7 +39,7 @@ public class Form2
             // Insert additional cases.
 
             default:
-                Trace.Fail("Unsupported option " + option, "Result set to 1.0");
+                Trace.Fail($"Unsupported option {option}", "Result set to 1.0");
                 result = 1.0;
                 break;
         }
@@ -46,7 +49,7 @@ public class Form2
     [STAThread]
     static void Main()
     {
-        var myForm = new Form2();
+        Form2 myForm = new();
         myForm.Method(Option.Second, "not an integer string");
     }
 }

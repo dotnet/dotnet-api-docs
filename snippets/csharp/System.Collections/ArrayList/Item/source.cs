@@ -4,38 +4,30 @@ using System.Collections;
 
 public class Example
 {
-    public static void Main()
+    public static void Run()
     {
         // Create an empty ArrayList, and add some elements.
-        ArrayList stringList = new ArrayList();
-
-        stringList.Add("a");
-        stringList.Add("abc");
-        stringList.Add("abcdef");
-        stringList.Add("abcdefg");
+        ArrayList stringList = ["a", "abc", "abcdef", "abcdefg"];
 
         // The Item property is an indexer, so the property name is
         // not required.
-        Console.WriteLine("Element {0} is \"{1}\"", 2, stringList[2]);
+        Console.WriteLine($"Element {2} is \"{stringList[2]}\"");
 
         // Assigning a value to the property changes the value of
         // the indexed element.
         stringList[2] = "abcd";
-        Console.WriteLine("Element {0} is \"{1}\"", 2, stringList[2]);
+        Console.WriteLine($"Element {2} is \"{stringList[2]}\"");
 
         // Accessing an element outside the current element count
         // causes an exception.
-        Console.WriteLine("Number of elements in the list: {0}",
-            stringList.Count);
+        Console.WriteLine($"Number of elements in the list: {stringList.Count}");
         try
         {
-            Console.WriteLine("Element {0} is \"{1}\"",
-                stringList.Count, stringList[stringList.Count]);
+            Console.WriteLine($"Element {stringList.Count} is \"{stringList[stringList.Count]}\"");
         }
-        catch(ArgumentOutOfRangeException aoore)
+        catch (ArgumentOutOfRangeException)
         {
-            Console.WriteLine("stringList({0}) is out of range.",
-                stringList.Count);
+            Console.WriteLine($"stringList({stringList.Count}) is out of range.");
         }
 
         // You cannot use the Item property to add new elements.
@@ -43,17 +35,15 @@ public class Example
         {
             stringList[stringList.Count] = "42";
         }
-        catch(ArgumentOutOfRangeException aoore)
+        catch (ArgumentOutOfRangeException)
         {
-            Console.WriteLine("stringList({0}) is out of range.",
-                stringList.Count);
+            Console.WriteLine($"stringList({stringList.Count}) is out of range.");
         }
 
         Console.WriteLine();
         for (int i = 0; i < stringList.Count; i++)
         {
-            Console.WriteLine("Element {0} is \"{1}\"", i,
-                stringList[i]);
+            Console.WriteLine($"Element {i} is \"{stringList[i]}\"");
         }
 
         Console.WriteLine();

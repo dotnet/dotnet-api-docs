@@ -3,26 +3,19 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-class MySample{
+// This object is used to wait for events.
+using AutoResetEvent signal = new(false);
+using EventLog myNewLog = new("Application", ".", "testEventLogEvent");
 
-    // This member is used to wait for events.
-    static AutoResetEvent signal;
+myNewLog.EntryWritten += MyOnEntryWritten;
+myNewLog.EnableRaisingEvents = true;
+myNewLog.WriteEntry("Test message", EventLogEntryType.Information);
+signal.WaitOne();
 
-    public static void Main(){
-
-        signal = new AutoResetEvent(false);
-        EventLog myNewLog = new EventLog("Application", ".", "testEventLogEvent");
-
-        myNewLog.EntryWritten += new EntryWrittenEventHandler(MyOnEntryWritten);
-        myNewLog.EnableRaisingEvents = true;
-        myNewLog.WriteEntry("Test message", EventLogEntryType.Information);
-	    signal.WaitOne();
-    }
-
-    public static void MyOnEntryWritten(object source, EntryWrittenEventArgs e){
-        Console.WriteLine("In event handler");
-        signal.Set();
-    }
+void MyOnEntryWritten(object source, EntryWrittenEventArgs e)
+{
+    Console.WriteLine("In event handler");
+    signal.Set();
 }
 
 // </Snippet1>

@@ -1,4 +1,4 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 
 public class Example1
@@ -6,19 +6,19 @@ public class Example1
     public static void Main()
     {
         bool[] flags = { true, false };
-        foreach (var flag in flags)
+        foreach (bool flag in flags)
         {
             // Get binary representation of flag.
-            Byte value = BitConverter.GetBytes(flag)[0];
+            byte value = BitConverter.GetBytes(flag)[0];
             Console.WriteLine($"Original value: {flag}");
             Console.WriteLine($"Binary value:   {value} ({GetBinaryString(value)})");
             // Restore the flag from its binary representation.
-            bool newFlag = BitConverter.ToBoolean(new Byte[] { value }, 0);
+            bool newFlag = BitConverter.ToBoolean(new byte[] { value }, 0);
             Console.WriteLine($"Restored value: {newFlag}{Environment.NewLine}");
         }
     }
 
-    private static string GetBinaryString(Byte value)
+    private static string GetBinaryString(byte value)
     {
         string retVal = Convert.ToString(value, 2);
         return new string('0', 8 - retVal.Length) + retVal;

@@ -5,34 +5,38 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesStringCollection  {
+public class SamplesStringCollection
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new StringCollection.
-      StringCollection myCol = new StringCollection();
-      String[] myArr = new String[] { "RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED" };
-      myCol.AddRange( myArr );
+        // Creates and initializes a new StringCollection.
+        StringCollection myCol = [];
+        string[] myArr = ["RED", "orange", "yellow", "RED", "green", "blue", "RED", "indigo", "violet", "RED"];
+        myCol.AddRange(myArr);
 
-      Console.WriteLine( "Initial contents of the StringCollection:" );
-      PrintValues( myCol );
+        Console.WriteLine("Initial contents of the StringCollection:");
+        PrintValues(myCol);
 
-      // Copies the collection to a new array starting at index 0.
-      String[] myArr2 = new String[myCol.Count];
-      myCol.CopyTo( myArr2, 0 );
+        // Copies the collection to a new array starting at index 0.
+        string[] myArr2 = new string[myCol.Count];
+        myCol.CopyTo(myArr2, 0);
 
-      Console.WriteLine( "The new array contains:" );
-      for ( int i = 0; i < myArr2.Length; i++ )  {
-         Console.WriteLine( "   [{0}] {1}", i, myArr2[i] );
-      }
-      Console.WriteLine();
-   }
+        Console.WriteLine("The new array contains:");
+        for (int i = 0; i < myArr2.Length; i++)
+        {
+            Console.WriteLine($"   [{i}] {myArr2[i]}");
+        }
+        Console.WriteLine();
+    }
 
-   public static void PrintValues( IEnumerable myCol )  {
-      foreach ( Object obj in myCol )
-         Console.WriteLine( "   {0}", obj );
-      Console.WriteLine();
-   }
+    public static void PrintValues(IEnumerable myCol)
+    {
+        foreach (object obj in myCol)
+            Console.WriteLine($"   {obj}");
+        Console.WriteLine();
+    }
 }
 
 /*

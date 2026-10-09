@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 
@@ -11,7 +8,7 @@ namespace CompositionContainerExample
     [Export]
     class MyAddin
     {
-        public String myData { get { return "The data!"; } }
+        public string myData => "The data!";
     }
 
     class MyProgram
@@ -22,17 +19,17 @@ namespace CompositionContainerExample
 
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            AggregateCatalog catalog = new AggregateCatalog();
+            AggregateCatalog catalog = new();
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(MyAddin).Assembly));
-            CompositionContainer _container = new CompositionContainer(catalog);
-            MyProgram myProgram = new MyProgram();
-            _container.SatisfyImportsOnce(myProgram);
+            CompositionContainer container = new(catalog);
+            MyProgram myProgram = new();
+            container.SatisfyImportsOnce(myProgram);
             Console.WriteLine(myProgram.myAddin.myData);
             Console.ReadLine();
 
-            _container.Dispose();
+            container.Dispose();
         }
     }
     //</snippet1>

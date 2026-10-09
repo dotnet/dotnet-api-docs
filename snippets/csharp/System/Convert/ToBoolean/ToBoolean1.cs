@@ -3,22 +3,22 @@ using System;
 
 public class BooleanConversion
 {
-   public static void Main()
-   {
-      String[] values = { null, String.Empty, "true", "TrueString",
+    public static void Main()
+    {
+        string[] values = { null, string.Empty, "true", "TrueString",
                           "False", "    false    ", "-1", "0" };
-      foreach (var value in values) {
-         try
-         {
-            Console.WriteLine("Converted '{0}' to {1}.", value,
-                              Convert.ToBoolean(value));
-         }
-         catch (FormatException)
-         {
-            Console.WriteLine("Unable to convert '{0}' to a Boolean.", value);
-         }
-      }
-   }
+        foreach (string value in values)
+        {
+            try
+            {
+                Console.WriteLine($"Converted '{value}' to {Convert.ToBoolean(value)}.");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($"Unable to convert '{value}' to a Boolean.");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //       Converted '' to False.

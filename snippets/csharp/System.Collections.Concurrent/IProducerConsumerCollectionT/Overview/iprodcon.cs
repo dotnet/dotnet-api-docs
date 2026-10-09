@@ -1,8 +1,8 @@
 ﻿// <snippet1>
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 public class SafeStack<T> : IProducerConsumerCollection<T>
 {
     // Used for enforcing thread-safety
-    private object m_lockObject = new object();
+    private object m_lockObject = new();
 
     // We'll use a regular old Stack for our core operations
     private Stack<T> m_sequentialStack = null;
@@ -69,7 +69,7 @@ public class SafeStack<T> : IProducerConsumerCollection<T>
     public T[] ToArray()
     {
         T[] rval = null;
-        lock (m_lockObject) rval = m_sequentialStack.ToArray();
+        lock (m_lockObject) rval = [.. m_sequentialStack];
         return rval;
     }
 
@@ -140,7 +140,7 @@ public class Program
     //      IPCC(T).CopyTo()
     static void TestSafeStack()
     {
-        SafeStack<int> stack = new SafeStack<int>();
+        SafeStack<int> stack = new();
         IProducerConsumerCollection<int> ipcc = (IProducerConsumerCollection<int>)stack;
 
         // Test Push()/TryAdd()
@@ -158,7 +158,7 @@ public class Program
         }
         catch (Exception e)
         {
-            Console.WriteLine("CopyTo() within boundaries unexpectedly threw an exception: {0}", e.Message);
+            Console.WriteLine($"CopyTo() within boundaries unexpectedly threw an exception: {e.Message}");
         }
 
         // Try CopyTo() that overflows
@@ -169,19 +169,22 @@ public class Program
         }
         catch (Exception e)
         {
-            Console.WriteLine("CopyTo() with index overflow threw an exception, as expected: {0}", e.Message);
+            Console.WriteLine($"CopyTo() with index overflow threw an exception, as expected: {e.Message}");
         }
 
         // Test enumeration
         Console.Write("Enumeration (should be three items): ");
-        foreach (int item in stack) Console.Write("{0} ", item);
+        foreach (int item in stack)
+        {
+            Console.Write($"{item} ");
+        }
         Console.WriteLine("");
 
         // Test TryPop()
         int popped = 0;
         if (stack.TryPop(out popped))
         {
-            Console.WriteLine("Successfully popped {0}", popped);
+            Console.WriteLine($"Successfully popped {popped}");
         }
         else
         {
@@ -189,12 +192,12 @@ public class Program
         }
 
         // Test Count
-        Console.WriteLine("stack count is {0}, should be 2", stack.Count);
+        Console.WriteLine($"stack count is {stack.Count}, should be 2");
 
         // Test TryTake()
         if (ipcc.TryTake(out popped))
         {
-            Console.WriteLine("Successfully IPCC-TryTaked {0}", popped);
+            Console.WriteLine($"Successfully IPCC-TryTaked {popped}");
         }
         else
         {

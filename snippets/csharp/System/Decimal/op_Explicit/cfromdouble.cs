@@ -7,15 +7,15 @@ class DecimalFromDoubleDemo
     const string formatter = "{0,25:E16}{1,33}";
 
     // Get the exception type name; remove the namespace prefix.
-    public static string GetExceptionType( Exception ex )
+    public static string GetExceptionType(Exception ex)
     {
-        string exceptionType = ex.GetType( ).ToString( );
+        string exceptionType = ex.GetType().ToString();
         return exceptionType.Substring(
-            exceptionType.LastIndexOf( '.' ) + 1 );
+            exceptionType.LastIndexOf('.') + 1);
     }
 
     // Convert the double argument; catch exceptions that are thrown.
-    public static void DecimalFromDouble( double argument )
+    public static void DecimalFromDouble(double argument)
     {
         object decValue;
 
@@ -24,33 +24,33 @@ class DecimalFromDoubleDemo
         {
             decValue = (decimal)argument;
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
-            decValue = GetExceptionType( ex );
+            decValue = GetExceptionType(ex);
         }
 
-        Console.WriteLine( formatter, argument, decValue );
+        Console.WriteLine(formatter, argument, decValue);
     }
 
-    public static void Main( )
+    public static void Main()
     {
         Console.WriteLine(
             "This example of the explicit conversion from double " +
-            "to decimal \ngenerates the following output.\n" );
-        Console.WriteLine( formatter, "double argument",
-            "decimal value" );
-        Console.WriteLine( formatter, "---------------",
-            "-------------" );
+            "to decimal \ngenerates the following output.\n");
+        Console.WriteLine(formatter, "double argument",
+            "decimal value");
+        Console.WriteLine(formatter, "---------------",
+            "-------------");
 
         // Convert double values and display the results.
-        DecimalFromDouble( 1.234567890123E-30 );
-        DecimalFromDouble( 1.2345678901234E-25 );
-        DecimalFromDouble( 1.23456789012345E-20 );
-        DecimalFromDouble( 1.234567890123456E-10 );
-        DecimalFromDouble( 1.2345678901234567 );
-        DecimalFromDouble( 1.23456789012345678E+12 );
-        DecimalFromDouble( 1.234567890123456789E+28 );
-        DecimalFromDouble( 1.234567890123456789E+30 );
+        DecimalFromDouble(1.234567890123E-30);
+        DecimalFromDouble(1.2345678901234E-25);
+        DecimalFromDouble(1.23456789012345E-20);
+        DecimalFromDouble(1.234567890123456E-10);
+        DecimalFromDouble(1.2345678901234567);
+        DecimalFromDouble(1.23456789012345678E+12);
+        DecimalFromDouble(1.234567890123456789E+28);
+        DecimalFromDouble(1.234567890123456789E+30);
     }
 }
 

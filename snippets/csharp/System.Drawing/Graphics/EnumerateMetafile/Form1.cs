@@ -3,10 +3,9 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
-
 // for Marshal.Copy
-using System.Runtime.InteropServices; 
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 public class Form1 : Form
 {

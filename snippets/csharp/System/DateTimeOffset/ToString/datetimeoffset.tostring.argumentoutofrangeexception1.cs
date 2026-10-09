@@ -4,23 +4,22 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-      CultureInfo jaJP = new CultureInfo("ja-JP");
-      jaJP.DateTimeFormat.Calendar = new JapaneseCalendar();
-      DateTimeOffset date1 = new DateTimeOffset(new DateTime(1867, 1, 1),
-                                                TimeSpan.Zero);
+    public static void Main()
+    {
+        CultureInfo jaJP = new("ja-JP");
+        jaJP.DateTimeFormat.Calendar = new JapaneseCalendar();
+        DateTimeOffset date1 = new(new DateTime(1867, 1, 1),
+                                                  TimeSpan.Zero);
 
-      try {
-         Console.WriteLine(date1.ToString(jaJP));
-      }
-      catch (ArgumentOutOfRangeException) {
-         Console.WriteLine("{0:d} is earlier than {1:d} or later than {2:d}",
-                           date1,
-                           jaJP.DateTimeFormat.Calendar.MinSupportedDateTime,
-                           jaJP.DateTimeFormat.Calendar.MaxSupportedDateTime);
-      }
-   }
+        try
+        {
+            Console.WriteLine(date1.ToString(jaJP));
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            Console.WriteLine($"{date1:d} is earlier than {jaJP.DateTimeFormat.Calendar.MinSupportedDateTime:d} or later than {jaJP.DateTimeFormat.Calendar.MaxSupportedDateTime:d}");
+        }
+    }
 }
 // The example displays the following output:
 //    1/1/1867 is earlier than 9/8/1868 or later than 12/31/9999

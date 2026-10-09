@@ -4,25 +4,13 @@ using System.Reflection;
 
 public class TestClass
 {
-    public void DisplayValue(String s)
-    {
-        Console.WriteLine(s);
-    }
+    public void DisplayValue(string s) => Console.WriteLine(s);
 
-    public void DisplayValue(String s, params Object[] values)
-    {
-        Console.WriteLine(s, values);
-    }
+    public void DisplayValue(string s, params object[] values) => Console.WriteLine(s, values);
 
-    public static bool Equals(TestClass t1, TestClass t2)
-    {
-        return Object.ReferenceEquals(t1, t2);
-    }
+    public static bool Equals(TestClass t1, TestClass t2) => object.ReferenceEquals(t1, t2);
 
-    public bool Equals(TestClass t)
-    {
-        return Object.ReferenceEquals(this, t);
-    }
+    public bool Equals(TestClass t) => object.ReferenceEquals(this, t);
 }
 
 public class Example1
@@ -40,14 +28,14 @@ public class Example1
         RetrieveMethod(t, "Equals", BindingFlags.Public | BindingFlags.Static);
     }
 
-    private static void RetrieveMethod(Type t, String name, BindingFlags flags)
+    private static void RetrieveMethod(Type t, string name, BindingFlags flags)
     {
         try
         {
             MethodInfo m = t.GetMethod(name, flags);
             if (m != null)
             {
-                Console.Write("{0}.{1}(", t.Name, m.Name);
+                Console.Write($"{t.Name}.{m.Name}(");
                 ParameterInfo[] parms = m.GetParameters();
                 for (int ctr = 0; ctr < parms.Length; ctr++)
                 {
@@ -70,7 +58,7 @@ public class Example1
             {
                 if (method.Name != name) continue;
 
-                Console.Write("   {0}.{1}(", t.Name, method.Name);
+                Console.Write($"   {t.Name}.{method.Name}(");
                 ParameterInfo[] parms = method.GetParameters();
                 for (int ctr = 0; ctr < parms.Length; ctr++)
                 {
@@ -88,12 +76,12 @@ public class Example1
 //       The following duplicate matches were found:
 //          TestClass.DisplayValue(String)
 //          TestClass.DisplayValue(String, Object[])
-//       
+//
 //       The following duplicate matches were found:
 //          TestClass.Equals(TestClass)
 //          TestClass.Equals(Object)
-//       
+//
 //       TestClass.Equals(TestClass)
-//       
+//
 //       TestClass.Equals(TestClass, TestClass)
 // </Snippet2>

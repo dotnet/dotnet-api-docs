@@ -5,9 +5,9 @@ class Example
 {
     public static void Main()
     {
-       Console.WriteLine();
-       //  Invoke this sample with an arbitrary set of command line arguments.
-       Console.WriteLine("CommandLine: {0}", Environment.CommandLine);
+        Console.WriteLine();
+        //  Invoke this sample with an arbitrary set of command line arguments.
+        Console.WriteLine($"CommandLine: {Environment.CommandLine}");
     }
 }
 // The example displays output like the following:

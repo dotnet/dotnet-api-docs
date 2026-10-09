@@ -5,42 +5,42 @@ using System;
 class BytesToStringDemo
 {
     // Display a byte array with a name.
-    public static void WriteByteArray( byte[ ] bytes, string name )
+    public static void WriteByteArray(byte[] bytes, string name)
     {
         const string underLine = "--------------------------------";
 
-        Console.WriteLine( name );
-        Console.WriteLine( underLine.Substring( 0,
-            Math.Min( name.Length, underLine.Length ) ) );
-        Console.WriteLine( BitConverter.ToString( bytes ) );
-        Console.WriteLine( );
+        Console.WriteLine(name);
+        Console.WriteLine(underLine.Substring(0,
+            Math.Min(name.Length, underLine.Length)));
+        Console.WriteLine(BitConverter.ToString(bytes));
+        Console.WriteLine();
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        byte[ ] arrayOne = {
+        byte[] arrayOne = {
              0,   1,   2,   4,   8,  16,  32,  64, 128, 255 };
 
-        byte[ ] arrayTwo = {
+        byte[] arrayTwo = {
             32,   0,   0,  42,   0,  65,   0, 125,   0, 197,
              0, 168,   3,  41,   4, 172,  32 };
 
-        byte[ ] arrayThree = {
+        byte[] arrayThree = {
             15,   0,   0, 128,  16,  39, 240, 216, 241, 255,
            127 };
 
-        byte[ ] arrayFour = {
+        byte[] arrayFour = {
             15,   0,   0,   0,   0,  16,   0, 255,   3,   0,
              0, 202, 154,  59, 255, 255, 255, 255, 127 };
 
-        Console.WriteLine( "This example of the " +
+        Console.WriteLine("This example of the " +
             "BitConverter.ToString( byte[ ] ) \n" +
-            "method generates the following output.\n" );
+            "method generates the following output.\n");
 
-        WriteByteArray( arrayOne, "arrayOne" );
-        WriteByteArray( arrayTwo, "arrayTwo" );
-        WriteByteArray( arrayThree, "arrayThree" );
-        WriteByteArray( arrayFour, "arrayFour" );
+        WriteByteArray(arrayOne, "arrayOne");
+        WriteByteArray(arrayTwo, "arrayTwo");
+        WriteByteArray(arrayThree, "arrayThree");
+        WriteByteArray(arrayFour, "arrayFour");
     }
 }
 

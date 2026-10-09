@@ -5,8 +5,8 @@ public class Example13
 {
     public static void Main()
     {
-        Single value = 123.456f;
-        Single additional = Single.Epsilon * 1e15f;
+        float value = 123.456f;
+        float additional = float.Epsilon * 1e15f;
         Console.WriteLine($"{value} + {additional} = {value + additional}");
     }
 }

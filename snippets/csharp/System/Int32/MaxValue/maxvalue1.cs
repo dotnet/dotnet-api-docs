@@ -3,23 +3,23 @@ using System;
 
 public class Class1
 {
-   public static void Main()
-   {
-      long[] numbersToConvert = { 162345, 32183, -54000, Int64.MaxValue/2 };
-      int newNumber;
-      foreach (long number in numbersToConvert)
-      {
-         if (number >= Int32.MinValue && number <= Int32.MaxValue)
-         {
-            newNumber = Convert.ToInt32(number);
-            Console.WriteLine($"Successfully converted {newNumber} to an Int32.");
-         }
-         else
-         {
-            Console.WriteLine($"Unable to convert {number} to an Int32.");
-         }
-      }
-   }
+    public static void Main()
+    {
+        long[] numbersToConvert = { 162345, 32183, -54000, long.MaxValue / 2 };
+        int newNumber;
+        foreach (long number in numbersToConvert)
+        {
+            if (number >= int.MinValue && number <= int.MaxValue)
+            {
+                newNumber = Convert.ToInt32(number);
+                Console.WriteLine($"Successfully converted {newNumber} to an Int32.");
+            }
+            else
+            {
+                Console.WriteLine($"Unable to convert {number} to an Int32.");
+            }
+        }
+    }
 }
 // The example displays the following output to the console:
 //    Successfully converted 162345 to an Int32.

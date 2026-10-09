@@ -24,7 +24,7 @@ class AddTakeDemo
     //      BlockingCollection<T>.CompleteAdding()
     public static async Task BC_AddTakeCompleteAdding()
     {
-        using (BlockingCollection<int> bc = new BlockingCollection<int>())
+        using (BlockingCollection<int> bc = [])
         {
             // Spin up a Task to populate the BlockingCollection
             Task t1 = Task.Run(() =>
@@ -41,7 +41,10 @@ class AddTakeDemo
                 try
                 {
                     // Consume the BlockingCollection
-                    while (true) Console.WriteLine(bc.Take());
+                    while (true)
+                    {
+                        Console.WriteLine(bc.Take());
+                    }
                 }
                 catch (InvalidOperationException)
                 {
@@ -66,10 +69,13 @@ class TryTakeDemo
     public static void BC_TryTake()
     {
         // Construct and fill our BlockingCollection
-        using (BlockingCollection<int> bc = new BlockingCollection<int>())
+        using (BlockingCollection<int> bc = [])
         {
             int NUMITEMS = 10000;
-            for (int i = 0; i < NUMITEMS; i++) bc.Add(i);
+            for (int i = 0; i < NUMITEMS; i++)
+            {
+                bc.Add(i);
+            }
             bc.CompleteAdding();
             int outerSum = 0;
 
@@ -79,15 +85,18 @@ class TryTakeDemo
                 int localItem;
                 int localSum = 0;
 
-                while (bc.TryTake(out localItem)) localSum += localItem;
+                while (bc.TryTake(out localItem))
+                {
+                    localSum += localItem;
+                }
                 Interlocked.Add(ref outerSum, localSum);
             };
 
             // Launch three parallel actions to consume the BlockingCollection
             Parallel.Invoke(action, action, action);
 
-            Console.WriteLine("Sum[0..{0}) = {1}, should be {2}", NUMITEMS, outerSum, ((NUMITEMS * (NUMITEMS - 1)) / 2));
-            Console.WriteLine("bc.IsCompleted = {0} (should be true)", bc.IsCompleted);
+            Console.WriteLine($"Sum[0..{NUMITEMS}) = {outerSum}, should be {(NUMITEMS * (NUMITEMS - 1)) / 2}");
+            Console.WriteLine($"bc.IsCompleted = {bc.IsCompleted} (should be true)");
         }
     }
 }
@@ -102,23 +111,31 @@ class FromToAnyDemo
     //      BlockingCollection<T>.TryTakeFromAny()
     public static void BC_FromToAny()
     {
-        BlockingCollection<int>[] bcs = new BlockingCollection<int>[2];
-        bcs[0] = new BlockingCollection<int>(5); // collection bounded to 5 items
-        bcs[1] = new BlockingCollection<int>(5); // collection bounded to 5 items
+        BlockingCollection<int>[] bcs =
+        [
+            new BlockingCollection<int>(5), // collection bounded to 5 items
+            new BlockingCollection<int>(5), // collection bounded to 5 items
+        ];
 
         // Should be able to add 10 items w/o blocking
         int numFailures = 0;
         for (int i = 0; i < 10; i++)
         {
-            if (BlockingCollection<int>.TryAddToAny(bcs, i) == -1) numFailures++;
+            if (BlockingCollection<int>.TryAddToAny(bcs, i) == -1)
+            {
+                numFailures++;
+            }
         }
-        Console.WriteLine("TryAddToAny: {0} failures (should be 0)", numFailures);
+        Console.WriteLine($"TryAddToAny: {numFailures} failures (should be 0)");
 
         // Should be able to retrieve 10 items
         int numItems = 0;
         int item;
-        while (BlockingCollection<int>.TryTakeFromAny(bcs, out item) != -1) numItems++;
-        Console.WriteLine("TryTakeFromAny: retrieved {0} items (should be 10)", numItems);
+        while (BlockingCollection<int>.TryTakeFromAny(bcs, out item) != -1)
+        {
+            numItems++;
+        }
+        Console.WriteLine($"TryTakeFromAny: retrieved {numItems} items (should be 10)");
     }
 }
 //</snippet3>
@@ -132,10 +149,10 @@ class ConsumingEnumerableDemo
     //      BlockingCollection<T>.GetConsumingEnumerable()
     public static async Task BC_GetConsumingEnumerable()
     {
-        using (BlockingCollection<int> bc = new BlockingCollection<int>())
+        using (BlockingCollection<int> bc = [])
         {
             // Kick off a producer task
-            var producerTask = Task.Run(async () =>
+            Task producerTask = Task.Run(async () =>
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -153,7 +170,7 @@ class ConsumingEnumerableDemo
             // Use bc.GetConsumingEnumerable() instead of just bc because the
             // former will block waiting for completion and the latter will
             // simply take a snapshot of the current state of the underlying collection.
-            foreach (var item in bc.GetConsumingEnumerable())
+            foreach (int item in bc.GetConsumingEnumerable())
             {
                 Console.WriteLine($"Consuming: {item}");
             }

@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
+
 
 public class Example5
 {
     public static void Main()
     {
         // <Snippet21>
-        Random rnd = new Random();
+        Random rnd = new();
         int[] numbers = new int[4];
         int total = 0;
         for (int ctr = 0; ctr <= 2; ctr++)

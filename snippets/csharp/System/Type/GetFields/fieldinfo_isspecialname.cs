@@ -16,19 +16,18 @@ class FieldInfo_IsSpecialName
             FieldInfo[] myField = myType.GetFields();
 
             Console.WriteLine("\nDisplaying fields that have SpecialName attributes:\n");
-            for(int i = 0; i < myField.Length; i++)
+            for (int i = 0; i < myField.Length; i++)
             {
                 // Determine whether or not each field is a special name.
-                if(myField[i].IsSpecialName)
+                if (myField[i].IsSpecialName)
                 {
-                    Console.WriteLine("The field {0} has a SpecialName attribute.",
-                        myField[i].Name);
+                    Console.WriteLine($"The field {myField[i].Name} has a SpecialName attribute.");
                 }
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-            Console.WriteLine("Exception : {0} " , e.Message);
+            Console.WriteLine($"Exception : {e.Message} ");
         }
     }
 }

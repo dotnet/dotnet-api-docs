@@ -7,42 +7,42 @@ class DecimalToSgl_DblDemo
     static string formatter = "{0,30}{1,17}{2,23}";
 
     // Convert the decimal argument; no exceptions are thrown.
-    public static void DecimalToSgl_Dbl( decimal argument )
+    public static void DecimalToSgl_Dbl(decimal argument)
     {
         object SingleValue;
         object DoubleValue;
 
         // Convert the argument to a float value.
-        SingleValue = decimal.ToSingle( argument );
+        SingleValue = decimal.ToSingle(argument);
 
         // Convert the argument to a double value.
-        DoubleValue = decimal.ToDouble( argument );
+        DoubleValue = decimal.ToDouble(argument);
 
-        Console.WriteLine( formatter, argument,
-            SingleValue, DoubleValue );
+        Console.WriteLine(formatter, argument,
+            SingleValue, DoubleValue);
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of the \n" +
+        Console.WriteLine("This example of the \n" +
             "  decimal.ToSingle( decimal ) and \n" +
             "  decimal.ToDouble( decimal ) \nmethods " +
             "generates the following output. It \ndisplays " +
-            "several converted decimal values.\n" );
-        Console.WriteLine( formatter, "decimal argument",
-            "float", "double" );
-        Console.WriteLine( formatter, "----------------",
-            "-----", "------" );
+            "several converted decimal values.\n");
+        Console.WriteLine(formatter, "decimal argument",
+            "float", "double");
+        Console.WriteLine(formatter, "----------------",
+            "-----", "------");
 
         // Convert decimal values and display the results.
-        DecimalToSgl_Dbl( 0.0000000000000000000000000001M );
-        DecimalToSgl_Dbl( 0.0000000000123456789123456789M );
-        DecimalToSgl_Dbl( 123M );
-        DecimalToSgl_Dbl( new decimal( 123000000, 0, 0, false, 6 ) );
-        DecimalToSgl_Dbl( 123456789.123456789M );
-        DecimalToSgl_Dbl( 123456789123456789123456789M );
-        DecimalToSgl_Dbl( decimal.MinValue );
-        DecimalToSgl_Dbl( decimal.MaxValue );
+        DecimalToSgl_Dbl(0.0000000000000000000000000001M);
+        DecimalToSgl_Dbl(0.0000000000123456789123456789M);
+        DecimalToSgl_Dbl(123M);
+        DecimalToSgl_Dbl(new decimal(123000000, 0, 0, false, 6));
+        DecimalToSgl_Dbl(123456789.123456789M);
+        DecimalToSgl_Dbl(123456789123456789123456789M);
+        DecimalToSgl_Dbl(decimal.MinValue);
+        DecimalToSgl_Dbl(decimal.MaxValue);
     }
 }
 

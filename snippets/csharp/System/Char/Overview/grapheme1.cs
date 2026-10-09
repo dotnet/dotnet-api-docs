@@ -6,9 +6,9 @@ public class Example1
 {
     public static void Main()
     {
-        StreamWriter sw = new StreamWriter("chars1.txt");
-        char[] chars = [ '\u0061', '\u0308' ];
-        string strng = new String(chars);
+        StreamWriter sw = new("chars1.txt");
+        char[] chars = ['\u0061', '\u0308'];
+        string strng = new(chars);
         sw.WriteLine(strng);
         sw.Close();
     }

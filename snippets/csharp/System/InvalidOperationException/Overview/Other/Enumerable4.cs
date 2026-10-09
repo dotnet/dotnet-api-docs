@@ -1,4 +1,4 @@
-// <Snippet9>
+﻿// <Snippet9>
 using System;
 using System.Linq;
 
@@ -8,7 +8,7 @@ public class EnumerableEx4
     {
         int[] dbQueryResults = { 1, 2, 3, 4 };
 
-        var firstNum = dbQueryResults.FirstOrDefault(n => n > 4);
+        int firstNum = dbQueryResults.FirstOrDefault(n => n > 4);
 
         if (firstNum == 0)
             Console.WriteLine("No value is greater than 4.");

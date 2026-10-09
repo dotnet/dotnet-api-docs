@@ -6,9 +6,9 @@ class Sample
 {
     public static void Main()
     {
-    Console.WriteLine();
-//  <-- Keep this information secure! -->
-    Console.WriteLine("MachineName: {0}", Environment.MachineName);
+        Console.WriteLine();
+        //  <-- Keep this information secure! -->
+        Console.WriteLine($"MachineName: {Environment.MachineName}");
     }
 }
 /*

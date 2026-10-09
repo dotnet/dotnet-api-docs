@@ -18,12 +18,8 @@ public class Example2
             else
                 totalFalse++;
         }
-        Console.WriteLine("Number of true values:  {0,7:N0} ({1:P3})",
-                          totalTrue,
-                          ((double)totalTrue) / (totalTrue + totalFalse));
-        Console.WriteLine("Number of false values: {0,7:N0} ({1:P3})",
-                          totalFalse,
-                          ((double)totalFalse) / (totalTrue + totalFalse));
+        Console.WriteLine($"Number of true values:  {totalTrue,7:N0} ({((double)totalTrue) / (totalTrue + totalFalse):P3})");
+        Console.WriteLine($"Number of false values: {totalFalse,7:N0} ({((double)totalFalse) / (totalTrue + totalFalse):P3})");
     }
 }
 
@@ -31,15 +27,9 @@ public class BooleanGenerator
 {
     Random rnd;
 
-    public BooleanGenerator()
-    {
-        rnd = new Random();
-    }
+    public BooleanGenerator() => rnd = new();
 
-    public bool NextBoolean()
-    {
-        return rnd.Next(0, 2) == 1;
-    }
+    public bool NextBoolean() => rnd.Next(0, 2) == 1;
 }
 // The example displays output like the following:
 //       Number of true values:  500,004 (50.000 %)

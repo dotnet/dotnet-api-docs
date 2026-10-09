@@ -5,81 +5,76 @@ using System;
 class DecimalCtorIIIBByDemo
 {
     // Get the exception type name; remove the namespace prefix.
-    public static string GetExceptionType( Exception ex )
+    public static string GetExceptionType(Exception ex)
     {
-        string exceptionType = ex.GetType( ).ToString( );
+        string exceptionType = ex.GetType().ToString();
         return exceptionType.Substring(
-            exceptionType.LastIndexOf( '.' ) + 1 );
+            exceptionType.LastIndexOf('.') + 1);
     }
 
     // Create a decimal object and display its value.
-    public static void CreateDecimal( int low, int mid, int high,
-        bool isNeg, byte scale )
+    public static void CreateDecimal(int low, int mid, int high,
+        bool isNeg, byte scale)
     {
         // Format the constructor for display.
-        string ctor = String.Format(
-            "decimal( {0}, {1}, {2}, {3}, {4} )",
-            low, mid, high, isNeg, scale );
+        string ctor = $"decimal( {low}, {mid}, {high}, {isNeg}, {scale} )";
         string valOrExc;
 
         try
         {
             // Construct the decimal value.
-            decimal decimalNum = new decimal(
-                low, mid, high, isNeg, scale );
+            decimal decimalNum = new(
+                low, mid, high, isNeg, scale);
 
             // Format and save the decimal value.
-            valOrExc = decimalNum.ToString( );
+            valOrExc = decimalNum.ToString();
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
             // Save the exception type if an exception was thrown.
-            valOrExc = GetExceptionType( ex );
+            valOrExc = GetExceptionType(ex);
         }
 
         // Display the constructor and decimal value or exception.
         int ctorLen = 76 - valOrExc.Length;
 
         // Display the data on one line if it will fit.
-        if ( ctorLen > ctor.Length )
-            Console.WriteLine( "{0}{1}", ctor.PadRight( ctorLen ),
-                valOrExc );
+        if (ctorLen > ctor.Length)
+            Console.WriteLine($"{ctor.PadRight(ctorLen)}{valOrExc}");
 
         // Otherwise, display the data on two lines.
         else
         {
-            Console.WriteLine( "{0}", ctor );
-            Console.WriteLine( "{0,76}", valOrExc );
+            Console.WriteLine($"{ctor}");
+            Console.WriteLine($"{valOrExc,76}");
         }
     }
 
-    public static void Main( )
+    public static void Main()
     {
 
-        Console.WriteLine( "This example of the decimal( int, int, " +
+        Console.WriteLine("This example of the decimal( int, int, " +
             "int, bool, byte ) \nconstructor " +
-            "generates the following output.\n" );
-        Console.WriteLine( "{0,-38}{1,38}", "Constructor",
-            "Value or Exception" );
-        Console.WriteLine( "{0,-38}{1,38}", "-----------",
-            "------------------" );
+            "generates the following output.\n");
+        Console.WriteLine($"{"Constructor",-38}{"Value or Exception",38}");
+        Console.WriteLine($"{"-----------",-38}{"------------------",38}");
 
         // Construct decimal objects from the component fields.
-        CreateDecimal( 0, 0, 0, false, 0 );
-        CreateDecimal( 0, 0, 0, false, 27 );
-        CreateDecimal( 0, 0, 0, true, 0 );
-        CreateDecimal( 1000000000, 0, 0, false, 0 );
-        CreateDecimal( 0, 1000000000, 0, false, 0 );
-        CreateDecimal( 0, 0, 1000000000, false, 0 );
-        CreateDecimal( 1000000000, 1000000000, 1000000000, false, 0 );
-        CreateDecimal( -1, -1, -1, false, 0 );
-        CreateDecimal( -1, -1, -1, true, 0 );
-        CreateDecimal( -1, -1, -1, false, 15 );
-        CreateDecimal( -1, -1, -1, false, 28 );
-        CreateDecimal( -1, -1, -1, false, 29 );
-        CreateDecimal( int.MaxValue, 0, 0, false, 18 );
-        CreateDecimal( int.MaxValue, 0, 0, false, 28 );
-        CreateDecimal( int.MaxValue, 0, 0, true, 28 );
+        CreateDecimal(0, 0, 0, false, 0);
+        CreateDecimal(0, 0, 0, false, 27);
+        CreateDecimal(0, 0, 0, true, 0);
+        CreateDecimal(1000000000, 0, 0, false, 0);
+        CreateDecimal(0, 1000000000, 0, false, 0);
+        CreateDecimal(0, 0, 1000000000, false, 0);
+        CreateDecimal(1000000000, 1000000000, 1000000000, false, 0);
+        CreateDecimal(-1, -1, -1, false, 0);
+        CreateDecimal(-1, -1, -1, true, 0);
+        CreateDecimal(-1, -1, -1, false, 15);
+        CreateDecimal(-1, -1, -1, false, 28);
+        CreateDecimal(-1, -1, -1, false, 29);
+        CreateDecimal(int.MaxValue, 0, 0, false, 18);
+        CreateDecimal(int.MaxValue, 0, 0, false, 28);
+        CreateDecimal(int.MaxValue, 0, 0, true, 28);
     }
 }
 

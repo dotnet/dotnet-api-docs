@@ -1,26 +1,26 @@
 ﻿// <Snippet4>
 using System;
 
-public class Example
+public class SingleNaNComparisonExample
 {
-   public static void Main()
-   {
-      Console.WriteLine("NaN == NaN: {0}", Single.NaN == Single.NaN); 
-      Console.WriteLine("NaN != NaN: {0}", Single.NaN != Single.NaN); 
-      Console.WriteLine("NaN.Equals(NaN): {0}", Single.NaN.Equals(Single.NaN)); 
-      Console.WriteLine("! NaN.Equals(NaN): {0}", ! Single.NaN.Equals(Single.NaN)); 
-      Console.WriteLine("IsNaN: {0}", Double.IsNaN(Double.NaN));
-      
-      Console.WriteLine("\nNaN > NaN: {0}", Single.NaN > Single.NaN); 
-      Console.WriteLine("NaN >= NaN: {0}", Single.NaN >= Single.NaN); 
-      Console.WriteLine("NaN < NaN: {0}", Single.NaN < Single.NaN);
-      Console.WriteLine("NaN < 100.0: {0}", Single.NaN < 100.0f); 
-      Console.WriteLine("NaN <= 100.0: {0}", Single.NaN <= 100.0f); 
-      Console.WriteLine("NaN >= 100.0: {0}", Single.NaN > 100.0f);
-      Console.WriteLine("NaN.CompareTo(NaN): {0}", Single.NaN.CompareTo(Single.NaN)); 
-      Console.WriteLine("NaN.CompareTo(100.0): {0}", Single.NaN.CompareTo(100.0f)); 
-      Console.WriteLine("(100.0).CompareTo(Single.NaN): {0}", (100.0f).CompareTo(Single.NaN)); 
-   }
+    public static void Run()
+    {
+        Console.WriteLine($"NaN == NaN: {float.NaN == float.NaN}");
+        Console.WriteLine($"NaN != NaN: {float.NaN != float.NaN}");
+        Console.WriteLine($"NaN.Equals(NaN): {float.NaN.Equals(float.NaN)}");
+        Console.WriteLine($"! NaN.Equals(NaN): {!float.NaN.Equals(float.NaN)}");
+        Console.WriteLine($"IsNaN: {double.IsNaN(double.NaN)}");
+
+        Console.WriteLine($"\nNaN > NaN: {float.NaN > float.NaN}");
+        Console.WriteLine($"NaN >= NaN: {float.NaN >= float.NaN}");
+        Console.WriteLine($"NaN < NaN: {float.NaN < float.NaN}");
+        Console.WriteLine($"NaN < 100.0: {float.NaN < 100.0f}");
+        Console.WriteLine($"NaN <= 100.0: {float.NaN <= 100.0f}");
+        Console.WriteLine($"NaN > 100.0: {float.NaN > 100.0f}");
+        Console.WriteLine($"NaN.CompareTo(NaN): {float.NaN.CompareTo(float.NaN)}");
+        Console.WriteLine($"NaN.CompareTo(100.0): {float.NaN.CompareTo(100.0f)}");
+        Console.WriteLine($"(100.0).CompareTo(Single.NaN): {(100.0f).CompareTo(float.NaN)}");
+    }
 }
 // The example displays the following output:
 //       NaN == NaN: False

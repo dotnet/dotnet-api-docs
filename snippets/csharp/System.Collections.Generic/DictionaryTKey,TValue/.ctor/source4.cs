@@ -2,22 +2,23 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class DictionaryConstructorExample5
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a new dictionary of strings, with string keys, an
         // initial capacity of 5, and a case-insensitive equality
         // comparer.
         Dictionary<string, string> openWith =
                       new Dictionary<string, string>(5,
-                          StringComparer.CurrentCultureIgnoreCase);
-
-        // Add 4 elements to the dictionary.
-        openWith.Add("txt", "notepad.exe");
-        openWith.Add("bmp", "paint.exe");
-        openWith.Add("DIB", "paint.exe");
-        openWith.Add("rtf", "wordpad.exe");
+                          StringComparer.CurrentCultureIgnoreCase)
+                      {
+                          // Add 4 elements to the dictionary.
+                          { "txt", "notepad.exe" },
+                          { "bmp", "paint.exe" },
+                          { "DIB", "paint.exe" },
+                          { "rtf", "wordpad.exe" }
+                      };
 
         // Try to add a fifth element with a key that is the same
         // except for case; this would be allowed with the default
@@ -33,7 +34,7 @@ public class Example
 
         // List the contents of the dictionary.
         Console.WriteLine();
-        foreach( KeyValuePair<string, string> kvp in openWith )
+        foreach (KeyValuePair<string, string> kvp in openWith)
         {
             Console.WriteLine("Key = {0}, Value = {1}", kvp.Key,
                 kvp.Value);

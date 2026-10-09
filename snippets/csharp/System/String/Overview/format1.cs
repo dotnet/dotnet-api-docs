@@ -4,18 +4,17 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-      DateTime date = new DateTime(2011, 3, 1);
-      CultureInfo[] cultures = { CultureInfo.InvariantCulture, 
-                                 new CultureInfo("en-US"), 
-                                 new CultureInfo("fr-FR") };
+    public static void Main()
+    {
+        DateTime date = new(2011, 3, 1);
+        CultureInfo[] cultures = [CultureInfo.InvariantCulture,
+                                  new CultureInfo("en-US"),
+                                  new CultureInfo("fr-FR")];
 
-      foreach (var culture in cultures)
-         Console.WriteLine("{0,-12} {1}", String.IsNullOrEmpty(culture.Name) ?
-                           "Invariant" : culture.Name, 
-                           date.ToString("d", culture));                                    
-   }
+        foreach (var culture in cultures)
+            Console.WriteLine($"{(string.IsNullOrEmpty(culture.Name) ?
+                              "Invariant" : culture.Name),-12} {date.ToString("d", culture)}");
+    }
 }
 // The example displays the following output:
 //       Invariant    03/01/2011

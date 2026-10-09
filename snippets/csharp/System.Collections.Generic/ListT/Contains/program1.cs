@@ -1,6 +1,7 @@
 ﻿//<snippet1>
 using System;
 using System.Collections.Generic;
+
 // Simple business object. A PartId is used to identify a part
 // but the part name can change.
 public class Part : IEquatable<Part>
@@ -10,40 +11,43 @@ public class Part : IEquatable<Part>
 
     public override string ToString()
     {
-        return "ID: " + PartId + "   Name: " + PartName;
+        return $"ID: {PartId}   Name: {PartName}";
     }
     public override bool Equals(object obj)
     {
         if (obj == null) return false;
-        Part objAsPart = obj as Part;
-        if (objAsPart == null) return false;
+        if (obj is not Part objAsPart) return false;
         else return Equals(objAsPart);
     }
+
     public override int GetHashCode()
     {
         return PartId;
     }
+
     public bool Equals(Part other)
     {
         if (other == null) return false;
-        return (this.PartId.Equals(other.PartId));
+        return (PartId.Equals(other.PartId));
     }
     // Should also override == and != operators.
 }
-public class Example
+
+public class PartExample
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a list of parts.
-        List<Part> parts = new List<Part>();
-
-        // Add parts to the list.
-        parts.Add(new Part() { PartName = "crank arm", PartId = 1234 });
-        parts.Add(new Part() { PartName = "chain ring", PartId = 1334 });
-        parts.Add(new Part() { PartName = "regular seat", PartId = 1434 });
-        parts.Add(new Part() { PartName = "banana seat", PartId = 1444 });
-        parts.Add(new Part() { PartName = "cassette", PartId = 1534 });
-        parts.Add(new Part() { PartName = "shift lever", PartId = 1634 }); ;
+        List<Part> parts =
+        [
+            // Add parts to the list.
+            new Part() { PartName = "crank arm", PartId = 1234 },
+            new Part() { PartName = "chain ring", PartId = 1334 },
+            new Part() { PartName = "regular seat", PartId = 1434 },
+            new Part() { PartName = "banana seat", PartId = 1444 },
+            new Part() { PartName = "cassette", PartId = 1534 },
+            new Part() { PartName = "shift lever", PartId = 1634 },
+        ];
 
         // Write out the parts in the list. This will call the overridden ToString method
         // in the Part class.
@@ -66,7 +70,7 @@ public class Example
         Console.WriteLine("\nExists: Part with Id=1444: {0}",
             parts.Exists(x => x.PartId == 1444));
 
-        /*This code example produces the following output:
+        /* This code example produces the following output:
 
         ID: 1234   Name: crank arm
         ID: 1334   Name: chain ring
@@ -80,7 +84,8 @@ public class Example
         Find: Part where name contains "seat": ID: 1434   Name: regular seat
 
         Exists: Part with Id=1444: True
-         */
+        
+        */
     }
 }
 //</snippet1>

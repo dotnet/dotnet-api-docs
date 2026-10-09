@@ -32,10 +32,10 @@ namespace SystemDateTimeReference
         private static void InstantiateFromString()
         {
             // <Snippet4>
-            var dateString = "5/1/2008 8:30:52 AM";
+            string dateString = "5/1/2008 8:30:52 AM";
             DateTime date1 = DateTime.Parse(dateString,
                                       System.Globalization.CultureInfo.InvariantCulture);
-            var iso8601String = "20080501T08:30:52Z";
+            string iso8601String = "20080501T08:30:52Z";
             DateTime dateISO8602 = DateTime.ParseExact(iso8601String, "yyyyMMddTHH:mm:ssZ",
                                             System.Globalization.CultureInfo.InvariantCulture);
             // </Snippet4>

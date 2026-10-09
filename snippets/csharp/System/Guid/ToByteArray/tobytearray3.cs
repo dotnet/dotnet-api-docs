@@ -8,7 +8,7 @@ public class Example
         Guid guid = Guid.NewGuid();
         Console.WriteLine($"Guid: {guid}");
         var bytes = guid.ToByteArray();
-        foreach (var byt in bytes)
+        foreach (byte byt in bytes)
             Console.Write($"{byt:X2} ");
 
         Console.WriteLine();

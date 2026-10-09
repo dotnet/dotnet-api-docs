@@ -4,17 +4,17 @@ using System;
 
 public class LambdaExpression
 {
-   public static void Main()
-   {
-      // <Snippet4>
-      Func<string, string> convert = s => s.ToUpper();
+    public static void Main()
+    {
+        // <Snippet4>
+        Func<string, string> convert = s => s.ToUpper();
 
-      string name = "Dakota";
-      Console.WriteLine(convert(name));
+        string name = "Dakota";
+        Console.WriteLine(convert(name));
 
-      // This code example produces the following output:
-      //
-      //    DAKOTA
-      // </Snippet4>
-   }
+        // This code example produces the following output:
+        //
+        //    DAKOTA
+        // </Snippet4>
+    }
 }

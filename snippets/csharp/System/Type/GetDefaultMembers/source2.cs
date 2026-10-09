@@ -15,15 +15,9 @@ public class Class1
         sval = "6040";
     }
 
-    public int GetIVal()
-    {
-        return ival;
-    }
+    public int GetIVal() => ival;
 
-    public string GetSVal()
-    {
-        return sval;
-    }
+    public string GetSVal() => sval;
 }
 // </snippet12>
 
@@ -32,10 +26,10 @@ public class GetMemberExample
     public static void Main()
     {
         // <snippet13>
-        Class1 c = new Class1();
+        Class1 c = new();
         object o;
         o = c.GetType().InvokeMember("", BindingFlags.InvokeMethod, null, c, new object[0]);
-        Console.WriteLine("Default member result: {0}", o);
+        Console.WriteLine($"Default member result: {o}");
         // </snippet13>
 
         GetDefMemberExample1();
@@ -52,9 +46,9 @@ public class GetMemberExample
             (DefaultMemberAttribute)Attribute.GetCustomAttribute((MemberInfo)classType, attribType);
         MemberInfo[] memInfo = classType.GetMember(defMem.MemberName);
         // </snippet14>
-        if ( memInfo.Length > 0)
+        if (memInfo.Length > 0)
         {
-            Console.WriteLine("Default Member: {0}", memInfo[0].Name);
+            Console.WriteLine($"Default Member: {memInfo[0].Name}");
         }
     }
 
@@ -64,9 +58,9 @@ public class GetMemberExample
         Type t = typeof(Class1);
         MemberInfo[] memInfo = t.GetDefaultMembers();
         // </snippet15>
-        if ( memInfo.Length > 0)
+        if (memInfo.Length > 0)
         {
-            Console.WriteLine("Default Member: {0}", memInfo[0].Name);
+            Console.WriteLine($"Default Member: {memInfo[0].Name}");
         }
     }
 
@@ -81,7 +75,7 @@ public class GetMemberExample
             MemberInfo[] memInfo = t.GetMember(defMem.MemberName);
             if (memInfo.Length > 0)
             {
-                Console.WriteLine("Default Member: {0}", memInfo[0].Name);
+                Console.WriteLine($"Default Member: {memInfo[0].Name}");
             }
         }
         // </snippet16>

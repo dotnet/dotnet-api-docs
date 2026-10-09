@@ -72,10 +72,23 @@
         <typeparam name="TOptions">The options type to be configured.</typeparam>
         <param name="optionsBuilder">The options builder to add the services to.</param>
         <summary>
-            Register this options instance for validation of its DataAnnotations.
+            Registers this options instance for validation of its DataAnnotations.
             </summary>
         <returns>The <see cref="T:Microsoft.Extensions.Options.OptionsBuilder`1" /> so that additional calls can be chained.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+            Synchronous validation runs when an options instance is created. When targeting .NET 11 or later,
+            asynchronous validation (including <c>AsyncValidationAttribute</c>-derived attributes)
+            runs during startup when <c>ValidateOnStart()</c> is also called.
+            If <c>ValidateOnStart()</c> is not called, attributes deriving from
+            <c>AsyncValidationAttribute</c> are never evaluated asynchronously: runtime options access triggers only
+            synchronous validation, which invokes the attribute's synchronous fallback instead.
+            The built-in <see cref="T:Microsoft.Extensions.Options.IOptionsSnapshot`1" /> implementation always uses synchronous attribute
+            validation and never calls the asynchronous <c>IsValidAsync</c> method. Options created before startup
+            validation or recreated by the built-in <see cref="T:Microsoft.Extensions.Options.IOptionsMonitor`1" /> implementation after a
+            change also use synchronous validation. To support these paths, ensure an
+            <c>AsyncValidationAttribute</c>-derived attribute provides a synchronous <c>IsValid</c> fallback that
+            does not throw.
+            </remarks>
       </Docs>
     </Member>
   </Members>

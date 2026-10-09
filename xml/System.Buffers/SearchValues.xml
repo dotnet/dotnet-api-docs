@@ -19,7 +19,18 @@
   <Docs>
     <summary>Provides a set of initialization methods for instances of the <see cref="T:System.Buffers.SearchValues`1" /> class.</summary>
     <remarks>
-      <see cref="T:System.Buffers.SearchValues`1" /> instances are optimized for situations where the same set of values is frequently used for searching at run time.</remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+<xref:System.Buffers.SearchValues`1> instances are optimized for situations where the same set of values is frequently used for searching at run time. Creating an instance is relatively expensive because the values are analyzed to pick a specialized, often vectorized, search algorithm. Create the instance once and cache it, typically in a `static readonly` field, then pass it to the <xref:System.MemoryExtensions> methods that search a span, such as <xref:System.MemoryExtensions.IndexOfAny*>, <xref:System.MemoryExtensions.IndexOfAnyExcept*>, <xref:System.MemoryExtensions.ContainsAny*>, and <xref:System.MemoryExtensions.ContainsAnyExcept*>.
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetEscaping":::
+
+For more use cases and examples, see <xref:System.Buffers.SearchValues`1>.
+
+]]></format>
+    </remarks>
   </Docs>
   <Members>
     <MemberGroup MemberName="Create">
@@ -70,7 +81,17 @@
         <param name="values">The set of values.</param>
         <summary>Creates an optimized representation of <paramref name="values" /> used for efficient searching.</summary>
         <returns>The optimized representation of <paramref name="values" /> used for efficient searching.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Cache the returned instance, for example in a `static readonly` field, and reuse it for every search. A UTF-8 literal (`"..."u8`) is a convenient way to specify the set of bytes without allocating a string. Large sets benefit the most, because the <xref:System.MemoryExtensions> overloads that accept individual values only go up to three:
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetBytes":::
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -116,7 +137,17 @@
         <param name="values">The set of values.</param>
         <summary>Creates an optimized representation of <paramref name="values" /> used for efficient searching.</summary>
         <returns>The optimized representation of <paramref name="values" /> used for efficient searching.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Cache the returned instance, for example in a `static readonly` field, and reuse it for every search. A common use is to validate that an input only contains allowed characters:
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetValidation":::
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -152,7 +183,23 @@
         <param name="comparisonType">Specifies whether to use <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" /> search semantics.</param>
         <summary>Creates an optimized representation of <paramref name="values" /> used for efficient searching.</summary>
         <returns>The optimized representation of <paramref name="values" /> used for efficient searching.</returns>
-        <remarks>Only <see cref="F:System.StringComparison.Ordinal" /> or <see cref="F:System.StringComparison.OrdinalIgnoreCase" /> may be used.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Only <xref:System.StringComparison.Ordinal?displayProperty=nameWithType> or <xref:System.StringComparison.OrdinalIgnoreCase?displayProperty=nameWithType> can be used.
+
+The returned instance searches for whole substrings, so it can only be used with the <xref:System.MemoryExtensions.IndexOfAny(System.ReadOnlySpan{System.Char},System.Buffers.SearchValues{System.String})> and <xref:System.MemoryExtensions.ContainsAny(System.ReadOnlySpan{System.Char},System.Buffers.SearchValues{System.String})> overloads that accept a `SearchValues<string>`. If you're searching for individual characters, use <xref:System.Buffers.SearchValues.Create(System.ReadOnlySpan{System.Char})> instead.
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetStrings":::
+
+Passing a single value is also useful. The resulting instance is a faster alternative to <xref:System.MemoryExtensions.IndexOf(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char},System.StringComparison)>, because the value is analyzed when the instance is created instead of on every search:
+
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetSingleString":::
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

@@ -9,31 +9,31 @@ class Sample
 {
     public static void Main()
     {
-    string input;
-    try
+        string input;
+        try
         {
-// Set the COM1 serial port to speed = 4800 baud, parity = odd,
-// data bits = 8, stop bits = 1.
-        SerialPort sp = new SerialPort("COM1",
-                        4800, Parity.Odd, 8, StopBits.One);
-// Timeout after 2 seconds.
-        sp.ReadTimeout = 2000;
-        sp.Open();
+            // Set the COM1 serial port to speed = 4800 baud, parity = odd,
+            // data bits = 8, stop bits = 1.
+            SerialPort sp = new SerialPort("COM1",
+                            4800, Parity.Odd, 8, StopBits.One);
+            // Timeout after 2 seconds.
+            sp.ReadTimeout = 2000;
+            sp.Open();
 
-// Read until either the default newline termination string
-// is detected or the read operation times out.
-        input = sp.ReadLine();
+            // Read until either the default newline termination string
+            // is detected or the read operation times out.
+            input = sp.ReadLine();
 
-        sp.Close();
+            sp.Close();
 
-// Echo the input.
-        Console.WriteLine(input);
+            // Echo the input.
+            Console.WriteLine(input);
         }
 
-// Only catch timeout exceptions.
-    catch (TimeoutException e)
+        // Only catch timeout exceptions.
+        catch (TimeoutException e)
         {
-        Console.WriteLine(e);
+            Console.WriteLine(e);
         }
     }
 }

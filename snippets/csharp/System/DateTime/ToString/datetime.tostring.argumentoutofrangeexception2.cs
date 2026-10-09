@@ -7,9 +7,9 @@ public class Example2
 {
     public static void Main()
     {
-        DateTime date1 = new DateTime(550, 1, 1);
+        DateTime date1 = new(550, 1, 1);
         CultureInfo dft;
-        CultureInfo arSY = new CultureInfo("ar-SY");
+        CultureInfo arSY = new("ar-SY");
         arSY.DateTimeFormat.Calendar = new HijriCalendar();
 
         // Change current culture to ar-SY.
@@ -23,10 +23,7 @@ public class Example2
         }
         catch (ArgumentOutOfRangeException)
         {
-            Console.WriteLine("{0} is earlier than {1} or later than {2}",
-                              date1.ToString("d", CultureInfo.InvariantCulture),
-                              arSY.DateTimeFormat.Calendar.MinSupportedDateTime.ToString("d", CultureInfo.InvariantCulture),
-                              arSY.DateTimeFormat.Calendar.MaxSupportedDateTime.ToString("d", CultureInfo.InvariantCulture));
+            Console.WriteLine($"{date1.ToString("d", CultureInfo.InvariantCulture)} is earlier than {arSY.DateTimeFormat.Calendar.MinSupportedDateTime.ToString("d", CultureInfo.InvariantCulture)} or later than {arSY.DateTimeFormat.Calendar.MaxSupportedDateTime.ToString("d", CultureInfo.InvariantCulture)}");
         }
 
         // Restore the default culture.

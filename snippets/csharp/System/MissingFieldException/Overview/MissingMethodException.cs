@@ -22,7 +22,7 @@ public class App
         catch (MissingMethodException e)
         {
             // Show the user that the DoSomething method cannot be called.
-            Console.WriteLine("Unable to call the DoSomething method: {0}", e.Message);
+            Console.WriteLine($"Unable to call the DoSomething method: {e.Message}");
         }
         //</snippet2>
 
@@ -33,12 +33,12 @@ public class App
             // However, because the App class does not define this field,
             // a MissingFieldException is thrown.
             typeof(App).InvokeMember("AField", BindingFlags.Static | BindingFlags.SetField,
-                null, null, new Object[] { 5 });
+                null, null, new object[] { 5 });
         }
         catch (MissingFieldException e)
         {
-         // Show the user that the AField field cannot be accessed.
-         Console.WriteLine("Unable to access the AField field: {0}", e.Message);
+            // Show the user that the AField field cannot be accessed.
+            Console.WriteLine($"Unable to access the AField field: {e.Message}");
         }
         //</snippet3>
 
@@ -53,10 +53,10 @@ public class App
         }
         catch (MissingMemberException e)
         {
-         // Notice that this code is catching MissingMemberException which is the
-         // base class of MissingMethodException and MissingFieldException.
-         // Show the user that the AnotherField field cannot be accessed.
-         Console.WriteLine("Unable to access the AnotherField field: {0}", e.Message);
+            // Notice that this code is catching MissingMemberException which is the
+            // base class of MissingMethodException and MissingFieldException.
+            // Show the user that the AnotherField field cannot be accessed.
+            Console.WriteLine($"Unable to access the AnotherField field: {e.Message}");
         }
         //</snippet4>
     }

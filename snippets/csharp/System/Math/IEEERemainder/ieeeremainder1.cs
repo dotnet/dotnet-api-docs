@@ -3,29 +3,29 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      Console.WriteLine($"{"IEEERemainder",35} {"Remainder operator",20}");
-      ShowRemainders(3, 2);
-      ShowRemainders(4, 2);
-      ShowRemainders(10, 3);
-      ShowRemainders(11, 3);
-      ShowRemainders(27, 4);
-      ShowRemainders(28, 5);
-      ShowRemainders(17.8, 4);
-      ShowRemainders(17.8, 4.1);
-      ShowRemainders(-16.3, 4.1);
-      ShowRemainders(17.8, -4.1);
-      ShowRemainders(-17.8, -4.1);
-   }
+    public static void Main()
+    {
+        Console.WriteLine($"{"IEEERemainder",35} {"Remainder operator",20}");
+        ShowRemainders(3, 2);
+        ShowRemainders(4, 2);
+        ShowRemainders(10, 3);
+        ShowRemainders(11, 3);
+        ShowRemainders(27, 4);
+        ShowRemainders(28, 5);
+        ShowRemainders(17.8, 4);
+        ShowRemainders(17.8, 4.1);
+        ShowRemainders(-16.3, 4.1);
+        ShowRemainders(17.8, -4.1);
+        ShowRemainders(-17.8, -4.1);
+    }
 
-   private static void ShowRemainders(double number1, double number2)
-   {
-      var formula = $"{number1} / {number2} = ";
-      var ieeeRemainder = Math.IEEERemainder(number1, number2);
-      var remainder = number1 % number2;
-      Console.WriteLine($"{formula,-16} {ieeeRemainder,18} {remainder,20}");
-   }
+    private static void ShowRemainders(double number1, double number2)
+    {
+        string formula = $"{number1} / {number2} = ";
+        double ieeeRemainder = Math.IEEERemainder(number1, number2);
+        double remainder = number1 % number2;
+        Console.WriteLine($"{formula,-16} {ieeeRemainder,18} {remainder,20}");
+    }
 }
 // The example displays the following output:
 //

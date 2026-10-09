@@ -7,10 +7,10 @@ using System;
 using System.Collections;
 using System.Globalization;
 
-public class SamplesSortedList
+public class SamplesSortedListDefault
 {
 
-    public static void Main()
+    public static void Run()
     {
 
         // Create a SortedList using the default comparer.
@@ -48,7 +48,7 @@ public class SamplesSortedList
         // Create a SortedList using the specified CaseInsensitiveComparer,
         // which is based on the Turkish culture (tr-TR), where "I" is not
         // the uppercase version of "i".
-        CultureInfo myCul = new CultureInfo("tr-TR");
+        CultureInfo myCul = new("tr-TR");
         SortedList mySL3 = new SortedList(new CaseInsensitiveComparer(myCul));
         Console.WriteLine(
             "mySL3 (case-insensitive comparer, Turkish culture):");
@@ -91,8 +91,7 @@ public class SamplesSortedList
         Console.WriteLine("        -KEY-   -VALUE-");
         for (int i = 0; i < myList.Count; i++)
         {
-            Console.WriteLine("        {0,-6}: {1}",
-                myList.GetKey(i), myList.GetByIndex(i));
+            Console.WriteLine($"        {myList.GetKey(i),-6}: {myList.GetByIndex(i)}");
         }
         Console.WriteLine();
     }

@@ -10,7 +10,7 @@ public class IteratingEx3
         var temp = new List<int>();
 
         // Square each number and store it in a temporary collection.
-        foreach (var number in numbers)
+        foreach (int number in numbers)
         {
             int square = (int)Math.Pow(number, 2);
             temp.Add(square);
@@ -22,8 +22,8 @@ public class IteratingEx3
         Array.Copy(temp.ToArray(), 0, combined, numbers.Count, temp.Count);
 
         // Iterate the array.
-        foreach (var value in combined)
-            Console.Write("{0}    ", value);
+        foreach (int value in combined)
+            Console.Write($"{value}    ");
     }
 }
 // The example displays the following output:

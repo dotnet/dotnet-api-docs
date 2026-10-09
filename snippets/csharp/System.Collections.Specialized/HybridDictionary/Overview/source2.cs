@@ -4,10 +4,10 @@ using System.Collections.Specialized;
 
 public class HybridDictSample
 {
-    public static void Main()
+    public static void Run()
     {
         // Creates and initializes a new HybridDictionary.
-        HybridDictionary myHybridDictionary = new HybridDictionary();
+        HybridDictionary myHybridDictionary = [];
 
         // <snippet2>
         foreach (DictionaryEntry de in myHybridDictionary)
@@ -17,8 +17,8 @@ public class HybridDictSample
         // </snippet2>
 
         // <snippet3>
-        HybridDictionary myCollection = new HybridDictionary();
-        lock(myCollection.SyncRoot)
+        HybridDictionary myCollection = [];
+        lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)
             {

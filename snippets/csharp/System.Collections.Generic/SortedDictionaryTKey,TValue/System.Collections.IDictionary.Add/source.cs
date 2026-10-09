@@ -31,18 +31,19 @@ public class Example
         // Create a new sorted dictionary of strings, with string keys,
         // and access it using the IDictionary interface.
         //
-        IDictionary openWith = new SortedDictionary<string, string>();
-
-        // Add some elements to the dictionary. There are no
-        // duplicate keys, but some of the values are duplicates.
-        // IDictionary.Add throws an exception if incorrect types
-        // are supplied for key or value.
-        openWith.Add("txt", "notepad.exe");
-        openWith.Add("bmp", "paint.exe");
-        openWith.Add("dib", "paint.exe");
-        openWith.Add("rtf", "wordpad.exe");
+        IDictionary openWith = new SortedDictionary<string, string>
+        {
+            // Add some elements to the dictionary. There are no
+            // duplicate keys, but some of the values are duplicates.
+            // IDictionary.Add throws an exception if incorrect types
+            // are supplied for key or value.
+            { "txt", "notepad.exe" },
+            { "bmp", "paint.exe" },
+            { "dib", "paint.exe" },
+            { "rtf", "wordpad.exe" }
+        };
         //</Snippet2>
-//</Snippet31>
+        //</Snippet31>
         //<Snippet21>
         try
         {
@@ -132,7 +133,7 @@ public class Example
         // with the IDictionary interface, the elements are retrieved
         // as DictionaryEntry objects instead of KeyValuePair objects.
         Console.WriteLine();
-        foreach( DictionaryEntry de in openWith )
+        foreach (DictionaryEntry de in openWith)
         {
             Console.WriteLine("Key = {0}, Value = {1}",
                 de.Key, de.Value);
@@ -148,7 +149,7 @@ public class Example
         // even though the ICollection interface is not strongly
         // typed.
         Console.WriteLine();
-        foreach( string s in icoll )
+        foreach (string s in icoll)
         {
             Console.WriteLine("Value = {0}", s);
         }
@@ -163,7 +164,7 @@ public class Example
         // even though the ICollection interface is not strongly
         // typed.
         Console.WriteLine();
-        foreach( string s in icoll )
+        foreach (string s in icoll)
         {
             Console.WriteLine("Key = {0}", s);
         }
@@ -180,7 +181,7 @@ public class Example
             Console.WriteLine("Key \"dib\" is not found.");
         }
         //</Snippet10>
-//<Snippet32>
+        //<Snippet32>
     }
 }
 //</Snippet32>

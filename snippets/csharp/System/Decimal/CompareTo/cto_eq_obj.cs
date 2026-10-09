@@ -6,62 +6,59 @@ using System;
 class DecCompToEqualsObjDemo
 {
     // Get the exception type name; remove the namespace prefix.
-    public static string GetExceptionType( Exception ex )
+    public static string GetExceptionType(Exception ex)
     {
-        string exceptionType = ex.GetType( ).ToString( );
+        string exceptionType = ex.GetType().ToString();
         return exceptionType.Substring(
-            exceptionType.LastIndexOf( '.' ) + 1 );
+            exceptionType.LastIndexOf('.') + 1);
     }
 
     // Compare the decimal to the object parameters,
     // and display the object parameters with the results.
-    public static void CompDecimalToObject( decimal Left,
-        object Right, string RightText )
+    public static void CompDecimalToObject(decimal Left,
+        object Right, string RightText)
     {
 
-        Console.WriteLine( "{0,-46}{1}", "object: "+RightText,
-            Right );
-        Console.WriteLine( "{0,-46}{1}", "Left.Equals( object )",
-            Left.Equals( Right ) );
-        Console.Write( "{0,-46}", "Left.CompareTo( object )" );
+        Console.WriteLine($"{"object: " + RightText,-46}{Right}");
+        Console.WriteLine($"{"Left.Equals( object )",-46}{Left.Equals(Right)}");
+        Console.Write($"{"Left.CompareTo( object )",-46}");
 
         try
         {
             // Catch the exception if CompareTo( ) throws one.
-            Console.WriteLine( "{0}\n", Left.CompareTo( Right ) );
+            Console.WriteLine($"{Left.CompareTo(Right)}\n");
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
-            Console.WriteLine( "{0}\n", GetExceptionType( ex ) );
+            Console.WriteLine($"{GetExceptionType(ex)}\n");
         }
     }
 
-    public static void Main( )
+    public static void Main()
     {
         Console.WriteLine(
             "This example of the decimal.Equals( object ) and \n" +
             "decimal.CompareTo( object ) methods generates the \n" +
             "following output. It creates several different " +
             "decimal \nvalues and compares them with the following " +
-            "reference value.\n" );
+            "reference value.\n");
 
         // Create a reference decimal value.
-        decimal Left = new decimal( 987.654 );
+        decimal Left = new(987.654);
 
-        Console.WriteLine( "{0,-46}{1}\n",
-            "Left: decimal( 987.654 )", Left );
+        Console.WriteLine($"{"Left: decimal( 987.654 )",-46}{Left}\n");
 
         // Create objects to compare with the reference.
-        CompDecimalToObject( Left, new decimal( 9.8765400E+2 ),
-            "decimal( 9.8765400E+2 )" );
-        CompDecimalToObject( Left, 987.6541M, "987.6541D" );
-        CompDecimalToObject( Left, 987.6539M, "987.6539D" );
-        CompDecimalToObject( Left,
-            new decimal( 987654000, 0, 0, false, 6 ),
-            "decimal( 987654000, 0, 0, false, 6 )" );
-        CompDecimalToObject( Left, 9.8765400E+2,
-            "Double 9.8765400E+2" );
-        CompDecimalToObject( Left, "987.654", "String \"987.654\"" );
+        CompDecimalToObject(Left, new decimal(9.8765400E+2),
+            "decimal( 9.8765400E+2 )");
+        CompDecimalToObject(Left, 987.6541M, "987.6541D");
+        CompDecimalToObject(Left, 987.6539M, "987.6539D");
+        CompDecimalToObject(Left,
+            new decimal(987654000, 0, 0, false, 6),
+            "decimal( 987654000, 0, 0, false, 6 )");
+        CompDecimalToObject(Left, 9.8765400E+2,
+            "Double 9.8765400E+2");
+        CompDecimalToObject(Left, "987.654", "String \"987.654\"");
     }
 }
 

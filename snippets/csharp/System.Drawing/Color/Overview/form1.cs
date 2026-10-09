@@ -1,40 +1,40 @@
-﻿using System.Drawing;
-using System;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 // The following code example demonstrates how to override the  
 // OnClosed method on a class derived from Form. 
 
 //<snippet6>
-public class myForm:
+public class myForm :
     Form
 
 {
     protected override void OnClosed(EventArgs e)
     {
-        MessageBox.Show("The form is now closing.", 
+        MessageBox.Show("The form is now closing.",
             "Close Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         base.OnClosed(e);
     }
 
     public myForm() : base()
-    {        
+    {
     }
 }
 
 //</snippet6>
 
-public class Form1: myForm
+public class Form1 : myForm
 
 {
     #region " Windows Form Designer generated code "
 
     public Form1() : base()
-    {        
+    {
 
         //This call is required by the Windows Form Designer.
         InitializeComponent();
-        this.Paint += new PaintEventHandler(Form1_Paint);
+        Paint += new PaintEventHandler(Form1_Paint);
         addButton.Click += new EventHandler(addButton_Click);
         subtractButton.Click += new EventHandler(subtractButton_Click);
         TruncateAndRoundSizes();
@@ -47,10 +47,7 @@ public class Form1: myForm
     {
         if (disposing)
         {
-            if (components != null)
-            {
-                components.Dispose();
-            }
+            components?.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -68,52 +65,52 @@ public class Form1: myForm
     [System.Diagnostics.DebuggerStepThrough]
     private void InitializeComponent()
     {
-        this.subtractButton = new System.Windows.Forms.Button();
-        this.addButton = new System.Windows.Forms.Button();
-        this.Label1 = new System.Windows.Forms.Label();
-        this.Label2 = new System.Windows.Forms.Label();
-        this.SuspendLayout();
+        subtractButton = new System.Windows.Forms.Button();
+        addButton = new System.Windows.Forms.Button();
+        Label1 = new System.Windows.Forms.Label();
+        Label2 = new System.Windows.Forms.Label();
+        SuspendLayout();
         //
         //subtractButton
         //
-        this.subtractButton.Location = new System.Drawing.Point(192, 40);
-        this.subtractButton.Name = "subtractButton";
-        this.subtractButton.TabIndex = 0;
-        this.subtractButton.Text = "subtractButton";
+        subtractButton.Location = new System.Drawing.Point(192, 40);
+        subtractButton.Name = "subtractButton";
+        subtractButton.TabIndex = 0;
+        subtractButton.Text = "subtractButton";
         //
         //addButton
         //
-        this.addButton.Location = new System.Drawing.Point(192, 80);
-        this.addButton.Name = "addButton";
-        this.addButton.TabIndex = 1;
-        this.addButton.Text = "addButton";
+        addButton.Location = new System.Drawing.Point(192, 80);
+        addButton.Name = "addButton";
+        addButton.TabIndex = 1;
+        addButton.Text = "addButton";
         //
         //Label1
         //
-        this.Label1.Location = new System.Drawing.Point(24, 192);
-        this.Label1.Name = "Label1";
-        this.Label1.Size = new System.Drawing.Size(240, 23);
-        this.Label1.TabIndex = 2;
-        this.Label1.Text = "Label1";
+        Label1.Location = new System.Drawing.Point(24, 192);
+        Label1.Name = "Label1";
+        Label1.Size = new System.Drawing.Size(240, 23);
+        Label1.TabIndex = 2;
+        Label1.Text = "Label1";
         //
         //Label2
         //
-        this.Label2.Location = new System.Drawing.Point(24, 224);
-        this.Label2.Name = "Label2";
-        this.Label2.Size = new System.Drawing.Size(240, 23);
-        this.Label2.TabIndex = 3;
-        this.Label2.Text = "Label2";
+        Label2.Location = new System.Drawing.Point(24, 224);
+        Label2.Name = "Label2";
+        Label2.Size = new System.Drawing.Size(240, 23);
+        Label2.TabIndex = 3;
+        Label2.Text = "Label2";
         //
         //Form1
         //
-        this.ClientSize = new System.Drawing.Size(292, 266);
-        this.Controls.Add(this.Label2);
-        this.Controls.Add(this.Label1);
-        this.Controls.Add(this.addButton);
-        this.Controls.Add(this.subtractButton);
-        this.Name = "Form1";
-        this.Text = "Form1";
-        this.ResumeLayout(false);
+        ClientSize = new System.Drawing.Size(292, 266);
+        Controls.Add(Label2);
+        Controls.Add(Label1);
+        Controls.Add(addButton);
+        Controls.Add(subtractButton);
+        Name = "Form1";
+        Text = "Form1";
+        ResumeLayout(false);
     }
 
     #endregion
@@ -145,10 +142,10 @@ public class Form1: myForm
         Size buttonSize = (Size)startPoint;
         if (buttonSize == subtractButton.Size)
 
-            // If the sizes are equal, tell the user.
+        // If the sizes are equal, tell the user.
         {
-            e.Graphics.DrawString("The sizes are equal.", 
-                new Font(this.Font, FontStyle.Italic), 
+            e.Graphics.DrawString("The sizes are equal.",
+                new Font(Font, FontStyle.Italic),
                 Brushes.Indigo, 10.0F, 65.0F);
         }
     }
@@ -168,12 +165,12 @@ public class Form1: myForm
         byte b = slateBlue.B;
         byte r = slateBlue.R;
         byte a = slateBlue.A;
-        string text = String.Format("Slate Blue has these ARGB values: Alpha:{0}, " +
-            "red:{1}, green: {2}, blue {3}", new object[]{a, r, g, b});
-        e.Graphics.DrawString(text, 
-            new Font(this.Font, FontStyle.Italic), 
-            new SolidBrush(slateBlue), 
-            new RectangleF(new PointF(0.0F, 0.0F), this.Size));
+        string text = string.Format("Slate Blue has these ARGB values: Alpha:{0}, " +
+            "red:{1}, green: {2}, blue {3}", new object[] { a, r, g, b });
+        e.Graphics.DrawString(text,
+            new Font(Font, FontStyle.Italic),
+            new SolidBrush(slateBlue),
+            new RectangleF(new PointF(0.0F, 0.0F), Size));
     }
     //</snippet3>
 
@@ -189,7 +186,7 @@ public class Form1: myForm
     // named subtractionButton and associate this method with the
     // button's Click event.
     //<snippet2>
-    private void subtractButton_Click(System.Object sender, System.EventArgs e)
+    private void subtractButton_Click(object sender, System.EventArgs e)
     {
         subtractButton.Size = subtractButton.Size - new Size(10, 10);
     }
@@ -200,7 +197,7 @@ public class Form1: myForm
     // this example, paste it into a form that contains a button named 
     // addButton and associate this method with the button's Click event.
     //<snippet4>
-    private void addButton_Click(System.Object sender, System.EventArgs e)
+    private void addButton_Click(object sender, System.EventArgs e)
     {
         addButton.Size = addButton.Size + new Size(10, 10);
     }
@@ -225,12 +222,12 @@ public class Form1: myForm
         Size truncatedSize = Size.Truncate(theSize);
 
         //Print out the values on two labels.
-        Label1.Text = "Rounded size = "+roundedSize.ToString();
-        Label2.Text = "Truncated size = "+truncatedSize.ToString();
+        Label1.Text = "Rounded size = " + roundedSize.ToString();
+        Label2.Text = "Truncated size = " + truncatedSize.ToString();
     }
     //</snippet5>
 
-// The following code example demonstrates how to use the 
+    // The following code example demonstrates how to use the
     // Point#ctor(int) and Size#ctor(int, int) constructors and the 
     // ContentAlignment enumeration. To run this example paste this code into  
     // a Windows Form that contains a label named Label1 and call the 

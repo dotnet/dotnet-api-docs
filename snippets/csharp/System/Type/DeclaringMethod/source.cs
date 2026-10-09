@@ -6,10 +6,7 @@ using System.Reflection;
 // Define a class with a generic method.
 public class Example
 {
-    public static void Generic<T>(T toDisplay)
-    {
-        Console.WriteLine("\r\nHere it is: {0}", toDisplay);
-    }
+    public static void Generic<T>(T toDisplay) => Console.WriteLine($"\r\nHere it is: {toDisplay}");
 }
 //</Snippet2>
 
@@ -37,7 +34,7 @@ public class Test
         //</Snippet3>
 
         // Invoke the method.
-        object[] args = {42};
+        object[] args = [42];
         miConstructed.Invoke(null, args);
 
         // Invoke the method normally.
@@ -48,28 +45,24 @@ public class Test
         // and show it's the same as the original definition.
         //
         MethodInfo miDef = miConstructed.GetGenericMethodDefinition();
-        Console.WriteLine("\r\nThe definition is the same: {0}",
-            miDef == mi);
+        Console.WriteLine($"\r\nThe definition is the same: {miDef == mi}");
         //</Snippet4>
     }
 
     private static void DisplayGenericMethodInfo(MethodInfo mi)
     {
-        Console.WriteLine("\r\n{0}", mi);
+        Console.WriteLine($"\r\n{mi}");
 
         //<Snippet5>
-        Console.WriteLine("\tIs this a generic method definition? {0}",
-            mi.IsGenericMethodDefinition);
+        Console.WriteLine($"\tIs this a generic method definition? {mi.IsGenericMethodDefinition}");
         //</Snippet5>
 
         //<Snippet6>
-        Console.WriteLine("\tIs it a generic method? {0}",
-            mi.IsGenericMethod);
+        Console.WriteLine($"\tIs it a generic method? {mi.IsGenericMethod}");
         //</Snippet6>
 
         //<Snippet7>
-        Console.WriteLine("\tDoes it have unassigned generic parameters? {0}",
-            mi.ContainsGenericParameters);
+        Console.WriteLine($"\tDoes it have unassigned generic parameters? {mi.ContainsGenericParameters}");
         //</Snippet7>
 
         //<Snippet8>
@@ -79,8 +72,7 @@ public class Test
         {
             Type[] typeArguments = mi.GetGenericArguments();
 
-            Console.WriteLine("\tList type arguments ({0}):",
-                typeArguments.Length);
+            Console.WriteLine($"\tList type arguments ({typeArguments.Length}):");
 
             foreach (Type tParam in typeArguments)
             {
@@ -97,7 +89,7 @@ public class Test
                 }
                 else
                 {
-                    Console.WriteLine("\t\t{0}", tParam);
+                    Console.WriteLine($"\t\t{tParam}");
                 }
             }
         }

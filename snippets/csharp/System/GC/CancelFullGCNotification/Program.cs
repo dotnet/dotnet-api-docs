@@ -23,7 +23,7 @@ namespace GCNotify
 
         // Collection for objects that
         // simulate the server request workload.
-        static List<byte[]> load = new List<byte[]>();
+        static List<byte[]> load = new();
 
         public static void Main(string[] args)
         {
@@ -37,7 +37,7 @@ namespace GCNotify
                 bAllocate = true;
 
                 // Start a thread using WaitForFullGCProc.
-                Thread thWaitForFullGC = new Thread(new ThreadStart(WaitForFullGCProc));
+                Thread thWaitForFullGC = new(new ThreadStart(WaitForFullGCProc));
                 thWaitForFullGC.Start();
 
                 // While the thread is checking for notifications in
@@ -57,7 +57,7 @@ namespace GCNotify
                             if (newCollCount != lastCollCount)
                             {
                                 // Show collection count when it increases:
-                                Console.WriteLine("Gen 2 collection count: {0}", GC.CollectionCount(2).ToString());
+                                Console.WriteLine($"Gen 2 collection count: {GC.CollectionCount(2).ToString()}");
                                 lastCollCount = newCollCount;
                             }
 

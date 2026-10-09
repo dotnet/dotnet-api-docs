@@ -1,13 +1,13 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 
 public class TipCalculator
 {
     private const double tipRate = 0.18;
-    public static void Main(string[] args)
+    public static void Run(string[] args)
     {
         double billTotal;
-        if (args.Length == 0 || ! Double.TryParse(args[0], out billTotal))
+        if (args.Length == 0 || !double.TryParse(args[0], out billTotal))
         {
             Console.WriteLine("usage: TIPCALC total");
             return;

@@ -6,10 +6,9 @@ using System.Threading;
 
 namespace Microsoft.WCF.Documentation
 {
+  // <snippet4>
   [CallbackBehaviorAttribute(
-   IncludeExceptionDetailInFaults= true,
-    UseSynchronizationContext=true,
-    ValidateMustUnderstand=true
+    UseSynchronizationContext=true
   )]
   public class Client : SampleDuplexHelloCallback
   {
@@ -22,18 +21,19 @@ namespace Microsoft.WCF.Documentation
 
     public void Run()
     {
-      // Picks up configuration from the configuration file.
+      Binding binding = new CustomBinding();
+      EndpointAddress address = new("http://localhost:8080/DuplexHello");
       SampleDuplexHelloClient wcfClient
-        = new SampleDuplexHelloClient(new InstanceContext(this), "WSDualHttpBinding_SampleDuplexHello");
+        = new(new InstanceContext(this), binding, address);
       try
       {
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("Enter a greeting to send and press ENTER: ");
+        Console.WriteLine("Enter a greeting to send and press 'Enter': ");
         Console.Write(">>> ");
         Console.ForegroundColor = ConsoleColor.Green;
         string greeting = Console.ReadLine();
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("Called service with: \r\n\t" + greeting);
+        Console.WriteLine($"Called service with: \r\n\t{greeting}");
         wcfClient.Hello(greeting);
         Console.WriteLine("Execution passes service call and moves to the WaitHandle.");
         this.waitHandle.WaitOne();
@@ -48,27 +48,28 @@ namespace Microsoft.WCF.Documentation
       }
       catch (TimeoutException timeProblem)
       {
-        Console.WriteLine("The service operation timed out. " + timeProblem.Message);
+        Console.WriteLine($"The service operation timed out. {timeProblem.Message}");
         Console.ReadLine();
       }
       catch (CommunicationException commProblem)
       {
-        Console.WriteLine("There was a communication problem. " + commProblem.Message);
+        Console.WriteLine($"There was a communication problem. {commProblem.Message}");
         Console.ReadLine();
       }
     }
     public static void Main()
     {
-      Client client = new Client();
+      Client client = new();
       client.Run();
     }
 
     public void Reply(string response)
     {
       Console.WriteLine("Received output.");
-      Console.WriteLine("\r\n\t" + response);
+      Console.WriteLine($"\r\n\t{response}");
       this.waitHandle.Set();
     }
   }
+  // </snippet4>
 }
 // </snippet3>

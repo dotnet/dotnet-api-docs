@@ -1,12 +1,26 @@
 ﻿using System;
 using System.Globalization;
-using System.Web.UI.WebControls;
 
-public partial class Default2 : System.Web.UI.Page
+public partial class Default2
 {
-    // controls on web form
-    TextBox inputNumber;
-    Label outputNumber;
+    private sealed class TextBox
+    {
+        public string Text { get; set; } = string.Empty;
+    }
+
+    private sealed class Label
+    {
+        public string Text { get; set; } = string.Empty;
+    }
+
+    private sealed class RequestContext
+    {
+        public string[] UserLanguages { get; } = [CultureInfo.CurrentCulture.Name];
+    }
+
+    private readonly TextBox inputNumber = new();
+    private readonly Label outputNumber = new();
+    private RequestContext Request { get; } = new();
 
     // <Snippet1>
     protected void OkToSingle_Click(object sender, EventArgs e)
@@ -16,23 +30,23 @@ public partial class Default2 : System.Web.UI.Page
         CultureInfo culture;
 
         // Return if string is empty
-        if (String.IsNullOrEmpty(this.inputNumber.Text))
+        if (string.IsNullOrEmpty(this.inputNumber.Text))
             return;
 
         // Get locale of web request to determine possible format of number
         if (Request.UserLanguages.Length == 0)
             return;
         locale = Request.UserLanguages[0];
-        if (String.IsNullOrEmpty(locale))
+        if (string.IsNullOrEmpty(locale))
             return;
 
         // Instantiate CultureInfo object for the user's locale
-        culture = new CultureInfo(locale);
+        culture = new(locale);
 
         // Convert user input from a string to a number
         try
         {
-            number = Single.Parse(this.inputNumber.Text, culture.NumberFormat);
+            number = float.Parse(this.inputNumber.Text, culture.NumberFormat);
         }
         catch (FormatException)
         {
@@ -55,23 +69,23 @@ public partial class Default2 : System.Web.UI.Page
         CultureInfo culture;
 
         // Return if string is empty
-        if (String.IsNullOrEmpty(this.inputNumber.Text))
+        if (string.IsNullOrEmpty(this.inputNumber.Text))
             return;
 
         // Get locale of web request to determine possible format of number
         if (Request.UserLanguages.Length == 0)
             return;
         locale = Request.UserLanguages[0];
-        if (String.IsNullOrEmpty(locale))
+        if (string.IsNullOrEmpty(locale))
             return;
 
         // Instantiate CultureInfo object for the user's locale
-        culture = new CultureInfo(locale);
+        culture = new(locale);
 
         // Convert user input from a string to a number
         try
         {
-            number = Double.Parse(this.inputNumber.Text, culture.NumberFormat);
+            number = double.Parse(this.inputNumber.Text, culture.NumberFormat);
         }
         catch (FormatException)
         {
@@ -94,23 +108,23 @@ public partial class Default2 : System.Web.UI.Page
         CultureInfo culture;
 
         // Return if string is empty
-        if (String.IsNullOrEmpty(this.inputNumber.Text))
+        if (string.IsNullOrEmpty(this.inputNumber.Text))
             return;
 
         // Get locale of web request to determine possible format of number
         if (Request.UserLanguages.Length == 0)
             return;
         locale = Request.UserLanguages[0];
-        if (String.IsNullOrEmpty(locale))
+        if (string.IsNullOrEmpty(locale))
             return;
 
         // Instantiate CultureInfo object for the user's locale
-        culture = new CultureInfo(locale);
+        culture = new(locale);
 
         // Convert user input from a string to a number
         try
         {
-            number = Decimal.Parse(this.inputNumber.Text, culture.NumberFormat);
+            number = decimal.Parse(this.inputNumber.Text, culture.NumberFormat);
         }
         catch (FormatException)
         {
@@ -133,23 +147,23 @@ public partial class Default2 : System.Web.UI.Page
         CultureInfo culture;
 
         // Return if string is empty
-        if (String.IsNullOrEmpty(this.inputNumber.Text))
+        if (string.IsNullOrEmpty(this.inputNumber.Text))
             return;
 
         // Get locale of web request to determine possible format of number
         if (Request.UserLanguages.Length == 0)
             return;
         locale = Request.UserLanguages[0];
-        if (String.IsNullOrEmpty(locale))
+        if (string.IsNullOrEmpty(locale))
             return;
 
         // Instantiate CultureInfo object for the user's locale
-        culture = new CultureInfo(locale);
+        culture = new(locale);
 
         // Convert user input from a string to a number
         try
         {
-            number = Int32.Parse(this.inputNumber.Text, culture.NumberFormat);
+            number = int.Parse(this.inputNumber.Text, culture.NumberFormat);
         }
         catch (FormatException)
         {
@@ -172,23 +186,23 @@ public partial class Default2 : System.Web.UI.Page
         CultureInfo culture;
 
         // Return if string is empty
-        if (String.IsNullOrEmpty(this.inputNumber.Text))
+        if (string.IsNullOrEmpty(this.inputNumber.Text))
             return;
 
         // Get locale of web request to determine possible format of number
         if (Request.UserLanguages.Length == 0)
             return;
         locale = Request.UserLanguages[0];
-        if (String.IsNullOrEmpty(locale))
+        if (string.IsNullOrEmpty(locale))
             return;
 
         // Instantiate CultureInfo object for the user's locale
-        culture = new CultureInfo(locale);
+        culture = new(locale);
 
         // Convert user input from a string to a number
         try
         {
-            number = Int64.Parse(this.inputNumber.Text, culture.NumberFormat);
+            number = long.Parse(this.inputNumber.Text, culture.NumberFormat);
         }
         catch (FormatException)
         {
@@ -211,23 +225,23 @@ public partial class Default2 : System.Web.UI.Page
         CultureInfo culture;
 
         // Return if string is empty
-        if (String.IsNullOrEmpty(this.inputNumber.Text))
+        if (string.IsNullOrEmpty(this.inputNumber.Text))
             return;
 
         // Get locale of web request to determine possible format of number
         if (Request.UserLanguages.Length == 0)
             return;
         locale = Request.UserLanguages[0];
-        if (String.IsNullOrEmpty(locale))
+        if (string.IsNullOrEmpty(locale))
             return;
 
         // Instantiate CultureInfo object for the user's locale
-        culture = new CultureInfo(locale);
+        culture = new(locale);
 
         // Convert user input from a string to a number
         try
         {
-            number = UInt32.Parse(this.inputNumber.Text, culture.NumberFormat);
+            number = uint.Parse(this.inputNumber.Text, culture.NumberFormat);
         }
         catch (FormatException)
         {
@@ -250,23 +264,23 @@ public partial class Default2 : System.Web.UI.Page
         CultureInfo culture;
 
         // Return if string is empty
-        if (String.IsNullOrEmpty(this.inputNumber.Text))
+        if (string.IsNullOrEmpty(this.inputNumber.Text))
             return;
 
         // Get locale of web request to determine possible format of number
         if (Request.UserLanguages.Length == 0)
             return;
         locale = Request.UserLanguages[0];
-        if (String.IsNullOrEmpty(locale))
+        if (string.IsNullOrEmpty(locale))
             return;
 
         // Instantiate CultureInfo object for the user's locale
-        culture = new CultureInfo(locale);
+        culture = new(locale);
 
         // Convert user input from a string to a number
         try
         {
-            number = UInt64.Parse(this.inputNumber.Text, culture.NumberFormat);
+            number = ulong.Parse(this.inputNumber.Text, culture.NumberFormat);
         }
         catch (FormatException)
         {

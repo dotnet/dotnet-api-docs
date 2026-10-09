@@ -18,17 +18,10 @@ public class Example3
             else
                 totalFalse++;
         }
-        Console.WriteLine("Number of true values:  {0,7:N0} ({1:P3})",
-                          totalTrue,
-                          ((double)totalTrue) / (totalTrue + totalFalse));
-        Console.WriteLine("Number of false values: {0,7:N0} ({1:P3})",
-                          totalFalse,
-                          ((double)totalFalse) / (totalTrue + totalFalse));
+        Console.WriteLine($"Number of true values:  {totalTrue,7:N0} ({((double)totalTrue) / (totalTrue + totalFalse):P3})");
+        Console.WriteLine($"Number of false values: {totalFalse,7:N0} ({((double)totalFalse) / (totalTrue + totalFalse):P3})");
 
-        bool NextBoolean()
-        {
-            return rnd.Next(0, 2) == 1;
-        }
+        bool NextBoolean() => rnd.Next(0, 2) == 1;
 
         // The example displays output like the following:
         //       Number of true values:  499,777 (49.978 %)

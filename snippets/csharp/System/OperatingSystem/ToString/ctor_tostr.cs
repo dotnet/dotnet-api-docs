@@ -6,46 +6,44 @@ using System;
 class OpSysConstructDemo
 {
     // Create and display an OperatingSystem object.
-    static void BuildOSObj( PlatformID pID, Version ver )
+    static void BuildOSObj(PlatformID pID, Version ver)
     {
-        OperatingSystem os = new OperatingSystem( pID, ver );
+        OperatingSystem os = new(pID, ver);
 
-        Console.WriteLine( "   {0}", os.ToString( ) );
+        Console.WriteLine($"   {os.ToString()}");
     }
 
-    static void BuildOperatingSystemObjects( )
+    static void BuildOperatingSystemObjects()
     {
         // The Version object does not need to correspond to an
         // actual OS version.
-        Version verNull     = new Version( );
-        Version verMajMin   = new Version( 3, 11 );
-        Version verMMBld    = new Version( 5, 25, 625 );
-        Version verMMBVer   = new Version( 5, 6, 7, 8 );
-        Version verString   = new Version( "3.5.8.13" );
+        Version verNull = new();
+        Version verMajMin = new(3, 11);
+        Version verMMBld = new(5, 25, 625);
+        Version verMMBVer = new(5, 6, 7, 8);
+        Version verString = new("3.5.8.13");
 
         // All PlatformID members are shown here.
-        BuildOSObj( PlatformID.Win32NT, verNull );
-        BuildOSObj( PlatformID.Win32S, verMajMin );
-        BuildOSObj( PlatformID.Win32Windows, verMMBld );
-        BuildOSObj( PlatformID.WinCE, verMMBVer );
-        BuildOSObj( PlatformID.Win32NT, verString );
+        BuildOSObj(PlatformID.Win32NT, verNull);
+        BuildOSObj(PlatformID.Win32S, verMajMin);
+        BuildOSObj(PlatformID.Win32Windows, verMMBld);
+        BuildOSObj(PlatformID.WinCE, verMMBVer);
+        BuildOSObj(PlatformID.Win32NT, verString);
     }
 
-    public static void Main( )
+    public static void Main()
     {
         Console.WriteLine(
             "This example of the OperatingSystem constructor " +
             "and \nOperatingSystem.ToString( ) " +
-            "generates the following output.\n" );
+            "generates the following output.\n");
         Console.WriteLine(
             "Create and display several different " +
-            "OperatingSystem objects:\n" );
+            "OperatingSystem objects:\n");
 
-        BuildOperatingSystemObjects( );
+        BuildOperatingSystemObjects();
 
-        Console.WriteLine(
-            "\nThe OS version of the host computer is:\n\n   {0}",
-            Environment.OSVersion.ToString( ) );
+        Console.WriteLine($"\nThe OS version of the host computer is:\n\n   {Environment.OSVersion.ToString()}");
     }
 }
 

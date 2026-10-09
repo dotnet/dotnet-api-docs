@@ -7,10 +7,10 @@ class Sample
 {
     public static void Main()
     {
-       Console.WriteLine();
-       Console.WriteLine("GetEnvironmentVariables: ");
-       foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
-           Console.WriteLine("  {0} = {1}", de.Key, de.Value);
+        Console.WriteLine();
+        Console.WriteLine("GetEnvironmentVariables: ");
+        foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
+            Console.WriteLine($"  {de.Key} = {de.Value}");
     }
 }
 // Output from the example is not shown, since it is:

@@ -12,11 +12,11 @@ public class FormattingExample
     private static void CallToString()
     {
         // <Snippet1>
-        byte[] numbers = [ 0, 16, 104, 213 ];
+        byte[] numbers = [0, 16, 104, 213];
         foreach (byte number in numbers)
         {
             // Display value using default formatting.
-            Console.Write("{0,-3}  -->   ", number.ToString());
+            Console.Write($"{number.ToString(),-3}  -->   ");
             // Display value with 3 digits and leading zeros.
             Console.Write(number.ToString("D3") + "   ");
             // Display value with hexadecimal.
@@ -36,14 +36,10 @@ public class FormattingExample
     {
         // <Snippet2>
         byte[] numbers = { 0, 16, 104, 213 };
-        Console.WriteLine("{0}   {1,8}   {2,5}   {3,5}",
-                          "Value", "Binary", "Octal", "Hex");
+        Console.WriteLine($"{"Value"}   {"Binary",8}   {"Octal",5}   {"Hex",5}");
         foreach (byte number in numbers)
         {
-            Console.WriteLine("{0,5}   {1,8}   {2,5}   {3,5}",
-                              number, Convert.ToString(number, 2),
-                              Convert.ToString(number, 8),
-                              Convert.ToString(number, 16));
+            Console.WriteLine($"{number,5}   {Convert.ToString(number, 2),8}   {Convert.ToString(number, 8),5}   {Convert.ToString(number, 16),5}");
         }
         // The example displays the following output:
         //       Value     Binary   Octal     Hex

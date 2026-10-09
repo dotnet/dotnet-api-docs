@@ -1,5 +1,4 @@
-﻿using System;
-using System.CodeDom;
+﻿using System.CodeDom;
 
 namespace CodeStatementCollectionExample
 {
@@ -20,7 +19,7 @@ namespace CodeStatementCollectionExample
 
             //<Snippet3>
             // Adds a CodeStatement to the collection.
-            collection.Add( new CodeCommentStatement("Test comment statement") );
+            collection.Add(new CodeCommentStatement("Test comment statement"));
             //</Snippet3>
 
             //<Snippet4>
@@ -28,24 +27,24 @@ namespace CodeStatementCollectionExample
             CodeStatement[] statements = {
                             new CodeCommentStatement("Test comment statement"),
                             new CodeCommentStatement("Test comment statement")};
-            collection.AddRange( statements );
+            collection.AddRange(statements);
 
             // Adds a collection of CodeStatement objects to the collection.
             CodeStatement testStatement = new CodeCommentStatement("Test comment statement");
             CodeStatementCollection statementsCollection = new CodeStatementCollection();
-            statementsCollection.Add( new CodeCommentStatement("Test comment statement") );
-            statementsCollection.Add( new CodeCommentStatement("Test comment statement") );
-            statementsCollection.Add( testStatement );
+            statementsCollection.Add(new CodeCommentStatement("Test comment statement"));
+            statementsCollection.Add(new CodeCommentStatement("Test comment statement"));
+            statementsCollection.Add(testStatement);
 
-            collection.AddRange( statementsCollection );
+            collection.AddRange(statementsCollection);
             //</Snippet4>
 
             //<Snippet5>
             // Tests for the presence of a CodeStatement in the
             // collection, and retrieves its index if it is found.
             int itemIndex = -1;
-            if( collection.Contains( testStatement ) )
-                itemIndex = collection.IndexOf( testStatement );
+            if (collection.Contains(testStatement))
+                itemIndex = collection.IndexOf(testStatement);
 
             //</Snippet5>
 
@@ -53,7 +52,7 @@ namespace CodeStatementCollectionExample
             // Copies the contents of the collection beginning at index 0 to the specified CodeStatement array.
             // 'statements' is a CodeStatement array.
             CodeStatement[] statementArray = new CodeStatement[collection.Count];
-            collection.CopyTo( statementArray, 0 );
+            collection.CopyTo(statementArray, 0);
             //</Snippet6>
 
             //<Snippet7>
@@ -63,12 +62,12 @@ namespace CodeStatementCollectionExample
 
             //<Snippet8>
             // Inserts a CodeStatement at index 0 of the collection.
-            collection.Insert( 0, new CodeCommentStatement("Test comment statement") );
+            collection.Insert(0, new CodeCommentStatement("Test comment statement"));
             //</Snippet8>
 
             //<Snippet9>
             // Removes the specified CodeStatement from the collection.
-            collection.Remove( testStatement );
+            collection.Remove(testStatement);
             //</Snippet9>
 
             //<Snippet10>

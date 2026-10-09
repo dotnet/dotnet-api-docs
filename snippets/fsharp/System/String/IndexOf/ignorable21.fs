@@ -15,12 +15,13 @@ printfn $"""{s2.IndexOf "\u00ADn"}"""
 printfn $"""{s1.IndexOf "\u00ADm"}"""
 printfn $"""{s2.IndexOf "\u00ADm"}"""
 
-// The example displays the following output
-// if run under the .NET Framework 4 or later:
+// The example displays the following output:
+
 //       0
 //       0
 //       1
 //       1
 //       4
 //       3
+
 // </Snippet21>

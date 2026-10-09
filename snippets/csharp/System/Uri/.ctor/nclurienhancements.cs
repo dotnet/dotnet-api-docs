@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Net;
-using System.Text;
-using System.Threading;
+
+
+
 
 namespace Example
 {
@@ -36,19 +36,23 @@ namespace Example
             string addressString = "catalog/shownew.htm?date=today";
             // Parse the string and create a new Uri instance, if possible.
             Uri result = null;
-            if (Uri.TryCreate(addressString, UriKind.RelativeOrAbsolute, out result)) {
+            if (Uri.TryCreate(addressString, UriKind.RelativeOrAbsolute, out result))
+            {
                 // The call was successful. Write the URI address to the console.
                 Console.Write(result.ToString());
                 // Check whether new Uri instance is absolute or relative.
-                if (result.IsAbsoluteUri) {
+                if (result.IsAbsoluteUri)
+                {
                     Console.WriteLine(" is an absolute Uri.");
                 }
-                else {
+                else
+                {
                     Console.WriteLine(" is a relative Uri.");
                 }
             }
-            else {
-            // Let the user know that the call failed.
+            else
+            {
+                // Let the user know that the call failed.
                 Console.WriteLine("addressString could not be parsed as a URI "
                     + "address.");
             }
@@ -60,18 +64,18 @@ namespace Example
         {
             //<snippet2>
             // Create an absolute Uri from a string.
-            Uri absoluteUri = new Uri("http://www.contoso.com/");
+            Uri absoluteUri = new("http://www.contoso.com/");
 
             // Create a relative Uri from a string.  allowRelative = true to allow for
             // creating a relative Uri.
-            Uri relativeUri = new Uri("/catalog/shownew.htm?date=today", UriKind.Relative);
+            Uri relativeUri = new("/catalog/shownew.htm?date=today", UriKind.Relative);
 
             // Check whether the new Uri is absolute or relative.
             if (!relativeUri.IsAbsoluteUri)
-                Console.WriteLine("{0} is a relative Uri.", relativeUri);
+                Console.WriteLine($"{relativeUri} is a relative Uri.");
 
             // Create a new Uri from an absolute Uri and a relative Uri.
-            Uri combinedUri = new Uri(absoluteUri, relativeUri);
+            Uri combinedUri = new(absoluteUri, relativeUri);
             Console.WriteLine(combinedUri.AbsoluteUri);
             //</snippet2>
         }
@@ -81,7 +85,7 @@ namespace Example
         {
             //<snippet3>
             // Create a new Uri from a string address.
-            Uri uriAddress = new Uri("HTTP://www.ConToso.com:80//thick%20and%20thin.htm");
+            Uri uriAddress = new("HTTP://www.ConToso.com:80//thick%20and%20thin.htm");
 
             // Write the new Uri to the console and note the difference in the two values.
             // ToString() gives the canonical version. OriginalString gives the original
@@ -100,7 +104,7 @@ namespace Example
         {
             //<snippet4>
             // Create new Uri using a string address.
-            Uri address = new Uri("http://[fe80::200:39ff:fe36:1a2d%254]/temp/example.htm");
+            Uri address = new("http://[fe80::200:39ff:fe36:1a2d%254]/temp/example.htm");
 
             // Make the address DNS safe.
 
@@ -117,17 +121,17 @@ namespace Example
         {
             //<snippet5>
             // Create some Uris.
-            Uri address1 = new Uri("http://www.contoso.com/index.htm#search");
-            Uri address2 = new Uri("http://www.contoso.com/index.htm");
-            Uri address3 = new Uri("http://www.contoso.com/index.htm?date=today");
+            Uri address1 = new("http://www.contoso.com/index.htm#search");
+            Uri address2 = new("http://www.contoso.com/index.htm");
+            Uri address3 = new("http://www.contoso.com/index.htm?date=today");
 
             // The first two are equal because the fragment is ignored.
             if (address1 == address2)
-                Console.WriteLine("{0} is equal to {1}", address1.ToString(), address2.ToString());
+                Console.WriteLine($"{address1.ToString()} is equal to {address2.ToString()}");
 
             // The second two are not equal.
             if (address2 != address3)
-                Console.WriteLine("{0} is not equal to {1}", address2.ToString(), address3.ToString());
+                Console.WriteLine($"{address2.ToString()} is not equal to {address3.ToString()}");
             //</snippet5>
         }
 
@@ -136,14 +140,14 @@ namespace Example
         {
             //<snippet6>
             // Create a base Uri.
-            Uri baseUri = new Uri("http://www.contoso.com/");
+            Uri baseUri = new("http://www.contoso.com/");
 
             // Create a new Uri from a string.
-            Uri uriAddress = new Uri("http://www.contoso.com/index.htm?date=today");
+            Uri uriAddress = new("http://www.contoso.com/index.htm?date=today");
 
             // Determine whether BaseUri is a base of UriAddress.
             if (baseUri.IsBaseOf(uriAddress))
-                Console.WriteLine("{0} is the base of {1}", baseUri, uriAddress);
+                Console.WriteLine($"{baseUri} is the base of {uriAddress}");
             //</snippet6>
         }
     }

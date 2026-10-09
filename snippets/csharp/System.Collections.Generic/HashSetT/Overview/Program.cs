@@ -8,8 +8,8 @@ class Program
         //<snippet01>
         //<snippet02>
         //<snippet03>
-        HashSet<int> evenNumbers = new HashSet<int>();
-        HashSet<int> oddNumbers = new HashSet<int>();
+        HashSet<int> evenNumbers = [];
+        HashSet<int> oddNumbers = [];
 
         for (int i = 0; i < 5; i++)
         {
@@ -28,7 +28,7 @@ class Program
         DisplaySet(oddNumbers);
 
         // Create a new HashSet populated with even numbers.
-        HashSet<int> numbers = new HashSet<int>(evenNumbers);
+        HashSet<int> numbers = [.. evenNumbers];
         Console.WriteLine("numbers UnionWith oddNumbers...");
         numbers.UnionWith(oddNumbers);
 

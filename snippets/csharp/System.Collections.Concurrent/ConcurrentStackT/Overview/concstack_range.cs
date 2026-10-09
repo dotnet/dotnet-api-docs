@@ -1,9 +1,12 @@
 ﻿//<snippet1>
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
+namespace ConcurrentStackRangeExample;
 
 class Example
 {
@@ -14,10 +17,10 @@ class Example
     {
         int numParallelTasks = 4;
         int numItems = 1000;
-        var stack = new ConcurrentStack<int>();
+        ConcurrentStack<int> stack = new();
 
         // Push a range of values onto the stack concurrently
-        await Task.WhenAll(Enumerable.Range(0, numParallelTasks).Select(i => Task.Factory.StartNew((state) =>
+        await Task.WhenAll([.. Enumerable.Range(0, numParallelTasks).Select(i => Task.Factory.StartNew((state) =>
         {
             // state = i * numItems
             int index = (int)state;
@@ -29,25 +32,25 @@ class Example
 
             Console.WriteLine($"Pushing an array of ints from {array[0]} to {array[numItems - 1]}");
             stack.PushRange(array);
-        }, i * numItems, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default)).ToArray());
+        }, i * numItems, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default))]);
 
         int numTotalElements = 4 * numItems;
         int[] resultBuffer = new int[numTotalElements];
-        await Task.WhenAll(Enumerable.Range(0, numParallelTasks).Select(i => Task.Factory.StartNew(obj =>
+        await Task.WhenAll([.. Enumerable.Range(0, numParallelTasks).Select(i => Task.Factory.StartNew(obj =>
         {
             int index = (int)obj;
             int result = stack.TryPopRange(resultBuffer, index, numItems);
 
             Console.WriteLine($"TryPopRange expected {numItems}, got {result}.");
-        }, i * numItems, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default)).ToArray());
+        }, i * numItems, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default))]);
 
         for (int i = 0; i < numParallelTasks; i++)
         {
             // Create a sequence we expect to see from the stack taking the last number of the range we inserted
-            var expected = Enumerable.Range(resultBuffer[i*numItems + numItems - 1], numItems);
+            IEnumerable<int> expected = Enumerable.Range(resultBuffer[i * numItems + numItems - 1], numItems);
 
             // Take the range we inserted, reverse it, and compare to the expected sequence
-            var areEqual = expected.SequenceEqual(resultBuffer.Skip(i * numItems).Take(numItems).Reverse());
+            bool areEqual = expected.SequenceEqual(resultBuffer.Skip(i * numItems).Take(numItems).Reverse());
             if (areEqual)
             {
                 Console.WriteLine($"Expected a range of {expected.First()} to {expected.Last()}. Got {resultBuffer[i * numItems + numItems - 1]} to {resultBuffer[i * numItems]}");

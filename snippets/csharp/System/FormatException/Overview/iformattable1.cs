@@ -3,11 +3,11 @@ using System;
 
 public class FormatExample8
 {
-   public static void Main()
-   {
-      decimal price = 169.32m;
-      Console.WriteLine("The cost is {0:Q2}.", price);
-   }
+    public static void Main()
+    {
+        decimal price = 169.32m;
+        Console.WriteLine($"The cost is {price:Q2}.");
+    }
 }
 // The example displays the following output:
 //    Unhandled Exception: System.FormatException: Format specifier was invalid.

@@ -10,12 +10,12 @@ public class MyWin32
     // Declare the SetConsoleCtrlHandler function
     // as external and receiving a delegate.
     [DllImport("Kernel32")]
-    public static extern Boolean SetConsoleCtrlHandler(HandlerRoutine Handler,
-        Boolean Add);
+    public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler,
+        bool Add);
 
     // A delegate type to be used as the handler routine
     // for SetConsoleCtrlHandler.
-    public delegate Boolean HandlerRoutine(CtrlTypes CtrlType);
+    public delegate bool HandlerRoutine(CtrlTypes CtrlType);
 
     // An enumerated type for the control messages
     // sent to the handler routine.
@@ -32,12 +32,12 @@ public class MyWin32
 public class MyApp
 {
     // A private static handler function in the MyApp class.
-    static Boolean Handler(MyWin32.CtrlTypes CtrlType)
+    static bool Handler(MyWin32.CtrlTypes CtrlType)
     {
-        String message = "This message should never be seen!";
+        string message = "This message should never be seen!";
 
         // A switch to handle the event type.
-        switch(CtrlType)
+        switch (CtrlType)
         {
             case MyWin32.CtrlTypes.CTRL_C_EVENT:
                 message = "A CTRL_C_EVENT was raised by the user.";
@@ -66,7 +66,7 @@ public class MyApp
     {
 
         // Use interop to set a console control handler.
-        MyWin32.HandlerRoutine hr = new MyWin32.HandlerRoutine(Handler);
+        MyWin32.HandlerRoutine hr = new(Handler);
         MyWin32.SetConsoleCtrlHandler(hr, true);
 
         // Give the user some time to raise a few events.
@@ -76,13 +76,13 @@ public class MyApp
         // The garbage collector can detect that the object has no
         // more managed references and might clean it up here while
         // the unmanaged SetConsoleCtrlHandler method is still using it.
-		
+
         // Force a garbage collection to demonstrate how the hr
         // object will be handled.
         GC.Collect();
         GC.WaitForPendingFinalizers();
         GC.Collect();
-		
+
         Thread.Sleep(30000);
 
         // Display a message to the console when the unmanaged method

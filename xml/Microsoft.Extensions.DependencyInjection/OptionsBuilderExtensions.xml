@@ -77,7 +77,34 @@
             Enforces options validation check on start rather than at run time.
             </summary>
         <returns>The <see cref="T:Microsoft.Extensions.Options.OptionsBuilder`1" /> so that additional calls can be chained.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>
+            With the built-in <see cref="T:Microsoft.Extensions.Options.IOptionsFactory`1" />, asynchronous validation runs during startup and
+            seeds the built-in <see cref="T:Microsoft.Extensions.Options.IOptions`1" /> and <see cref="T:Microsoft.Extensions.Options.IOptionsMonitor`1" /> instances
+            when their caches do not already contain a value. Options requiring asynchronous validation cannot be
+            accessed synchronously before startup completes. A value successfully created synchronously before or
+            during startup remains the cache winner, and a faulted monitor cache entry causes startup validation to
+            fail rather than being replaced.
+            </para>
+          <para>
+            A derived or replacement <see cref="T:Microsoft.Extensions.Options.IOptionsFactory`1" /> uses synchronous startup validation and
+            does not invoke <see cref="M:Microsoft.Extensions.Options.IAsyncValidateOptions`1.ValidateAsync(System.String,`0,System.Threading.CancellationToken)" />. Default-name asynchronous
+            validation requires the built-in <see cref="T:Microsoft.Extensions.Options.IOptions`1" /> implementation; startup throws
+            <see cref="T:System.InvalidOperationException" /> when a custom implementation is registered. The built-in
+            <see cref="T:Microsoft.Extensions.Options.IOptionsSnapshot`1" /> validates synchronously in per-scope caches that startup validation
+            does not populate. The built-in options monitor also reloads synchronously and does not invoke asynchronous
+            validation. The built-in asynchronous validators therefore cause reload to fail and prevent change
+            listeners from being notified; no asynchronous last-known-good guarantee is provided.
+            </para>
+          <para>
+            Publication uses <see cref="M:Microsoft.Extensions.Options.IOptionsMonitorCache`1.GetOrAdd(System.String,System.Func{`0})" /> so an existing monitor value is not
+            replaced. For compatibility, this method exposes the built-in startup validator through
+            <see cref="T:Microsoft.Extensions.Options.IStartupValidator" /> and <see cref="T:Microsoft.Extensions.Options.IAsyncStartupValidator" /> as the same singleton. A custom
+            validator registered only as <see cref="T:Microsoft.Extensions.Options.IStartupValidator" /> takes precedence and suppresses all
+            asynchronous startup validators. New custom startup validators should register only
+            <see cref="T:Microsoft.Extensions.Options.IAsyncStartupValidator" />.
+            </para>
+        </remarks>
       </Docs>
     </Member>
   </Members>

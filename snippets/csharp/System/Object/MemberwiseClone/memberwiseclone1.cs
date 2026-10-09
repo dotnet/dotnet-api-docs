@@ -5,10 +5,7 @@ public class IdInfo
 {
     public int IdNumber;
 
-    public IdInfo(int IdNumber)
-    {
-        this.IdNumber = IdNumber;
-    }
+    public IdInfo(int IdNumber) => this.IdNumber = IdNumber;
 }
 
 public class Person
@@ -17,15 +14,12 @@ public class Person
     public string Name;
     public IdInfo IdInfo;
 
-    public Person ShallowCopy()
-    {
-        return (Person)MemberwiseClone();
-    }
+    public Person ShallowCopy() => (Person)MemberwiseClone();
 
     public Person DeepCopy()
     {
         Person other = (Person)MemberwiseClone();
-        other.IdInfo = new IdInfo(IdInfo.IdNumber);
+        other.IdInfo = new(IdInfo.IdNumber);
         return other;
     }
 }
@@ -39,7 +33,7 @@ public class Example
         {
             Age = 42,
             Name = "Sam",
-            IdInfo = new IdInfo(6565)
+            IdInfo = new(6565)
         };
 
         // Perform a shallow copy of p1 and assign it to p2.
@@ -83,7 +77,7 @@ public class Example
 }
 
 /* The example displays the following output:
- * 
+ *
  * Original values of p1 and p2:
       p1 instance values:
          Name: Sam, Age: 42

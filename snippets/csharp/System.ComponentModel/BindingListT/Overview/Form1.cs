@@ -17,10 +17,10 @@ public partial class Form1 : Form
     public Form1()
     {
         AutoScaleMode = AutoScaleMode.Font;
-        textBox1 = new TextBox();
-        textBox2 = new TextBox();
-        listBox1 = new ListBox();
-        button1 = new Button();
+        textBox1 = new();
+        textBox2 = new();
+        listBox1 = new();
+        button1 = new();
         textBox1.Location = new Point(169, 26);
         textBox1.Size = new Size(100, 20);
         textBox1.Text = "Bracket";
@@ -59,7 +59,7 @@ public partial class Form1 : Form
     void InitializeListOfParts()
     {
         // Create the new BindingList of Part type.
-        listOfParts = new BindingList<Part>
+        listOfParts = new()
         {
             // Allow new parts to be added, but not removed once committed.        
             AllowNew = true,
@@ -73,14 +73,15 @@ public partial class Form1 : Form
         };
 
         // Add a couple of parts to the list.
-        listOfParts.Add(new Part("Widget", 1234));
-        listOfParts.Add(new Part("Gadget", 5647));
+        listOfParts.Add(new("Widget", 1234));
+        listOfParts.Add(new("Gadget", 5647));
     }
     //</snippet2>
 
     //<snippet3>
     // Create a new part from the text in the two text boxes.
-    void listOfParts_AddingNew(object sender, AddingNewEventArgs e) => e.NewObject = new Part(textBox1.Text, int.Parse(textBox2.Text));
+    void listOfParts_AddingNew(object sender, AddingNewEventArgs e) =>
+        e.NewObject = new Part(textBox1.Text, int.Parse(textBox2.Text));
     //</snippet3>
 
     //<snippet4>
@@ -97,14 +98,15 @@ public partial class Form1 : Form
         }
         else
         {
-            textBox2.Text = randomNumber.Next(9999).ToString();
+            textBox2.Text = $"{randomNumber.Next(9999)}";
             textBox1.Text = "Enter part name";
         }
     }
     //</snippet4>
 
     //<snippet5>
-    void listOfParts_ListChanged(object sender, ListChangedEventArgs e) => MessageBox.Show(e.ListChangedType.ToString());
+    void listOfParts_ListChanged(object sender, ListChangedEventArgs e) =>
+        _ = MessageBox.Show($"{e.ListChangedType}");
     //</snippet5>
 
     [STAThread]

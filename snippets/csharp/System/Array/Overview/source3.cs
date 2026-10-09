@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 public class SamplesArray2
 {
@@ -19,12 +19,12 @@ public class SamplesArray2
         }
 
         // Displays the properties of the Array.
-        Console.WriteLine("The Array has {0} dimension(s) and a total of {1} elements.", myArr.Rank, myArr.Length);
+        Console.WriteLine($"The Array has {myArr.Rank} dimension(s) and a total of {myArr.Length} elements.");
         Console.WriteLine("\tLength\tLower\tUpper");
         for (int i = 0; i < myArr.Rank; i++)
         {
-            Console.Write("{0}:\t{1}", i, myArr.GetLength(i));
-            Console.WriteLine("\t{0}\t{1}", myArr.GetLowerBound(i), myArr.GetUpperBound(i));
+            Console.Write($"{i}:\t{myArr.GetLength(i)}");
+            Console.WriteLine($"\t{myArr.GetLowerBound(i)}\t{myArr.GetUpperBound(i)}");
         }
 
         // Displays the contents of the Array.
@@ -47,7 +47,7 @@ public class SamplesArray2
                     Console.WriteLine();
                     i = 1;
                 }
-                Console.Write("\t{0}", myEnumerator.Current);
+                Console.Write($"\t{myEnumerator.Current}");
             }
             Console.WriteLine();
         }

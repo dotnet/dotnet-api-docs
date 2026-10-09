@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 public class WordCount2
 {
-    private String filename = String.Empty;
+    private string filename = string.Empty;
     private int nWords = 0;
-    private String pattern = @"\b\w+\b";
+    private string pattern = @"\b\w+\b";
 
     public WordCount2(string filename)
     {
@@ -15,11 +15,11 @@ public class WordCount2
             throw new FileNotFoundException("The file does not exist.");
 
         this.filename = filename;
-        string txt = String.Empty;
+        string txt = string.Empty;
         StreamReader? sr = null;
         try
         {
-            sr = new StreamReader(filename);
+            sr = new(filename);
             txt = sr.ReadToEnd();
         }
         finally
@@ -29,14 +29,11 @@ public class WordCount2
         nWords = Regex.Matches(txt, pattern).Count;
     }
 
-    public string FullName
-    { get { return filename; } }
+    public string FullName => filename;
 
-    public string Name
-    { get { return Path.GetFileName(filename); } }
+    public string Name => Path.GetFileName(filename);
 
-    public int Count
-    { get { return nWords; } }
+    public int Count => nWords;
 }
 // </Snippet2>
 
@@ -44,8 +41,7 @@ public class Example
 {
     public static void Main()
     {
-        WordCount2 wc = new WordCount2(@"C:\users\ronpet\documents\Fr_Mike_Mass.txt");
-        Console.WriteLine("File {0} ({1}) has {2} words",
-                          wc.Name, wc.FullName, wc.Count);
+        WordCount2 wc = new(@"C:\users\ronpet\documents\Fr_Mike_Mass.txt");
+        Console.WriteLine($"File {wc.Name} ({wc.FullName}) has {wc.Count} words");
     }
 }

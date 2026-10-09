@@ -16,7 +16,7 @@ public class CodeGenExample
         class1.CustomAttributes.Add(codeAttrDecl);
 
         CodeAttributeArgument codeAttr =
-            new CodeAttributeArgument( new CodePrimitiveExpression("This class is obsolete."));
+            new CodeAttributeArgument(new CodePrimitiveExpression("This class is obsolete."));
         codeAttrDecl = new CodeAttributeDeclaration("System.Obsolete", codeAttr);
         class1.CustomAttributes.Add(codeAttrDecl);
 

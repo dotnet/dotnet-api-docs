@@ -11,9 +11,9 @@ public class Example8
         double fromVariable = value;
         double fromParse = double.Parse("-4.42330604244772E-305");
 
-        Console.WriteLine("Double value from literal: {0,29:R}", fromLiteral);
-        Console.WriteLine("Double value from variable: {0,28:R}", fromVariable);
-        Console.WriteLine("Double value from Parse method: {0,24:R}", fromParse);
+        Console.WriteLine($"Double value from literal: {fromLiteral,29:R}");
+        Console.WriteLine($"Double value from variable: {fromVariable,28:R}");
+        Console.WriteLine($"Double value from Parse method: {fromParse,24:R}");
 
         // The output is:
         //    Double value from literal:        -4.42330604244772E-305

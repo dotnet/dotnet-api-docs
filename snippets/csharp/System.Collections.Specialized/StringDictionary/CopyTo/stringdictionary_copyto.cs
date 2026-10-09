@@ -5,34 +5,38 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-public class SamplesStringDictionary  {
+public class SamplesStringDictionary
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Creates and initializes a new StringDictionary.
-      StringDictionary myCol = new StringDictionary();
-      myCol.Add( "red", "rojo" );
-      myCol.Add( "green", "verde" );
-      myCol.Add( "blue", "azul" );
+        // Creates and initializes a new StringDictionary.
+        StringDictionary myCol = new()
+      {
+          { "red", "rojo" },
+          { "green", "verde" },
+          { "blue", "azul" }
+      };
 
-      // Displays the values in the StringDictionary.
-      Console.WriteLine( "KEYS\tVALUES in the StringDictionary" );
-      foreach ( DictionaryEntry myDE in myCol )
-         Console.WriteLine( "{0}\t{1}", myDE.Key, myDE.Value );
-      Console.WriteLine();
+        // Displays the values in the StringDictionary.
+        Console.WriteLine("KEYS\tVALUES in the StringDictionary");
+        foreach (DictionaryEntry myDE in myCol)
+            Console.WriteLine($"{myDE.Key}\t{myDE.Value}");
+        Console.WriteLine();
 
-      // Creates an array with DictionaryEntry elements.
-      DictionaryEntry[] myArr = { new DictionaryEntry(), new DictionaryEntry(), new DictionaryEntry() };
+        // Creates an array with DictionaryEntry elements.
+        DictionaryEntry[] myArr = [new DictionaryEntry(), new DictionaryEntry(), new DictionaryEntry()];
 
-      // Copies the StringDictionary to the array.
-      myCol.CopyTo( myArr, 0 );
+        // Copies the StringDictionary to the array.
+        myCol.CopyTo(myArr, 0);
 
-      // Displays the values in the array.
-      Console.WriteLine( "KEYS\tVALUES in the array" );
-      for ( int i = 0; i < myArr.Length; i++ )
-         Console.WriteLine( "{0}\t{1}", myArr[i].Key, myArr[i].Value );
-      Console.WriteLine();
-   }
+        // Displays the values in the array.
+        Console.WriteLine("KEYS\tVALUES in the array");
+        for (int i = 0; i < myArr.Length; i++)
+            Console.WriteLine($"{myArr[i].Key}\t{myArr[i].Value}");
+        Console.WriteLine();
+    }
 }
 
 /*

@@ -14,11 +14,13 @@ class MainWindowTitleClass
         try
         {
             // Create an instance of process component.
-            using (Process myProcess = new Process())
             {
+                using Process myProcess = new();
                 // Create an instance of 'myProcessStartInfo'.
-                ProcessStartInfo myProcessStartInfo = new ProcessStartInfo();
-                myProcessStartInfo.FileName = "notepad";
+                ProcessStartInfo myProcessStartInfo = new()
+                {
+                    FileName = "notepad"
+                };
                 myProcess.StartInfo = myProcessStartInfo;
                 // Start process.
                 myProcess.Start();

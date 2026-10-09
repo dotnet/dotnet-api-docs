@@ -1,77 +1,76 @@
 ﻿// Snippet for: F:System.Drawing.Imaging.Encoder.SaveFlag
-        // <snippet4>
+// <snippet4>
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+
 class Example_MultiFrame
 {
     public static void Main()
     {
-        Bitmap multi;
-        Bitmap page2;
-        Bitmap page3;
-        ImageCodecInfo myImageCodecInfo;
-        Encoder myEncoder;
-        EncoderParameter myEncoderParameter;
-        EncoderParameters myEncoderParameters;
-                     
         // Create three Bitmap objects.
-        multi = new Bitmap("Shapes.bmp");
-        page2 = new Bitmap("Iron.jpg");
-        page3 = new Bitmap("House.png");
-                     
+        using Bitmap multi = new("Shapes.bmp");
+        using Bitmap page2 = new("Iron.jpg");
+        using Bitmap page3 = new("House.png");
+
         // Get an ImageCodecInfo object that represents the TIFF codec.
-        myImageCodecInfo = GetEncoderInfo("image/tiff");
-                     
+        ImageCodecInfo myImageCodecInfo = GetEncoderInfo("image/tiff");
+
         // Create an Encoder object based on the GUID
         // for the SaveFlag parameter category.
-        myEncoder = Encoder.SaveFlag;
-                     
+        Encoder myEncoder = Encoder.SaveFlag;
+
         // Create an EncoderParameters object.
         // An EncoderParameters object has an array of EncoderParameter
         // objects. In this case, there is only one
         // EncoderParameter object in the array.
-        myEncoderParameters = new EncoderParameters(1);
-                     
+        using EncoderParameters myEncoderParameters = new(1);
+
         // Save the first page (frame).
-        myEncoderParameter = new EncoderParameter(
+        EncoderParameter myEncoderParameter = new(
             myEncoder,
             (long)EncoderValue.MultiFrame);
         myEncoderParameters.Param[0] = myEncoderParameter;
         multi.Save("Multiframe.tiff", myImageCodecInfo, myEncoderParameters);
-                     
+
         // Save the second page (frame).
+        myEncoderParameter.Dispose();
         myEncoderParameter = new EncoderParameter(
             myEncoder,
             (long)EncoderValue.FrameDimensionPage);
         myEncoderParameters.Param[0] = myEncoderParameter;
         multi.SaveAdd(page2, myEncoderParameters);
-                     
+
         // Save the third page (frame).
+        myEncoderParameter.Dispose();
         myEncoderParameter = new EncoderParameter(
             myEncoder,
             (long)EncoderValue.FrameDimensionPage);
         myEncoderParameters.Param[0] = myEncoderParameter;
         multi.SaveAdd(page3, myEncoderParameters);
-                     
+
         // Close the multiple-frame file.
+        myEncoderParameter.Dispose();
         myEncoderParameter = new EncoderParameter(
             myEncoder,
             (long)EncoderValue.Flush);
         myEncoderParameters.Param[0] = myEncoderParameter;
         multi.SaveAdd(myEncoderParameters);
+        myEncoderParameter.Dispose();
     }
-    private static ImageCodecInfo GetEncoderInfo(String mimeType)
+
+    private static ImageCodecInfo GetEncoderInfo(string mimeType)
     {
-        int j;
-        ImageCodecInfo[] encoders;
-        encoders = ImageCodecInfo.GetImageEncoders();
-        for(j = 0; j < encoders.Length; ++j)
+        ImageCodecInfo[] encoders = ImageCodecInfo.GetImageEncoders();
+        for (int j = 0; j < encoders.Length; ++j)
         {
-            if(encoders[j].MimeType == mimeType)
+            if (encoders[j].MimeType == mimeType)
+            {
                 return encoders[j];
+            }
         }
+
         return null;
     }
 }
-        // </snippet4>
+// </snippet4>

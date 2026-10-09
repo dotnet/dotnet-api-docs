@@ -14,7 +14,7 @@ class Program
 
         // Get MethodA()
         MethodInfo mInfo = typeof(Program).GetMethod("MethodA");
-        Console.WriteLine("Found method: {0}", mInfo);
+        Console.WriteLine($"Found method: {mInfo}");
     }
 }
 // </Snippet1>

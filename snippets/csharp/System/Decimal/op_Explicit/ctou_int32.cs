@@ -8,15 +8,15 @@ class DecimalToU_Int32Demo
     const string formatter = "{0,17}{1,19}{2,19}";
 
     // Get the exception type name; remove the namespace prefix.
-    public static string GetExceptionType( Exception ex )
+    public static string GetExceptionType(Exception ex)
     {
-        string exceptionType = ex.GetType( ).ToString( );
+        string exceptionType = ex.GetType().ToString();
         return exceptionType.Substring(
-            exceptionType.LastIndexOf( '.' ) + 1 );
+            exceptionType.LastIndexOf('.') + 1);
     }
 
     // Convert the decimal argument; catch exceptions that are thrown.
-    public static void DecimalToU_Int32( decimal argument )
+    public static void DecimalToU_Int32(decimal argument)
     {
         object Int32Value;
         object UInt32Value;
@@ -26,9 +26,9 @@ class DecimalToU_Int32Demo
         {
             Int32Value = (int)argument;
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
-            Int32Value = GetExceptionType( ex );
+            Int32Value = GetExceptionType(ex);
         }
 
         // Convert the argument to a uint value.
@@ -36,39 +36,39 @@ class DecimalToU_Int32Demo
         {
             UInt32Value = (uint)argument;
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
-            UInt32Value = GetExceptionType( ex );
+            UInt32Value = GetExceptionType(ex);
         }
 
-        Console.WriteLine( formatter, argument,
-            Int32Value, UInt32Value );
+        Console.WriteLine(formatter, argument,
+            Int32Value, UInt32Value);
     }
 
-    public static void Main( )
+    public static void Main()
     {
         Console.WriteLine(
             "This example of the explicit conversions from decimal " +
             "to int \nand decimal to uint generates the following " +
             "output. It displays \nseveral converted decimal " +
-            "values.\n" );
-        Console.WriteLine( formatter, "decimal argument",
-            "int/exception", "uint/exception" );
-        Console.WriteLine( formatter, "----------------",
-            "-------------", "--------------" );
+            "values.\n");
+        Console.WriteLine(formatter, "decimal argument",
+            "int/exception", "uint/exception");
+        Console.WriteLine(formatter, "----------------",
+            "-------------", "--------------");
 
         // Convert decimal values and display the results.
-        DecimalToU_Int32( 123M );
-        DecimalToU_Int32( new decimal( 123000, 0, 0, false, 3 ) );
-        DecimalToU_Int32( 123.999M );
-        DecimalToU_Int32( 4294967295.999M );
-        DecimalToU_Int32( 4294967296M );
-        DecimalToU_Int32( 2147483647.999M );
-        DecimalToU_Int32( 2147483648M );
-        DecimalToU_Int32( - 0.999M );
-        DecimalToU_Int32( - 1M );
-        DecimalToU_Int32( - 2147483648.999M );
-        DecimalToU_Int32( - 2147483649M );
+        DecimalToU_Int32(123M);
+        DecimalToU_Int32(new decimal(123000, 0, 0, false, 3));
+        DecimalToU_Int32(123.999M);
+        DecimalToU_Int32(4294967295.999M);
+        DecimalToU_Int32(4294967296M);
+        DecimalToU_Int32(2147483647.999M);
+        DecimalToU_Int32(2147483648M);
+        DecimalToU_Int32(-0.999M);
+        DecimalToU_Int32(-1M);
+        DecimalToU_Int32(-2147483648.999M);
+        DecimalToU_Int32(-2147483649M);
     }
 }
 

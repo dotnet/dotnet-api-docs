@@ -1,13 +1,12 @@
-﻿using System;
-using System.CodeDom;
+﻿using System.CodeDom;
 
 namespace CodeDomSampleBatch
 {
-	public class Class1
-	{
-		public Class1()
-		{
-		}
+    public class Class1
+    {
+        public Class1()
+        {
+        }
 
         public static CodeCompileUnit CreateCompileUnit()
         {
@@ -17,11 +16,11 @@ namespace CodeDomSampleBatch
             // Creates a code expression for a CodeExpressionStatement to contain.
             CodeExpression invokeExpression = new CodeMethodInvokeExpression(
                 new CodeTypeReferenceExpression("Console"),
-                "Write", new CodePrimitiveExpression("Example string") );
+                "Write", new CodePrimitiveExpression("Example string"));
 
             // Creates a statement using a code expression.
             CodeExpressionStatement expressionStatement;
-            expressionStatement = new CodeExpressionStatement( invokeExpression );
+            expressionStatement = new CodeExpressionStatement(invokeExpression);
 
             // A C# code generator produces the following source code for the preceeding example code:
 
@@ -62,7 +61,7 @@ namespace CodeDomSampleBatch
             string literalCode;
             literalCode = "using System; namespace TestLiteralCode " +
                 "{ public class TestClass { public TestClass() {} } }";
-            CodeSnippetCompileUnit csu = new CodeSnippetCompileUnit( literalCode );
+            CodeSnippetCompileUnit csu = new CodeSnippetCompileUnit(literalCode);
             //</Snippet8>
             return csu;
         }
@@ -74,12 +73,12 @@ namespace CodeDomSampleBatch
             //<Snippet4>
             // Creates an empty CodeNamespaceImportCollection.
             CodeNamespaceImportCollection collection =
-                new CodeNamespaceImportCollection();            			
+                new CodeNamespaceImportCollection();
             //</Snippet4>
 
             //<Snippet5>
             // Adds a CodeNamespaceImport to the collection.
-            collection.Add( new CodeNamespaceImport("System") );
+            collection.Add(new CodeNamespaceImport("System"));
             //</Snippet5>
 
             //<Snippet6>
@@ -87,7 +86,7 @@ namespace CodeDomSampleBatch
             CodeNamespaceImport[] Imports = {
                     new CodeNamespaceImport("System"),
                     new CodeNamespaceImport("System.Drawing") };
-            collection.AddRange( Imports );
+            collection.AddRange(Imports);
             //</Snippet6>
 
             //<Snippet7>
@@ -96,5 +95,5 @@ namespace CodeDomSampleBatch
             //</Snippet7>
             //</Snippet3>
         }
-	}
+    }
 }

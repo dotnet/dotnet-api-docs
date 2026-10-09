@@ -54,7 +54,9 @@ Public Class SignVerifyEnvelope
       Dim doc As New XmlDocument()
       
       ' Load the passed XML file using its name.
-      doc.Load(New XmlTextReader(FileName))
+      Using reader As XmlReader = XmlReader.Create(FileName)
+         doc.Load(reader)
+      End Using
       
       ' Create a SignedXml object.
       Dim signedXml As New SignedXml(doc)
@@ -102,7 +104,9 @@ Public Class SignVerifyEnvelope
       Dim xmlDocument As New XmlDocument()
       
       ' Load the passed XML file into the document. 
-      xmlDocument.Load(Name)
+      Using reader As XmlReader = XmlReader.Create(Name)
+         xmlDocument.Load(reader)
+      End Using
       
       ' Create a new SignedXml object and pass it
       ' the XML document class.

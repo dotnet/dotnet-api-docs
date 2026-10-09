@@ -24,19 +24,19 @@ public class SamplesArray
             rank = anArray.Rank;
             if (rank > 1)
             {
-                Console.WriteLine("Lengths of {0:d} dimension array[{1:d}]", rank, i);
+                Console.WriteLine($"Lengths of {rank:d} dimension array[{i:d}]");
                 // show the lengths of each dimension
                 for (j = 0; j < rank; j++)
                 {
-                    Console.WriteLine("    Length of dimension({0:d}) = {1:d}", j, anArray.GetLength(j));
+                    Console.WriteLine($"    Length of dimension({j:d}) = {anArray.GetLength(j):d}");
                 }
             }
             else
             {
-                Console.WriteLine("Lengths of single dimension array[{0:d}]", i);
+                Console.WriteLine($"Lengths of single dimension array[{i:d}]");
             }
             // show the total length of the entire array or all dimensions
-            Console.WriteLine("    Total length of the array = {0:d}", anArray.Length);
+            Console.WriteLine($"    Total length of the array = {anArray.Length:d}");
             Console.WriteLine();
             i++;
         }

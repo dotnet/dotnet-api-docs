@@ -9,7 +9,7 @@ public class IConvertibleEx
         try
         {
             IConvertible conv = flag;
-            Char ch = conv.ToChar(null);
+            char ch = conv.ToChar(null);
             Console.WriteLine("Conversion succeeded.");
         }
         catch (InvalidCastException)
@@ -19,7 +19,7 @@ public class IConvertibleEx
 
         try
         {
-            Char ch = Convert.ToChar(flag);
+            char ch = Convert.ToChar(flag);
             Console.WriteLine("Conversion succeeded.");
         }
         catch (InvalidCastException)

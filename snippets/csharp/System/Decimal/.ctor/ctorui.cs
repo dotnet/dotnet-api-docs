@@ -5,31 +5,31 @@ using System;
 class DecimalCtorUIDemo
 {
     // Create a decimal object and display its value.
-    public static void CreateDecimal( uint value, string valToStr )
+    public static void CreateDecimal(uint value, string valToStr)
     {
-        decimal decimalNum = new decimal( value );
+        decimal decimalNum = new(value);
 
         // Format the constructor for display.
-        string ctor = String.Format( "decimal( {0} )", valToStr );
+        string ctor = $"decimal( {valToStr} )";
 
         // Display the constructor and its value.
-        Console.WriteLine( "{0,-33}{1,16}", ctor, decimalNum );
+        Console.WriteLine($"{ctor,-33}{decimalNum,16}");
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of the decimal( uint ) " +
-            "constructor \ngenerates the following output.\n" );
-        Console.WriteLine( "{0,-33}{1,16}", "Constructor", "Value" );
-        Console.WriteLine( "{0,-33}{1,16}", "-----------", "-----" );
+        Console.WriteLine("This example of the decimal( uint ) " +
+            "constructor \ngenerates the following output.\n");
+        Console.WriteLine($"{"Constructor",-33}{"Value",16}");
+        Console.WriteLine($"{"-----------",-33}{"-----",16}");
 
         // Construct decimal objects from uint values.
-        CreateDecimal( uint.MinValue, "uint.MinValue" );
-        CreateDecimal( uint.MaxValue, "uint.MaxValue" );
-        CreateDecimal( (uint)int.MaxValue, "(uint)int.MaxValue" );
-        CreateDecimal( 999999999U, "999999999U" );
-        CreateDecimal( 0x40000000U, "0x40000000U" );
-        CreateDecimal( 0xC0000000, "0xC0000000" );
+        CreateDecimal(uint.MinValue, "uint.MinValue");
+        CreateDecimal(uint.MaxValue, "uint.MaxValue");
+        CreateDecimal((uint)int.MaxValue, "(uint)int.MaxValue");
+        CreateDecimal(999999999U, "999999999U");
+        CreateDecimal(0x40000000U, "0x40000000U");
+        CreateDecimal(0xC0000000, "0xC0000000");
     }
 }
 

@@ -9,11 +9,10 @@ class Example
         byte[] values = { byte.MinValue, byte.MaxValue,
                           0x3F, 123, 200 };
         // Convert each value to a Decimal.
-        foreach (var value in values) {
-           decimal decValue = value;
-           Console.WriteLine("{0} ({1}) --> {2} ({3})", value,
-                             value.GetType().Name, decValue,
-                             decValue.GetType().Name);
+        foreach (byte value in values)
+        {
+            decimal decValue = value;
+            Console.WriteLine($"{value} ({value.GetType().Name}) --> {decValue} ({decValue.GetType().Name})");
         }
     }
 }

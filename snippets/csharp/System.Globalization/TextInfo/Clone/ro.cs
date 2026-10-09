@@ -10,8 +10,8 @@ class Sample
     public static void Main()
     {
 // Get the TextInfo of a predefined culture that ships with
-// the .NET Framework.
-    CultureInfo ci = new CultureInfo("en-US");
+// .NET.
+    CultureInfo ci = new("en-US");
     TextInfo ti1 = ci.TextInfo;
 
 // Display whether the TextInfo is read-only or not.

@@ -13,11 +13,10 @@ public class Example
     public static void Main()
     {
         // Create an instance of the Type class using the GetType method.
-        Type  myType=typeof(Demo);
+        Type myType = typeof(Demo);
         // Get and display the IsAutoLayout property of the
         // Demoinstance.
-        Console.WriteLine("\nThe AutoLayout property for the Demo class is {0}.",
-            myType.IsAutoLayout);
+        Console.WriteLine($"\nThe AutoLayout property for the Demo class is {myType.IsAutoLayout}.");
     }
 }
 // </Snippet1>

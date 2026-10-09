@@ -1,8 +1,8 @@
 ﻿//<snippet1>
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -41,7 +41,10 @@ namespace PartitionerDemo
                     throw new ObjectDisposedException("InternalEnumerable: Can't call GetEnumerator() after disposing");
 
                 // For static partitioning, keep track of the number of active enumerators.
-                if (m_downcountEnumerators) Interlocked.Increment(ref m_activeEnumerators);
+                if (m_downcountEnumerators)
+                {
+                    Interlocked.Increment(ref m_activeEnumerators);
+                }
 
                 return new InternalEnumerator(m_reader, this);
             }
@@ -154,12 +157,12 @@ namespace PartitionerDemo
             if (numPartitions < 1)
                 throw new ArgumentOutOfRangeException("NumPartitions");
 
-            List<IEnumerator<T>> list = new List<IEnumerator<T>>(numPartitions);
+            List<IEnumerator<T>> list = new(numPartitions);
 
             // Since we are doing static partitioning, create an InternalEnumerable with reference
             // counting of spawned InternalEnumerators turned on.  Once all of the spawned enumerators
             // are disposed, dynamicPartitions will be disposed.
-            var dynamicPartitions = new InternalEnumerable(m_referenceEnumerable.GetEnumerator(), true);
+            InternalEnumerable dynamicPartitions = new(m_referenceEnumerable.GetEnumerator(), true);
             for (int i = 0; i < numPartitions; i++)
                 list.Add(dynamicPartitions.GetEnumerator());
 
@@ -189,11 +192,11 @@ namespace PartitionerDemo
         static void Main()
         {
             // Our sample collection
-            string[] collection = new string[] {"red", "orange", "yellow", "green", "blue", "indigo",
-                "violet", "black", "white", "grey"};
+            string[] collection = ["red", "orange", "yellow", "green", "blue", "indigo",
+                "violet", "black", "white", "grey"];
 
             // Instantiate a partitioner for our collection
-            SingleElementPartitioner<string> myPart = new SingleElementPartitioner<string>(collection);
+            SingleElementPartitioner<string> myPart = new(collection);
 
             //
             // Simple test with ForEach
@@ -201,7 +204,7 @@ namespace PartitionerDemo
             Console.WriteLine("Testing with Parallel.ForEach");
             Parallel.ForEach(myPart, item =>
             {
-                Console.WriteLine("  item = {0}, thread id = {1}", item, Thread.CurrentThread.ManagedThreadId);
+                Console.WriteLine($"  item = {item}, thread id = {Thread.CurrentThread.ManagedThreadId}");
             });
 
             //
@@ -214,7 +217,7 @@ namespace PartitionerDemo
             //
 
             // Perform static partitioning of collection
-            var staticPartitions = myPart.GetPartitions(2);
+            IList<IEnumerator<string>> staticPartitions = myPart.GetPartitions(2);
             int index = 0;
 
             Console.WriteLine("Static Partitioning, 2 partitions, 2 tasks:");
@@ -223,14 +226,14 @@ namespace PartitionerDemo
             Action staticAction = () =>
             {
                 int myIndex = Interlocked.Increment(ref index) - 1; // compute your index
-                var myItems = staticPartitions[myIndex]; // grab your static partition
+                IEnumerator<string> myItems = staticPartitions[myIndex]; // grab your static partition
                 int id = Thread.CurrentThread.ManagedThreadId; // cache your thread id
 
                 // Enumerate through your static partition
                 while (myItems.MoveNext())
                 {
                     Thread.Sleep(50); // guarantees that multiple threads have a chance to run
-                    Console.WriteLine("  item = {0}, thread id = {1}", myItems.Current, Thread.CurrentThread.ManagedThreadId);
+                    Console.WriteLine($"  item = {myItems.Current}, thread id = {Thread.CurrentThread.ManagedThreadId}");
                 }
 
                 myItems.Dispose();
@@ -247,7 +250,7 @@ namespace PartitionerDemo
 
             // Grab an IEnumerable which can then be used to generate multiple
             // shared IEnumerables.
-            var dynamicPartitions = myPart.GetDynamicPartitions();
+            IEnumerable<string> dynamicPartitions = myPart.GetDynamicPartitions();
 
             Console.WriteLine("Dynamic Partitioning, 3 tasks:");
 
@@ -255,14 +258,14 @@ namespace PartitionerDemo
             Action dynamicAction = () =>
             {
                 // Grab an enumerator from the dynamic partitions
-                var enumerator = dynamicPartitions.GetEnumerator();
+                IEnumerator<string> enumerator = dynamicPartitions.GetEnumerator();
                 int id = Thread.CurrentThread.ManagedThreadId; // cache our thread id
 
                 // Enumerate through your dynamic enumerator
                 while (enumerator.MoveNext())
                 {
                     Thread.Sleep(50); // guarantees that multiple threads will have a chance to run
-                    Console.WriteLine("  item = {0}, thread id = {1}", enumerator.Current, id);
+                    Console.WriteLine($"  item = {enumerator.Current}, thread id = {id}");
                 }
 
                 enumerator.Dispose();

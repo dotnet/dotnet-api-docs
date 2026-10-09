@@ -10,28 +10,28 @@ public class MyFilterAttributeSample
         try
         {
             MemberFilter myFilter = Type.FilterAttribute;
-            Type myType = typeof(System.String);
+            Type myType = typeof(string);
             MemberInfo[] myMemberInfoArray = myType.FindMembers(MemberTypes.Constructor
-                |MemberTypes.Method, BindingFlags.Public | BindingFlags.Static |
+                | MemberTypes.Method, BindingFlags.Public | BindingFlags.Static |
                 BindingFlags.Instance, myFilter, MethodAttributes.SpecialName);
             foreach (MemberInfo myMemberinfo in myMemberInfoArray)
             {
-                Console.Write ("\n" + myMemberinfo.Name);
-                Console.Write (" is a " + myMemberinfo.MemberType.ToString());
+                Console.Write("\n" + myMemberinfo.Name);
+                Console.Write(" is a " + myMemberinfo.MemberType);
             }
         }
-        catch(ArgumentNullException e)
+        catch (ArgumentNullException e)
         {
             Console.Write("ArgumentNullException : " + e.Message);
         }
-        catch(SecurityException e)
+        catch (SecurityException e)
         {
             Console.Write("SecurityException : " + e.Message);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.Write("Exception :" + e.Message);
         }
-    }	
+    }
 }
 // </Snippet1>

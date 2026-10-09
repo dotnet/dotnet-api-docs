@@ -3,24 +3,24 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      Console.WriteLine("NaN == NaN: {0}", Double.NaN == Double.NaN);
-      Console.WriteLine("NaN != NaN: {0}", Double.NaN != Double.NaN);
-      Console.WriteLine("NaN.Equals(NaN): {0}", Double.NaN.Equals(Double.NaN));
-      Console.WriteLine("! NaN.Equals(NaN): {0}", ! Double.NaN.Equals(Double.NaN));
-      Console.WriteLine("IsNaN: {0}", Double.IsNaN(Double.NaN));
+    public static void Main()
+    {
+        Console.WriteLine($"NaN == NaN: {double.NaN == double.NaN}");
+        Console.WriteLine($"NaN != NaN: {double.NaN != double.NaN}");
+        Console.WriteLine($"NaN.Equals(NaN): {double.NaN.Equals(double.NaN)}");
+        Console.WriteLine($"! NaN.Equals(NaN): {!double.NaN.Equals(double.NaN)}");
+        Console.WriteLine($"IsNaN: {double.IsNaN(double.NaN)}");
 
-      Console.WriteLine("\nNaN > NaN: {0}", Double.NaN > Double.NaN);
-      Console.WriteLine("NaN >= NaN: {0}", Double.NaN >= Double.NaN);
-      Console.WriteLine("NaN < NaN: {0}", Double.NaN < Double.NaN);
-      Console.WriteLine("NaN < 100.0: {0}", Double.NaN < 100.0);
-      Console.WriteLine("NaN <= 100.0: {0}", Double.NaN <= 100.0);
-      Console.WriteLine("NaN >= 100.0: {0}", Double.NaN > 100.0);
-      Console.WriteLine("NaN.CompareTo(NaN): {0}", Double.NaN.CompareTo(Double.NaN));
-      Console.WriteLine("NaN.CompareTo(100.0): {0}", Double.NaN.CompareTo(100.0));
-      Console.WriteLine("(100.0).CompareTo(Double.NaN): {0}", (100.0).CompareTo(Double.NaN));
-   }
+        Console.WriteLine($"\nNaN > NaN: {double.NaN > double.NaN}");
+        Console.WriteLine($"NaN >= NaN: {double.NaN >= double.NaN}");
+        Console.WriteLine($"NaN < NaN: {double.NaN < double.NaN}");
+        Console.WriteLine($"NaN < 100.0: {double.NaN < 100.0}");
+        Console.WriteLine($"NaN <= 100.0: {double.NaN <= 100.0}");
+        Console.WriteLine($"NaN >= 100.0: {double.NaN > 100.0}");
+        Console.WriteLine($"NaN.CompareTo(NaN): {double.NaN.CompareTo(double.NaN)}");
+        Console.WriteLine($"NaN.CompareTo(100.0): {double.NaN.CompareTo(100.0)}");
+        Console.WriteLine($"(100.0).CompareTo(Double.NaN): {(100.0).CompareTo(double.NaN)}");
+    }
 }
 // The example displays the following output:
 //       NaN == NaN: False

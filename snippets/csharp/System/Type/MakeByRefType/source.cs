@@ -9,12 +9,12 @@ public class Example
         // Create a Type object that represents a one-dimensional
         // array of Example objects.
         Type t = typeof(Example).MakeArrayType();
-        Console.WriteLine("\r\nArray of Example: {0}", t);
+        Console.WriteLine($"\r\nArray of Example: {t}");
 
         // Create a Type object that represents a two-dimensional
         // array of Example objects.
         t = typeof(Example).MakeArrayType(2);
-        Console.WriteLine("\r\nTwo-dimensional array of Example: {0}", t);
+        Console.WriteLine($"\r\nTwo-dimensional array of Example: {t}");
 
         // Demonstrate an exception when an invalid array rank is
         // specified.
@@ -22,15 +22,15 @@ public class Example
         {
             t = typeof(Example).MakeArrayType(-1);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            Console.WriteLine("\r\n{0}", ex);
+            Console.WriteLine($"\r\n{ex}");
         }
 
         // Create a Type object that represents a ByRef parameter
         // of type Example.
         t = typeof(Example).MakeByRefType();
-        Console.WriteLine("\r\nByRef Example: {0}", t);
+        Console.WriteLine($"\r\nByRef Example: {t}");
 
         // Get a Type object representing the Example class, a
         // MethodInfo representing the "Test" method, a ParameterInfo
@@ -42,12 +42,12 @@ public class Example
         MethodInfo mi = t2.GetMethod("Test");
         ParameterInfo pi = mi.GetParameters()[0];
         Type pt = pi.ParameterType;
-        Console.WriteLine("Are the ByRef types equal? {0}", (t == pt));
+        Console.WriteLine($"Are the ByRef types equal? {(t == pt)}");
 
         // Create a Type object that represents a pointer to an
         // Example object.
         t = typeof(Example).MakePointerType();
-        Console.WriteLine("\r\nPointer to Example: {0}", t);
+        Console.WriteLine($"\r\nPointer to Example: {t}");
     }
 
     // A sample method with a ByRef parameter.

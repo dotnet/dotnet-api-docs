@@ -5,9 +5,7 @@ public class Precision1
     // <Snippet7>
     public static void Example()
     {
-        Console.WriteLine("{0,5} {1,20:R}  {2,12} {3,15}\n",
-                          "Value", "Full Precision", "ToEven",
-                          "AwayFromZero");
+        Console.WriteLine($"{"Value",5} {"Full Precision",20:R}  {"ToEven",12} {"AwayFromZero",15}\n");
         double value = 11.1;
         for (int ctr = 0; ctr <= 5; ctr++)
             value = RoundValueAndAdd(value);

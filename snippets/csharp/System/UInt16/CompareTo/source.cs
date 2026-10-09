@@ -1,314 +1,314 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Snippets {
-	class Launcher {
-		static void Main(string[] args)
-		{
-			Temperature t1 = Temperature.Parse("20'F", NumberStyles.Integer, null);
-			Console.WriteLine( t1.ToString("F", null) );
+namespace Snippets
+{
+    class Launcher
+    {
+        static void Main(string[] args)
+        {
+            Temperature t1 = Temperature.Parse("20'F", NumberStyles.Integer, null);
+            Console.WriteLine(t1.ToString("F", null));
 
-			string str1 = t1.ToString("G", null);
-			Console.WriteLine( str1 );
+            string str1 = t1.ToString("G", null);
+            Console.WriteLine(str1);
 
-			Temperature t2 = Temperature.Parse(str1, NumberStyles.Integer, null);
-			Console.WriteLine( t2.ToString("F", null) );
+            Temperature t2 = Temperature.Parse(str1, NumberStyles.Integer, null);
+            Console.WriteLine(t2.ToString("F", null));
 
-			Console.WriteLine( t1.CompareTo(t2) );
+            Console.WriteLine(t1.CompareTo(t2));
 
-			Temperature t3 = Temperature.Parse("30'F", NumberStyles.Integer, null);
-			Console.WriteLine( t3.ToString("F", null) );
+            Temperature t3 = Temperature.Parse("30'F", NumberStyles.Integer, null);
+            Console.WriteLine(t3.ToString("F", null));
 
-			Console.WriteLine( t1.CompareTo(t3) );
+            Console.WriteLine(t1.CompareTo(t3));
 
-			Console.ReadLine();
-		}
-	}
-	//<snippet1>
-	/// <summary>
-	/// Temperature class stores the value as UInt16
-	/// and delegates most of the functionality
-	/// to the UInt16 implementation.
-	/// </summary>
-	public class Temperature : IComparable, IFormattable {
-		/// <summary>
-		/// IComparable.CompareTo implementation.
-		/// </summary>
-		public int CompareTo(object obj) {
-			if(obj is Temperature) {
-				Temperature temp = (Temperature) obj;
+            Console.ReadLine();
+        }
+    }
+    //<snippet1>
+    /// <summary>
+    /// Temperature class stores the value as UInt16
+    /// and delegates most of the functionality
+    /// to the UInt16 implementation.
+    /// </summary>
+    public class Temperature : IComparable, IFormattable
+    {
+        /// <summary>
+        /// IComparable.CompareTo implementation.
+        /// </summary>
+        public int CompareTo(object obj)
+        {
+            if (obj is Temperature)
+            {
+                Temperature temp = (Temperature)obj;
 
-				return m_value.CompareTo(temp.m_value);
-			}
-			
-			throw new ArgumentException("object is not a Temperature");	
-		}
+                return m_value.CompareTo(temp.m_value);
+            }
 
-		/// <summary>
-		/// IFormattable.ToString implementation.
-		/// </summary>
-		public string ToString(string format, IFormatProvider provider) {
-			if( format != null && format.Equals("F") ) {
-				return String.Format("{0}'F", this.Value.ToString());
-			}
+            throw new ArgumentException("object is not a Temperature");
+        }
 
-			return m_value.ToString(format, provider);
-		}
+        /// <summary>
+        /// IFormattable.ToString implementation.
+        /// </summary>
+        public string ToString(string format, IFormatProvider provider)
+        {
+            if (format != null && format.Equals("F"))
+            {
+                return $"{this.Value.ToString()}'F";
+            }
 
-		/// <summary>
-		/// Parses the temperature from a string in form
-		/// [ws][sign]digits['F|'C][ws]
-		/// </summary>
-		public static Temperature Parse(string s, NumberStyles styles, IFormatProvider provider) {
-			Temperature temp = new Temperature();
+            return m_value.ToString(format, provider);
+        }
 
-			if( s.TrimEnd(null).EndsWith("'F") ) {
-				temp.Value = UInt16.Parse( s.Remove(s.LastIndexOf('\''), 2), styles, provider);
-			}
-			else {
-				temp.Value = UInt16.Parse(s, styles, provider);
-			}
+        /// <summary>
+        /// Parses the temperature from a string in form
+        /// [ws][sign]digits['F|'C][ws]
+        /// </summary>
+        public static Temperature Parse(string s, NumberStyles styles, IFormatProvider provider)
+        {
+            Temperature temp = new();
 
-			return temp;
-		}
+            if (s.TrimEnd(null).EndsWith("'F"))
+            {
+                temp.Value = ushort.Parse(s.Remove(s.LastIndexOf('\''), 2), styles, provider);
+            }
+            else
+            {
+                temp.Value = ushort.Parse(s, styles, provider);
+            }
 
-		// The value holder
-		protected ushort m_value;
+            return temp;
+        }
 
-		public ushort Value {
-			get {
-				return m_value;
-			}
-			set {
-				m_value = value;
-			}
-		}
-	}
-	//</snippet1>
+        // The value holder
+        protected ushort m_value;
+
+        public ushort Value {
+            get => m_value;
+            set => m_value = value;
+        }
+    }
+    //</snippet1>
 }
 
-namespace Snippets2 {
-	//<snippet2>
-	public class Temperature {
-		public static ushort MinValue {
-			get {
-				return UInt16.MinValue;
-			}
-		}
+namespace Snippets2
+{
+    //<snippet2>
+    public class Temperature
+    {
+        public static ushort MinValue => ushort.MinValue;
 
-		public static ushort MaxValue {
-			get {
-				return UInt16.MaxValue;
-			}
-		}
+        public static ushort MaxValue => ushort.MaxValue;
 
-		// The value holder
-		protected ushort m_value;
+        // The value holder
+        protected ushort m_value;
 
-		public ushort Value {
-			get {
-				return m_value;
-			}
-			set {
-				m_value = value;
-			}
-		}
-	}
-	//</snippet2>
+        public ushort Value {
+            get => m_value;
+            set => m_value = value;
+        }
+    }
+    //</snippet2>
 }
 
-namespace Snippets3 {
-	//<snippet3>
-	public class Temperature : IComparable {
-		/// <summary>
-		/// IComparable.CompareTo implementation.
-		/// </summary>
-		public int CompareTo(object obj) {
-			if(obj is Temperature) {
-				Temperature temp = (Temperature) obj;
+namespace Snippets3
+{
+    //<snippet3>
+    public class Temperature : IComparable
+    {
+        /// <summary>
+        /// IComparable.CompareTo implementation.
+        /// </summary>
+        public int CompareTo(object obj)
+        {
+            if (obj is Temperature)
+            {
+                Temperature temp = (Temperature)obj;
 
-				return m_value.CompareTo(temp.m_value);
-			}
-			
-			throw new ArgumentException("object is not a Temperature");	
-		}
+                return m_value.CompareTo(temp.m_value);
+            }
 
-		// The value holder
-		protected ushort m_value;
+            throw new ArgumentException("object is not a Temperature");
+        }
 
-		public ushort Value {
-			get {
-				return m_value;
-			}
-			set {
-				m_value = value;
-			}
-		}
-	}
-	//</snippet3>
+        // The value holder
+        protected ushort m_value;
+
+        public ushort Value {
+            get => m_value;
+            set => m_value = value;
+        }
+    }
+    //</snippet3>
 }
 
-namespace Snippets4 {
-	//<snippet4>
-	public class Temperature : IFormattable {
-		/// <summary>
-		/// IFormattable.ToString implementation.
-		/// </summary>
-		public string ToString(string format, IFormatProvider provider) {
-			if( format != null && format.Equals("F") ) {
-				return String.Format("{0}'F", this.Value.ToString());
-			}
+namespace Snippets4
+{
+    //<snippet4>
+    public class Temperature : IFormattable
+    {
+        /// <summary>
+        /// IFormattable.ToString implementation.
+        /// </summary>
+        public string ToString(string format, IFormatProvider provider)
+        {
+            if (format != null && format.Equals("F"))
+            {
+                return $"{this.Value.ToString()}'F";
+            }
 
-			return m_value.ToString(format, provider);
-		}
+            return m_value.ToString(format, provider);
+        }
 
-		// The value holder
-		protected ushort m_value;
+        // The value holder
+        protected ushort m_value;
 
-		public ushort Value {
-			get {
-				return m_value;
-			}
-			set {
-				m_value = value;
-			}
-		}
-	}
-	//</snippet4>
+        public ushort Value {
+            get => m_value;
+            set => m_value = value;
+        }
+    }
+    //</snippet4>
 }
-namespace Snippets5 {
-	//<snippet5>
-	public class Temperature {
-		/// <summary>
-		/// Parses the temperature from a string in form
-		/// [ws][sign]digits['F|'C][ws]
-		/// </summary>
-		public static Temperature Parse(string s) {
-			Temperature temp = new Temperature();
+namespace Snippets5
+{
+    //<snippet5>
+    public class Temperature
+    {
+        /// <summary>
+        /// Parses the temperature from a string in form
+        /// [ws][sign]digits['F|'C][ws]
+        /// </summary>
+        public static Temperature Parse(string s)
+        {
+            Temperature temp = new();
 
-			if( s.TrimEnd(null).EndsWith("'F") ) {
-				temp.Value = UInt16.Parse( s.Remove(s.LastIndexOf('\''), 2) );
-			}
-			else {
-				temp.Value = UInt16.Parse(s);
-			}
+            if (s.TrimEnd(null).EndsWith("'F"))
+            {
+                temp.Value = ushort.Parse(s.Remove(s.LastIndexOf('\''), 2));
+            }
+            else
+            {
+                temp.Value = ushort.Parse(s);
+            }
 
-			return temp;
-		}
+            return temp;
+        }
 
-		// The value holder
-		protected ushort m_value;
+        // The value holder
+        protected ushort m_value;
 
-		public ushort Value {
-			get {
-				return m_value;
-			}
-			set {
-				m_value = value;
-			}
-		}
-	}
-	//</snippet5>
+        public ushort Value {
+            get => m_value;
+            set => m_value = value;
+        }
+    }
+    //</snippet5>
 }
-namespace Snippets6 {
-	//<snippet6>
-	public class Temperature {
-		/// <summary>
-		/// Parses the temperature from a string in form
-		/// [ws][sign]digits['F|'C][ws]
-		/// </summary>
-		public static Temperature Parse(string s, IFormatProvider provider) {
-			Temperature temp = new Temperature();
+namespace Snippets6
+{
+    //<snippet6>
+    public class Temperature
+    {
+        /// <summary>
+        /// Parses the temperature from a string in form
+        /// [ws][sign]digits['F|'C][ws]
+        /// </summary>
+        public static Temperature Parse(string s, IFormatProvider provider)
+        {
+            Temperature temp = new();
 
-			if( s.TrimEnd(null).EndsWith("'F") ) {
-				temp.Value = UInt16.Parse( s.Remove(s.LastIndexOf('\''), 2), provider);
-			}
-			else {
-				temp.Value = UInt16.Parse(s, provider);
-			}
+            if (s.TrimEnd(null).EndsWith("'F"))
+            {
+                temp.Value = ushort.Parse(s.Remove(s.LastIndexOf('\''), 2), provider);
+            }
+            else
+            {
+                temp.Value = ushort.Parse(s, provider);
+            }
 
-			return temp;
-		}
+            return temp;
+        }
 
-		// The value holder
-		protected ushort m_value;
+        // The value holder
+        protected ushort m_value;
 
-		public ushort Value {
-			get {
-				return m_value;
-			}
-			set {
-				m_value = value;
-			}
-		}
-	}
-	//</snippet6>
+        public ushort Value {
+            get => m_value;
+            set => m_value = value;
+        }
+    }
+    //</snippet6>
 }
-namespace Snippets7 {
-	//<snippet7>
-	public class Temperature {
-		/// <summary>
-		/// Parses the temperature from a string in form
-		/// [ws][sign]digits['F|'C][ws]
-		/// </summary>
-		public static Temperature Parse(string s, NumberStyles styles) {
-			Temperature temp = new Temperature();
+namespace Snippets7
+{
+    //<snippet7>
+    public class Temperature
+    {
+        /// <summary>
+        /// Parses the temperature from a string in form
+        /// [ws][sign]digits['F|'C][ws]
+        /// </summary>
+        public static Temperature Parse(string s, NumberStyles styles)
+        {
+            Temperature temp = new();
 
-			if( s.TrimEnd(null).EndsWith("'F") ) {
-				temp.Value = UInt16.Parse( s.Remove(s.LastIndexOf('\''), 2), styles);
-			}
-			else {
-				temp.Value = UInt16.Parse(s, styles);
-			}
+            if (s.TrimEnd(null).EndsWith("'F"))
+            {
+                temp.Value = ushort.Parse(s.Remove(s.LastIndexOf('\''), 2), styles);
+            }
+            else
+            {
+                temp.Value = ushort.Parse(s, styles);
+            }
 
-			return temp;
-		}
+            return temp;
+        }
 
-		// The value holder
-		protected ushort m_value;
+        // The value holder
+        protected ushort m_value;
 
-		public ushort Value {
-			get {
-				return m_value;
-			}
-			set {
-				m_value = value;
-			}
-		}
-	}
-	//</snippet7>
+        public ushort Value {
+            get => m_value;
+            set => m_value = value;
+        }
+    }
+    //</snippet7>
 }
-namespace Snippets8 {
-	//<snippet8>
-	public class Temperature {
-		/// <summary>
-		/// Parses the temperature from a string in form
-		/// [ws][sign]digits['F|'C][ws]
-		/// </summary>
-		public static Temperature Parse(string s, NumberStyles styles, IFormatProvider provider) {
-			Temperature temp = new Temperature();
+namespace Snippets8
+{
+    //<snippet8>
+    public class Temperature
+    {
+        /// <summary>
+        /// Parses the temperature from a string in form
+        /// [ws][sign]digits['F|'C][ws]
+        /// </summary>
+        public static Temperature Parse(string s, NumberStyles styles, IFormatProvider provider)
+        {
+            Temperature temp = new();
 
-			if( s.TrimEnd(null).EndsWith("'F") ) {
-				temp.Value = UInt16.Parse( s.Remove(s.LastIndexOf('\''), 2), styles, provider);
-			}
-			else {
-				temp.Value = UInt16.Parse(s, styles, provider);
-			}
+            if (s.TrimEnd(null).EndsWith("'F"))
+            {
+                temp.Value = ushort.Parse(s.Remove(s.LastIndexOf('\''), 2), styles, provider);
+            }
+            else
+            {
+                temp.Value = ushort.Parse(s, styles, provider);
+            }
 
-			return temp;
-		}
+            return temp;
+        }
 
-		// The value holder
-		protected ushort m_value;
+        // The value holder
+        protected ushort m_value;
 
-		public ushort Value {
-			get {
-				return m_value;
-			}
-			set {
-				m_value = value;
-			}
-		}
-	}
-	//</snippet8>
+        public ushort Value {
+            get => m_value;
+            set => m_value = value;
+        }
+    }
+    //</snippet8>
 }

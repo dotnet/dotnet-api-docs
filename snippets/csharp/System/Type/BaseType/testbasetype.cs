@@ -5,7 +5,7 @@ class TestType
     public static void Main()
     {
         Type t = typeof(int);
-        Console.WriteLine("{0} inherits from {1}.", t,t.BaseType);
+        Console.WriteLine($"{t} inherits from {t.BaseType}.");
     }
 }
 //</Snippet1>

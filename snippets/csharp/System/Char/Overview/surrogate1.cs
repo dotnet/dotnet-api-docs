@@ -6,9 +6,9 @@ public class Example3
 {
     public static void Main()
     {
-        StreamWriter sw = new StreamWriter(@".\chars2.txt");
+        StreamWriter sw = new(@".\chars2.txt");
         int utf32 = 0x1D160;
-        string surrogate = Char.ConvertFromUtf32(utf32);
+        string surrogate = char.ConvertFromUtf32(utf32);
         sw.WriteLine($"U+{utf32:X6} UTF-32 = {surrogate} ({ShowCodePoints(surrogate)}) UTF-16");
         sw.Close();
     }
@@ -16,7 +16,7 @@ public class Example3
     private static string ShowCodePoints(string value)
     {
         string retval = null;
-        foreach (var ch in value)
+        foreach (char ch in value)
             retval += $"U+{Convert.ToUInt16(ch):X4} ";
 
         return retval.Trim();

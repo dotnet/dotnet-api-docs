@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -62,12 +62,12 @@ namespace SystemDateTimeReference
             TimeZoneInfo.ClearCachedData();
             Console.WriteLine($"Current Time Zone: {TimeZoneInfo.Local.DisplayName}");
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
-            StreamReader sr = new StreamReader(filenameTxt);
+            StreamReader sr = new(filenameTxt);
             string[] inputValues = sr.ReadToEnd().Split(new char[] { '|' },
                                                         StringSplitOptions.RemoveEmptyEntries);
             sr.Close();
             Console.WriteLine($"The dates on an {Thread.CurrentThread.CurrentCulture.Name} system:");
-            foreach (var inputValue in inputValues)
+            foreach (string inputValue in inputValues)
             {
                 DateTime dateValue;
                 if (DateTime.TryParse(inputValue, out dateValue))
@@ -137,12 +137,12 @@ namespace SystemDateTimeReference
             TimeZoneInfo.ClearCachedData();
             Console.WriteLine($"Current Time Zone: {TimeZoneInfo.Local.DisplayName}");
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
-            StreamReader sr = new StreamReader(filenameTxt);
+            StreamReader sr = new(filenameTxt);
             string[] inputValues = sr.ReadToEnd().Split(new char[] { '|' },
                                                         StringSplitOptions.RemoveEmptyEntries);
             sr.Close();
             Console.WriteLine($"The dates on an {Thread.CurrentThread.CurrentCulture.Name} system:");
-            foreach (var inputValue in inputValues)
+            foreach (string inputValue in inputValues)
             {
                 DateTime dateValue;
                 if (DateTime.TryParseExact(inputValue, "O", CultureInfo.InvariantCulture,
@@ -206,7 +206,7 @@ namespace SystemDateTimeReference
             var fs = new FileStream(filenameInts, FileMode.Create);
             var bw = new BinaryWriter(fs);
             bw.Write(ticks.Length);
-            foreach (var tick in ticks)
+            foreach (long tick in ticks)
                 bw.Write(tick);
 
             bw.Close();
@@ -218,8 +218,8 @@ namespace SystemDateTimeReference
             TimeZoneInfo.ClearCachedData();
             Console.WriteLine($"Current Time Zone: {TimeZoneInfo.Local.DisplayName}");
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
-            FileStream fs = new FileStream(filenameInts, FileMode.Open);
-            BinaryReader br = new BinaryReader(fs);
+            FileStream fs = new(filenameInts, FileMode.Open);
+            BinaryReader br = new(fs);
             int items;
             DateTime[] dates;
 

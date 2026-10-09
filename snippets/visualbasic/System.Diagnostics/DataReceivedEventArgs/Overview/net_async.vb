@@ -1,10 +1,8 @@
 ﻿' System.Diagnostics
 '
-' Requires .NET Framework version 1.2 or higher.
-'
 
-' The following example uses the net view command to list the 
-' available network resources available on a remote computer, 
+' The following example uses the net view command to list the
+' available network resources available on a remote computer,
 ' and displays the results to the console. Specifying the optional
 ' error log file redirects error output to that file.
 
@@ -18,7 +16,7 @@ Imports System.Threading
 Imports System.ComponentModel
 
 Namespace ProcessAsyncStreamSamples
-   
+
    Class ProcessAsyncErrorRedirection
       ' Define static variables shared by class methods.
       Private Shared streamError As StreamWriter = Nothing
@@ -26,20 +24,20 @@ Namespace ProcessAsyncStreamSamples
       Private Shared netOutput As StringBuilder = Nothing
       Private Shared errorRedirect As Boolean = False
       Private Shared errorsWritten As Boolean = False
-      
+
       Public Shared Sub RedirectNetCommandStreams()
          Dim netArguments As String
          Dim netProcess As Process
-         
+
          ' Get the input computer name.
          Console.WriteLine("Enter the computer name for the net view command:")
          netArguments = Console.ReadLine().ToUpper(CultureInfo.InvariantCulture)
          If String.IsNullOrEmpty(netArguments) Then
-            ' Default to the help command if there is 
+            ' Default to the help command if there is
             ' not an input argument.
             netArguments = "/?"
          End If
-         
+
          ' Check if errors should be redirected to a file.
          errorsWritten = False
          Console.WriteLine("Enter a fully qualified path to an error log file")
@@ -48,7 +46,7 @@ Namespace ProcessAsyncStreamSamples
          If Not String.IsNullOrEmpty(netErrorFile) Then
             errorRedirect = True
          End If
-         
+
          ' Note that at this point, netArguments and netErrorFile
          ' are set with user input.  If the user did not specify
          ' an error file, then errorRedirect is set to false.
@@ -56,23 +54,23 @@ Namespace ProcessAsyncStreamSamples
          ' Initialize the process and its StartInfo properties.
          netProcess = New Process()
          netProcess.StartInfo.FileName = "Net.exe"
-         
+
          ' Build the net command argument list.
          netProcess.StartInfo.Arguments = String.Format("view {0}", _
                                                         netArguments)
-         
+
          ' Set UseShellExecute to false for redirection.
          netProcess.StartInfo.UseShellExecute = False
-         
-         ' Redirect the standard output of the net command.  
+
+         ' Redirect the standard output of the net command.
          ' Read the stream asynchronously using an event handler.
          netProcess.StartInfo.RedirectStandardOutput = True
          AddHandler netProcess.OutputDataReceived, _
                             AddressOf NetOutputDataHandler
          netOutput = new StringBuilder()
-         
+
          If errorRedirect Then
-            ' Redirect the error output of the net command. 
+            ' Redirect the error output of the net command.
             netProcess.StartInfo.RedirectStandardError = True
             AddHandler netProcess.ErrorDataReceived, _
                             AddressOf NetErrorDataHandler
@@ -80,39 +78,39 @@ Namespace ProcessAsyncStreamSamples
             ' Do not redirect the error output.
             netProcess.StartInfo.RedirectStandardError = False
          End If
-         
+
          Console.WriteLine(ControlChars.Lf + "Starting process: NET {0}", _
                            netProcess.StartInfo.Arguments)
          If errorRedirect Then
             Console.WriteLine("Errors will be written to the file {0}", _
                            netErrorFile)
          End If
-         
+
          ' Start the process.
          netProcess.Start()
-         
+
          ' Start the asynchronous read of the standard output stream.
          netProcess.BeginOutputReadLine()
-         
+
          If errorRedirect Then
             ' Start the asynchronous read of the standard
             ' error stream.
             netProcess.BeginErrorReadLine()
          End If
-         
+
          ' Let the net command run, collecting the output.
          netProcess.WaitForExit()
-      
+
          If Not streamError Is Nothing Then
              ' Close the error file.
              streamError.Close()
-         Else 
+         Else
              ' Set errorsWritten to false if the stream is not
              ' open.   Either there are no errors, or the error
              ' file could not be opened.
              errorsWritten = False
          End If
-   
+
          If netOutput.Length > 0 Then
             ' If the process wrote more than just
             ' white space, write the output to the console.
@@ -122,9 +120,9 @@ Namespace ProcessAsyncStreamSamples
             Console.WriteLine(netOutput)
             Console.WriteLine()
          End If
-         
+
          If errorsWritten Then
-            ' Signal that the error file had something 
+            ' Signal that the error file had something
             ' written to it.
             Dim errorOutput As String()
             errorOutput = File.ReadAllLines(netErrorFile)
@@ -137,15 +135,15 @@ Namespace ProcessAsyncStreamSamples
                 For Each errLine in errorOutput
                     Console.WriteLine("  {0}", errLine)
                 Next
-          
+
                 Console.WriteLine()
             End If
          End If
-         
+
          netProcess.Close()
-      End Sub 
-      
-      
+      End Sub
+
+
       Private Shared Sub NetOutputDataHandler(sendingProcess As Object, _
           outLine As DataReceivedEventArgs)
 
@@ -154,9 +152,9 @@ Namespace ProcessAsyncStreamSamples
             ' Add the text to the collected output.
             netOutput.Append(Environment.NewLine + "  " + outLine.Data)
          End If
-      End Sub 
-       
-      
+      End Sub
+
+
       Private Shared Sub NetErrorDataHandler(sendingProcess As Object, _
           errLine As DataReceivedEventArgs)
 
@@ -168,7 +166,7 @@ Namespace ProcessAsyncStreamSamples
             If Not errorsWritten Then
                 If streamError Is Nothing Then
                     ' Open the file.
-                    Try 
+                    Try
                         streamError = New StreamWriter(netErrorFile, true)
                     Catch e As Exception
                         Console.WriteLine("Could not open error file!")
@@ -188,28 +186,28 @@ Namespace ProcessAsyncStreamSamples
 
                 errorsWritten = True
             End If
-                     
+
             If Not streamError Is Nothing Then
-                  
+
                 ' Write redirected errors to the file.
                 streamError.WriteLine(errLine.Data)
                 streamError.Flush()
              End If
           End If
-      End Sub 
-   End Class  
-End Namespace 
+      End Sub
+   End Class
+End Namespace
 ' </Snippet2>
 
 Namespace ProcessAsyncStreamSamples
-  
+
    Class ProcessSampleMain
 
       ' The main entry point for the application.
       Shared Sub Main()
          Try
             ProcessAsyncErrorRedirection.RedirectNetCommandStreams()
-         
+
          Catch e As InvalidOperationException
             Console.WriteLine("Exception:")
             Console.WriteLine(e.ToString())

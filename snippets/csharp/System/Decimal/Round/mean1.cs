@@ -9,24 +9,24 @@ public class Mean
         decimal sum = 0;
 
         // Calculate true mean.
-        foreach (var value in values)
+        foreach (decimal value in values)
             sum += value;
 
-        Console.WriteLine("True mean:     {0:N2}", sum / values.Length);
+        Console.WriteLine($"True mean:     {sum / values.Length:N2}");
 
         // Calculate mean with rounding away from zero.
         sum = 0;
-        foreach (var value in values)
+        foreach (decimal value in values)
             sum += Math.Round(value, 1, MidpointRounding.AwayFromZero);
 
-        Console.WriteLine("AwayFromZero:  {0:N2}", sum / values.Length);
+        Console.WriteLine($"AwayFromZero:  {sum / values.Length:N2}");
 
         // Calculate mean with rounding to nearest.
         sum = 0;
-        foreach (var value in values)
+        foreach (decimal value in values)
             sum += Math.Round(value, 1, MidpointRounding.ToEven);
 
-        Console.WriteLine("ToEven:        {0:N2}", sum / values.Length);
+        Console.WriteLine($"ToEven:        {sum / values.Length:N2}");
 
         // The example displays the following output:
         //       True mean:     1.40

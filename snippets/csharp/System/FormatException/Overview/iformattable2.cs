@@ -3,11 +3,11 @@ using System;
 
 public class FormatExample9
 {
-   public static void Main()
-   {
-      decimal price = 169.32m;
-      Console.WriteLine("The cost is {0:C2}.", price);
-   }
+    public static void Main()
+    {
+        decimal price = 169.32m;
+        Console.WriteLine($"The cost is {price:C2}.");
+    }
 }
 // The example displays the following output:
 //    The cost is $169.32.

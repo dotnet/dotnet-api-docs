@@ -1,13 +1,13 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 
 public class Example6
 {
     public static void Main()
     {
-        Double value1 = 1.1632875981534209e-225;
-        Double value2 = 9.1642346778e-175;
-        Double result = value1 * value2;
+        double value1 = 1.1632875981534209e-225;
+        double value2 = 9.1642346778e-175;
+        double result = value1 * value2;
         Console.WriteLine($"{value1} * {value2} = {result}");
         Console.WriteLine($"{result} = 0: {result.Equals(0.0)}");
     }

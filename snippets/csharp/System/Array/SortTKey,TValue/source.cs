@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class ReverseComparer: IComparer<string>
+public class ReverseComparer : IComparer<string>
 {
     public int Compare(string x, string y)
     {
@@ -28,8 +28,7 @@ public class Example
         Console.WriteLine();
         for (int i = 0; i < dinosaurs.Length; i++)
         {
-            Console.WriteLine("{0}: up to {1} meters long.",
-                dinosaurs[i], dinosaurSizes[i]);
+            Console.WriteLine($"{dinosaurs[i]}: up to {dinosaurSizes[i]} meters long.");
         }
 
         Console.WriteLine("\nSort(dinosaurs, dinosaurSizes)");
@@ -38,11 +37,10 @@ public class Example
         Console.WriteLine();
         for (int i = 0; i < dinosaurs.Length; i++)
         {
-            Console.WriteLine("{0}: up to {1} meters long.",
-                dinosaurs[i], dinosaurSizes[i]);
+            Console.WriteLine($"{dinosaurs[i]}: up to {dinosaurSizes[i]} meters long.");
         }
 
-        ReverseComparer rc = new ReverseComparer();
+        ReverseComparer rc = new();
 
         Console.WriteLine("\nSort(dinosaurs, dinosaurSizes, rc)");
         Array.Sort(dinosaurs, dinosaurSizes, rc);
@@ -50,8 +48,7 @@ public class Example
         Console.WriteLine();
         for (int i = 0; i < dinosaurs.Length; i++)
         {
-            Console.WriteLine("{0}: up to {1} meters long.",
-                dinosaurs[i], dinosaurSizes[i]);
+            Console.WriteLine($"{dinosaurs[i]}: up to {dinosaurSizes[i]} meters long.");
         }
 
         Console.WriteLine("\nSort(dinosaurs, dinosaurSizes, 3, 3)");
@@ -60,8 +57,7 @@ public class Example
         Console.WriteLine();
         for (int i = 0; i < dinosaurs.Length; i++)
         {
-            Console.WriteLine("{0}: up to {1} meters long.",
-                dinosaurs[i], dinosaurSizes[i]);
+            Console.WriteLine($"{dinosaurs[i]}: up to {dinosaurSizes[i]} meters long.");
         }
 
         Console.WriteLine("\nSort(dinosaurs, dinosaurSizes, 3, 3, rc)");
@@ -70,8 +66,7 @@ public class Example
         Console.WriteLine();
         for (int i = 0; i < dinosaurs.Length; i++)
         {
-            Console.WriteLine("{0}: up to {1} meters long.",
-                dinosaurs[i], dinosaurSizes[i]);
+            Console.WriteLine($"{dinosaurs[i]}: up to {dinosaurSizes[i]} meters long.");
         }
     }
 }

@@ -30,9 +30,6 @@ class BaseClass2 : IDisposable
         disposed = true;
     }
 
-    ~BaseClass2()
-    {
-        Dispose(disposing: false);
-    }
+    ~BaseClass2() => Dispose(disposing: false);
 }
 // </Snippet5>

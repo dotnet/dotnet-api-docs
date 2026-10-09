@@ -9,14 +9,8 @@ class MyClass3
     // Declare an indexer.
     public int this[int i, int j]
     {
-        get
-        {
-            return _myArray[i, j];
-        }
-        set
-        {
-            _myArray[i, j] = value;
-        }
+        get => _myArray[i, j];
+        set => _myArray[i, j] = value;
     }
 }
 
@@ -38,14 +32,13 @@ public class MyTypeClass3
             PropertyInfo myPropInfo = myType.GetProperty("Item", myTypeArr);
 
             // Display the property.
-            Console.WriteLine("The {0} property exists in MyClass3.",
-                myPropInfo.ToString());
+            Console.WriteLine($"The {myPropInfo} property exists in MyClass3.");
         }
         catch (NullReferenceException e)
         {
             Console.WriteLine("An exception occurred.");
-            Console.WriteLine("Source : {0}", e.Source);
-            Console.WriteLine("Message : {0}", e.Message);
+            Console.WriteLine($"Source : {e.Source}");
+            Console.WriteLine($"Message : {e.Message}");
         }
     }
 }

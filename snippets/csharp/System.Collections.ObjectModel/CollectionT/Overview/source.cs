@@ -3,31 +3,32 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
+namespace CollectionExample;
+
 public class Demo
 {
     public static void Main()
     {
-        Collection<string> dinosaurs = new Collection<string>();
+        Collection<string> dinosaurs =
+        [
+            "Psitticosaurus",
+            "Caudipteryx",
+            "Compsognathus",
+            "Muttaburrasaurus",
+        ];
 
-        dinosaurs.Add("Psitticosaurus");
-        dinosaurs.Add("Caudipteryx");
-        dinosaurs.Add("Compsognathus");
-        dinosaurs.Add("Muttaburrasaurus");
-
-        Console.WriteLine("{0} dinosaurs:", dinosaurs.Count);
+        Console.WriteLine($"{dinosaurs.Count} dinosaurs:");
         Display(dinosaurs);
 
-        Console.WriteLine("\nIndexOf(\"Muttaburrasaurus\"): {0}",
-            dinosaurs.IndexOf("Muttaburrasaurus"));
+        Console.WriteLine($"\nIndexOf(\"Muttaburrasaurus\"): {dinosaurs.IndexOf("Muttaburrasaurus")}");
 
-        Console.WriteLine("\nContains(\"Caudipteryx\"): {0}",
-            dinosaurs.Contains("Caudipteryx"));
+        Console.WriteLine($"\nContains(\"Caudipteryx\"): {dinosaurs.Contains("Caudipteryx")}");
 
         Console.WriteLine("\nInsert(2, \"Nanotyrannus\")");
         dinosaurs.Insert(2, "Nanotyrannus");
         Display(dinosaurs);
 
-        Console.WriteLine("\ndinosaurs[2]: {0}", dinosaurs[2]);
+        Console.WriteLine($"\ndinosaurs[2]: {dinosaurs[2]}");
 
         Console.WriteLine("\ndinosaurs[2] = \"Microraptor\"");
         dinosaurs[2] = "Microraptor";
@@ -43,13 +44,13 @@ public class Demo
 
         Console.WriteLine("\ndinosaurs.Clear()");
         dinosaurs.Clear();
-        Console.WriteLine("Count: {0}", dinosaurs.Count);
+        Console.WriteLine($"Count: {dinosaurs.Count}");
     }
 
     private static void Display(Collection<string> cs)
     {
         Console.WriteLine();
-        foreach( string item in cs )
+        foreach (string item in cs)
         {
             Console.WriteLine(item);
         }

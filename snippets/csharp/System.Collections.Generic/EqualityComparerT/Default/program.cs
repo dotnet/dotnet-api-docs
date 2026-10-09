@@ -5,19 +5,19 @@ static class Program
 {
     static void Main()
     {
-        var redBox = new Box(8, 8, 4);
-        var blueBox = new Box(6, 8, 4);
-        var greenBox = new Box(4, 8, 8);
+        Box redBox = new(8, 8, 4);
+        Box blueBox = new(6, 8, 4);
+        Box greenBox = new(4, 8, 8);
 
-        var boxes = new[] { redBox, blueBox, greenBox };
+        Box[] boxes = new[] { redBox, blueBox, greenBox };
 
-        var boxToFind = new Box(4, 8, 8);
+        Box boxToFind = new(4, 8, 8);
 
-        var foundByDimension = boxes.FindFirst(boxToFind);
+        Box foundByDimension = boxes.FindFirst(boxToFind);
 
         Console.WriteLine($"Found box {foundByDimension} by dimension.");
 
-        var foundByVolume = boxes.FindFirst(boxToFind, new BoxEqVolume());
+        Box foundByVolume = boxes.FindFirst(boxToFind, new BoxEqVolume());
 
         Console.WriteLine($"Found box {foundByVolume} by volume.");
     }
@@ -30,7 +30,7 @@ public static class CollectionExtensions
     {
         comparer = comparer ?? EqualityComparer<T>.Default;
 
-        foreach (var item in collection)
+        foreach (T item in collection)
         {
             if (comparer.Equals(item, itemToFind))
             {

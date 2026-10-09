@@ -59,8 +59,7 @@ class Sample
         // Display the original DateTime.
 
         dtString = dispDt.ToString(datePatt);
-        Console.WriteLine("{0} {1}, Kind = {2}",
-                          title, dtString, dispDt.Kind);
+        Console.WriteLine($"{title} {dtString}, Kind = {dispDt.Kind}");
 
         // Convert inputDt to local time and display the result.
         // If inputDt.Kind is DateTimeKind.Utc, the conversion is performed.
@@ -70,8 +69,7 @@ class Sample
 
         dispDt = inputDt.ToLocalTime();
         dtString = dispDt.ToString(datePatt);
-        Console.WriteLine("  ToLocalTime:     {0}, Kind = {1}",
-                          dtString, dispDt.Kind);
+        Console.WriteLine($"  ToLocalTime:     {dtString}, Kind = {dispDt.Kind}");
 
         // Convert inputDt to universal time and display the result.
         // If inputDt.Kind is DateTimeKind.Utc, the conversion is not performed.
@@ -81,8 +79,7 @@ class Sample
 
         dispDt = inputDt.ToUniversalTime();
         dtString = dispDt.ToString(datePatt);
-        Console.WriteLine("  ToUniversalTime: {0}, Kind = {1}",
-                          dtString, dispDt.Kind);
+        Console.WriteLine($"  ToUniversalTime: {dtString}, Kind = {dispDt.Kind}");
         Console.WriteLine();
     }
 
@@ -91,8 +88,7 @@ class Sample
     public static void DisplayNow(string title, DateTime inputDt)
     {
         string dtString = inputDt.ToString(datePatt);
-        Console.WriteLine("{0} {1}, Kind = {2}",
-                          title, dtString, inputDt.Kind);
+        Console.WriteLine($"{title} {dtString}, Kind = {inputDt.Kind}");
     }
 }
 

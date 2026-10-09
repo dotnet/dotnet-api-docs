@@ -3,12 +3,12 @@ using System.Collections;
 
 public class SamplesArrayList2
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
-        ArrayList myCollection = new ArrayList();
+        ArrayList myCollection = [];
 
-        lock(myCollection.SyncRoot)
+        lock (myCollection.SyncRoot)
         {
             foreach (object item in myCollection)
             {

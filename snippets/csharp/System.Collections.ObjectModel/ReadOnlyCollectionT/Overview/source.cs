@@ -7,39 +7,31 @@ public class Example
 {
     public static void Main()
     {
-        List<string> dinosaurs = new List<string>();
-
-        dinosaurs.Add("Tyrannosaurus");
-        dinosaurs.Add("Amargasaurus");
-        dinosaurs.Add("Deinonychus");
-        dinosaurs.Add("Compsognathus");
+        List<string> dinosaurs = ["Tyrannosaurus", "Amargasaurus", "Deinonychus", "Compsognathus"];
 
         ReadOnlyCollection<string> readOnlyDinosaurs =
-            new ReadOnlyCollection<string>(dinosaurs);
+            new(dinosaurs);
 
         Console.WriteLine();
-        foreach( string dinosaur in readOnlyDinosaurs )
+        foreach (string dinosaur in readOnlyDinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
 
-        Console.WriteLine("\nCount: {0}", readOnlyDinosaurs.Count);
+        Console.WriteLine($"\nCount: {readOnlyDinosaurs.Count}");
 
-        Console.WriteLine("\nContains(\"Deinonychus\"): {0}",
-            readOnlyDinosaurs.Contains("Deinonychus"));
+        Console.WriteLine($"\nContains(\"Deinonychus\"): {readOnlyDinosaurs.Contains("Deinonychus")}");
 
-        Console.WriteLine("\nreadOnlyDinosaurs[3]: {0}",
-            readOnlyDinosaurs[3]);
+        Console.WriteLine($"\nreadOnlyDinosaurs[3]: {readOnlyDinosaurs[3]}");
 
-        Console.WriteLine("\nIndexOf(\"Compsognathus\"): {0}",
-            readOnlyDinosaurs.IndexOf("Compsognathus"));
+        Console.WriteLine($"\nIndexOf(\"Compsognathus\"): {readOnlyDinosaurs.IndexOf("Compsognathus")}");
 
         Console.WriteLine("\nInsert into the wrapped List:");
         Console.WriteLine("Insert(2, \"Oviraptor\")");
         dinosaurs.Insert(2, "Oviraptor");
 
         Console.WriteLine();
-        foreach( string dinosaur in readOnlyDinosaurs )
+        foreach (string dinosaur in readOnlyDinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -47,11 +39,10 @@ public class Example
         string[] dinoArray = new string[readOnlyDinosaurs.Count + 2];
         readOnlyDinosaurs.CopyTo(dinoArray, 1);
 
-        Console.WriteLine("\nCopied array has {0} elements:",
-            dinoArray.Length);
-        foreach( string dinosaur in dinoArray )
+        Console.WriteLine($"\nCopied array has {dinoArray.Length} elements:");
+        foreach (string dinosaur in dinoArray)
         {
-            Console.WriteLine("\"{0}\"", dinosaur);
+            Console.WriteLine($"\"{dinosaur}\"");
         }
     }
 }

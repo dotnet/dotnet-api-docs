@@ -9,9 +9,9 @@ public class NumberOfItems64_1
 {
     private static PerformanceCounter PC;
 
-    public static void Main()
+    public static void Run()
     {
-        ArrayList samplesList = new ArrayList();
+        ArrayList samplesList = [];
 
         // If the category does not exist, create the category and exit.
         // Perfomance counters should not be created and immediately used.
@@ -29,12 +29,14 @@ public class NumberOfItems64_1
     {
         if (!PerformanceCounterCategory.Exists("NumberOfItems64SampleCategory"))
         {
-            CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
+            CounterCreationDataCollection CCDC = [];
 
             // Add the counter.
-            CounterCreationData NOI64 = new CounterCreationData();
-            NOI64.CounterType = PerformanceCounterType.NumberOfItems64;
-            NOI64.CounterName = "NumberOfItems64Sample";
+            CounterCreationData NOI64 = new()
+            {
+                CounterType = PerformanceCounterType.NumberOfItems64,
+                CounterName = "NumberOfItems64Sample"
+            };
             CCDC.Add(NOI64);
 
             // Create the category.
@@ -55,14 +57,15 @@ public class NumberOfItems64_1
         // Create the counters.
         PC = new PerformanceCounter("NumberOfItems64SampleCategory",
             "NumberOfItems64Sample",
-            false);
-
-        PC.RawValue = 0;
+            false)
+        {
+            RawValue = 0
+        };
     }
 
     private static void CollectSamples(ArrayList samplesList)
     {
-        Random r = new Random(DateTime.Now.Millisecond);
+        Random r = new(DateTime.Now.Millisecond);
 
         // Loop for the samples.
         for (int j = 0; j < 100; j++)
@@ -109,9 +112,9 @@ public class NumberOfItems64_1
 
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
     //++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
-    private static Single MyComputeCounterValue(CounterSample s0, CounterSample s1)
+    private static float MyComputeCounterValue(CounterSample s0, CounterSample s1)
     {
-        Single counterValue = s1.RawValue;
+        float counterValue = s1.RawValue;
         return (counterValue);
     }
 
