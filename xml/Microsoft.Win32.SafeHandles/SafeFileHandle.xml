@@ -201,12 +201,24 @@
         <Parameter Name="asyncWrite" Type="System.Boolean" Index="3" FrameworkAlternate="net-11.0" />
       </Parameters>
       <Docs>
-        <param name="readHandle">To be added.</param>
-        <param name="writeHandle">To be added.</param>
-        <param name="asyncRead">To be added.</param>
-        <param name="asyncWrite">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="readHandle">When this method returns, contains the read end of the pipe.</param>
+        <param name="writeHandle">When this method returns, contains the write end of the pipe.</param>
+        <param name="asyncRead">
+          <see langword="true" /> to enable asynchronous I/O for the read end of the pipe; otherwise, <see langword="false" />.</param>
+        <param name="asyncWrite">
+          <see langword="true" /> to enable asynchronous I/O for the write end of the pipe; otherwise, <see langword="false" />.</param>
+        <summary>Creates an anonymous pipe.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+To avoid accidental handle leaks to child processes, the created handles aren't inheritable.
+
+On Windows, asynchronous handles are created with the `FILE_FLAG_OVERLAPPED` flag. On Unix, asynchronous handles are created with the `O_NONBLOCK` flag.
+
+The returned handles own their underlying resources. Dispose both handles when they're no longer needed.
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.IOException">An I/O error occurred while creating the pipe.</exception>
+        <exception cref="T:System.ComponentModel.Win32Exception">A Windows error occurred while creating the pipe.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsAsync">
@@ -349,9 +361,10 @@
         <ReturnType>System.IO.FileHandleType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the type of the file that this handle represents.</summary>
+        <value>The type of the file.</value>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">The handle is closed.</exception>
       </Docs>
     </Member>
   </Members>
