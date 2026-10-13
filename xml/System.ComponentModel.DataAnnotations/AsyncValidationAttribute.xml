@@ -22,7 +22,7 @@
   <Docs>
     <summary>
       <para>Base class for validation attributes that require asynchronous operations, such as database lookups or API calls.</para>
-      <para>Derived implementations must be thread-safe, as instances of this attribute may be invoked concurrently from multiple threads.</para>
+      <para>Derived implementations must be thread-safe, as instances of this attribute might be invoked concurrently from multiple threads.</para>
     </summary>
     <remarks>To be added.</remarks>
   </Docs>
@@ -60,9 +60,9 @@
         <Parameter Name="errorMessageAccessor" Type="System.Func&lt;System.String&gt;" />
       </Parameters>
       <Docs>
-        <param name="errorMessageAccessor">The <see cref="T:System.Func`1" /> that will return an error message.</param>
+        <param name="errorMessageAccessor">The <see cref="T:System.Func`1" /> that returns an error message.</param>
         <summary>
-          <para>Allows for providing a resource accessor function that will be used by the <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString" /> property to retrieve the error message.</para>
+          <para>Allows for providing a resource accessor function that is used by the <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString" /> property to retrieve the error message.</para>
         </summary>
         <remarks>To be added.</remarks>
       </Docs>
@@ -147,8 +147,9 @@
             <see cref="M:System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)" />.
           </para>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">is thrown if the current attribute is malformed.</exception>
+        <exception cref="T:System.InvalidOperationException">The current attribute is malformed.</exception>
         <exception cref="T:System.ArgumentNullException">When <paramref name="validationContext" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.OperationCanceledException">The validation operation was canceled.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsValid">
@@ -290,7 +291,7 @@
           </para>
           <para>
             Implementations must observe the supplied <paramref name="cancellationToken" /> and stop work promptly
-            when cancellation is requested. The validation infrastructure may cancel this token after a validation
+            when cancellation is requested. The validation infrastructure might cancel this token after a validation
             failure to stop sibling validators and awaits all started validation tasks before returning. An
             implementation that ignores cancellation can delay failure and short-circuiting.
           </para>
