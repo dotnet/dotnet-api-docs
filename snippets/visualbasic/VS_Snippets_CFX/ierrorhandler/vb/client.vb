@@ -5,7 +5,7 @@ Imports System.ServiceModel.Channels
 Imports Microsoft.WCF.Documentation
 
 Public Class Client
-  Public Shared Sub Main()
+  Public Shared Sub Run()
 	' Picks up configuration from the configuration file.
 	Dim wcfClient As New SampleServiceClient()
 	Try
@@ -20,7 +20,7 @@ Public Class Client
 	  wcfClient.Abort()
 	  Console.ReadLine()
 	' Catch the contractually specified SOAP fault raised here as an exception.
-	Catch greetingFault As FaultException(Of GreetingFault)
+	Catch greetingFault As FaultException(Of ClientGreetingFault)
 	  Console.WriteLine(greetingFault.Detail.Message)
 	  Console.Read()
 	  wcfClient.Abort()

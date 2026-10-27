@@ -55,6 +55,7 @@ Key points:
 - Editable content lives inside `<Docs>` elements: `<summary>`, `<remarks>`, `<param>`, `<returns>`, `<exception>`, `<example>`, `<seealso>`, and `<altmember>`.
 - Longer content goes inside `<format type="text/markdown"><![CDATA[ ... ]]></format>` blocks, which support full Markdown.
 - Namespace-level docs are in files like `xml/ns-System.xml`.
+- Full wording guidance for summaries, parameter descriptions, return values, property values, exceptions, etc. is available at https://github.com/dotnet/dotnet-api-docs/wiki.
 
 ## Cross-references
 
@@ -118,3 +119,7 @@ Shared markdown fragments live in `includes/` and are referenced from CDATA bloc
 - Be concise. Break up long sentences.
 - Use the present tense. For example, "The method returns a value" instead of "The method will return a value."
 - Use the Oxford comma in lists of three or more items.
+- Lead with the reason for doing something before describing how to do it.
+- Don't use suspended compound modifiers, such as "left- and right-aligned text".
+- Don't use "this" as a standalone pronoun — replace it with the specific noun it refers to.
+- Use "for example" instead of "e.g." and "that is" instead of "i.e.".

@@ -1,0 +1,89 @@
+<Type Name="IValidationAttributeFormatter" FullName="Microsoft.Extensions.Validation.Localization.IValidationAttributeFormatter">
+  <TypeSignature Language="C#" Value="public interface IValidationAttributeFormatter" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract beforefieldinit IValidationAttributeFormatter" />
+  <TypeSignature Language="DocId" Value="T:Microsoft.Extensions.Validation.Localization.IValidationAttributeFormatter" />
+  <TypeSignature Language="VB.NET" Value="Public Interface IValidationAttributeFormatter" />
+  <TypeSignature Language="F#" Value="type IValidationAttributeFormatter = interface" />
+  <TypeSignature Language="C++ CLI" Value="public interface class IValidationAttributeFormatter" />
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Extensions.Validation.Localization</AssemblyName>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>
+             Formats a validation error message template with attribute-specific arguments.
+             Used by the validation localization pipeline to produce fully formatted error messages
+             from localized templates that contain positional placeholders beyond <c>{0}</c> (the display name).
+             </summary>
+    <remarks>
+      <para>
+             To add formatting support for a custom validation attribute, you have two options:
+             </para>
+      <list type="number">
+        <item>
+          <description>
+                 Implement <see cref="T:Microsoft.Extensions.Validation.Localization.IValidationAttributeFormatter" /> directly on the attribute itself.
+                 <see cref="T:Microsoft.Extensions.Validation.Localization.ValidationAttributeFormatterRegistry" /> checks for this first and uses the
+                 attribute as its own formatter automatically.
+                 </description>
+        </item>
+        <item>
+          <description>
+                 Create a separate <see cref="T:Microsoft.Extensions.Validation.Localization.IValidationAttributeFormatter" /> implementation and register
+                 it via <see cref="P:Microsoft.Extensions.Validation.Localization.ValidationLocalizationOptions.AttributeFormatters" /> by calling
+                 <see cref="M:Microsoft.Extensions.Validation.Localization.ValidationAttributeFormatterRegistry.AddFormatter``1(System.Func{``0,Microsoft.Extensions.Validation.Localization.IValidationAttributeFormatter})" />.
+                 </description>
+        </item>
+      </list>
+      <example>
+             The following example shows how to register a formatter for a custom attribute:
+             <code>
+             public class MyAttributeFormatter(MyAttribute attribute) : IValidationAttributeFormatter
+             {
+                 public string FormatErrorMessage(CultureInfo culture, string messageTemplate, string displayName)
+                     =&gt; string.Format(culture, messageTemplate, displayName, attribute.CustomProperty);
+             }
+            
+             // Register it in Program.cs:
+             builder.Services.AddValidationLocalization(options =&gt;
+                 options.AttributeFormatters.AddFormatter&lt;MyAttribute&gt;(
+                     attribute =&gt; new MyAttributeFormatter(attribute)));
+             </code></example>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="FormatErrorMessage">
+      <MemberSignature Language="C#" Value="public string FormatErrorMessage (System.Globalization.CultureInfo culture, string messageTemplate, string displayName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance string FormatErrorMessage(class System.Globalization.CultureInfo culture, string messageTemplate, string displayName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.Validation.Localization.IValidationAttributeFormatter.FormatErrorMessage(System.Globalization.CultureInfo,System.String,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Function FormatErrorMessage (culture As CultureInfo, messageTemplate As String, displayName As String) As String" />
+      <MemberSignature Language="F#" Value="abstract member FormatErrorMessage : System.Globalization.CultureInfo * string * string -&gt; string" Usage="iValidationAttributeFormatter.FormatErrorMessage (culture, messageTemplate, displayName)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::String ^ FormatErrorMessage(System::Globalization::CultureInfo ^ culture, System::String ^ messageTemplate, System::String ^ displayName);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Validation.Localization</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="culture" Type="System.Globalization.CultureInfo" />
+        <Parameter Name="messageTemplate" Type="System.String" />
+        <Parameter Name="displayName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="culture">The <see cref="T:System.Globalization.CultureInfo" /> to use when formatting.</param>
+        <param name="messageTemplate">The error message template containing format placeholders.</param>
+        <param name="displayName">The resolved display name of the member being validated.</param>
+        <summary>
+            Formats the specified <paramref name="messageTemplate" /> by substituting attribute-specific
+            arguments alongside the <paramref name="displayName" />.
+            </summary>
+        <returns>The fully formatted error message.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

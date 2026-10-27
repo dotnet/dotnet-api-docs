@@ -12,11 +12,11 @@ Imports System.Runtime.Serialization
 
 <Assembly: System.Runtime.Serialization.ContractNamespaceAttribute("http://microsoft.wcf.documentation", ClrNamespace:="microsoft.wcf.documentation")>
 
-Namespace microsoft.wcf.documentation
+Namespace Microsoft.WCF.Documentation
 
 
 	<System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "3.0.0.0"), System.Runtime.Serialization.DataContractAttribute()> _
-	Partial Public Class SampleFault
+	Partial Public Class ClientSampleFault
 		Inherits Object
 		Implements System.Runtime.Serialization.IExtensibleDataObject
 
@@ -52,7 +52,7 @@ Public Interface ISampleService
 
     <System.ServiceModel.OperationContractAttribute(Action:="http://microsoft.wcf.documentation/ISampleService/SampleMethod", _
             ReplyAction:="http://microsoft.wcf.documentation/ISampleService/SampleMethodResponse"), _
-            System.ServiceModel.FaultContractAttribute(GetType(microsoft.wcf.documentation.SampleFault), _
+            System.ServiceModel.FaultContractAttribute(GetType(Microsoft.WCF.Documentation.ClientSampleFault), _
             Action:="http://microsoft.wcf.documentation/ISampleService/SampleMethodSampleFaultFault", _
             Name:="SampleFault")> _
     Function SampleMethod(ByVal msg As String) As String

@@ -11,12 +11,12 @@ Public Class Client
 	Me.wait = New ManualResetEvent(False)
   End Sub
 
-  Public Shared Sub Main()
+  Public Shared Sub Run()
 	Dim client As New Client()
-	client.Run()
+	client.Start()
   End Sub
 
-  Private Sub Run()
+  Private Sub Start()
 	' Picks up configuration from the config file.
 	' <snippet4>
 	Dim wcfClient As New SampleServiceClient(New InstanceContext(Me))

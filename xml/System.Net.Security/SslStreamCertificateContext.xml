@@ -146,7 +146,7 @@ The provided certificates should not be disposed during the lifetime of the <xre
         <param name="additionalCertificates">Supplementary certificates used to build the certificate chain.</param>
         <param name="offline">
           <see langword="false" /> to indicate that the missing certificates can be downloaded from the network; <see langword="true" /> to indicate that only available X509Certificate stores should be searched for missing certificates.</param>
-        <param name="trust">An optional trust policy, to replace the default system trust.</param>
+        <param name="trust">An optional trust policy to replace the default system trust. A custom certificate chain policy on the authentication options takes precedence for remote certificate validation.</param>
         <summary>Attempts to build the certificate chain from the provided certificates.</summary>
         <returns>The certificate context with the newly created certificate chain.</returns>
         <remarks>
@@ -155,6 +155,8 @@ The provided certificates should not be disposed during the lifetime of the <xre
 ## Remarks
 
 The provided certificates should not be disposed during the lifetime of the <xref:System.Net.Security.SslStreamCertificateContext>.
+
+If <xref:System.Net.Security.SslClientAuthenticationOptions.CertificateChainPolicy> or <xref:System.Net.Security.SslServerAuthenticationOptions.CertificateChainPolicy> isn't `null`, the specified chain policy supersedes the `trust` argument for remote certificate validation. The <xref:System.Security.Cryptography.X509Certificates.X509ChainPolicy.TrustMode> and <xref:System.Security.Cryptography.X509Certificates.X509ChainPolicy.CustomTrustStore> properties determine trust instead. The server still sends the trust list during the TLS handshake if the trust policy is configured to do so.
 
 > [!IMPORTANT]
 > The target certificate must include a private key.

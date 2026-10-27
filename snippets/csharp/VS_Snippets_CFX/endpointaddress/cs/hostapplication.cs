@@ -13,13 +13,13 @@ namespace Microsoft.WCF.Documentation
   class HostApplication
   {
 
-    static void Main()
+    public static void Run()
     {
       HostApplication app = new HostApplication();
-      app.Run();
+      app.Start();
     }
 
-    private void Run()
+    private void Start()
     {
 
             // Get base address from app settings in configuration

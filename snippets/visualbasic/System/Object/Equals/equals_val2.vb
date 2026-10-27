@@ -17,15 +17,15 @@ End Structure
 
 Module Example4
     Public Sub Main()
-        Dim p1 As New Person4("John")
-        Dim p2 As New Person4("John")
+        Dim person1 As New Person4("John")
+        Dim person2 As New Person4("John")
 
         Console.WriteLine("Calling Equals:")
-        Console.WriteLine(p1.Equals(p2))
+        Console.WriteLine(person1.Equals(person2))
         Console.WriteLine()
 
         Console.WriteLine("Casting to an Object and calling Equals:")
-        Console.WriteLine(CObj(p1).Equals(p2))
+        Console.WriteLine(CObj(person1).Equals(person2))
     End Sub
 End Module
 ' The example displays the following output:

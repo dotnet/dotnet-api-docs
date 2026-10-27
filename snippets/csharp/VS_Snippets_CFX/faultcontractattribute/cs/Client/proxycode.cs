@@ -69,23 +69,41 @@ public interface ISampleServiceChannel : ISampleService, System.ServiceModel.ICl
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
 public partial class SampleServiceClient : System.ServiceModel.ClientBase<ISampleService>, ISampleService
 {
+    private const string DefaultEndpointAddress = "http://localhost:8080/SampleService";
+    private const string WsHttpBindingEndpointName = "WSHttpBinding_ISampleService";
+
+    private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(string endpointConfigurationName)
+    {
+        if (string.Equals(endpointConfigurationName, WsHttpBindingEndpointName, System.StringComparison.Ordinal))
+        {
+            return new System.ServiceModel.WSHttpBinding();
+        }
+
+        throw new System.InvalidOperationException(string.Format("Could not find endpoint with name '{0}'.", endpointConfigurationName));
+    }
+
+    private static System.ServiceModel.EndpointAddress GetDefaultEndpointAddress()
+    {
+        return new System.ServiceModel.EndpointAddress(DefaultEndpointAddress);
+    }
 
     public SampleServiceClient()
+            : base(new System.ServiceModel.WSHttpBinding(), GetDefaultEndpointAddress())
     {
     }
 
     public SampleServiceClient(string endpointConfigurationName) :
-            base(endpointConfigurationName)
+            base(GetBindingForEndpoint(endpointConfigurationName), GetDefaultEndpointAddress())
     {
     }
 
     public SampleServiceClient(string endpointConfigurationName, string remoteAddress) :
-            base(endpointConfigurationName, remoteAddress)
+            base(GetBindingForEndpoint(endpointConfigurationName), new System.ServiceModel.EndpointAddress(remoteAddress))
     {
     }
 
     public SampleServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) :
-            base(endpointConfigurationName, remoteAddress)
+            base(GetBindingForEndpoint(endpointConfigurationName), remoteAddress)
     {
     }
 

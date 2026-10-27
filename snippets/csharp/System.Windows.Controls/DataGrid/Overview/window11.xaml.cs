@@ -1,4 +1,5 @@
-﻿using System;
+﻿// <SnippetAll>
+using System;
 using System.Collections.ObjectModel;
 //<SnippetUsing>
 //Additional using statements
@@ -110,3 +111,4 @@ namespace DataGrid_CustomColumns
     }
     //</SnippetHyperlink3>
 }
+// </SnippetAll>

@@ -2,9 +2,24 @@
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 
+[ServiceContract]
+public interface ISampleService
+{
+  [OperationContract]
+  string SampleMethod(string message);
+}
+
+public class SampleServiceProxy : ClientBase<ISampleService>, ISampleService
+{
+  public string SampleMethod(string message)
+  {
+    return Channel.SampleMethod(message);
+  }
+}
+
 public class Client
 {
-  public static void Main()
+  public static void Run()
   {
     // Picks up configuration from the config file.
       using (SampleServiceProxy proxy = new SampleServiceProxy())
