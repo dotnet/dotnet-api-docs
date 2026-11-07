@@ -3271,6 +3271,9 @@ The example uses the file, `books.xml`, as input.
 
  This method parses Document Type Definitions (DTDs), but does not do DTD or Schema validation. If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create*> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
 
+> [!IMPORTANT]
+> When the XML is from an untrusted source, set <xref:System.Xml.XmlDocument.XmlResolver?displayProperty=nameWithType> to `null` before calling `LoadXml` so that external document type definitions (DTDs) and entities are not resolved. For more information, see [CA3075: Insecure DTD processing](/dotnet/fundamentals/code-analysis/quality-rules/ca3075).
+
  If you want to load from a <xref:System.IO.Stream>, <xref:System.String>, <xref:System.IO.TextReader>, or <xref:System.Xml.XmlReader>, use the Load method instead of this method.
 
  This method is a Microsoft extension to the Document Object Model (DOM).
@@ -4717,6 +4720,9 @@ The following example displays the document.
 
 ## Remarks
  The `XmlResolver` can be used to load DTDs or expand entity references. Using the <xref:System.Xml.XmlResolver.Credentials?displayProperty=nameWithType> property, you can set credentials on the `XmlResolver` to access resources stored on a secure network resource.
+
+> [!IMPORTANT]
+> When the XML is from an untrusted source, set this property to `null` to prevent the `XmlDocument` from resolving external DTDs, entities, and schemas, or supply an <xref:System.Xml.XmlSecureResolver> that restricts the resources that can be accessed. For more information, see [CA3075: Insecure DTD processing](/dotnet/fundamentals/code-analysis/quality-rules/ca3075).
 
 - If the document was not loaded using an <xref:System.Xml.XmlReader> (that is, if it was loaded using a stream, file, and so on) the `XmlResolver` on the `XmlDocument` is always used.
 
