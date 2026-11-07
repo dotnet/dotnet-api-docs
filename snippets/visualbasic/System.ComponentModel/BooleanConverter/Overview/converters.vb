@@ -179,9 +179,12 @@ Namespace ConvertersVB
             ' This converter can only convert a TimeSpan object to and from a string.
             '<snippet21>
             Dim ts As New TimeSpan(133333330)
-            Dim myTSStr As String = "5000000"
+            Dim myTSStr As String = "00:00:00.5000000"
             Console.WriteLine(TypeDescriptor.GetConverter(ts).ConvertTo(ts, GetType(String)))
             Console.WriteLine(TypeDescriptor.GetConverter(ts).ConvertFrom(myTSStr))
+            ' The example displays the following output:
+            ' 00:00:13.3333330
+            ' 00:00:00.5000000
             '</snippet21>
             '============================================================
             ' TypeListConverter
