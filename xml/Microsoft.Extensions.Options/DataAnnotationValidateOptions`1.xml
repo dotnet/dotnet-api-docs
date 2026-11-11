@@ -214,6 +214,10 @@
             </summary>
         <returns>The <see cref="T:Microsoft.Extensions.Options.ValidateOptionsResult" /> result.</returns>
         <remarks>
+            The built-in asynchronous options path invokes this method instead of
+            <see cref="M:Microsoft.Extensions.Options.DataAnnotationValidateOptions`1.Validate(System.String,`0)" />. This method performs complete DataAnnotations validation,
+            including synchronous and asynchronous attributes, and recursively validates members marked with
+            <see cref="T:Microsoft.Extensions.Options.ValidateObjectMembersAttribute" /> or <see cref="T:Microsoft.Extensions.Options.ValidateEnumeratedItemsAttribute" />.
             The <paramref name="cancellationToken" /> is propagated from
             <c>Host.StartAsync(CancellationToken)</c>. By default, no startup timeout
             is applied. Configure <c>HostOptions.StartupTimeout</c> or pass
@@ -222,7 +226,11 @@
             <code>
             builder.Services.Configure&lt;HostOptions&gt;(opts =&gt;
                 opts.StartupTimeout = TimeSpan.FromSeconds(30));
-            </code></remarks>
+            </code>
+            Cancellation is cooperative. Validation cleanup awaits started work, so a validator that ignores the token
+            can delay completion. A timeout-linked token requests cancellation; it does not enforce a hard completion
+            deadline.
+            </remarks>
       </Docs>
     </Member>
   </Members>
