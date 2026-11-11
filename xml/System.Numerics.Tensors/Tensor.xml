@@ -3693,7 +3693,7 @@
             Broadcast the data from <paramref name="source" /> to the smallest broadcastable shape compatible with <paramref name="lengthsSource" />. Creates a new <see cref="T:System.Numerics.Tensors.Tensor`1" /> and allocates new memory.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>Rank-zero empty spans are treated as empty vectors with shape <c>[0]</c> when checking broadcast compatibility. Explicitly specified dimension lengths are preserved.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Broadcast&lt;T&gt;">
@@ -3763,7 +3763,7 @@
             If the shape of the <paramref name="source" /> is not compatible with the new shape, an exception is thrown.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>A rank-zero empty source or an empty <paramref name="lengths" /> span is treated as the shape <c>[0]</c> when checking broadcast compatibility. Explicitly specified dimension lengths are preserved.</remarks>
         <exception cref="T:System.ArgumentException">The shapes are not broadcast compatible.</exception>
       </Docs>
     </Member>
@@ -4245,7 +4245,7 @@
             Join a sequence of tensors along an existing axis.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>Leading singleton padding is ignored when aligning inputs to the first tensor's shape. Rank-zero empty tensors have effective shape <c>[0]</c>.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Concatenate&lt;T&gt;">
@@ -4310,7 +4310,7 @@
             Join a sequence of tensors along an existing axis.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>Inputs and the destination are aligned to the first tensor's effective shape by adding or removing leading singleton dimensions. Rank-zero empty tensors have effective shape <c>[0]</c>.</remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="ConcatenateOnDimension&lt;T&gt;">
@@ -4370,7 +4370,7 @@
             Join a sequence of tensors along an existing axis.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>The dimension refers to the first tensor's effective shape. Other inputs are aligned by adding or removing leading singleton dimensions. Rank-zero empty tensors have effective shape <c>[0]</c>.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ConcatenateOnDimension&lt;T&gt;">
@@ -4437,7 +4437,7 @@
             Join a sequence of tensors along an existing axis.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>The dimension refers to the first tensor's effective shape. Other inputs and the destination are aligned by adding or removing leading singleton dimensions. Rank-zero empty tensors have effective shape <c>[0]</c>.</remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="ConvertChecked&lt;TFrom,TTo&gt;">
@@ -23998,7 +23998,7 @@
         <param name="destination">Destination <see cref="T:System.Numerics.Tensors.TensorSpan`1" /> with the desired new shape.</param>
         <summary>
             Copies the data from <paramref name="tensor" />. If the final shape is smaller all data after that point is ignored.
-            If the final shape is bigger it is filled with 0s.
+            If the final shape is bigger it is filled with the default value of <typeparamref name="T" />.
             </summary>
         <remarks>To be added.</remarks>
       </Docs>
@@ -24060,7 +24060,7 @@
         <param name="destination">Destination <see cref="T:System.Numerics.Tensors.TensorSpan`1" /> with the desired new shape.</param>
         <summary>
             Copies the data from <paramref name="tensor" />. If the final shape is smaller all data after that point is ignored.
-            If the final shape is bigger it is filled with 0s.
+            If the final shape is bigger it is filled with the default value of <typeparamref name="T" />.
             </summary>
         <remarks>To be added.</remarks>
       </Docs>
@@ -24119,7 +24119,7 @@
         <param name="destination">Destination <see cref="T:System.Numerics.Tensors.TensorSpan`1" /> with the desired new shape.</param>
         <summary>
             Copies the data from <paramref name="tensor" />. If the final shape is smaller all data after that point is ignored.
-            If the final shape is bigger it is filled with 0s.
+            If the final shape is bigger it is filled with the default value of <typeparamref name="T" />.
             </summary>
         <remarks>To be added.</remarks>
       </Docs>
@@ -25345,7 +25345,7 @@
             Determines whether two sequences are equal by comparing the elements using IEquatable{T}.Equals(T).
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>Shapes must be equivalent after ignoring leading singleton padding and treating rank-zero empty tensors as shape <c>[0]</c>. Other dimensions are not broadcast.</remarks>
       </Docs>
     </Member>
     <Member MemberName="SequenceEqual&lt;T&gt;">
@@ -25412,7 +25412,7 @@
             Determines whether two sequences are equal by comparing the elements using IEquatable{T}.Equals(T).
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>Shapes must be equivalent after ignoring leading singleton padding and treating rank-zero empty tensors as shape <c>[0]</c>. Other dimensions are not broadcast.</remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="SetSlice&lt;T&gt;">
@@ -26657,7 +26657,9 @@
             evenly on the given <paramref name="dimension" /> an exception is thrown.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>Rank-zero empty tensors have effective shape <c>[0]</c>.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="splitCount" /> is not positive.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Sqrt&lt;T&gt;">
@@ -27146,10 +27148,10 @@
         <typeparam name="T">To be added.</typeparam>
         <param name="tensors">Input <see cref="T:System.Numerics.Tensors.Tensor`1" />.</param>
         <summary>
-            Join multiple <see cref="T:System.Numerics.Tensors.Tensor`1" /> along a new dimension that is added at position 0. All tensors must have the same shape.
+            Join multiple <see cref="T:System.Numerics.Tensors.Tensor`1" /> along a new dimension that is added at position 0. All tensors must have equivalent shapes.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>Inputs are aligned to the first tensor's shape by adding or removing leading singleton dimensions. Rank-zero empty tensors have effective shape <c>[0]</c>.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Stack&lt;T&gt;">
@@ -27215,10 +27217,10 @@
         <param name="tensors">Input <see cref="T:System.Numerics.Tensors.Tensor`1" />.</param>
         <param name="destination" />
         <summary>
-            Join multiple <see cref="T:System.Numerics.Tensors.Tensor`1" /> along a new dimension that is added at position 0. All tensors must have the same shape.
+            Join multiple <see cref="T:System.Numerics.Tensors.Tensor`1" /> along a new dimension that is added at position 0. All tensors must have equivalent shapes.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>Inputs are aligned to the first tensor's shape by adding or removing leading singleton dimensions. The destination may differ from the result by leading singleton padding. Rank-zero empty tensors have effective shape <c>[0]</c>.</remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="StackAlongDimension&lt;T&gt;">
@@ -27275,10 +27277,10 @@
         <param name="tensors">Input <see cref="T:System.Numerics.Tensors.Tensor`1" />.</param>
         <param name="dimension">Index of where the new dimension will be.</param>
         <summary>
-            Join multiple <see cref="T:System.Numerics.Tensors.Tensor`1" /> along a new dimension. The axis parameter specifies the index of the new dimension. All tensors must have the same shape.
+            Join multiple <see cref="T:System.Numerics.Tensors.Tensor`1" /> along a new dimension. The axis parameter specifies the index of the new dimension. All tensors must have equivalent shapes.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>The dimension refers to the first tensor's effective shape. Other inputs are aligned by adding or removing leading singleton dimensions. Rank-zero empty tensors have effective shape <c>[0]</c>.</remarks>
       </Docs>
     </Member>
     <Member MemberName="StackAlongDimension&lt;T&gt;">
@@ -27342,10 +27344,10 @@
         <param name="destination" />
         <param name="dimension">Index of where the new dimension will be.</param>
         <summary>
-            Join multiple <see cref="T:System.Numerics.Tensors.Tensor`1" /> along a new dimension. The axis parameter specifies the index of the new dimension. All tensors must have the same shape.
+            Join multiple <see cref="T:System.Numerics.Tensors.Tensor`1" /> along a new dimension. The axis parameter specifies the index of the new dimension. All tensors must have equivalent shapes.
             </summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>The dimension refers to the first tensor's effective shape. Other inputs are aligned by adding or removing leading singleton dimensions. The destination may differ from the result by leading singleton padding. Rank-zero empty tensors have effective shape <c>[0]</c>.</remarks>
       </Docs>
     </Member>
     <Member MemberName="StdDev&lt;T&gt;">
