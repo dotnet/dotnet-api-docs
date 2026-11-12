@@ -241,9 +241,9 @@
       <Docs>
         <param name="destination">The destination tensor span.</param>
         <summary>Copies the contents of the tensor into a destination tensor span.</summary>
-        <remarks>This method copies all of the source tensor to <paramref name="destination" /> even if they overlap.</remarks>
+        <remarks>Overlapping dense tensors with equal element counts and identical views are supported. Other overlapping layouts are rejected before copying.</remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="destination" /> is shorter than the source tensor.</exception>
+          <paramref name="destination" /> is shorter than the source tensor, or the source and destination overlap in an unsupported layout.</exception>
       </Docs>
     </Member>
     <Member MemberName="Empty">
@@ -305,9 +305,9 @@
       <Docs>
         <param name="destination">The destination span.</param>
         <summary>Flattens the contents of the tensor into a destination span.</summary>
-        <remarks>This method copies all of the source tensor to <paramref name="destination" /> even if they overlap.</remarks>
+        <remarks>Overlapping dense tensors are supported. Other overlapping layouts are rejected before copying.</remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="destination" /> is shorter than the source tensor.</exception>
+          <paramref name="destination" /> is shorter than the source tensor, or the source and destination overlap in an unsupported layout.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetDimensionSpan">
@@ -809,9 +809,10 @@
         <returns>
           <see langword="true" /> if the copy operation succeeded; otherwise, <c>false</c>.</returns>
         <remarks>
-          <para>If the source and <paramref name="destination" /> overlap, the entirety of the source is handled as if it was copied to a temporary location before it is copied to <paramref name="destination" />.</para>
+          <para>Overlapping dense tensors with equal element counts and identical views are supported. Other overlapping layouts throw <see cref="T:System.ArgumentException" /> before copying.</para>
           <para>If the <paramref name="destination" /> length is shorter than the source, no items are copied and the method returns <c>false</c>.</para>
         </remarks>
+        <exception cref="T:System.ArgumentException">The source and <paramref name="destination" /> overlap in an unsupported layout.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryFlattenTo">
@@ -849,9 +850,10 @@
         <returns>
           <see langword="true" /> if the copy operation succeeded; otherwise, <c>false</c>.</returns>
         <remarks>
-          <para>If the source and <paramref name="destination" /> overlap, the entirety of the source is handled as if it was flattened to a temporary location before it is copied to <paramref name="destination" />.</para>
+          <para>Overlapping dense tensors are supported. Other overlapping layouts throw <see cref="T:System.ArgumentException" /> before copying.</para>
           <para>If the <paramref name="destination" /> length is shorter than the source, no items are copied and the method returns <c>false</c>.</para>
         </remarks>
+        <exception cref="T:System.ArgumentException">The source and <paramref name="destination" /> overlap in an unsupported layout.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="TryGetSpan">
