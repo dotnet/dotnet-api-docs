@@ -207,9 +207,12 @@ namespace TypeCon
          // This converter can only convert a TimeSpan object to and from a string.
          //<snippet21>
          TimeSpan ts(133333330);
-         String^ myTSStr = "5000000";
+         String^ myTSStr = "00:00:00.5000000";
          Console::WriteLine( TypeDescriptor::GetConverter( ts )->ConvertTo( ts, String::typeid ) );
          Console::WriteLine( TypeDescriptor::GetConverter( ts )->ConvertFrom( myTSStr ) );
+         // The example displays the following output:
+         // 00:00:13.3333330
+         // 00:00:00.5000000
          //</snippet21>
 
          //============================================================
