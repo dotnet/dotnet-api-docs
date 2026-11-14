@@ -837,7 +837,10 @@ This example is for the server process, which uses the <xref:System.IO.Pipes.Nam
 
 
 ## Examples
- The following example demonstrates a method to create a pipe server that can respond to multiple simultaneous client requests, and a method for client impersonation. This example creates a <xref:System.IO.Pipes.NamedPipeServerStream> object in a parent process, which then creates multiple threads that wait for <xref:System.IO.Pipes.NamedPipeClientStream> objects to connect. After a client is connected, it supplies a file name to the server and the contents of that file are read and sent back to the client. Because the <xref:System.IO.Pipes.NamedPipeServerStream> impersonates the client when opening the file, the client can request only files that it has sufficient permissions to open.
+ The following example demonstrates a method to create a pipe server that can respond to multiple simultaneous client requests, and a method for client impersonation. This example creates a <xref:System.IO.Pipes.NamedPipeServerStream> object in a parent process, which then creates multiple threads that wait for <xref:System.IO.Pipes.NamedPipeClientStream> objects to connect. After a client is connected, it supplies a file name to the server and the contents of that file are read and sent back to the client.
+
+> [!CAUTION]
+> On Linux and macOS, <xref:System.IO.Pipes.NamedPipeServerStream.RunAsClient*> changes only the effective user ID, not the effective group ID or supplementary groups, and the change affects all threads in the server process. Don't rely on `RunAsClient` alone as an authorization boundary. Before using client-supplied file paths as in this example, perform explicit authorization checks to determine whether the requested operation is allowed. For details, see the remarks for `RunAsClient`.
 
  :::code language="csharp" source="~/snippets/csharp/System.IO.Pipes/NamedPipeServerStream/GetImpersonationUserName/Program.cs" id="Snippet01":::
  :::code language="vb" source="~/snippets/visualbasic/System.IO.Pipes/NamedPipeServerStream/GetImpersonationUserName/program.vb" id="Snippet01":::
@@ -942,12 +945,17 @@ This example is for the server process, which uses the <xref:System.IO.Pipes.Nam
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The connecting client's permissions are applied to the remote server. For example, if the connecting client tries to request the contents of a file on the server, the client can request only files that it has sufficient permissions to open.
+ On Windows, `RunAsClient` uses `ImpersonateNamedPipeClient` to impersonate the client's access token, including group membership. Only the thread executing the delegate impersonates the client.
 
- On Windows, only the thread used for executing the delegate is updated to impersonate the client. On other platforms, all threads from the parent process impersonate the client when `RunAsClient` is called. This behavior affects multi-threaded servers such as the example shown.
+ On Linux and macOS, `RunAsClient` changes only the effective user ID (EUID) to the connected client's user ID. The effective group ID (EGID) and supplementary groups remain those of the server process. File-system authorization evaluates both user and group identities, so the delegate can access resources through the server's group permissions that the client can't access. The delegate doesn't acquire group permissions that belong only to the client.
+
+> [!CAUTION]
+> On Linux and macOS, don't rely on `RunAsClient` alone as an authorization boundary. Authorization can depend on groups, capabilities, and other security context beyond the user ID. Perform explicit authorization checks before acting on client-influenced input, such as client-supplied file paths, to determine whether the requested operation is allowed.
+>
+> The effective user ID change affects all threads in the server process, not just the thread executing the delegate. Account for the process-wide change when designing multithreaded servers, including servers based on the following example.
 
 ## Examples
- The following example demonstrates a method to create a pipe server that can respond to multiple simultaneous client requests, and a method for client impersonation. This example creates a <xref:System.IO.Pipes.NamedPipeServerStream> object in a parent process, which then creates multiple threads that wait for <xref:System.IO.Pipes.NamedPipeClientStream> objects to connect. After a client is connected, it supplies a file name to the server and the contents of that file are read and sent back to the client. Because the <xref:System.IO.Pipes.NamedPipeServerStream> impersonates the client when opening the file, the client can request only files that it has sufficient permissions to open.
+ The following example demonstrates a method to create a pipe server that can respond to multiple simultaneous client requests, and a method for client impersonation. This example creates a <xref:System.IO.Pipes.NamedPipeServerStream> object in a parent process, which then creates multiple threads that wait for <xref:System.IO.Pipes.NamedPipeClientStream> objects to connect. After a client is connected, it supplies a file name to the server and the contents of that file are read and sent back to the client.
 
  :::code language="csharp" source="~/snippets/csharp/System.IO.Pipes/NamedPipeServerStream/GetImpersonationUserName/Program.cs" id="Snippet01":::
  :::code language="vb" source="~/snippets/visualbasic/System.IO.Pipes/NamedPipeServerStream/GetImpersonationUserName/program.vb" id="Snippet01":::
