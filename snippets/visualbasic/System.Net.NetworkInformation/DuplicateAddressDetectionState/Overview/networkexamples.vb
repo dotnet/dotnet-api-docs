@@ -794,6 +794,21 @@ Public Class NetworkingExample
     
     End Sub
     
+    ' The example displays output similar to the following:
+    '    Interface information for MyComputer.contoso.com
+    '    Intel(R) Ethernet Connection
+    '    ============================
+    '      Interface type .......................... : Ethernet
+    '      Physical Address ........................ : 001122AABBCC
+    '      Is receive only.......................... : False
+    '      Multicast................................ : True
+    '    Software Loopback Interface 1
+    '    =============================
+    '      Interface type .......................... : Loopback
+    '      Physical Address ........................ :
+    '      Is receive only.......................... : False
+    '      Multicast................................ : True
+    
     '</Snippet51> 
     
     Public Shared Sub Main() 
