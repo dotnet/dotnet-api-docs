@@ -197,9 +197,12 @@ public static class TypeCon_Doc
         // This converter can only convert a TimeSpan object to and from a string.
         //<snippet21>
         TimeSpan ts = new(133333330);
-        string myTSStr = "5000000";
+        string myTSStr = "00:00:00.5000000";
         Console.WriteLine(TypeDescriptor.GetConverter(ts).ConvertTo(ts, typeof(string)));
         Console.WriteLine(TypeDescriptor.GetConverter(ts).ConvertFrom(myTSStr));
+        // The example displays the following output:
+        // 00:00:13.3333330
+        // 00:00:00.5000000
         //</snippet21>
 
         //============================================================
